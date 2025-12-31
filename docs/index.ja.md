@@ -6,5 +6,8 @@
 
 ## Family mruby について
 
-https://blog.silentworlds.info/family-mruby-os-freertosbesunomicrorubymarutivmgou-xiang/
+[解説記事](https://blog.silentworlds.info/family-mruby-os-freertosbesunomicrorubymarutivmgou-xiang/)
+
+ドキュメント整備中
+
 

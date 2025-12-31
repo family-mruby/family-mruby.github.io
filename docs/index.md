@@ -1,9 +1,11 @@
 # Family mruby Documentation
 
 <div align="center">
-  <img src="images/topimage.png" alt="FMRuby Logo">
+  <img src="images/topimage.png" width="500" alt="FMRuby Logo">
 </div>
 
 ## About Family mruby
 
-https://blog.silentworlds.info/family-mruby-os-freertosbesunomicrorubymarutivmgou-xiang-2/
+[blog article](https://blog.silentworlds.info/family-mruby-os-freertosbesunomicrorubymarutivmgou-xiang-2/)
+
+Documentation is under construction.
