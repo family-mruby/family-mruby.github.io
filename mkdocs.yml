@@ -1,7 +1,7 @@
 site_name: Family mruby project
 site_description: Family mruby project documentation
 site_author: kishima
-site_url: https://family-mruby.github.io/family-mruby-docs/
+site_url: https://family-mruby.github.io/
 
 theme:
   favicon: assets/favicon.ico
