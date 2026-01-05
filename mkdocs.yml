@@ -44,11 +44,11 @@ plugins:
           build: true
           nav_translations:
             Home: ホーム
-            About: サイトについて
+            Getting_Started: 使い方
 
 nav:
   - Home: index.md
-  - About: about.md
+  - Getting_Started: getting_started.md
 
 markdown_extensions:
   - admonition
