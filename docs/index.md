@@ -12,7 +12,7 @@ Documentation is under construction.
 
 ## Repository
 
-https://github.com/family-mruby
+[https://github.com/family-mruby](https://github.com/family-mruby)
 
 ## Demo Video
 

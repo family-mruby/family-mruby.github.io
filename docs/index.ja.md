@@ -12,7 +12,7 @@
 
 ## リポジトリ
 
-https://github.com/family-mruby
+[https://github.com/family-mruby](https://github.com/family-mruby)
 
 ## デモ動画
 
