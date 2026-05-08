@@ -44,11 +44,59 @@ plugins:
           build: true
           nav_translations:
             Home: ホーム
-            Getting_Started: 使い方
+            Architecture: アーキテクチャ
+            Getting Started: はじめに
+            Power & Connection: 起動と接続
+            Hello World: Hello World
+            BLE File Manager: BLE ファイルマネージャ
+            API Reference: API リファレンス
+            Overview: 一覧
+            FmrbApp: FmrbApp
+            FmrbGfx: FmrbGfx
+            Sprite: Sprite
+            FmrbAudio: FmrbAudio
+            Pub/Sub: Pub/Sub
+            File & I/O: ファイル・I/O
+            Log: ログ
+            Peripherals: 周辺機器
+            Utilities: ユーティリティ
+            Constants & System Info: 定数・システム情報
+            Task & Machine: Task / Machine
+            Guide: ガイド
+            App Config (.toml): アプリ設定ファイル (.toml)
+            Audio File Formats: 音声ファイルフォーマット
+            Image & Icon Files: 画像・アイコンファイル
+            Limitations: 制約事項
+            Examples: サンプル集
+            Hardware: ハードウェア
 
 nav:
   - Home: index.md
-  - Getting_Started: getting_started.md
+  - Architecture: architecture.md
+  - Getting Started:
+      - Power & Connection: getting_started/setup.md
+      - Hello World: getting_started/hello_world.md
+      - BLE File Manager: getting_started/ble_file_manager.md
+  - API Reference:
+      - Overview: api/index.md
+      - FmrbApp: api/fmrb_app.md
+      - FmrbGfx: api/fmrb_gfx.md
+      - Sprite: api/sprite.md
+      - FmrbAudio: api/audio.md
+      - Pub/Sub: api/pubsub.md
+      - File & I/O: api/filesystem.md
+      - Log: api/log.md
+      - Peripherals: api/peripherals.md
+      - Utilities: api/utilities.md
+      - Constants & System Info: api/const.md
+      - Task & Machine: api/system.md
+  - Guide:
+      - App Config (.toml): guide/app_toml.md
+      - Audio File Formats: guide/audio_formats.md
+      - Image & Icon Files: guide/image_formats.md
+      - Limitations: guide/limitations.md
+  - Examples: examples.md
+  - Hardware: hardware.md
 
 markdown_extensions:
   - admonition
