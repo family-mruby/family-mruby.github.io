@@ -32,6 +32,7 @@ File.open("foo.txt", "r")  # 裸パスは /flash/ に自動展開
 | `File.directory?(path)` | ディレクトリか |
 | `File.size(path)` | バイトサイズ |
 | `File.delete(path)` / `File.unlink(path)` | 削除 |
+| `File.rename(old, new)` | リネーム / 移動 |
 | `File.join(*names)` | パス結合 |
 | `File.expand_path(path, default_dir = ".")` | 絶対パスに展開 |
 | `File.basename(path, suffix = "")` | ファイル名抽出 |

@@ -49,6 +49,7 @@ plugins:
             Power & Connection: 起動と接続
             Hello World: Hello World
             BLE File Manager: BLE ファイルマネージャ
+            Default Apps: 標準アプリ
             API Reference: API リファレンス
             Overview: 一覧
             FmrbApp: FmrbApp
@@ -69,6 +70,7 @@ plugins:
             Limitations: 制約事項
             Examples: サンプル集
             Hardware: ハードウェア
+            Verified Peripherals: 動作確認済み機器
 
 nav:
   - Home: index.md
@@ -76,6 +78,7 @@ nav:
       - Power & Connection: getting_started/setup.md
       - Hello World: getting_started/hello_world.md
       - BLE File Manager: getting_started/ble_file_manager.md
+      - Default Apps: getting_started/default_apps.md
   - API Reference:
       - Overview: api/index.md
       - FmrbApp: api/fmrb_app.md
@@ -97,6 +100,7 @@ nav:
   - Examples: examples.md
   - Architecture: architecture.md
   - Hardware: hardware.md
+  - Verified Peripherals: compatibility.md
 
 markdown_extensions:
   - admonition
