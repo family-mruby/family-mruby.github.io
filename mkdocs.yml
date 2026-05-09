@@ -62,7 +62,7 @@ plugins:
             Utilities: ユーティリティ
             Constants & System Info: 定数・システム情報
             Task & Machine: Task / Machine
-            Guide: ガイド
+            File Formats: ファイル形式
             App Config (.toml): アプリ設定ファイル (.toml)
             Audio File Formats: 音声ファイルフォーマット
             Image & Icon Files: 画像・アイコンファイル
@@ -90,11 +90,11 @@ nav:
       - Utilities: api/utilities.md
       - Constants & System Info: api/const.md
       - Task & Machine: api/system.md
-  - Guide:
-      - App Config (.toml): guide/app_toml.md
-      - Audio File Formats: guide/audio_formats.md
-      - Image & Icon Files: guide/image_formats.md
-      - Limitations: guide/limitations.md
+  - File Formats:
+      - App Config (.toml): file_formats/app_toml.md
+      - Audio File Formats: file_formats/audio_formats.md
+      - Image & Icon Files: file_formats/image_formats.md
+  - Limitations: limitations.md
   - Examples: examples.md
   - Hardware: hardware.md
 
