@@ -7,9 +7,10 @@
 ```ruby
 class MyApp < FmrbApp
   def on_create
-    @gfx.clear(FmrbGfx::BLACK)
+    clear_user_area(FmrbGfx::WHITE)
     @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Hello, mruby!", FmrbGfx::WHITE)
+                   "Hello, mruby!", FmrbGfx::BLACK)
+    draw_window_frame
     @gfx.present
   end
 
@@ -121,10 +122,14 @@ when :gamepad_axis
 |---|---|
 | `set_window_position(x, y)` | ウィンドウ位置を変更 |
 | `draw_window_frame` | ウィンドウ枠（タイトルバー + 縁）を描画。基底クラスが管理する `GfxBlock` を再利用 |
+| `clear_user_area(color = FmrbGfx::BLACK)` | アプリ描画可能領域（タイトルバー・枠を除く）を指定色で塗りつぶす |
 | `draw_scrollbar(scroll, total, visible, x=…, y=…, w=…, h=…)` | スクロールバー描画 |
 | `scrollbar_hit(click_x, click_y, x=…, y=…, w=…, h=…)` | スクロールバーのヒット判定 (`:up` / `:down` / `nil`) |
 | `request_file_select(mode = "open")` | システムのファイル選択ダイアログを呼び出し |
 | `request_reload` | スクリプトをリロード（タイトルバー右クリックで自動呼び出しされる） |
+
+!!! tip "`@gfx.clear` の代わりに `clear_user_area`"
+    `@gfx.clear(color)` は **キャンバス全体** を塗りつぶすため、タイトルバーや閉じるボタンも消えます。ウィンドウ枠を保ちたい場合は `clear_user_area(color)` を使ってください。
 
 ## メッセージング
 
@@ -225,11 +230,10 @@ class CounterApp < FmrbApp
   private
 
   def redraw
-    @gfx.fill_rect(@user_area_x0, @user_area_y0,
-                   @user_area_width, @user_area_height,
-                   FmrbGfx::BLACK)
+    clear_user_area(FmrbGfx::WHITE)
     @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Count: #{@count}", FmrbGfx::WHITE)
+                   "Count: #{@count}", FmrbGfx::BLACK)
+    draw_window_frame
     @gfx.present
   end
 end

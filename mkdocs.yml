@@ -72,7 +72,6 @@ plugins:
 
 nav:
   - Home: index.md
-  - Architecture: architecture.md
   - Getting Started:
       - Power & Connection: getting_started/setup.md
       - Hello World: getting_started/hello_world.md
@@ -96,6 +95,7 @@ nav:
       - Image & Icon Files: file_formats/image_formats.md
   - Limitations: limitations.md
   - Examples: examples.md
+  - Architecture: architecture.md
   - Hardware: hardware.md
 
 markdown_extensions:

@@ -85,12 +85,11 @@ class UptimeView < FmrbApp
   private
 
   def redraw
-    @gfx.fill_rect(@user_area_x0, @user_area_y0,
-                   @user_area_width, @user_area_height,
-                   FmrbGfx::BLACK)
+    clear_user_area(FmrbGfx::WHITE)
     @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
                    "Uptime: #{Machine.uptime_formatted}",
-                   FmrbGfx::WHITE)
+                   FmrbGfx::BLACK)
+    draw_window_frame
     @gfx.present
   end
 end

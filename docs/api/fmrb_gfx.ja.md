@@ -69,7 +69,7 @@ FmrbGfx.hsv_to_rgb(120, 255, 255) # → [r, g, b] (各 0..255)
 ```ruby
 @gfx.set_text_size(2)             # 1〜4
 @gfx.draw_text(10, 20, "Hello",
-               FmrbGfx::WHITE)    # bg なし→透過
+               FmrbGfx::BLACK)    # bg なし→透過
 @gfx.draw_text(10, 40, "Hi",
                FmrbGfx::WHITE,
                FmrbGfx::BLUE)     # bg あり→不透明
@@ -119,14 +119,15 @@ CRT モニタでの色調整に使います（[NTSC 出力テスト](../examples
 ```ruby
 class ShapesApp < FmrbApp
   def on_create
-    @gfx.clear(FmrbGfx::BLACK)
+    clear_user_area(FmrbGfx::WHITE)
     x = @user_area_x0 + 5
     y = @user_area_y0 + 5
     @gfx.fill_rect(x, y, 30, 20, FmrbGfx::RED)
     @gfx.fill_circle(x + 60, y + 10, 10, FmrbGfx::GREEN)
-    @gfx.draw_round_rect(x + 90, y, 30, 20, 4, FmrbGfx::CYAN)
+    @gfx.draw_round_rect(x + 90, y, 30, 20, 4, FmrbGfx::BLUE)
     @gfx.draw_text(x, y + 30, "Shapes",
-                   FmrbGfx::WHITE)
+                   FmrbGfx::BLACK)
+    draw_window_frame
     @gfx.present
   end
 

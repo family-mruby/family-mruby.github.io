@@ -89,13 +89,14 @@
 ```ruby
 class SysInfo < FmrbApp
   def on_create
-    @gfx.clear(FmrbGfx::BLACK)
+    clear_user_area(FmrbGfx::WHITE)
     x = @user_area_x0 + 4
     y = @user_area_y0 + 4
-    @gfx.draw_text(x, y,      "OS: #{FmrbConst::OS_VERSION}", FmrbGfx::WHITE)
-    @gfx.draw_text(x, y + 10, "Chip: #{FmrbConst::CHIP_MODEL}", FmrbGfx::WHITE)
-    @gfx.draw_text(x, y + 20, "PSRAM: #{FmrbConst::PSRAM_SIZE_MB}MB", FmrbGfx::WHITE)
-    @gfx.draw_text(x, y + 30, "MAC: #{FmrbConst::MAC_ADDRESS}", FmrbGfx::WHITE)
+    @gfx.draw_text(x, y,      "OS: #{FmrbConst::OS_VERSION}", FmrbGfx::BLACK)
+    @gfx.draw_text(x, y + 10, "Chip: #{FmrbConst::CHIP_MODEL}", FmrbGfx::BLACK)
+    @gfx.draw_text(x, y + 20, "PSRAM: #{FmrbConst::PSRAM_SIZE_MB}MB", FmrbGfx::BLACK)
+    @gfx.draw_text(x, y + 30, "MAC: #{FmrbConst::MAC_ADDRESS}", FmrbGfx::BLACK)
+    draw_window_frame
     @gfx.present
   end
 end

@@ -69,8 +69,10 @@ default_window_pos_y = 30
 # /flash/app/demo/hello.app.rb
 class HelloApp < FmrbApp
   def on_create
+    clear_user_area(FmrbGfx::WHITE)
     @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Hello!", FmrbGfx::WHITE)
+                   "Hello!", FmrbGfx::BLACK)
+    draw_window_frame
     @gfx.present
   end
 
