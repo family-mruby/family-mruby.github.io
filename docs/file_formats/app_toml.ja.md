@@ -177,6 +177,9 @@ icon = "usr/share/icon/myapp.icon"
 
 ランチャーは `/flash/app` 直下のすべてのサブディレクトリを再帰的にスキャンして `.toml` を検出します。
 
+!!! note "スキャンは起動時のみ"
+    アプリ一覧は **システム起動時に 1 回だけ** スキャンされます。`create_app` や BLE で新規アプリを追加した後は、**ランチャーを開いて右クリック** で再スキャン、もしくは本体を再起動してください（[Hello World ▸ ランチャーで反映する](../getting_started/hello_world.md#ランチャーで反映する) 参照）。
+
 ## 関連
 
 - アプリの作り方は [Hello World](../getting_started/hello_world.md) を参照
