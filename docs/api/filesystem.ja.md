@@ -153,4 +153,4 @@ Dir.open(dir_path)
 ## 関連
 
 - 制約事項（特に `binread` 無し、ファイル数上限など）は [制約事項](../limitations.md) を参照
-- BLE で PC からファイルを置く方法は [BLE ファイルマネージャ](../getting_started/ble_file_manager.md) を参照
+- BLE で PC からファイルを置く方法は [コンソール](../getting_started/console.md) を参照

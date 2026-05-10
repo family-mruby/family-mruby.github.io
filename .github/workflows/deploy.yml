@@ -25,8 +25,8 @@ jobs:
         run: |
           pip install mkdocs mkdocs-material mkdocs-static-i18n
 
-      - name: Sync file-manager from fmruby-core
-        run: bash scripts/sync-file-manager.sh
+      - name: Sync console web client from fmruby-core
+        run: bash scripts/sync-console.sh
 
       - name: Build and Deploy to gh-pages
         run: mkdocs gh-deploy --force

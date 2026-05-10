@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-# Sync external HTML asset (file-manager) from fmruby-core (single source of truth)
-bash scripts/sync-file-manager.sh
+# Sync external HTML asset (console web client) from fmruby-core (single source of truth)
+bash scripts/sync-console.sh
 
 # Docker
 docker build -t mkdocs-builder ./docker

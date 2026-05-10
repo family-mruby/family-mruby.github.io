@@ -78,4 +78,4 @@ iOS は OS 制約で Web Serial が使えません。デスクトップから書
 
 - [起動と接続](setup.md) — 書き込み後の動作確認
 - [アーキテクチャ](../architecture.md) — fmruby-core と fmruby-graphics-audio の役割
-- [BLE ファイルマネージャ](ble_file_manager.md) — アプリファイル（`.app.rb` 等）の更新は BLE 経由が便利
+- [コンソール](console.md) — アプリファイル（`.app.rb` 等）の更新は BLE 経由が便利

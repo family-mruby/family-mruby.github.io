@@ -4,7 +4,7 @@ set -euo pipefail
 # Source ref of fmruby-core (override with FMRUBY_CORE_REF env var if needed)
 SRC_REF="${FMRUBY_CORE_REF:-main}"
 SRC_URL="https://raw.githubusercontent.com/family-mruby/fmruby-core/${SRC_REF}/tool/web/index.html"
-DEST="docs/file-manager/index.html"
+DEST="docs/console/index.html"
 
 mkdir -p "$(dirname "$DEST")"
 

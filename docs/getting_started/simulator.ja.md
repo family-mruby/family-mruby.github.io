@@ -84,6 +84,6 @@ docker compose up
 ## 関連
 
 - [起動と接続](setup.md) — 実機の使い方
-- [BLE ファイルマネージャ](ble_file_manager.md) — シミュレータでは使えません（実機専用）
+- [コンソール](console.md) — シミュレータでは使えません（実機専用）
 - [ファームウェア更新](firmware_update.md) — シミュレータには不要
 - [ハードウェア](../hardware.md) — narya-board の仕様

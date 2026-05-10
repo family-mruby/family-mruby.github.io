@@ -17,5 +17,5 @@ venv/
 *.swo
 *~
 
-# Generated at build time by scripts/sync-file-manager.sh
-/docs/file-manager/index.html
+# Generated at build time by scripts/sync-console.sh
+/docs/console/index.html
