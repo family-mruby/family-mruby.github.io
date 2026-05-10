@@ -14,6 +14,14 @@ Documentation is under construction.
 
 [https://github.com/family-mruby](https://github.com/family-mruby)
 
+## Firmware Installer
+
+A browser-based firmware installer is available (Chrome / Edge / Opera).
+
+[https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
+
+See [Getting Started ▸ Firmware Update](getting_started/firmware_update.md) for details.
+
 ## Demo Video
 
 <div align="center">

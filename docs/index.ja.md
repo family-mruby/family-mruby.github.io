@@ -14,6 +14,14 @@
 
 [https://github.com/family-mruby](https://github.com/family-mruby)
 
+## ファームウェア更新
+
+ブラウザだけでファームウェアを書き込める Web インストーラがあります（Chrome / Edge / Opera 対応）。
+
+[https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
+
+詳細は [はじめに ▸ ファームウェア更新](getting_started/firmware_update.md) を参照。
+
 ## デモ動画
 
 <div align="center">
