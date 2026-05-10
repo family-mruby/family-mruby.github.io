@@ -22,6 +22,18 @@ A browser-based firmware installer is available (Chrome / Edge / Opera).
 
 See [Getting Started ▸ Firmware Update](getting_started/firmware_update.md) for details.
 
+## Try without hardware
+
+Run Family mruby OS in your browser via Docker + VNC.
+
+```bash
+docker run --rm -p 6080:6080 ghcr.io/family-mruby/fmruby-desktop:latest
+```
+
+Then open [http://localhost:6080/vnc.html](http://localhost:6080/vnc.html).
+
+See [Getting Started ▸ Simulator](getting_started/simulator.md) for details.
+
 ## Demo Video
 
 <div align="center">

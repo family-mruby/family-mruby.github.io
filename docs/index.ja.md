@@ -22,6 +22,18 @@
 
 詳細は [はじめに ▸ ファームウェア更新](getting_started/firmware_update.md) を参照。
 
+## 実機なしで試す
+
+Docker と Web ブラウザだけで Family mruby OS を体験できます。
+
+```bash
+docker run --rm -p 6080:6080 ghcr.io/family-mruby/fmruby-desktop:latest
+```
+
+→ ブラウザで [http://localhost:6080/vnc.html](http://localhost:6080/vnc.html)
+
+詳細は [はじめに ▸ シミュレータ](getting_started/simulator.md) を参照。
+
 ## デモ動画
 
 <div align="center">

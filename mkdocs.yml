@@ -48,6 +48,7 @@ plugins:
             Getting Started: はじめに
             Power & Connection: 起動と接続
             Hello World: Hello World
+            Simulator: シミュレータ
             BLE File Manager: BLE ファイルマネージャ
             Default Apps: 標準アプリ
             Firmware Update: ファームウェア更新
@@ -77,6 +78,7 @@ nav:
   - Home: index.md
   - Getting Started:
       - Power & Connection: getting_started/setup.md
+      - Simulator: getting_started/simulator.md
       - Hello World: getting_started/hello_world.md
       - BLE File Manager: getting_started/ble_file_manager.md
       - Default Apps: getting_started/default_apps.md
@@ -98,11 +100,11 @@ nav:
       - App Config (.toml): file_formats/app_toml.md
       - Audio File Formats: file_formats/audio_formats.md
       - Image & Icon Files: file_formats/image_formats.md
-  - Limitations: limitations.md
   - Examples: examples.md
   - Architecture: architecture.md
   - Hardware: hardware.md
   - Verified Peripherals: compatibility.md
+  - Limitations: limitations.md
 
 markdown_extensions:
   - admonition
