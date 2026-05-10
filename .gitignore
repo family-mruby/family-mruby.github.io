@@ -16,3 +16,6 @@ venv/
 *.swp
 *.swo
 *~
+
+# Generated at build time by scripts/sync-file-manager.sh
+/docs/file-manager/index.html
