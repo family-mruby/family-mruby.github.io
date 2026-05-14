@@ -14,6 +14,8 @@
 |---|---|---|
 | `mruby.app.rb` | mruby の動作確認・最小サンプル | `FmrbApp`, `FmrbGfx` 基本 |
 | `shapes.app.rb` | 図形描画の総合デモ（矩形・円・楕円・三角形・円弧・テキスト） | [`FmrbGfx`](api/fmrb_gfx.md) |
+| `ja_text.app.rb` | 日本語テキスト描画。Default / misaki_8 / efontJA_12 / Mixed / Hybrid / Scaled を切替 | [`FmrbGfx#set_font`](api/fmrb_gfx.md#日本語テキストフォント切替) |
+| `p5_test.app.rb` | Processing/p5.js 風描画ライブラリのデモ（基本図形 / アフィン変換 / ベジエ / テキスト / blend / get_pixel） | [P5](api/p5.md) |
 | `i2c_kbd.app.rb` | I2C キーボード（アドレス `0x5F`）からの入力読み取り | [`I2C`](api/peripherals.md#i2c) + [Pub/Sub](api/pubsub.md) |
 | `led_matrix.app.rb` | WS2812B 8x8 RGB LED 行列の制御 + 画面プレビュー | [`RMT`](api/peripherals.md#rmt), Pub/Sub |
 | `pub_demo.app.rb` + `sub_demo.app.rb` | アプリ間 Pub/Sub の最小ペア | [Pub/Sub](api/pubsub.md) |

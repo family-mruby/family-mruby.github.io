@@ -11,6 +11,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `FmrbApp` | アプリ基底クラス。ライフサイクル、ウィンドウ、メッセージング | [FmrbApp](fmrb_app.md) |
 | `FmrbGfx` | 図形・テキスト描画（`@gfx`） | [FmrbGfx](fmrb_gfx.md) |
 | `SpriteImage` / `SpriteInstance` / `GfxBlock` | スプライト・タイルマップ | [Sprite](sprite.md) |
+| `P5` | Processing/p5.js 風の描画 DSL（`require "p5"`） | [P5](p5.md) |
 | `FmrbAudio` | BGM・効果音・音声合成（`@audio`） | [FmrbAudio](audio.md) |
 | Pub/Sub (`subscribe` / `publish`) | アプリ間メッセージング | [Pub/Sub](pubsub.md) |
 

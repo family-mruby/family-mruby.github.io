@@ -78,7 +78,71 @@ FmrbGfx.hsv_to_rgb(120, 255, 255) # → [r, g, b] (各 0..255)
 | メソッド | 用途 |
 |---|---|
 | `set_text_size(size)` | テキストサイズ。`1`〜`4` |
-| `draw_text(x, y, text, color [, bg_color])` | 第5引数を省略すると背景透過 |
+| `draw_text(x, y, text, color [, bg_color], mixed: false)` | テキスト描画。`mixed: true` で ASCII/日本語ハイブリッド |
+| `set_font(family, size = nil)` | フォント切替（後述） |
+| `current_font` / `current_text_size` | 現在のフォント / サイズ（読み取り専用） |
+
+## 日本語テキスト・フォント切替
+
+`set_font(family, size)` で日本語フォントに切り替えると、UTF-8 文字列をそのまま描画できます。
+
+```ruby
+# 既定の ASCII フォント（Font0、6x8）
+@gfx.set_font(:default)
+@gfx.draw_text(10, 20, "Hello", FmrbGfx::BLACK)
+
+# 日本語 8px（misaki_8、システム UI と揃う小さめ）
+@gfx.set_font(:ja, 8)
+@gfx.draw_text(10, 40, "こんにちは", FmrbGfx::BLACK)
+
+# 日本語 12px（efontJA_12、読みやすい大きめ）
+@gfx.set_font(:ja, 12)
+@gfx.draw_text(10, 60, "ファミリーmruby", FmrbGfx::BLACK)
+```
+
+### 対応フォント
+
+| `family` | `size` | 内容 |
+|---|---|---|
+| `:default` | （指定不可） | Font0 6x8 ASCII。起動時の既定 |
+| `:ja` | `8` | **misaki_8** 8x8、システム UI と同サイズ |
+| `:ja` | `12` | **efontJA_12** 12x12、読みやすい |
+
+### ハイブリッド描画 (`mixed: true`)
+
+ASCII と日本語が混ざった文字列を 1 回の `draw_text` で描けます。ASCII 部分は Font0 (6x8)、UTF-8 マルチバイト部分は misaki_8 (8x8) でレンダリングされます。
+
+```ruby
+@gfx.draw_text(10, 20, "puts 'こんにちは'",
+               FmrbGfx::BLACK, mixed: true)
+```
+
+コード例や英日混在の UI 文字列に便利です。
+
+!!! tip "`draw_window_frame` はフォントを保存・復元"
+    `FmrbApp#draw_window_frame` はタイトルバーを必ず既定の 6x8 で描いてから **呼び出し前のフォント設定を復元** します。アプリ側で毎フレーム `set_font` を再指定する必要はありません。
+
+!!! note "JA フォントの読み込みコスト"
+    `set_font(:ja, ...)` 初回は WROVER 側でフォントデータを準備するため数十 ms 程度かかります。`on_create` 内で一度だけ呼ぶのが理想です。
+
+### サンプル（日本語）
+
+```ruby
+class HelloJaApp < FmrbApp
+  def on_create
+    clear_user_area(FmrbGfx::WHITE)
+    @gfx.set_font(:ja, 12)
+    @gfx.draw_text(@user_area_x0 + 8, @user_area_y0 + 8,
+                   "こんにちは、Family mruby!", FmrbGfx::BLACK)
+    draw_window_frame
+    @gfx.present
+  end
+end
+
+HelloJaApp.new.start
+```
+
+`flash/app/demo/ja_text.app.rb` に各モード（default / 8px / 12px / Mixed / Hybrid / Scaled）を切り替えるサンプルがあります。
 
 ## 画像 API
 

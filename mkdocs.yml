@@ -57,6 +57,7 @@ plugins:
             FmrbApp: FmrbApp
             FmrbGfx: FmrbGfx
             Sprite: Sprite
+            P5: P5
             FmrbAudio: FmrbAudio
             Pub/Sub: Pub/Sub
             File & I/O: ファイル・I/O
@@ -88,6 +89,7 @@ nav:
       - FmrbApp: api/fmrb_app.md
       - FmrbGfx: api/fmrb_gfx.md
       - Sprite: api/sprite.md
+      - P5: api/p5.md
       - FmrbAudio: api/audio.md
       - Pub/Sub: api/pubsub.md
       - File & I/O: api/filesystem.md

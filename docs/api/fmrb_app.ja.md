@@ -91,6 +91,9 @@ ev_alt?(ev)    # Alt が押されている
 !!! note
     文字キーを判定するときは **`scancode` を使ってください**。`keycode` はプラットフォーム間で値が変わります（SDL2 はアスキーを返す等）。
 
+!!! tip "`FmrbConst::KEY_*` / `MOD_*` 定数"
+    `scancode` の値は USB HID Usage ID なので、生の `0x29` （ESC）等を書く代わりに **`FmrbConst::KEY_ESC`** などの定数が使えます。修飾キーも `FmrbConst::MOD_CTRL` などのマスク定数があります。一覧は [定数 ▸ KEY_* / MOD_*](const.md#入力デバイス-キーボード-key_) を参照。
+
 ### マウス
 
 ```ruby
@@ -115,6 +118,9 @@ when :gamepad_axis
   ev[:axis]        # 0..5
   ev[:value]       # 軸値
 ```
+
+!!! tip "`FmrbConst::GP_*` 定数"
+    ボタン番号には `FmrbConst::GP_SQUARE` / `GP_CROSS` / `GP_START` 等、軸番号には `GP_AXIS_LX` / `GP_AXIS_LY` などの定数があります。詳細は [定数 ▸ GP_*](const.md#入力デバイス-ゲームパッド-gp_) を参照。
 
 ## ウィンドウ操作
 

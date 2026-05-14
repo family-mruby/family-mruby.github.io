@@ -78,6 +78,104 @@
 
 これらはすべて RGB332 値です。アプリの UI を OS の配色に合わせたい場合に使います。
 
+### 入力デバイス: キーボード (`KEY_*`)
+
+USB HID Usage ID。`on_event(ev)` の `ev[:scancode]` と比較します。
+
+| カテゴリ | 定数 |
+|---|---|
+| 英字 | `KEY_A` .. `KEY_Z` |
+| 数字 | `KEY_1` .. `KEY_9`, `KEY_0` |
+| 制御 | `KEY_ENTER`, `KEY_ESC`, `KEY_BACKSPACE`, `KEY_TAB`, `KEY_SPACE` |
+| 記号 | `KEY_MINUS`, `KEY_EQUAL`, `KEY_LBRACKET`, `KEY_RBRACKET`, `KEY_BACKSLASH`, `KEY_SEMICOLON`, `KEY_QUOTE`, `KEY_GRAVE`, `KEY_COMMA`, `KEY_PERIOD`, `KEY_SLASH` |
+| ロック | `KEY_CAPSLOCK`, `KEY_SCROLLLOCK`, `KEY_NUMLOCK` |
+| ファンクション | `KEY_F1` .. `KEY_F12` |
+| 編集 | `KEY_INSERT`, `KEY_HOME`, `KEY_PGUP`, `KEY_DELETE`, `KEY_END`, `KEY_PGDN` |
+| 矢印 | `KEY_LEFT`, `KEY_RIGHT`, `KEY_UP`, `KEY_DOWN` |
+| その他 | `KEY_PRINTSCREEN`, `KEY_PAUSE` |
+| 修飾キー（個別） | `KEY_LCTRL`, `KEY_LSHIFT`, `KEY_LALT`, `KEY_LGUI`, `KEY_RCTRL`, `KEY_RSHIFT`, `KEY_RALT`, `KEY_RGUI` |
+
+### 入力デバイス: 修飾キーマスク (`MOD_*`)
+
+`on_event(ev)` の `ev[:modifier]` と AND を取って判定します。
+
+| 定数 | ビット | 意味 |
+|---|---|---|
+| `MOD_LCTRL` | 0x01 | 左 Ctrl |
+| `MOD_LSHIFT` | 0x02 | 左 Shift |
+| `MOD_LALT` | 0x04 | 左 Alt |
+| `MOD_LGUI` | 0x08 | 左 GUI (Win / Cmd) |
+| `MOD_RCTRL` | 0x10 | 右 Ctrl |
+| `MOD_RSHIFT` | 0x20 | 右 Shift |
+| `MOD_RALT` | 0x40 | 右 Alt |
+| `MOD_RGUI` | 0x80 | 右 GUI |
+| `MOD_CTRL` | 0x11 | 左右 Ctrl 合成 (`MOD_LCTRL | MOD_RCTRL`) |
+| `MOD_SHIFT` | 0x22 | 左右 Shift 合成 |
+| `MOD_ALT` | 0x44 | 左右 Alt 合成 |
+| `MOD_GUI` | 0x88 | 左右 GUI 合成 |
+
+!!! tip "`ev_ctrl?(ev)` / `ev_shift?(ev)` / `ev_alt?(ev)`"
+    `FmrbApp` のヘルパでも判定できます。MOD_* を直接使うのは特殊なケースだけで、通常はこちらを使ってください。
+
+### 入力デバイス: ゲームパッド (`GP_*`)
+
+`on_event(ev)` で `ev[:type] == :gamepad_down` / `:gamepad_up` のとき `ev[:button]` がボタン番号、`:gamepad_axis` のとき `ev[:axis]` が軸番号です。
+
+#### ボタン
+
+| 定数 | 値 | 意味 |
+|---|---|---|
+| `GP_SQUARE` | 0 | □ |
+| `GP_CROSS` | 1 | × |
+| `GP_CIRCLE` | 2 | ○ |
+| `GP_TRIANGLE` | 3 | △ |
+| `GP_L1` | 4 | 左ショルダー |
+| `GP_R1` | 5 | 右ショルダー |
+| `GP_L2` | 6 | 左トリガー |
+| `GP_R2` | 7 | 右トリガー |
+| `GP_SELECT` | 8 | Select |
+| `GP_START` | 9 | Start |
+| `GP_L3` | 10 | 左スティック押し込み |
+| `GP_R3` | 11 | 右スティック押し込み |
+| `GP_UP` | 12 | 十字キー上 |
+| `GP_DOWN` | 13 | 十字キー下 |
+| `GP_LEFT` | 14 | 十字キー左 |
+| `GP_RIGHT` | 15 | 十字キー右 |
+
+#### 軸
+
+| 定数 | 値 | 意味 |
+|---|---|---|
+| `GP_AXIS_LX` | 0 | 左スティック X |
+| `GP_AXIS_LY` | 1 | 左スティック Y |
+| `GP_AXIS_RX` | 2 | 右スティック X |
+| `GP_AXIS_RY` | 3 | 右スティック Y |
+
+### サンプル: キー判定
+
+```ruby
+def on_event(ev)
+  super
+  if ev[:type] == :key_down
+    case ev[:scancode]
+    when FmrbConst::KEY_LEFT  then @x -= 4
+    when FmrbConst::KEY_RIGHT then @x += 4
+    when FmrbConst::KEY_SPACE then shoot
+    when FmrbConst::KEY_ESC   then stop
+    end
+    if (ev[:modifier] || 0) & FmrbConst::MOD_CTRL != 0 &&
+       ev[:scancode] == FmrbConst::KEY_S
+      save_state
+    end
+  elsif ev[:type] == :gamepad_down
+    case ev[:button]
+    when FmrbConst::GP_CROSS  then jump
+    when FmrbConst::GP_START  then pause
+    end
+  end
+end
+```
+
 ### その他
 
 | 定数 | 内容 |
