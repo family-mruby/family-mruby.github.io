@@ -176,14 +176,9 @@ when :gamepad_axis
 !!! tip "ウィンドウ枠を侵さない描画"
     タイトルバーがあるウィンドウモードでは、絶対に `@user_area_*` の範囲内で描画してください。`@user_area_x0`, `@user_area_y0` から始めて、幅 `@user_area_width`、高さ `@user_area_height` 内で完結させます。
 
-## 仮想パスと OS パスの変換
+## ファイル・ディレクトリのパス
 
-| メソッド | 用途 |
-|---|---|
-| `to_file_path(virtual_path)` | `"/home/x.nsf"` → `"home/x.nsf"`（`File.open` 用） |
-| `to_os_dir_path(virtual_path)` | `"/home"` → ESP32: `"/flash/home"`、Linux: `"flash/home"` |
-
-ファイル選択ダイアログから受け取った仮想パスを、`File.open` / `Dir.open` で開けるパスに変換します。
+`File.open` / `Dir.open` にはルート相対のパス（`/data/foo.txt` など）や SD カードの `/mnt/sd/...` をそのまま渡します。詳細は [ファイル・I/O ▸ ファイル名前空間](filesystem.md#ファイル名前空間) を参照。
 
 ## クラスメソッド
 

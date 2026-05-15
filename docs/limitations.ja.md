@@ -41,10 +41,10 @@ picoruby には `File.binread` や `File.read(path)` のショートカットが
 
 ```ruby
 # NG (例外)
-data = File.binread("/flash/img.bmp")
+data = File.binread("/img.bmp")
 
 # OK
-data = File.open("/flash/img.bmp", "r") { |f| f.read }
+data = File.open("/img.bmp", "r") { |f| f.read }
 ```
 
 ### 配列要素を含む並列代入
@@ -113,14 +113,12 @@ end
 | ファイル名 | ASCII 推奨。日本語や記号は避ける |
 | `Dir#seek` / `Dir#tell` | **未対応**（`ENOSYS`）。`rewind` してから数え直す |
 
-## mruby_tick の挙動
+## mruby tick
 
-`mruby_tick_task` は RubyKaigi 期間中の安定化のため一時的に **無効化** されています。代わりに、`_spin` ループ内での補完が唯一のタスクドライバです。
-
-これにより:
+`mruby_tick_task` は無効化されており、Ruby タスクは `_spin` ループ内でのみ進行します。
 
 - `on_update` が呼ばれる頻度は `_spin(timeout_ms)` の引数に依存
-- 独立タスク（`Thread` 相当）から Ruby コードを書こうとすると、上記の `sleep_ms` 問題が顕在化
+- 独立タスク（`Thread` 相当）から Ruby コードを動かすと、上記の `sleep_ms` 問題が顕在化
 
 通常の「`FmrbApp` を継承して `on_update` を書く」という使い方をする限り問題はありません。
 

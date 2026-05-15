@@ -57,7 +57,6 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `request_file_select(mode)` | ファイル選択ダイアログ |
 | `request_reload` | アプリ再読み込み |
 | `ev_ctrl?(ev)` / `ev_shift?(ev)` / `ev_alt?(ev)` | 修飾キー判定 |
-| `to_file_path(p)` / `to_os_dir_path(p)` | 仮想パス→OS パス変換 |
 
 ### `FmrbGfx` (描画)
 

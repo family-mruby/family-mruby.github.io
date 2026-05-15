@@ -23,12 +23,12 @@
 config = {"score" => 100, "name" => "Player1", "options" => [1, 2, 3]}
 
 # 保存
-File.open("/flash/save.dat", "w") do |f|
+File.open("/save.dat", "w") do |f|
   f.write(MessagePack.pack(config))
 end
 
 # 読み戻し
-data = File.open("/flash/save.dat", "r") { |f| f.read }
+data = File.open("/save.dat", "r") { |f| f.read }
 restored = MessagePack.unpack(data)
 Log.info("score = #{restored["score"]}")
 ```
@@ -59,7 +59,7 @@ RGB332 形式の BMP 画像データをパースします。
 ### サンプル
 
 ```ruby
-data = File.open("/flash/img.bmp", "r") { |f| f.read }
+data = File.open("/img.bmp", "r") { |f| f.read }
 bmp = BMP332.parse(data)
 Log.info("size: #{bmp[:width]}x#{bmp[:height]}")
 

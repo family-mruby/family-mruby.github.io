@@ -58,7 +58,7 @@ img.draw do |g|
 end
 # あるいは BMP から読み込み
 img2 = SpriteImage.new(@gfx, width: 16, height: 16)
-img2.load_bmp("/flash/usr/share/sprite/player.bmp")
+img2.load_bmp("/usr/share/sprite/player.bmp")
 ```
 
 ## SpriteInstance

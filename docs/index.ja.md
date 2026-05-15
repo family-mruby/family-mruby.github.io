@@ -8,8 +8,6 @@
 
 [解説記事](https://blog.silentworlds.info/family-mruby-os-freertosbesunomicrorubymarutivmgou-xiang/)
 
-ドキュメント整備中
-
 ## リポジトリ
 
 [https://github.com/family-mruby](https://github.com/family-mruby)

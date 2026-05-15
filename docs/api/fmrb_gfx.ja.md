@@ -148,10 +148,10 @@ HelloJaApp.new.start
 
 ```ruby
 # ファイル転送（PC → flash）
-@gfx.transfer_file("local.bmp", "/flash/img.bmp")
+@gfx.transfer_file("local.bmp", "/img.bmp")
 
 # 画像のロードと描画
-img = @gfx.create_image_from_file("/flash/img.bmp")
+img = @gfx.create_image_from_file("/img.bmp")
 @gfx.draw_image(img[:id], 10, 20)               # 等倍
 @gfx.draw_image(img[:id], 10, 20, scale_x: 2.0,
                 scale_y: 2.0)                   # 2倍

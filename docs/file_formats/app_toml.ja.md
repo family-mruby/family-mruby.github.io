@@ -16,7 +16,7 @@ my_clock.app.rb
 my_clock.app.toml
 ```
 
-ペアで `/flash/app/<category>/` 以下に置きます（`category` は任意のサブディレクトリ。`demo`, `game`, `tool` 等が標準）。
+ペアで `/app/<category>/` 以下に置きます（`category` は任意のサブディレクトリ。`demo`, `game`, `tool` 等が標準）。
 
 | 言語 | 拡張子 |
 |---|---|
@@ -66,7 +66,7 @@ default_window_pos_y = 30
 対応する Ruby ファイル:
 
 ```ruby
-# /flash/app/demo/hello.app.rb
+# /app/demo/hello.app.rb
 class HelloApp < FmrbApp
   def on_create
     clear_user_area(FmrbGfx::WHITE)
@@ -112,7 +112,7 @@ large_memory = 1
 icon = "usr/share/icon/tetris.icon"
 ```
 
-- ファイルは `/flash/usr/share/icon/` 以下に置きます
+- ファイルは `/usr/share/icon/` 以下に置きます
 - 形式は **テキスト形式**。詳細は [画像・アイコンファイル](image_formats.md#アイコンファイル) を参照
 - `icon` を省略すると、本体ファイルの拡張子に応じた既定アイコンが使われます (`.rb` → ruby、`.lua` → lua、`.bas` → basic)
 
@@ -166,7 +166,7 @@ icon = "usr/share/icon/myapp.icon"
 ## アプリの配置先
 
 ```
-/flash/app/
+/app/
 ├── demo/      # サンプル・デモ
 ├── game/      # ゲーム
 ├── tool/      # ツール
@@ -175,7 +175,7 @@ icon = "usr/share/icon/myapp.icon"
     └── myapp.app.toml
 ```
 
-ランチャーは `/flash/app` 直下のすべてのサブディレクトリを再帰的にスキャンして `.toml` を検出します。
+ランチャーは `/app` 直下のすべてのサブディレクトリを再帰的にスキャンして `.toml` を検出します。
 
 !!! note "スキャンは起動時のみ"
     アプリ一覧は **システム起動時に 1 回だけ** スキャンされます。`create_app` や BLE で新規アプリを追加した後は、**ランチャーを開いて右クリック** で再スキャン、もしくは本体を再起動してください（[Hello World ▸ ランチャーで反映する](../getting_started/hello_world.md#ランチャーで反映する) 参照）。

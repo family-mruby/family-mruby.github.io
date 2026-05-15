@@ -2,22 +2,29 @@
 
 ファイル・ディレクトリ操作 API です。`File` / `Dir` / `IO` クラスを提供します。
 
-## マウントポイント
+## ファイル名前空間
 
-| パス prefix | デバイス | 用途 |
+ユーザーから見えるパスは Unix 風の単一名前空間です。アプリは `/data/...` のようなルート相対のパス、SD カードへは `/mnt/sd/...` を `File.open` / `Dir.open` に渡せます。HAL が ESP32 / Linux 両方の実際のマウントに解決します。
+
+| パス | デバイス | 用途 |
 |---|---|---|
-| `/flash/...` | 内蔵 LittleFS | システムファイル、ユーザーアプリ、永続データ |
-| `/sd/...` | SD カード（FAT32） | 大容量データ、音楽、画像 |
-| `/...`（裸） | 内蔵 LittleFS にプレフィックス自動付与 | レガシー扱い |
+| `/...`（`/app`, `/data`, `/usr` 等） | 内蔵 LittleFS（16MB） | システムファイル、ユーザーアプリ、永続データ |
+| `/mnt/sd/...` | SD カード（FAT32） | 大容量データ、音楽、画像 |
 
 ```ruby
-# どちらの書き方でも同じ場所
-File.open("/flash/foo.txt", "r")
-File.open("foo.txt", "r")  # 裸パスは /flash/ に自動展開
+# 内蔵 flash 上のファイル
+File.open("/data/log.txt", "r") { |f| f.read }
+
+# SD カード上のファイル
+File.open("/mnt/sd/song.nsf", "r") { |f| f.read }
+
+# `/mnt` を開くとマウント点が列挙される（仮想ディレクトリ）
+Dir.open("/mnt")     # → ["sd"]
+Dir.open("/mnt/sd")  # → SD カードの中身
 ```
 
-!!! note "Linux ターゲット"
-    `@platform == :linux`（Docker 開発環境）では `flash/` という相対ディレクトリにマップされます。`@app.to_os_dir_path("/")` などで適切に変換できます。
+!!! note "内部マウント点の名称（参考）"
+    HAL 内部では内蔵 flash を `/flash`、SD カードを `/sd` というマウント名で扱っており、`/flash/foo` や `/sd/foo` といった表記もエイリアスとして受け付けます。アプリコードでは混乱を避けるため、上記のルート相対 / `/mnt/sd` を使ってください。
 
 ## File クラス
 
@@ -53,20 +60,20 @@ File.open("foo.txt", "r")  # 裸パスは /flash/ に自動展開
 
 ```ruby
 # 読み込み
-text = File.open("/flash/data/log.txt", "r") { |f| f.read }
+text = File.open("/data/log.txt", "r") { |f| f.read }
 
 # 書き込み
-File.open("/flash/data/score.txt", "w") do |f|
+File.open("/data/score.txt", "w") do |f|
   f.write("score=#{@score}\n")
 end
 
 # 存在確認
-if File.exist?("/flash/usr/share/icon/ruby.icon")
+if File.exist?("/usr/share/icon/ruby.icon")
   Log.info("icon found")
 end
 
 # 削除
-File.delete("/flash/tmp/old.dat") if File.exist?("/flash/tmp/old.dat")
+File.delete("/tmp/old.dat") if File.exist?("/tmp/old.dat")
 ```
 
 !!! warning "`File.binread` は無い"
@@ -102,7 +109,7 @@ rescue => e
   []
 end
 
-list_files("/flash/usr/share/music")
+list_files("/usr/share/music")
 ```
 
 !!! note
@@ -136,19 +143,15 @@ rescue => e
 end
 ```
 
-## 仮想パスとの変換
+## 仮想パスはそのまま渡す
 
-ファイル選択ダイアログ等から仮想パス（`"/home/x.nsf"` のような形式）を受け取る場合は、`FmrbApp` のヘルパで OS パスに変換します。
+ファイル選択ダイアログや BLE で受け取った仮想パスは、そのまま `File.open` / `Dir.open` に渡します。
 
 ```ruby
-real_path = to_file_path("/home/x.nsf")          # "home/x.nsf"
-File.open(real_path, "r") { |f| f.read }
-
-dir_path = to_os_dir_path("/home")               # ESP32: "/flash/home", Linux: "flash/home"
-Dir.open(dir_path)
+File.open("/mnt/sd/song.nsf", "r") { |f| f.read }    # SD カード
+File.open("/data/save.dat", "r")                     # 内蔵フラッシュ
+Dir.open("/mnt/sd")                                  # SD のルート
 ```
-
-詳細は [FmrbApp](fmrb_app.md#仮想パスと-os-パスの変換) を参照。
 
 ## 関連
 

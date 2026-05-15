@@ -11,7 +11,7 @@ narya-board の各端子・ピン配置の仕様をまとめます。
 |---|---|
 | メイン MCU (fmrb-core) | ESP32-S3-WROOM-1-N16R8（16MB Flash + 8MB PSRAM） |
 | サブ MCU (fmrb-graphics-audio) | ESP32-WROVER-E/IE（PSRAM 搭載） |
-| MCU 間通信 | UART1（921600 bps、CTS/RTS フロー制御）<br>※ 旧版は SPI、現行は UART に移行 |
+| MCU 間通信 | UART1（921600 bps、CTS/RTS フロー制御） |
 | 映像出力 | NTSC コンポジット (LovyanGFX CVBS 実装) |
 | 音声出力 | I2S DAC（NES APU エミュレータ） |
 | ストレージ | 内蔵 LittleFS (16MB) + SD カード (FAT32, SPI 接続) |
@@ -62,10 +62,10 @@ USB Hub 経由で複数デバイスを同時接続できます。安価なマウ
 
 | デバイス | パス prefix | 容量 |
 |---|---|---|
-| 内蔵 LittleFS | `/flash/...` | 16MB |
-| SD カード | `/sd/...` | カード次第（FAT32 推奨） |
+| 内蔵 LittleFS | ルート相対（例 `/data/foo.txt`） | 16MB |
+| SD カード | `/mnt/sd/...` | カード次第（FAT32 推奨） |
 
-ファイルシステム API は [ファイル・I/O](api/filesystem.md) を参照。
+`/mnt` を `Dir.open` するとマウント点 `sd` が見える仮想ディレクトリになっているので、`ls /mnt/sd` のような Unix 風の歩き方ができます。ファイルシステム API は [ファイル・I/O](api/filesystem.md) を参照。
 
 ## ボタン
 
@@ -110,7 +110,7 @@ USB Hub 経由で複数デバイスを同時接続できます。安価なマウ
 | 0 | UART リフラッシュ用ストラッピングピン |
 | 3 | JTAG プルダウン |
 | 5 | WROVER リセット |
-| 9〜13 | WROVER との通信 (UART1 / 旧 SPI) |
+| 9〜13 | WROVER との通信 (UART1) |
 | 15〜18 | SD カード SPI3 |
 | 19, 20 | USB D-, D+ |
 | 35, 36, 37 | PSRAM |

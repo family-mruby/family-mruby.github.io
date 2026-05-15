@@ -103,7 +103,7 @@ Shell> edit /app/usr/my_app.app.rb     # Editor 起動
 
 ## File Manager
 
-`/flash/` や `/sd/` 配下のファイルをツリー表示で閲覧・操作。コンソール (BLE 経由) は PC からの操作ですが、こちらは本体から操作するものです。
+`/` や `/mnt/sd/` 配下のファイルをツリー表示で閲覧・操作。コンソール (BLE 経由) は PC からの操作ですが、こちらは本体から操作するものです。
 
 ## Log Viewer
 

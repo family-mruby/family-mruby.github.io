@@ -14,7 +14,7 @@ hello.app.rb       # アプリ本体（Ruby）
 hello.app.toml     # 設定ファイル
 ```
 
-両方を `/flash/app/<好きなディレクトリ>/` 以下に置き、ランチャーで再スキャン（[後述](#ランチャーで反映する)）または再起動するとアイコンが表示されます。
+両方を `/app/<好きなディレクトリ>/` 以下に置き、ランチャーで再スキャン（[後述](#ランチャーで反映する)）または再起動するとアイコンが表示されます。
 
 ## Step 1: 文字を表示するだけの最小アプリ
 
@@ -130,14 +130,14 @@ HelloApp.new.start
 
 ## ファイルを基板に送る
 
-PC で書いた `hello.app.rb` と `hello.app.toml` を基板の `/flash/app/myapps/` 以下に転送します。
+PC で書いた `hello.app.rb` と `hello.app.toml` を基板の `/app/myapps/` 以下に転送します。
 
 転送方法は **コンソール** (BLE 経由の Web ツール) が標準です。詳細は [コンソール](console.md) を参照。
 
 転送後の配置イメージ:
 
 ```
-/flash/app/
+/app/
 ├── demo/
 ├── game/
 ├── tool/
@@ -185,8 +185,8 @@ Tip: edit it with `edit /app/usr/my_clock.app.rb`
 
 これだけで:
 
-- `/flash/app/usr/my_clock.app.rb` — Step 2 ベース（`clear_user_area` + `draw_window_frame` 入り、全 `on_*` ライフサイクルメソッドのひな型あり）
-- `/flash/app/usr/my_clock.app.toml` — 標準サイズのウィンドウ設定
+- `/app/usr/my_clock.app.rb` — Step 2 ベース（`clear_user_area` + `draw_window_frame` 入り、全 `on_*` ライフサイクルメソッドのひな型あり）
+- `/app/usr/my_clock.app.toml` — 標準サイズのウィンドウ設定
 
 の 2 ファイルが作られます。次節「ランチャーで反映する」で見えるようになります。
 
@@ -197,14 +197,14 @@ Tip: edit it with `edit /app/usr/my_clock.app.rb`
 1. ランチャーを開く（メニューバーの `Family mruby` → `Launcher`）
 2. ランチャーウィンドウ内で **右クリック**
 3. タイトルバーが一瞬 **「Rescanning...」** に変わる（=要求受付の合図）
-4. **1〜2 秒待つ**（裏で `/flash/app/` 配下を再スキャン中）
+4. **1〜2 秒待つ**（裏で `/app/` 配下を再スキャン中）
 5. タイトルが「Launcher」に戻り、新アプリのアイコンが追加されている
 
 !!! tip "再起動でも反映される"
     右クリック再スキャンを使わず、本体を再起動すれば（USB を抜き差し）、起動時のスキャンで自動的にランチャーに乗ります。手早く済ませたいときは右クリックの方が便利です。
 
 !!! note "アイコン画像はキャッシュ済み"
-    既存のアイコン (`ruby.icon` / `lua.icon` / `basic.icon` 等) は WROVER 側にアップロード済みのキャッシュをそのまま使うので、再アップロードは行われません。再スキャンの所要時間は主に `/flash/app/` 配下の `.toml` 読み込みコストです。
+    既存のアイコン (`ruby.icon` / `lua.icon` / `basic.icon` 等) は WROVER 側にアップロード済みのキャッシュをそのまま使うので、再アップロードは行われません。再スキャンの所要時間は主に `/app/` 配下の `.toml` 読み込みコストです。
 
 ### 命名規則
 
@@ -220,7 +220,7 @@ snake_case → CamelCase + `App` でクラス名、Title Case で表示名 (`app
 
 ### 配置先
 
-ひな型は **`/flash/app/usr/`**（自動作成）に置かれます。`demo`/`game`/`tool` などのカテゴリと混ぜたくない、ユーザー作成アプリ専用のディレクトリです。
+ひな型は **`/app/usr/`**（自動作成）に置かれます。`demo`/`game`/`tool` などのカテゴリと混ぜたくない、ユーザー作成アプリ専用のディレクトリです。
 
 ### 既存ファイルの保護
 
@@ -228,11 +228,11 @@ snake_case → CamelCase + `App` でクラス名、Title Case で表示名 (`app
 
 ### テンプレートのカスタマイズ
 
-ひな型ファイル本体は **`/flash/usr/share/template/`** に置いてあります:
+ひな型ファイル本体は **`/usr/share/template/`** に置いてあります:
 
 ```
-/flash/usr/share/template/app.rb.template
-/flash/usr/share/template/app.toml.template
+/usr/share/template/app.rb.template
+/usr/share/template/app.toml.template
 ```
 
 このファイルを直接編集すると、以後の `create_app` の出力を自分好みにカスタマイズできます。プレースホルダ:
@@ -257,7 +257,7 @@ snake_case → CamelCase + `App` でクラス名、Title Case で表示名 (`app
 - `.toml` ファイルが `.rb` と同じディレクトリにあるか
 - `app_screen_name` が `.toml` に書かれているか
 - `launcher_visible = false` を指定していないか
-- ファイルの配置先が `/flash/app/<dir>/` 以下になっているか
+- ファイルの配置先が `/app/<dir>/` 以下になっているか
 
 ### 起動するがすぐ閉じる
 

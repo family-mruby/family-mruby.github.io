@@ -3,7 +3,7 @@
 `flash/app/` 以下に同梱されているアプリの紹介です。それぞれが特定の API・機能を実演しているので、まず動かしてみて、ソースを読みながら自分のアプリを作る参考にしてください。
 
 ソースファイルの場所:
-- mruby アプリ: `fmruby-core/flash/app/<カテゴリ>/<名前>.app.rb`
+- mruby アプリ: `fmruby-core/app/<カテゴリ>/<名前>.app.rb`
 - 設定: 同じディレクトリの `<名前>.app.toml`
 
 ## デモ (demo)
@@ -21,6 +21,15 @@
 | `pub_demo.app.rb` + `sub_demo.app.rb` | アプリ間 Pub/Sub の最小ペア | [Pub/Sub](api/pubsub.md) |
 | `lua.app.lua` | Lua VM の動作確認 | – |
 | `basic.app.bas` / `bounce.app.bas` | BASIC VM の動作確認 | – |
+
+## デバッグ (debug)
+
+`flash/app/debug/` 配下の検証用アプリ。
+
+| アプリ | 内容 | 学べる API |
+|---|---|---|
+| `ntsc_color_test.app.rb` | NTSC カラーバー出力テスト | [`FmrbGfx#set_output_level`/`set_chroma_level`](api/fmrb_gfx.md#ntsc-出力調整esp32-のみ) |
+| `sd_test.app.rb` | SD カードへ `/mnt/sd/sd_test.txt` を書き → 読み → 比較。Space で再実行 | [ファイル・I/O ▸ ファイル名前空間](api/filesystem.md#ファイル名前空間) |
 
 ## ゲーム (game)
 

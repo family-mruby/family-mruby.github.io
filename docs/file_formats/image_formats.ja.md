@@ -30,7 +30,7 @@ GIMP / ImageMagick / Photoshop 等で:
 2. 256 色（インデックスなし）モードに変換
 3. **BMP** として保存
 
-PC 側で RGB332 化するスクリプトを使うと確実です（`fmruby-core/tool/` 以下に変換用スクリプトが整備中）。
+RGB332 への色変換は PC 側で行ってから書き込みます。
 
 ### 使い方
 
@@ -38,14 +38,14 @@ PC 側で RGB332 化するスクリプトを使うと確実です（`fmruby-core
 # スプライト画像として読み込み（高速）
 img = SpriteImage.new(@gfx, width: 32, height: 32,
                        transparent_color: 0, use_transparent: true)
-img.load_bmp("/flash/usr/share/sprite/player.bmp")
+img.load_bmp("/usr/share/sprite/player.bmp")
 
 # 通常画像として読み込み・表示
-ret = @gfx.create_image_from_file("/flash/img.bmp")
+ret = @gfx.create_image_from_file("/img.bmp")
 @gfx.draw_image(ret[:id], 10, 20)
 
 # Ruby 側でピクセルを操作したい場合
-data = File.open("/flash/img.bmp", "r") { |f| f.read }
+data = File.open("/img.bmp", "r") { |f| f.read }
 bmp = BMP332.parse(data)
 # bmp[:width], bmp[:height], bmp[:pixels]
 ```
@@ -55,9 +55,9 @@ bmp = BMP332.parse(data)
 任意のパス。慣例的には:
 
 ```
-/flash/usr/share/sprite/   # スプライト
-/flash/usr/share/picture/  # 一般画像
-/flash/<your_app>/         # アプリ専用
+/usr/share/sprite/   # スプライト
+/usr/share/picture/  # 一般画像
+/<your_app>/         # アプリ専用
 ```
 
 ## アイコンファイル (.icon)
@@ -100,7 +100,7 @@ bmp = BMP332.parse(data)
 ### 配置先
 
 ```
-/flash/usr/share/icon/<name>.icon
+/usr/share/icon/<name>.icon
 ```
 
 `.toml` で参照する際は:
@@ -109,7 +109,7 @@ bmp = BMP332.parse(data)
 icon = "usr/share/icon/myapp.icon"
 ```
 
-（先頭の `/flash/` は不要、相対パスで書きます）
+（先頭の `/` は不要、相対パスで書きます）
 
 ### サンプル
 
@@ -143,9 +143,7 @@ icon = "usr/share/icon/myapp.icon"
 
 ## PNG
 
-PNG ファイルの直接表示は **未対応** です。PC 側で BMP332 形式に変換してください（GIMP の「エクスポート」→ BMP、24bit を選んだ後、別途 RGB332 変換スクリプトで圧縮）。
-
-将来のバージョンで PNG 対応が予定されていますが、現時点では非対応です。
+PNG ファイルの直接表示は **未対応** です。PC 側で BMP332 形式に変換して書き込んでください（GIMP の「エクスポート」→ BMP、24bit を選んだ後、別途 RGB332 変換スクリプトで圧縮）。
 
 ## 関連
 

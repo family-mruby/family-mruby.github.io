@@ -68,7 +68,7 @@ fmruby-graphics-audio/tools/gen_intro_fmsq.rb    # ジングル
 スロット（番号 ID）にロードしてから再生します。
 
 ```ruby
-data = File.open("/flash/sfx.fmsq", "r") { |f| f.read }
+data = File.open("/sfx.fmsq", "r") { |f| f.read }
 @audio.load_fmsq(0, data)   # スロット 0 に登録
 @audio.play_slot(0)         # 再生
 ```
@@ -87,7 +87,7 @@ NES Sound Format は実機ファミコン音楽を再生する標準フォーマ
 ### 再生
 
 ```ruby
-@audio.play("/flash/usr/share/music/dq.nsf", track: 1)
+@audio.play("/usr/share/music/dq.nsf", track: 1)
 ```
 
 `track:` は曲番号（1 始まり）。NSF には複数曲が含まれるため、ファイル名で曲を選んだ後、track 指定で個別曲を選べます。
@@ -103,7 +103,7 @@ NES Sound Format は実機ファミコン音楽を再生する標準フォーマ
 
 ## WAV / MP3
 
-現バージョンでは **未対応** です。FMSQ または NSF に変換してください。
+**未対応** です。FMSQ または NSF に変換してください。
 
 ## 直接合成 (`note_on` / `note_off`)
 
