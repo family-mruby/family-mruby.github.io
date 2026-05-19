@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://family-mruby.github.io/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/architecture/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/architecture/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/compatibility/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/compatibility/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/compatibility/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/examples/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/examples/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/examples/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/hardware/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/hardware/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/hardware/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/limitations/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/limitations/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/limitations/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/audio/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/audio/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/audio/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/const/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/const/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/const/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/filesystem/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/filesystem/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/filesystem/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/fmrb_app/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/fmrb_app/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/fmrb_app/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/fmrb_gfx/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/fmrb_gfx/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/fmrb_gfx/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/log/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/log/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/log/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/p5/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/p5/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/p5/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/peripherals/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/peripherals/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/peripherals/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/pubsub/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/pubsub/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/pubsub/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/sprite/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/sprite/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/sprite/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/system/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/system/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/system/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/tilemap/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/tilemap/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/tilemap/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/utilities/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/utilities/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/utilities/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/app_toml/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/app_toml/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/app_toml/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/audio_formats/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/audio_formats/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/audio_formats/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/image_formats/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/image_formats/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/image_formats/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/console/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/console/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/console/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/default_apps/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/default_apps/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/default_apps/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/firmware_update/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/firmware_update/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/firmware_update/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/hello_world/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/hello_world/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/hello_world/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/setup/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/setup/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/setup/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/simulator/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/simulator/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/simulator/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/architecture/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/architecture/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/compatibility/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/compatibility/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/compatibility/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/examples/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/examples/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/examples/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/hardware/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/hardware/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/hardware/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/limitations/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/limitations/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/limitations/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/audio/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/audio/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/audio/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/const/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/const/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/const/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/filesystem/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/filesystem/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/filesystem/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/fmrb_app/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/fmrb_app/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/fmrb_app/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/fmrb_gfx/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/fmrb_gfx/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/fmrb_gfx/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/log/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/log/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/log/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/p5/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/p5/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/p5/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/peripherals/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/peripherals/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/peripherals/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/pubsub/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/pubsub/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/pubsub/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/sprite/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/sprite/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/sprite/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/system/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/system/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/system/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/tilemap/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/tilemap/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/tilemap/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/utilities/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/utilities/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/utilities/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/app_toml/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/app_toml/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/app_toml/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/audio_formats/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/audio_formats/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/audio_formats/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/image_formats/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/image_formats/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/image_formats/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/console/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/console/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/console/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/default_apps/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/default_apps/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/default_apps/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/firmware_update/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/firmware_update/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/firmware_update/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/hello_world/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/hello_world/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/hello_world/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/setup/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/setup/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/setup/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/simulator/</loc>
+        <lastmod>2026-05-19</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/simulator/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/simulator/"/>
+    </url>
+</urlset>

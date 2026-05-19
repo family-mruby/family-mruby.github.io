@@ -1,0 +1,2431 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Family mruby project documentation">
+      
+      
+        <meta name="author" content="kishima">
+      
+      
+        <link rel="canonical" href="https://family-mruby.github.io/ja/getting_started/hello_world/">
+      
+      
+        <link rel="prev" href="../simulator/">
+      
+      
+        <link rel="next" href="../console/">
+      
+      
+        
+          <link rel="alternate" href="../../../getting_started/hello_world/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Hello World - Family mruby project</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hello-world" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../../" title="Family mruby project" class="md-header__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Family mruby project
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hello World
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="言語切り替え">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../getting_started/hello_world/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="タブ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ホーム
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../setup/" class="md-tabs__link">
+          
+  
+  
+  はじめに
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
+          
+  
+  
+  API リファレンス
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../file_formats/app_toml/" class="md-tabs__link">
+          
+  
+  
+  ファイル形式
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../examples/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  サンプル集
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  アーキテクチャ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../hardware/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ハードウェア
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../compatibility/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  動作確認済み機器
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../limitations/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  制約事項
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="Family mruby project" class="md-nav__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Family mruby project
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    はじめに
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    はじめに
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    起動と接続
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simulator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    シミュレータ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最小のアプリ構成
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 文字を表示するだけの最小アプリ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: 文字を表示するだけの最小アプリ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .rb ファイル
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .toml ファイル
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: ウィンドウ枠を表示する
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ファイルを基板に送る
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        起動して画面に表示する
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修正してリロードする
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create_app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ショートカット: create_app でひな型を生成する
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ショートカット: create_app でひな型を生成する">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使い方
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ランチャーで反映する
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        命名規則
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置先
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        既存ファイルの保護
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テンプレートのカスタマイズ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次のステップ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        トラブル時のチェック
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="トラブル時のチェック">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ランチャーにアイコンが出ない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        起動するがすぐ閉じる
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        画面に何も出ない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        閉じるボタンが見えない
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    コンソール
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../default_apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    標準アプリ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../firmware_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファームウェア更新
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API リファレンス
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API リファレンス
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一覧
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fmrb_app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbApp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fmrb_gfx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbGfx
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/sprite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tilemap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TileMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/p5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbAudio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/pubsub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pub/Sub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファイル・I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ログ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/peripherals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    周辺機器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/utilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ユーティリティ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/const/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    定数・システム情報
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Task / Machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファイル形式
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ファイル形式
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_formats/app_toml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アプリ設定ファイル (.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_formats/audio_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音声ファイルフォーマット
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_formats/image_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    画像・アイコンファイル
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    サンプル集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アーキテクチャ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ハードウェア
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    動作確認済み機器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    制約事項
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最小のアプリ構成
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 文字を表示するだけの最小アプリ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: 文字を表示するだけの最小アプリ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .rb ファイル
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .toml ファイル
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: ウィンドウ枠を表示する
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ファイルを基板に送る
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        起動して画面に表示する
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        修正してリロードする
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create_app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ショートカット: create_app でひな型を生成する
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ショートカット: create_app でひな型を生成する">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使い方
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ランチャーで反映する
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        命名規則
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置先
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        既存ファイルの保護
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テンプレートのカスタマイズ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次のステップ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        トラブル時のチェック
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="トラブル時のチェック">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ランチャーにアイコンが出ない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        起動するがすぐ閉じる
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        画面に何も出ない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        閉じるボタンが見えない
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="hello-world">Hello World<a class="headerlink" href="#hello-world" title="Permanent link">&para;</a></h1>
+<p>「Hello, mruby!」と画面に表示する最小の <strong>GUI アプリ</strong> を動かして、自分のアプリを書く流れを掴みます。</p>
+<div class="admonition note">
+<p class="admonition-title">このページは GUI アプリのサンプルです</p>
+<p>Family mruby のアプリは大きく分けて、画面に描画する <strong>GUI アプリ</strong> と、画面を持たない <strong>headless アプリ</strong>（バックグラウンドで動く処理）があります。このページでは GUI アプリの最小例を扱います。</p>
+</div>
+<h2 id="_1">最小のアプリ構成<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>Family mruby のアプリは <strong>2 つのファイル</strong> をペアで作ります。</p>
+<div class="codehilite"><pre><span></span><code>hello.app.rb       # アプリ本体（Ruby）
+hello.app.toml     # 設定ファイル
+</code></pre></div>
+
+<p>両方を <code>/app/&lt;好きなディレクトリ&gt;/</code> 以下に置き、ランチャーで再スキャン（<a href="#ランチャーで反映する">後述</a>）または再起動するとアイコンが表示されます。</p>
+<h2 id="step-1">Step 1: 文字を表示するだけの最小アプリ<a class="headerlink" href="#step-1" title="Permanent link">&para;</a></h2>
+<p>まずはウィンドウ管理のことを考えず、<strong>画面に文字を出すだけ</strong> のアプリから始めます。</p>
+<h3 id="rb"><code>.rb</code> ファイル<a class="headerlink" href="#rb" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># hello.app.rb</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HelloApp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">FmrbApp</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">on_create</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="no">FmrbGfx</span><span class="o">::</span><span class="no">BLACK</span><span class="p">)</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Hello, mruby!&quot;</span><span class="p">,</span><span class="w"> </span><span class="no">FmrbGfx</span><span class="o">::</span><span class="no">WHITE</span><span class="p">)</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">present</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">HelloApp</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">start</span>
+</code></pre></div>
+
+<p>何が起きているか:</p>
+<table>
+<thead>
+<tr>
+<th>コード</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class HelloApp &lt; FmrbApp</code></td>
+<td><code>FmrbApp</code> を継承するアプリクラス</td>
+</tr>
+<tr>
+<td><code>on_create</code></td>
+<td>起動時に 1 回呼ばれる初期化処理</td>
+</tr>
+<tr>
+<td><code>@gfx.clear(...)</code></td>
+<td>キャンバス全体を黒で塗りつぶし</td>
+</tr>
+<tr>
+<td><code>@gfx.draw_text(0, 0, ...)</code></td>
+<td>ウィンドウ左上 (0, 0) に文字を描画</td>
+</tr>
+<tr>
+<td><code>@gfx.present</code></td>
+<td>バッファを画面に反映（<strong>必須</strong>）</td>
+</tr>
+<tr>
+<td><code>HelloApp.new.start</code></td>
+<td>アプリを実行</td>
+</tr>
+</tbody>
+</table>
+<p><code>on_update</code> は省略しています（基底クラスの実装が継承され、330ms ごとに何もせず呼ばれるだけになります）。詳細は <a href="../../api/fmrb_app/">FmrbApp</a> を参照。</p>
+<div class="admonition warning">
+<p class="admonition-title">このサンプルではウィンドウを閉じられません</p>
+<p><code>@gfx.clear</code> は <strong>キャンバス全体（タイトルバーを含む）</strong> を塗りつぶします。<code>FmrbApp</code> の基底クラスが起動時に描いてくれるタイトルバーと閉じるボタンが上書きされて消えてしまうため、<strong>画面上に閉じるボタンが見えなくなります</strong>。</p>
+<p>アプリを終了するには電源を入れ直すか、別のアプリから kill する必要があります。実用的に作るなら次の Step 2 に進んでください。</p>
+</div>
+<h3 id="toml"><code>.toml</code> ファイル<a class="headerlink" href="#toml" title="Permanent link">&para;</a></h3>
+<p>同じディレクトリに <code>hello.app.toml</code> を作成:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">app_handle_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span>
+<span class="n">app_screen_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello&quot;</span>
+<span class="n">default_window_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;window&quot;</span>
+<span class="n">default_window_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">160</span>
+<span class="n">default_window_height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span>
+<span class="n">default_window_pos_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+<span class="n">default_window_pos_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">40</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>キー</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app_handle_name</code></td>
+<td>内部ハンドル名（<code>.rb</code> ファイル名のベースと一致させる）</td>
+</tr>
+<tr>
+<td><code>app_screen_name</code></td>
+<td>ランチャーやタイトルバーの表示名</td>
+</tr>
+<tr>
+<td><code>default_window_mode</code></td>
+<td><code>"window"</code> / <code>"fullwindow"</code> / <code>"fullscreen"</code> / <code>"background"</code></td>
+</tr>
+<tr>
+<td><code>default_window_width/height</code></td>
+<td>ウィンドウサイズ (px)</td>
+</tr>
+<tr>
+<td><code>default_window_pos_x/y</code></td>
+<td>ウィンドウ左上座標</td>
+</tr>
+</tbody>
+</table>
+<p>全キーの説明は <a href="../../file_formats/app_toml/">アプリ設定ファイル (.toml)</a> を参照。</p>
+<h2 id="step-2">Step 2: ウィンドウ枠を表示する<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h2>
+<p>実用的な GUI アプリにするには、<strong>タイトルバーと閉じるボタンを残す</strong> 必要があります。コツは 2 つ:</p>
+<ol>
+<li>画面全体ではなく <strong>アプリの描画可能領域 (user area) だけ</strong> を塗りつぶす（タイトルバーや枠線を消さない）</li>
+<li>描画後に <strong><code>draw_window_frame</code> を呼ぶ</strong>（基底クラスが用意したタイトルバー描画を再実行）</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="c1"># hello.app.rb (Step 2)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HelloApp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">FmrbApp</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">on_create</span>
+<span class="w">    </span><span class="n">redraw</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">on_update</span>
+<span class="w">    </span><span class="mi">500</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="kp">private</span>
+
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">redraw</span>
+<span class="w">    </span><span class="n">clear_user_area</span><span class="p">(</span><span class="no">FmrbGfx</span><span class="o">::</span><span class="no">WHITE</span><span class="p">)</span><span class="w">   </span><span class="c1"># user area を白で塗りつぶし</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span><span class="vi">@user_area_x0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="vi">@user_area_y0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">                   </span><span class="s2">&quot;Hello, mruby!&quot;</span><span class="p">,</span><span class="w"> </span><span class="no">FmrbGfx</span><span class="o">::</span><span class="no">BLACK</span><span class="p">)</span>
+<span class="w">    </span><span class="n">draw_window_frame</span><span class="w">                  </span><span class="c1"># タイトルバー・枠線を再描画</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">present</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">HelloApp</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">start</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>変更点</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@gfx.clear(FmrbGfx::BLACK)</code> → <code>clear_user_area(FmrbGfx::WHITE)</code></td>
+<td>描画範囲を user area に限定し、タイトルバーを保護。背景は白に</td>
+</tr>
+<tr>
+<td>文字色を <code>WHITE</code> → <code>BLACK</code></td>
+<td>白背景に合わせて見やすく</td>
+</tr>
+<tr>
+<td><code>draw_window_frame</code> の追加</td>
+<td>基底クラスが用意したフレームを再描画。閉じるボタンが現れる</td>
+</tr>
+<tr>
+<td>描画ロジックを <code>redraw</code> に分離</td>
+<td>後で再描画しやすくするための整理</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title"><code>clear_user_area(color)</code> ヘルパー</p>
+<p><code>FmrbApp</code> には <code>clear_user_area(color = FmrbGfx::BLACK)</code> というヘルパーが用意されており、<code>@gfx.fill_rect(@user_area_x0, @user_area_y0, @user_area_width, @user_area_height, color)</code> の糖衣として使えます。色を指定したい場合は <code>clear_user_area(FmrbGfx::BLUE)</code> のように渡してください。</p>
+</div>
+<p>これで:</p>
+<ul>
+<li>タイトルバー右上の <strong>× ボタンをクリック</strong> でアプリを終了できる</li>
+<li>タイトルバーを <strong>右クリック</strong> で再ロード（<code>request_reload</code>）できる</li>
+<li>描画範囲は <code>@user_area_*</code> の中に収まり、枠と干渉しない</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">@user_area_* とは</p>
+<p><code>@user_area_x0</code>, <code>y0</code>, <code>x1</code>, <code>y1</code>, <code>width</code>, <code>height</code> はタイトルバーや枠線を除いた <strong>アプリが自由に描いてよい領域</strong> の座標です。<code>@fullscreen</code> の場合は画面全体を指します。詳細は <a href="../../api/fmrb_app/#主要インスタンス変数">FmrbApp ▸ 主要インスタンス変数</a> を参照。</p>
+</div>
+<h2 id="_2">ファイルを基板に送る<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>PC で書いた <code>hello.app.rb</code> と <code>hello.app.toml</code> を基板の <code>/app/myapps/</code> 以下に転送します。</p>
+<p>転送方法は <strong>コンソール</strong> (BLE 経由の Web ツール) が標準です。詳細は <a href="../console/">コンソール</a> を参照。</p>
+<p>転送後の配置イメージ:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">/</span><span class="n">app</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">demo</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">game</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="k">tool</span><span class="o">/</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">myapps</span><span class="o">/</span><span class="w">         </span><span class="err">←</span><span class="w"> </span><span class="err">自分で作るディレクトリ</span>
+<span class="w">    </span><span class="err">├──</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">rb</span>
+<span class="w">    </span><span class="err">└──</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">toml</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>新しいディレクトリを作る場合は、コンソールの「新規ディレクトリ」または <code>mkdir</code> 操作で先に作っておきます。</p>
+</div>
+<h2 id="_3">起動して画面に表示する<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ol>
+<li>ファイル転送が完了したら、ランチャーを開いて <strong>右クリック</strong> で再スキャン（または基板を再起動）</li>
+<li>タイトルバーが「Rescanning...」になり、1〜2 秒待つと新アプリ「Hello」のアイコンが追加される</li>
+<li>アイコンをダブルクリック（またはマウスでクリック → Enter）</li>
+<li>画面に「Hello, mruby!」と表示されます</li>
+</ol>
+<p>Step 2 の版なら、タイトルバー右の <strong>× ボタン</strong> をクリックでアプリを終了できます。</p>
+<h2 id="_4">修正してリロードする<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>アプリを更新したいときは:</p>
+<ol>
+<li>PC で <code>hello.app.rb</code> を書き換え</li>
+<li>コンソールで再アップロード（同じ名前で上書き）</li>
+<li>アプリのタイトルバーを <strong>右クリック</strong> すると、確認ダイアログが出てリロード</li>
+</ol>
+<p>ファイル単位の再起動なので、再起動を待たずに開発できます。</p>
+<h2 id="create_app">ショートカット: <code>create_app</code> でひな型を生成する<a class="headerlink" href="#create_app" title="Permanent link">&para;</a></h2>
+<p>毎回 <code>.rb</code> と <code>.toml</code> を手書きするのは面倒です。Family mruby のシェルには <strong><code>create_app</code></strong> コマンドがあり、Step 2 ベースのひな型一式を一発で生成できます。</p>
+<h3 id="_5">使い方<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>ランチャーから <strong>Shell</strong> を起動して、以下を実行:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">&gt; </span><span class="ge">create_app my_clock</span>
+Created: /app/usr/my_clock.app.rb
+Created: /app/usr/my_clock.app.toml
+Tip: edit it with <span class="sb">`edit /app/usr/my_clock.app.rb`</span>
+</code></pre></div>
+
+<p>これだけで:</p>
+<ul>
+<li><code>/app/usr/my_clock.app.rb</code> — Step 2 ベース（<code>clear_user_area</code> + <code>draw_window_frame</code> 入り、全 <code>on_*</code> ライフサイクルメソッドのひな型あり）</li>
+<li><code>/app/usr/my_clock.app.toml</code> — 標準サイズのウィンドウ設定</li>
+</ul>
+<p>の 2 ファイルが作られます。次節「ランチャーで反映する」で見えるようになります。</p>
+<h3 id="_6">ランチャーで反映する<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>ランチャーは起動時にアプリ一覧をスキャンして固定するため、<strong>ファイルを追加しても自動では出てきません</strong>。再スキャンを促すには:</p>
+<ol>
+<li>ランチャーを開く（メニューバーの <code>Family mruby</code> → <code>Launcher</code>）</li>
+<li>ランチャーウィンドウ内で <strong>右クリック</strong></li>
+<li>タイトルバーが一瞬 <strong>「Rescanning...」</strong> に変わる（=要求受付の合図）</li>
+<li><strong>1〜2 秒待つ</strong>（裏で <code>/app/</code> 配下を再スキャン中）</li>
+<li>タイトルが「Launcher」に戻り、新アプリのアイコンが追加されている</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">再起動でも反映される</p>
+<p>右クリック再スキャンを使わず、本体を再起動すれば（USB を抜き差し）、起動時のスキャンで自動的にランチャーに乗ります。手早く済ませたいときは右クリックの方が便利です。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">アイコン画像はキャッシュ済み</p>
+<p>既存のアイコン (<code>ruby.icon</code> / <code>lua.icon</code> / <code>basic.icon</code> 等) は WROVER 側にアップロード済みのキャッシュをそのまま使うので、再アップロードは行われません。再スキャンの所要時間は主に <code>/app/</code> 配下の <code>.toml</code> 読み込みコストです。</p>
+</div>
+<h3 id="_7">命名規則<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p><code>&lt;name&gt;</code> は <strong>小文字英数字とアンダースコア</strong> のみ、先頭は英字。例:</p>
+<table>
+<thead>
+<tr>
+<th>入力</th>
+<th>生成されるクラス名</th>
+<th>表示名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hello</code></td>
+<td><code>HelloApp</code></td>
+<td><code>Hello</code></td>
+</tr>
+<tr>
+<td><code>my_clock</code></td>
+<td><code>MyClockApp</code></td>
+<td><code>My Clock</code></td>
+</tr>
+<tr>
+<td><code>snake01</code></td>
+<td><code>Snake01App</code></td>
+<td><code>Snake01</code></td>
+</tr>
+</tbody>
+</table>
+<p>snake_case → CamelCase + <code>App</code> でクラス名、Title Case で表示名 (<code>app_screen_name</code>) が自動生成されます。</p>
+<h3 id="_8">配置先<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>ひな型は <strong><code>/app/usr/</code></strong>（自動作成）に置かれます。<code>demo</code>/<code>game</code>/<code>tool</code> などのカテゴリと混ぜたくない、ユーザー作成アプリ専用のディレクトリです。</p>
+<h3 id="_9">既存ファイルの保護<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>同名のファイルが既にあると <strong>エラーで止まります</strong>（誤って上書きしないため）。続けるには <code>rm</code> で削除するか、別の名前を選んでください。</p>
+<h3 id="_10">テンプレートのカスタマイズ<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>ひな型ファイル本体は <strong><code>/usr/share/template/</code></strong> に置いてあります:</p>
+<div class="codehilite"><pre><span></span><code>/usr/share/template/app.rb.template
+/usr/share/template/app.toml.template
+</code></pre></div>
+
+<p>このファイルを直接編集すると、以後の <code>create_app</code> の出力を自分好みにカスタマイズできます。プレースホルダ:</p>
+<table>
+<thead>
+<tr>
+<th>プレースホルダ</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{{name}}</code></td>
+<td>snake_case の名前</td>
+</tr>
+<tr>
+<td><code>{{class}}</code></td>
+<td>CamelCase のクラス名（末尾に <code>App</code>）</td>
+</tr>
+<tr>
+<td><code>{{title}}</code></td>
+<td>Title Case の表示名</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_11">次のステップ<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<ul>
+<li>図形を描いてみる → <a href="../../api/fmrb_gfx/">FmrbGfx</a></li>
+<li>イベント処理を加える → <a href="../../api/fmrb_app/#イベントハンドリング-on_eventev">FmrbApp ▸ イベントハンドリング</a></li>
+<li>既存サンプルを読む → <a href="../../examples/">サンプル集</a></li>
+</ul>
+<h2 id="_12">トラブル時のチェック<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<h3 id="_13">ランチャーにアイコンが出ない<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<ul>
+<li>ランチャーで <strong>右クリック</strong> して再スキャンしたか（→ <a href="#ランチャーで反映する">ランチャーで反映する</a>）</li>
+<li><code>.toml</code> ファイルが <code>.rb</code> と同じディレクトリにあるか</li>
+<li><code>app_screen_name</code> が <code>.toml</code> に書かれているか</li>
+<li><code>launcher_visible = false</code> を指定していないか</li>
+<li>ファイルの配置先が <code>/app/&lt;dir&gt;/</code> 以下になっているか</li>
+</ul>
+<h3 id="_14">起動するがすぐ閉じる<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li>例外で落ちている可能性。ログを確認:<ul>
+<li><code>Log.info</code> を <code>on_create</code> に追加して進行を確認</li>
+<li><code>FmrbApp._get_last_error</code> を別アプリから呼んで直前のエラーを確認</li>
+</ul>
+</li>
+</ul>
+<h3 id="_15">画面に何も出ない<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>@gfx.present</code> を呼んでいるか確認</li>
+<li>描画座標が <code>@user_area_x0 / y0 / width / height</code> の範囲内か確認</li>
+</ul>
+<h3 id="_16">閉じるボタンが見えない<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>@gfx.clear</code> でキャンバス全体を消してしまっている → Step 2 のように <code>@user_area_*</code> の範囲で塗りつぶし、<code>draw_window_frame</code> を呼ぶ</li>
+</ul>
+<p>詳細は <a href="../../limitations/">制約事項</a> を参照。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
