@@ -38,6 +38,7 @@ my_clock.app.toml
 | `resizable` | integer (0/1) | 任意 | `0` | `1` でユーザーがリサイズ可能 |
 | `large_memory` | integer (0/1) | 任意 | `0` | `1` で大きいヒープ領域を確保（メモリを多く使うアプリ用） |
 | `launcher_visible` | bool / string | 任意 | `true` | `false` または `0` でランチャーから非表示 |
+| `rounded_corners` | bool / string | 任意 | `true` | `false` でウィンドウ角の透過処理を無効化（fps を稼ぎたいときの最適化） |
 | `icon` | string | 任意 | (拡張子別の既定) | アイコンファイルパス（`.icon` 形式） |
 
 ## ウィンドウモード
@@ -167,15 +168,20 @@ icon = "usr/share/icon/myapp.icon"
 
 ```
 /app/
-├── demo/      # サンプル・デモ
-├── game/      # ゲーム
-├── tool/      # ツール
+├── demo/                   # サンプル・デモ
+├── game/                   # ゲーム
+│   └── rpg_demo/           # アプリと一緒にアセットを置くバンドル形式も可
+│       ├── rpg_demo.app.rb
+│       ├── rpg_demo.app.toml
+│       ├── world.bmp
+│       └── world.map.json
+├── tool/                   # ツール
 └── (任意の名前)/
     ├── myapp.app.rb
     └── myapp.app.toml
 ```
 
-ランチャーは `/app` 直下のすべてのサブディレクトリを再帰的にスキャンして `.toml` を検出します。
+ランチャーは `/app` 直下のサブディレクトリをスキャンして `.toml` を検出します。**さらに 1 階層下** （`/app/<category>/<bundle>/*.app.toml`）もスキャン対象なので、画像・マップなどのアセットをアプリと同じディレクトリにまとめる **バンドル形式** が使えます（[TileMap](../api/tilemap.md) の RPG デモを参照）。
 
 !!! note "スキャンは起動時のみ"
     アプリ一覧は **システム起動時に 1 回だけ** スキャンされます。`create_app` や BLE で新規アプリを追加した後は、**ランチャーを開いて右クリック** で再スキャン、もしくは本体を再起動してください（[Hello World ▸ ランチャーで反映する](../getting_started/hello_world.md#ランチャーで反映する) 参照）。

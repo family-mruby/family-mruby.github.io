@@ -30,6 +30,8 @@
 |---|---|---|
 | `ntsc_color_test.app.rb` | NTSC カラーバー出力テスト | [`FmrbGfx#set_output_level`/`set_chroma_level`](api/fmrb_gfx.md#ntsc-出力調整esp32-のみ) |
 | `sd_test.app.rb` | SD カードへ `/mnt/sd/sd_test.txt` を書き → 読み → 比較。Space で再実行 | [ファイル・I/O ▸ ファイル名前空間](api/filesystem.md#ファイル名前空間) |
+| `tile_map_test.app.rb` | TileMap + TileSheet + JSON でマップ描画 | [TileMap / TileSheet](api/tilemap.md) |
+| `draw_tile_test.app.rb` | `FmrbGfx#draw_tile` の最小検証 | [FmrbGfx ▸ draw_tile](api/fmrb_gfx.md#draw_tile-の使いどころ) |
 
 ## ゲーム (game)
 
@@ -40,6 +42,7 @@
 | `shooter.app.rb` | フルスクリーンシューティング | [`Sprite`](api/sprite.md), 当たり判定 |
 | `raycaster.app.rb` | Wolfenstein 3D 風の擬似 3D。`large_memory = 1` を指定 | 固定小数点演算、`FmrbGfx` 高速描画 |
 | `piano.app.rb` | キーボードで弾けるピアノ | [`FmrbAudio#note_on/off`](api/audio.md#音声合成-note_on--note_off) |
+| `rpg_demo/` | JRPG 風サンプル。`/app/<cat>/<bundle>/` 形式でアセットを同梱 | [TileMap / TileSheet](api/tilemap.md), `FmrbApp.set_cursor_visible` |
 
 ## ツール (tool)
 

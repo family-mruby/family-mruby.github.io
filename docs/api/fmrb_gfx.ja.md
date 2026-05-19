@@ -164,10 +164,40 @@ img = @gfx.create_image_from_file("/img.bmp")
 | `file_status(path)` | `{exists:, size:}` |
 | `create_image_from_file(path)` | `{id:, width:, height:}` または `nil` |
 | `draw_image(id, x, y, scale_x: 1.0, scale_y: 1.0)` | 画像描画 |
+| `draw_tile(image_id, src_x, src_y, w, h, dst_x:, dst_y:)` | **画像の部分領域** を `(dst_x, dst_y)` にコピー描画。タイルマップ用 |
 | `delete_image(id)` | 解放 |
 
 !!! note "対応画像形式"
     `create_image_from_file` は **RGB332 の BMP** に対応します。フォーマットの詳細は [画像・アイコンファイル](../file_formats/image_formats.md) を参照。
+
+### `draw_tile` の使いどころ
+
+`SpriteInstance` を作らずに **SpriteImage の一部だけ** をキャンバスに直接スタンプできます。タイルシート画像から 16x16 のセルを 1 マスずつ並べていく BG 描画に向いています。`use_transparent: true` で作った SpriteImage の透過色は尊重されるので、上下レイヤを重ねた地図描画もできます。
+
+```ruby
+sheet = SpriteImage.new(@gfx, width: 64, height: 32,
+                          transparent_color: 0, use_transparent: true)
+sheet.load_bmp("/usr/share/sprites/tilesheet.bmp")
+# tilesheet の (0, 0) から 16x16 を canvas の (32, 16) に描く
+@gfx.draw_tile(sheet.id, 0, 0, 16, 16, dst_x: 32, dst_y: 16)
+```
+
+より高水準なラッパは [TileMap](tilemap.md) を参照。
+
+## 合成領域の指定 (`set_composite_regions`)
+
+```ruby
+@gfx.set_composite_regions([
+  {dst_x: 0,   dst_y: 0,   w: 4, h: 4, transparent: true},   # 左上の丸み
+  {dst_x: w-4, dst_y: 0,   w: 4, h: 4, transparent: true},   # 右上
+  {dst_x: 0,   dst_y: 4,   w: w, h: h - 8, transparent: false},  # 中央は不透明
+  # ...
+])
+```
+
+キャンバスの **どの矩形をどう合成するか**（透過モード / 不透明モード）を指定するパフォーマンス用 API。丸角ウィンドウなど、角だけ透過させて中央を高速 memcpy パスで合成したいときに使います。最大 8 領域。`nil` か `[]` を渡すとクリア。
+
+通常は `.toml` の `rounded_corners` フラグ（[アプリ設定 ▸ rounded_corners](../file_formats/app_toml.md)）でシステム側が設定するので、ユーザーアプリで直接触る機会は少ないです。
 
 ## NTSC 出力調整（ESP32 のみ）
 

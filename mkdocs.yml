@@ -57,6 +57,7 @@ plugins:
             FmrbApp: FmrbApp
             FmrbGfx: FmrbGfx
             Sprite: Sprite
+            TileMap: TileMap
             P5: P5
             FmrbAudio: FmrbAudio
             Pub/Sub: Pub/Sub
@@ -89,6 +90,7 @@ nav:
       - FmrbApp: api/fmrb_app.md
       - FmrbGfx: api/fmrb_gfx.md
       - Sprite: api/sprite.md
+      - TileMap: api/tilemap.md
       - P5: api/p5.md
       - FmrbAudio: api/audio.md
       - Pub/Sub: api/pubsub.md

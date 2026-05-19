@@ -10,7 +10,8 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 |---|---|---|
 | `FmrbApp` | アプリ基底クラス。ライフサイクル、ウィンドウ、メッセージング | [FmrbApp](fmrb_app.md) |
 | `FmrbGfx` | 図形・テキスト描画（`@gfx`） | [FmrbGfx](fmrb_gfx.md) |
-| `SpriteImage` / `SpriteInstance` / `GfxBlock` | スプライト・タイルマップ | [Sprite](sprite.md) |
+| `SpriteImage` / `SpriteInstance` / `GfxBlock` | スプライト | [Sprite](sprite.md) |
+| `TileSheet` / `TileMap` | タイルマップ描画 + fmrb_map JSON 読込 | [TileMap](tilemap.md) |
 | `P5` | Processing/p5.js 風の描画 DSL（`require "p5"`） | [P5](p5.md) |
 | `FmrbAudio` | BGM・効果音・音声合成（`@audio`） | [FmrbAudio](audio.md) |
 | Pub/Sub (`subscribe` / `publish`) | アプリ間メッセージング | [Pub/Sub](pubsub.md) |
@@ -21,6 +22,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 |---|---|---|
 | `IO` / `File` / `Dir` | ファイル・ディレクトリ操作 | [ファイル・I/O](filesystem.md) |
 | `Log` | ロギング | [ログ](log.md) |
+| `JSON` | JSON のパース・生成 | [ユーティリティ](utilities.md#json) |
 | `MessagePack` | バイナリシリアライズ | [ユーティリティ](utilities.md#messagepack) |
 | `BMP332` | RGB332 BMP 画像のパース | [ユーティリティ](utilities.md#bmp332) |
 | `RX8900` | RTC（I2C 接続）ドライバ | [ユーティリティ](utilities.md#rx8900) |

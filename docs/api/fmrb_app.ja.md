@@ -191,7 +191,8 @@ when :gamepad_axis
 | `FmrbApp.gfx_stats` | 描画統計 `{cmds:, presents:}` |
 | `FmrbApp.sys_pool_info` | システムメモリプール情報 |
 | `FmrbApp.heap_info` | ESP-IDF ヒープ情報（`free`, `total`, `min_free`, `largest_block` ほか） |
-| `FmrbApp.enable_cursor` | マウスカーソルを表示 |
+| `FmrbApp.enable_cursor` | マウスカーソルを表示（最初のマウス移動まで遅延あり） |
+| `FmrbApp.set_cursor_visible(visible)` | カーソルの即時表示／非表示。フルスクリーンゲームで非表示にし、終了時に戻す用途 |
 | `FmrbApp._get_last_error` | 最後のアプリエラー（あれば `{name:, error:}`） |
 
 ## 定数

@@ -61,9 +61,9 @@ a[i] = a[j]
 a[j] = tmp
 ```
 
-### `JSON` ライブラリは未同梱
+### `JSON` 利用時は `::JSON.parse` と書く
 
-JSON が必要な場面では [`MessagePack`](api/utilities.md#messagepack) を使ってください。
+JSON ライブラリは利用可能ですが、クラス内で `JSON.parse` と書くと picoruby の定数探索でクラス内 `JSON` を先に探して失敗します。**`::JSON.parse(...)` と先頭に `::` を付ける** のが安全です。詳細は [ユーティリティ ▸ JSON](api/utilities.md#json) を参照。
 
 ### `IO` の挙動
 

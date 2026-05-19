@@ -1,6 +1,34 @@
-# ユーティリティ (MessagePack / BMP332 / RX8900)
+# ユーティリティ (JSON / MessagePack / BMP332 / RX8900)
 
 汎用ユーティリティ系の API をまとめます。
+
+## JSON
+
+JSON 文字列のパース・生成。設定ファイル、マップデータ、Web ツールとのやり取りなどに使います。
+
+### メソッド
+
+| メソッド | 用途 |
+|---|---|
+| `JSON.parse(string)` | JSON 文字列を Hash / Array に変換 |
+| `JSON.generate(obj)` / `JSON.dump(obj)` | Ruby オブジェクトを JSON 文字列に |
+
+### サンプル
+
+```ruby
+text = File.open("/data/conf.json", "r") { |f| f.read }
+conf = ::JSON.parse(text)
+Log.info("user=#{conf["user"]}")
+
+File.open("/data/conf.json", "w") do |f|
+  f.write(::JSON.generate({"user" => "kishima", "score" => 100}))
+end
+```
+
+!!! warning "`::JSON` と書く"
+    クラスの中で書く `JSON.parse(...)` は picoruby の定数探索で **クラス内の `JSON`** として解釈され、見つからず失敗することがあります。`::JSON.parse(...)` と先頭に `::` を付けてトップレベルを明示してください。
+
+[TileMap](tilemap.md) は内部で `JSON.parse` を使ってマップファイルを読みます。
 
 ## MessagePack
 
