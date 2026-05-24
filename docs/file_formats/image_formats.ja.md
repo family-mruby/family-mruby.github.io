@@ -10,31 +10,43 @@ Family mruby が対応する画像・アイコン形式と、その作成・変�
 |---|---|---|
 | BMP (RGB332) | 一般的な画像表示・スプライト | [BMP332](../api/utilities.md#bmp332) / [SpriteImage](../api/sprite.md#spriteimage) |
 | `.icon` | アプリアイコン（テキスト形式） | – |
-| PNG | 直接表示は **未対応**（変換ツールで BMP332 に） | – |
+| PNG | 未対応 | – |
 
 ## BMP (RGB332)
 
-Family mruby が標準で扱う画像形式は **RGB332 BMP** です（1 ピクセル = 1 バイト、R:3 G:3 B:2）。
-
-### 特徴
-
-- 1 ピクセル 1 バイトと小さく、PSRAM 容量を節約できる
-- WROVER 側でハードウェアデコードできるため描画が高速
-- 256 色相当（実際は 8R × 8G × 4B = 256 通り）
+Family mruby が標準で扱う画像形式は、RGB332 相当の 8bit BMP です。  
+1 ピクセルは 1 バイトで、色は R:3bit / G:3bit / B:2bit で表現されます。
 
 ### フォーマット仕様
 
-標準的な BMP ヘッダ（BITMAPFILEHEADER + BITMAPINFOHEADER） + 8bit インデックス無しの直接ピクセル列。各ピクセルは RGB332 値そのもの。
+BMP ファイル形式としては、標準的な 8bit パレット BMP を使用します。
 
-### PC で作る方法（変換手順）
+- BMP ヘッダ  
+  - `BITMAPFILEHEADER`
+  - `BITMAPINFOHEADER`
+- 8bit indexed BMP
+- パレットは RGB332 配列
+- 各ピクセル値は RGB332 インデックス値
+
+### PC で作る方法
 
 GIMP / ImageMagick / Photoshop 等で:
 
-1. 画像を必要なサイズにリサイズ
-2. 256 色（インデックスなし）モードに変換
-3. **BMP** として保存
+1. 画像を必要サイズにリサイズ
+2. 8bit / 256 色に変換
+3. BMP（8bit indexed）として保存
 
-RGB332 への色変換は PC 側で行ってから書き込みます。
+その後、パレットを RGB332 配列に変換します。
+
+### RGB332 の色構成
+
+| 要素 | bit数 |
+|---|---|
+| Red | 3bit |
+| Green | 3bit |
+| Blue | 2bit |
+
+合計 8bit / 256 色です。
 
 ### 使い方
 
@@ -52,16 +64,6 @@ ret = @gfx.create_image_from_file("/img.bmp")
 data = File.open("/img.bmp", "r") { |f| f.read }
 bmp = BMP332.parse(data)
 # bmp[:width], bmp[:height], bmp[:pixels]
-```
-
-### 配置先
-
-任意のパス。慣例的には:
-
-```
-/usr/share/sprite/   # スプライト
-/usr/share/picture/  # 一般画像
-/<your_app>/         # アプリ専用
 ```
 
 ## アイコンファイル (.icon)
@@ -99,7 +101,7 @@ bmp = BMP332.parse(data)
 
 ### 推奨サイズ
 
-ランチャーアイコンの標準サイズは **12 × 12 ピクセル**（既存アイコンに合わせると統一感あり）。
+ランチャーアイコンの標準サイズは **12 × 12 ピクセル**
 
 ### 配置先
 

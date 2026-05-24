@@ -4,6 +4,7 @@
 
 !!! note "このページは GUI アプリのサンプルです"
     Family mruby のアプリは大きく分けて、画面に描画する **GUI アプリ** と、画面を持たない **headless アプリ**（バックグラウンドで動く処理）があります。このページでは GUI アプリの最小例を扱います。
+    **headless アプリ** は、まだサポートしてませんが、Shellアプリからスクリプトとして実行することは可能です。
 
 ## 最小のアプリ構成
 
@@ -35,7 +36,7 @@ end
 HelloApp.new.start
 ```
 
-何が起きているか:
+コードの説明
 
 | コード | 役割 |
 |---|---|
@@ -46,14 +47,12 @@ HelloApp.new.start
 | `@gfx.present` | バッファを画面に反映（**必須**） |
 | `HelloApp.new.start` | アプリを実行 |
 
-`on_update` は省略しています（基底クラスの実装が継承され、330ms ごとに何もせず呼ばれるだけになります）。詳細は [FmrbApp](../api/fmrb_app.md) を参照。
 
 !!! warning "このサンプルではウィンドウを閉じられません"
-    `@gfx.clear` は **キャンバス全体（タイトルバーを含む）** を塗りつぶします。`FmrbApp` の基底クラスが起動時に描いてくれるタイトルバーと閉じるボタンが上書きされて消えてしまうため、**画面上に閉じるボタンが見えなくなります**。
-    
-    アプリを終了するには電源を入れ直すか、別のアプリから kill する必要があります。実用的に作るなら次の Step 2 に進んでください。
+    `@gfx.clear` は キャンバス全体（タイトルバーを含む）を塗りつぶします。`FmrbApp` の基底クラスが起動時に描いてくれるタイトルバーと閉じるボタンが上書きされて消えてしまうため、画面上に閉じるボタンが見えなくなります。
+    次のサンプルではWindowの枠の描画も行います。
 
-### `.toml` ファイル
+### `.app.toml` ファイル
 
 同じディレクトリに `hello.app.toml` を作成:
 
@@ -71,7 +70,7 @@ default_window_pos_y = 40
 |---|---|
 | `app_handle_name` | 内部ハンドル名（`.rb` ファイル名のベースと一致させる） |
 | `app_screen_name` | ランチャーやタイトルバーの表示名 |
-| `default_window_mode` | `"window"` / `"fullwindow"` / `"fullscreen"` / `"background"` |
+| `default_window_mode` | `"window"` / `"fullwindow"` / `"fullscreen"` |
 | `default_window_width/height` | ウィンドウサイズ (px) |
 | `default_window_pos_x/y` | ウィンドウ左上座標 |
 
@@ -79,9 +78,9 @@ default_window_pos_y = 40
 
 ## Step 2: ウィンドウ枠を表示する
 
-実用的な GUI アプリにするには、**タイトルバーと閉じるボタンを残す** 必要があります。コツは 2 つ:
+実用的な GUI アプリにするには、以下の点に注意して **タイトルバーと閉じるボタンを残す** 必要があります。
 
-1. 画面全体ではなく **アプリの描画可能領域 (user area) だけ** を塗りつぶす（タイトルバーや枠線を消さない）
+1. ウィンドウ全体ではなく **アプリの描画可能領域 (user area) だけ** を塗りつぶす（タイトルバーや枠線を消さない）
 2. 描画後に **`draw_window_frame` を呼ぶ**（基底クラスが用意したタイトルバー描画を再実行）
 
 ```ruby
@@ -95,14 +94,12 @@ class HelloApp < FmrbApp
     500
   end
 
-  private
-
   def redraw
     clear_user_area(FmrbGfx::WHITE)   # user area を白で塗りつぶし
     @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
                    "Hello, mruby!", FmrbGfx::BLACK)
     draw_window_frame                  # タイトルバー・枠線を再描画
-    @gfx.present
+    @gfx.present # 画面表示に反映
   end
 end
 
@@ -146,8 +143,6 @@ PC で書いた `hello.app.rb` と `hello.app.toml` を基板の `/app/myapps/` 
     └── hello.app.toml
 ```
 
-!!! note
-    新しいディレクトリを作る場合は、コンソールの「新規ディレクトリ」または `mkdir` 操作で先に作っておきます。
 
 ## 起動して画面に表示する
 

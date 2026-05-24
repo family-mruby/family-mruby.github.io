@@ -33,7 +33,7 @@ my_clock.app.toml
 |---|---|---|---|---|
 | `app_handle_name` | string | 推奨 | （なし） | アプリの内部ハンドル名。本体ファイル名のベースと一致させる |
 | `app_screen_name` | string | 任意 | `nil` | 画面・ランチャー上に表示する名前 |
-| `default_window_mode` | string | 任意 | `"window"` | `"window"` / `"fullwindow"` / `"fullscreen"` / `"background"` |
+| `default_window_mode` | string | 任意 | `"window"` | `"window"` / `"fullwindow"` / `"fullscreen"` |
 | `default_window_width` | integer | 任意 | `100` | ウィンドウ幅 (px) |
 | `default_window_height` | integer | 任意 | `100` | ウィンドウ高さ (px) |
 | `default_window_pos_x` | integer | 任意 | `50` | ウィンドウ左上 X 座標 |
@@ -51,7 +51,7 @@ my_clock.app.toml
 | `window` | タイトルバー付きのウィンドウ | `default_window_*` を使用 |
 | `fullwindow` | タイトルバー無しのフルウィンドウ | `default_window_*` を使用 |
 | `fullscreen` | 画面全体を占有（他アプリは中断） | サイズは画面解像度、位置は `(0, 0)` 固定 |
-| `background` | 画面表示なし（headless） | 不要 |
+| `background` | 未サポート：画面表示なし（headless） | 不要 |
 
 `fullscreen` の場合、`@user_area_*` は画面全体を指します。`window` ではタイトルバー（11px）と枠線を除いた部分が `@user_area_*` です。
 
@@ -98,17 +98,8 @@ default_window_mode = "fullscreen"
 
 ## 大量メモリを必要とする場合
 
-`large_memory = 1` を指定すると、起動時に確保される Ruby のヒープ領域が拡大されます。raycaster やビットマップを大量に扱うアプリで使います。
-
-```toml
-app_handle_name = "raycaster"
-app_screen_name = "Raycaster"
-default_window_mode = "fullscreen"
-large_memory = 1
-```
-
-!!! warning
-    `large_memory` を有効にすると 1 つのアプリが多くの PSRAM を消費するため、同時に動かせるアプリ数が減ります。必要なときだけ使ってください。
+`large_memory = 1` を指定すると、起動時に大きいメモリプールスロットが選択されます。
+現在は１スロットのみ存在してます。
 
 ## アイコン指定
 
