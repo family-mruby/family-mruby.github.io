@@ -2,9 +2,6 @@
 
 narya-board の各端子・ピン配置の仕様です。
 
-!!! note
-    内容編集中です
-
 
 !!! note
     回路図・KiCAD 設計データ・基板写真は [narya-board リポジトリ](https://github.com/family-mruby/narya-board) を参照してください。
@@ -16,7 +13,7 @@ narya-board の各端子・ピン配置の仕様です。
 | メイン MCU (fmrb-core) | ESP32-S3-WROOM-1-N16R8（16MB Flash + 8MB PSRAM） |
 | サブ MCU (fmrb-graphics-audio) | ESP32-WROVER-E/IE（PSRAM 搭載） |
 | MCU 間通信 | UART1（921600 bps、CTS/RTS フロー制御） |
-| 映像出力 | NTSC コンポジット (LovyanGFX CVBS 実装) |
+| 映像出力 | NTSC コンポジット (LovyanGFX CVBS を利用) |
 | 音声出力 | I2S DAC（NES APU エミュレータ） |
 | ストレージ | 内蔵 LittleFS (16MB) + SD カード (FAT32, SPI 接続) |
 
@@ -24,12 +21,9 @@ narya-board の各端子・ピン配置の仕様です。
 
 | 項目 | 値 |
 |---|---|
-| 入力 | USB Type-C (5V / ~500mA) |
+| 入力 | USB Type-C (5V) |
 | 内部レギュレータ | 3.3V |
-| 推奨電源 | 安定した USB 給電（PC、スマホ用 5V アダプタ等） |
-
-!!! warning
-    USB 周辺機器（マウス、キーボード、ゲームパッド）を本体に接続する場合は、5V 系の電流を多く消費します。USB ハブ経由か、外部給電 USB を使ってください。
+| 推奨電源 | 1A以上の安定した USB 給電 |
 
 ## 映像出力
 
@@ -37,7 +31,7 @@ narya-board の各端子・ピン配置の仕様です。
 |---|---|
 | コネクタ | RCA（ピンジャック、黄色） |
 | 信号方式 | NTSC コンポジット |
-| 標準解像度 | 320 x 224（オーバースキャンに収まる範囲） |
+| 標準解像度 | 320 x 240 |
 | カラー | RGB332（256 色） |
 
 CRT モニタ／キャプチャデバイスの個体差で色味が変わる場合は、`FmrbGfx#set_output_level` / `set_chroma_level` で調整できます。
@@ -50,49 +44,33 @@ CRT モニタ／キャプチャデバイスの個体差で色味が変わる場�
 | 信号 | I2S → DAC でアナログ出力 |
 | 出力レベル | ライン出力相当 |
 
-NES APU エミュレータが動いており、矩形波 2 系統 + 三角波 + ノイズ + DPCM の 5 チャンネルで音を鳴らせます。詳細は [FmrbAudio](api/audio.md) と [音声ファイルフォーマット](file_formats/audio_formats.md) を参照。
+NES APU エミュレータが動いており、矩形波 2 系統 + 三角波 + ノイズ の ４ チャンネルで音を鳴らせます。詳細は [FmrbAudio](api/audio.md) と [音声ファイルフォーマット](file_formats/audio_formats.md) を参照。
 
-## USB
+## GROVE
 
-| 項目 | 値 |
-|---|---|
-| 機能 | USB Host |
-| プロトコル | USB HID |
-| 対応デバイス | キーボード、マウス、ゲームパッド（HID 互換） |
+基板には 2 つの GROVE コネクタがあります。
+左画からGND、電源、Sig1、Sig2 とした場合の接続品は以下の通りです。
 
-USB Hub 経由で複数デバイスを同時接続できます。安価なマウスで稀に再接続が必要なケースが既知ですが、ホットプラグ対応済みです。
-
-## ストレージ
-
-| デバイス | パス prefix | 容量 |
-|---|---|---|
-| 内蔵 LittleFS | ルート相対（例 `/data/foo.txt`） | 16MB |
-| SD カード | `/mnt/sd/...` | カード次第（FAT32 推奨） |
-
-`/mnt` を `Dir.open` するとマウント点 `sd` が見える仮想ディレクトリになっているので、`ls /mnt/sd` のような Unix 風の歩き方ができます。ファイルシステム API は [ファイル・I/O](api/filesystem.md) を参照。
-
-## ボタン
-
-基板上に 3 つの物理ボタンがあります。
-
-| ボタン | GPIO | 用途 |
-|---|---|---|
-| UP | GPIO 6 | カーソル上 |
-| DOWN | GPIO 7 | カーソル下 |
-| ENTER | GPIO 8 | 決定 |
-
-これらはシステム側で監視されており、HID イベントとしてアプリに通知されます。
-
-## LED
-
-| LED | GPIO | 色 | 用途 |
+| コネクタ | Sig2 | Sig2 | 備考 |
 |---|---|---|---|
-| STATUS | GPIO 4 | 緑 | 起動状態・正常動作 |
-| ERROR | GPIO 39 | 赤 | エラー表示 |
+| GROVE 1 | GPIO 14/I2C1-SDA | GPIO 21/I2C1-SCL | I2C用/RTC (RX8900 アドレス:0x32) と共有。10Kプルアップ有り |
+| GROVE 2 | GPIO 47 | GPIO 48 | 汎用。プルアップなし。電源選択可能 |
 
-## 拡張 I/O ピン
+GROVE 1 は RTC が接続されている I2C バスを共有するため、アドレスの衝突に注意してください。
 
-外部回路と接続できる端子:
+GROVE 2 は信号にプルアップなしで、電源の供給方法をピンヘッダで変更可能なので、UARTや[RMT](api/peripherals.md#rmt) など自由な用途で利用可能です。
+
+![Grove](images/Grove-pin.png)
+
+## PIN配置
+
+ESP32-S3 PIN配置
+
+![ESP32-S3 PIN配置](images/ESP32-S3-PIN.png)
+
+ESP32-WROVER PIN配置
+
+![ESP32-WROVER PIN配置](images/ESP32-WROVER-PIN.png)
 
 ### I2C
 
@@ -103,47 +81,15 @@ USB Hub 経由で複数デバイスを同時接続できます。安価なマウ
 
 `I2C.new(unit: "ESP32_I2C0", ...)` 等で利用します（[周辺機器 ▸ I2C](api/peripherals.md#i2c) 参照）。
 
-### 自由 GPIO
+### 外出しGPIO
 
-下記以外の GPIO は通常ユーザーアプリから自由に使えます。
+ピン位置 (S3)
 
-#### システム予約ピン（ユーザーは触らない）
+![ピン位置 (S3)](images/pin-location-s3.png)
 
-| GPIO | 用途 |
-|---|---|
-| 0 | UART リフラッシュ用ストラッピングピン |
-| 3 | JTAG プルダウン |
-| 5 | WROVER リセット |
-| 9〜13 | WROVER との通信 (UART1) |
-| 15〜18 | SD カード SPI3 |
-| 19, 20 | USB D-, D+ |
-| 35, 36, 37 | PSRAM |
-| 38 | SD カード検出 |
-| 45, 46 | ストラッピングピン |
+ピン位置 (WROVER)
 
-#### 内蔵機能で使われているピン
-
-| GPIO | 用途 |
-|---|---|
-| 1 | USB 電源制御 |
-| 4 | Status LED |
-| 6, 7, 8 | ボタン UP / DOWN / ENTER |
-| 14, 21 | I2C1 |
-| 39 | Error LED（JTAG MTCK と共有） |
-| 47, 48 | I2C2 |
-
-### 利用可否の確認方法
-
-`FmrbHw.pin_available?(pin)` で実行時にピンが空いているかを確認できます。`tool/gpio_viewer.app.rb` で全ピンの状態を一覧できます。
-
-```ruby
-unless FmrbHw.pin_available?(10)
-  Log.error("Pin 10 in use")
-  return
-end
-```
-
-詳細は [FmrbHw](api/const.md#fmrbhw) を参照。
+![ピン位置 (WROVER)](images/pin-location-wrover.png)
 
 ## RTC (リアルタイムクロック)
 
