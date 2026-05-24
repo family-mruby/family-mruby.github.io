@@ -1,6 +1,6 @@
 # FmrbApp
 
-`FmrbApp` は Family mruby のアプリケーション基底クラスです。ユーザーアプリは **必ず `FmrbApp` を継承して** ライフサイクルメソッドを実装します。
+`FmrbApp` は Family mruby のアプリケーション基底クラスです。ユーザーアプリは 必ず `FmrbApp` を継承して ライフサイクルメソッドを実装します。
 
 ## 最小サンプル
 
@@ -29,7 +29,7 @@ MyApp.new.start
 | メソッド | 呼び出し条件 | 戻り値の意味 |
 |---|---|---|
 | `on_create` | アプリ起動時に1回 | 任意（無視される） |
-| `on_update` | メインループ内で繰り返し | **次回 `on_update` までの待機ミリ秒**。デフォルト 330ms |
+| `on_update` | メインループ内で繰り返し | 次回 `on_update` までの待機ミリ秒。デフォルト 330ms |
 | `on_event(ev)` | キーボード／マウス／ゲームパッド／HID 受信時 | 任意 |
 | `on_suspend` | フルスクリーンアプリに切り替えられたとき | 任意 |
 | `on_resume` | 中断状態から復帰したとき | 任意 |
@@ -89,10 +89,10 @@ ev_alt?(ev)    # Alt が押されている
 ```
 
 !!! note
-    文字キーを判定するときは **`scancode` を使ってください**。`keycode` はプラットフォーム間で値が変わります（SDL2 はアスキーを返す等）。
+    文字キーを判定するときは `scancode` を使ってください。`keycode` はプラットフォーム間で値が変わります（SDL2 はアスキーを返す等）。
 
 !!! tip "`FmrbConst::KEY_*` / `MOD_*` 定数"
-    `scancode` の値は USB HID Usage ID なので、生の `0x29` （ESC）等を書く代わりに **`FmrbConst::KEY_ESC`** などの定数が使えます。修飾キーも `FmrbConst::MOD_CTRL` などのマスク定数があります。一覧は [定数 ▸ KEY_* / MOD_*](const.md#入力デバイス-キーボード-key_) を参照。
+    `scancode` の値は USB HID Usage ID なので、生の `0x29` （ESC）等を書く代わりに `FmrbConst::KEY_ESC` などの定数が使えます。修飾キーも `FmrbConst::MOD_CTRL` などのマスク定数があります。一覧は [定数 ▸ KEY_* / MOD_*](const.md#入力デバイス-キーボード-key_) を参照。
 
 ### マウス
 
@@ -135,7 +135,7 @@ when :gamepad_axis
 | `request_reload` | スクリプトをリロード（タイトルバー右クリックで自動呼び出しされる） |
 
 !!! tip "`@gfx.clear` の代わりに `clear_user_area`"
-    `@gfx.clear(color)` は **キャンバス全体** を塗りつぶすため、タイトルバーや閉じるボタンも消えます。ウィンドウ枠を保ちたい場合は `clear_user_area(color)` を使ってください。
+    `@gfx.clear(color)` は キャンバス全体 を塗りつぶすため、タイトルバーや閉じるボタンも消えます。ウィンドウ枠を保ちたい場合は `clear_user_area(color)` を使ってください。
 
 ## メッセージング
 
@@ -168,7 +168,7 @@ when :gamepad_axis
 | `@fullscreen` | フルスクリーンならば `true` |
 | `@window_width` / `@window_height` | ウィンドウ全体のサイズ |
 | `@pos_x` / `@pos_y` | ウィンドウ左上の絶対座標 |
-| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | **タイトルバーや枠を除いた描画可能領域** の境界 |
+| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | タイトルバーや枠を除いた描画可能領域 の境界 |
 | `@user_area_width` / `@user_area_height` | 描画可能領域のサイズ |
 | `@running` | アプリが動作中なら `true` |
 | `@suspended` | サスペンド中なら `true` |

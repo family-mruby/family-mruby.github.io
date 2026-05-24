@@ -46,6 +46,6 @@ Long ago, BASIC was often the first programming language that children encounter
 
 Today, development environments for most programming languages are freely available and easily installable on PCs. However, because so much is possible, beginners often don't know where to start. Even reaching the point where you can make something slightly beyond "Hello World," such as a simple game, can require a surprisingly high setup cost.
 
-**Family mruby** aims to recreate that accessible programming experience on modern hardware. It provides an environment where you can build small games or applications using a scripting language on a single microcontroller board—bringing back the joy of simple, immediate programming.
+Family mruby aims to recreate that accessible programming experience on modern hardware. It provides an environment where you can build small games or applications using a scripting language on a single microcontroller board—bringing back the joy of simple, immediate programming.
 
 For the system architecture, see the [Architecture](architecture.md) page.

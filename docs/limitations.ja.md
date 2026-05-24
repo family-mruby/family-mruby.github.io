@@ -7,19 +7,19 @@
 
 ## メモリ・PSRAM の制約
 
-Family mruby の各アプリは独立した Ruby VM として動作し、それぞれが PSRAM 上に **独自のヒープとスタック** を持ちます。
+Family mruby の各アプリは独立した Ruby VM として動作し、それぞれが PSRAM 上に 独自のヒープとスタック を持ちます。
 
 | 項目 | 目安・上限 |
 |---|---|
 | 標準アプリのヒープ | 数百 KB |
 | `large_memory = 1` 指定時のヒープ | より大きく確保（複数 MB） |
 | アプリ同時起動数 | メモリ次第。`large_memory` を有効にすると減る |
-| メッセージペイロード | 最大 **176 バイト**（MessagePack 後） |
+| メッセージペイロード | 最大 176 バイト（MessagePack 後） |
 
 ### 大きいデータを扱うとき
 
-- 画像や音声は **ファイルとして** flash / SD に置き、必要時に開く
-- アプリ間でやり取りする時は **ファイルパスを `publish`** するか、ファイルに書いてから読む
+- 画像や音声は ファイルとして flash / SD に置き、必要時に開く
+- アプリ間でやり取りする時は ファイルパスを `publish` するか、ファイルに書いてから読む
 
 ### 確認方法
 
@@ -32,7 +32,7 @@ Log.info("free=#{info[:free]} largest_block=#{info[:largest_block]}")
 
 ### PSRAM スタックと DMA
 
-PSRAM 上の領域を **DMA に直接渡せない** ハードウェア制約があります（SPI flash や一部周辺機器）。Family mruby はこのため `hw_proxy` という仕組みで内部的に SRAM 経由のバッファを使っていますが、自分で C 拡張を書くときは注意してください。
+PSRAM 上の領域を DMA に直接渡せない ハードウェア制約があります（SPI flash や一部周辺機器）。Family mruby はこのため `hw_proxy` という仕組みで内部的に SRAM 経由のバッファを使っていますが、自分で C 拡張を書くときは注意してください。
 
 ## picoruby と CRuby の差分
 
@@ -66,7 +66,7 @@ a[j] = tmp
 
 ### `JSON` 利用時は `::JSON.parse` と書く
 
-JSON ライブラリは利用可能ですが、クラス内で `JSON.parse` と書くと picoruby の定数探索でクラス内 `JSON` を先に探して失敗します。**`::JSON.parse(...)` と先頭に `::` を付ける** のが安全です。詳細は [ユーティリティ ▸ JSON](api/utilities.md#json) を参照。
+JSON ライブラリは利用可能ですが、クラス内で `JSON.parse` と書くと picoruby の定数探索でクラス内 `JSON` を先に探して失敗します。`::JSON.parse(...)` と先頭に `::` を付ける のが安全です。詳細は [ユーティリティ ▸ JSON](api/utilities.md#json) を参照。
 
 ### `IO` の挙動
 
@@ -77,7 +77,7 @@ JSON ライブラリは利用可能ですが、クラス内で `JSON.parse` と�
 
 ### `sleep_ms` が止まる場合がある
 
-Kernel の `sleep_ms`（picoruby が提供）は、`_spin` の外（つまり `FmrbApp` のメインループから外れた独立タスク中）で **tick が進まず停止する** ことがあります。
+Kernel の `sleep_ms`（picoruby が提供）は、`_spin` の外（つまり `FmrbApp` のメインループから外れた独立タスク中）で tick が進まず停止する ことがあります。
 
 ```ruby
 # NG: 独立タスク内では止まることあり
@@ -87,7 +87,7 @@ sleep_ms(500)
 Machine.delay_ms(500)
 ```
 
-通常の `on_update` 内では `on_update` の **戻り値** で待機時間を指定するのが正攻法です:
+通常の `on_update` 内では `on_update` の 戻り値 で待機時間を指定するのが正攻法です:
 
 ```ruby
 def on_update
@@ -114,7 +114,7 @@ end
 | 1 ファイルの最大サイズ | LittleFS の制限内（数 MB 程度推奨） |
 | パスの最大長 | `FmrbConst::MAX_PATH_LEN` |
 | ファイル名 | ASCII 推奨。日本語や記号は避ける |
-| `Dir#seek` / `Dir#tell` | **未対応**（`ENOSYS`）。`rewind` してから数え直す |
+| `Dir#seek` / `Dir#tell` | 未対応（`ENOSYS`）。`rewind` してから数え直す |
 
 ## mruby tick
 
@@ -139,7 +139,7 @@ end
 
 ### `GfxBlock` の制約
 
-`GfxBlock` は描画コマンド列を WROVER 側にバイトコードとしてキャッシュする仕組みのため、**ブロック内で命令数を変えてはいけません**。
+`GfxBlock` は描画コマンド列を WROVER 側にバイトコードとしてキャッシュする仕組みのため、ブロック内で命令数を変えてはいけません。
 
 ```ruby
 # NG: kwargs によって命令数が変わる
@@ -157,11 +157,11 @@ end
 
 ## アプリ間メッセージのサイズ制限
 
-[Pub/Sub](api/pubsub.md) の `publish` / `send_message` のペイロードは MessagePack 後で **176 バイト** までです。それを超える場合はファイル経由にする、複数メッセージに分けるなどの工夫が必要です。
+[Pub/Sub](api/pubsub.md) の `publish` / `send_message` のペイロードは MessagePack 後で 176 バイト までです。それを超える場合はファイル経由にする、複数メッセージに分けるなどの工夫が必要です。
 
 ## ファイル選択ダイアログの制限
 
-`request_file_select(mode)` は同時に **1 つのアプリ** からしか呼べません。同時に複数のアプリで開こうとするとカーネルが拒否します。
+`request_file_select(mode)` は同時に 1 つのアプリ からしか呼べません。同時に複数のアプリで開こうとするとカーネルが拒否します。
 
 ## 関連
 

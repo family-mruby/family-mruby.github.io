@@ -12,12 +12,12 @@ Family mruby は、FreeRTOS上に構築された「MicroRubyベースのマル�
 
 アーキテクチャは2つの主要コンポーネントで構成されています：
 
-- **fmrb-core (ESP32-S3 with PSRAM)**: Family mruby OSフレームワークを実行するメイン処理ボード。複数のFreeRTOSタスクをホストし、それぞれが独立したVMを実行します：
+- fmrb-core (ESP32-S3 with PSRAM): Family mruby OSフレームワークを実行するメイン処理ボード。複数のFreeRTOSタスクをホストし、それぞれが独立したVMを実行します：
     - OS Manager (MicroRuby): システム管理と調整
     - MicroRuby App: Rubyで書かれたユーザーアプリケーション
     - Guest Language Apps: Luaなどの他のスクリプト言語のサポート
 
-- **fmrb-audio-graphics (ESP32 with PSRAM)**: オーディオ/グラフィックス処理を担当する専用ボード。Audio/Graphics Controller、NES APUエミュレータ、LovyanGFXライブラリを含みます。コアボードとは UART 経由で通信します。
+- fmrb-audio-graphics (ESP32 with PSRAM): オーディオ/グラフィックス処理を担当する専用ボード。Audio/Graphics Controller、NES APUエミュレータ、LovyanGFXライブラリを含みます。コアボードとは UART 経由で通信します。
 
 ## マルチVM
 
@@ -25,10 +25,10 @@ Family mruby は、FreeRTOS上に構築された「MicroRubyベースのマル�
 
 ## 主な特徴
 
-- **OSの基盤**: ESP-IDF上で動作するFreeRTOS
-- **VM実装**: mrubyベースのMicroRuby VMを使用
-- **独立したメモリプール**: 各VMは独自のメモリアロケータハンドルを持ち、システム全体のメモリ断片化を防止し、個々のVMの障害を隔離します
-- **多言語サポート**: MicroRubyを主要サポート、Luaの実験的サポート、MicroPythonの統合も計画中
+- OSの基盤: ESP-IDF上で動作するFreeRTOS
+- VM実装: mrubyベースのMicroRuby VMを使用
+- 独立したメモリプール: 各VMは独自のメモリアロケータハンドルを持ち、システム全体のメモリ断片化を防止し、個々のVMの障害を隔離します
+- 多言語サポート: MicroRubyを主要サポート、Luaの実験的サポート、MicroPythonの統合も計画中
 
 ## ターゲットハードウェア
 

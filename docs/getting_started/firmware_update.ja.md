@@ -9,21 +9,21 @@
 
 | 項目 | 推奨 |
 |---|---|
-| Web Serial 対応ブラウザ | **Chrome / Edge / Opera** （デスクトップ版）。Firefox / Safari は不可 |
+| Web Serial 対応ブラウザ | Chrome / Edge / Opera （デスクトップ版）。Firefox / Safari は不可 |
 | USB Type-C ケーブル | データ通信対応のもの（充電専用ケーブルでは書き込めません） |
 
 ## 書き込み手順
 
-Family mruby 基板には **MCU が 2 つ** 載っており（メイン処理の ESP32-S3と、映像／音声の ESP32-WROVER）、それぞれ独立にフラッシュ書き込みします。インストーラ画面に各 MCU 用のボタンが用意されています。
+Family mruby 基板には MCU が 2 つ 載っており（メイン処理の ESP32-S3と、映像／音声の ESP32-WROVER）、それぞれ独立にフラッシュ書き込みします。インストーラ画面に各 MCU 用のボタンが用意されています。
 
 1. ブラウザで [インストーラ](https://family-mruby.github.io/family-mruby-installer/) を開く
-2. 基板を **USB Type-C ケーブルで PC に接続**（ケーブルはデータ対応のものを使用）
-3. ドロップダウンから書き込みたい **バージョン** を選択
+2. 基板を USB Type-C ケーブルで PC に接続（ケーブルはデータ対応のものを使用）
+3. ドロップダウンから書き込みたい バージョン を選択
 4. 書き込み対象に応じて以下のいずれかをクリック:
-    - **`fmruby-core`** ボタン: ESP32-S3 を書き込む
-    - **`fmruby-graphics-audio`** ボタン: ESP32-WROVER を書き込む
-5. ブラウザのダイアログで **シリアルポート** を選択
-6. 自動的にチップ判定が行われ、**書き込み開始**
+    - `fmruby-core` ボタン: ESP32-S3 を書き込む
+    - `fmruby-graphics-audio` ボタン: ESP32-WROVER を書き込む
+5. ブラウザのダイアログで シリアルポート を選択
+6. 自動的にチップ判定が行われ、書き込み開始
 
 !!! note "更新の対象"
     両方のMCUのファームウェアをバージョンを揃えて更新してください。合っていないと正常に起動しないです。
@@ -36,14 +36,14 @@ Family mruby 基板には **MCU が 2 つ** 載っており（メイン処理の
 
 基板には用途別の USB Type-C ポートがあります:
 
-- **ESP32-S3 側 USB-C** に繋ぐと → fmruby-core を書き込み可能
-- **ESP32-WROVER 側 USB-C** に繋ぐと → fmruby-graphics-audio を書き込み可能
+- ESP32-S3 側 USB-C に繋ぐと → fmruby-core を書き込み可能
+- ESP32-WROVER 側 USB-C に繋ぐと → fmruby-graphics-audio を書き込み可能
 
 ## トラブル時のチェック
 
 ### ブラウザがシリアルポートを認識しない
 
-- ケーブルが **データ通信対応** か確認（充電専用 USB-C ケーブルでは認識しません）
+- ケーブルが データ通信対応 か確認（充電専用 USB-C ケーブルでは認識しません）
 - USB認証を受けているケーブルを利用する
 - USB ハブを介さず PC に直接挿す
 - なるべく短いUSBケーブルを利用する
@@ -58,5 +58,5 @@ Family mruby 基板には **MCU が 2 つ** 載っており（メイン処理の
 
 ### 書き込み後に画面が出ない
 
-- **両方の MCU が同じプロトコルバージョン** か確認。古い fmruby-core × 新しい fmruby-graphics-audio などの組み合わせは起動に失敗します
+- 両方の MCU が同じプロトコルバージョン か確認。古い fmruby-core × 新しい fmruby-graphics-audio などの組み合わせは起動に失敗します
 - 両方とも最新版に揃えて書き込む

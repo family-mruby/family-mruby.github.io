@@ -58,13 +58,13 @@
 
 ## 学習に最適な順番
 
-1. **`mruby.app.rb`** を読んで基本構造を把握
-2. **`shapes.app.rb`** で `FmrbGfx` の使い方を確認
-3. **`pub_demo.app.rb` / `sub_demo.app.rb`** でアプリ間メッセージング
-4. **`piano.app.rb`** で音声 API
-5. **`flappy.rb`** で「描画 + 音 + 入力」の組み合わせ
-6. **`tetris.app.rb`** で状態を持つゲーム
-7. **`raycaster.app.rb`** で大規模アプリの構成と最適化
+1. `mruby.app.rb` を読んで基本構造を把握
+2. `shapes.app.rb` で `FmrbGfx` の使い方を確認
+3. `pub_demo.app.rb` / `sub_demo.app.rb` でアプリ間メッセージング
+4. `piano.app.rb` で音声 API
+5. `flappy.rb` で「描画 + 音 + 入力」の組み合わせ
+6. `tetris.app.rb` で状態を持つゲーム
+7. `raycaster.app.rb` で大規模アプリの構成と最適化
 
 ## 自分のアプリを書きたいときの起点
 

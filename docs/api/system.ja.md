@@ -30,10 +30,10 @@ end
 | `Machine.delay_ms(ms)` | FreeRTOS の `vTaskDelay` ベースで `ms` ミリ秒待機（戻り値: `ms`） |
 | `Machine.busy_wait_ms(ms)` | ビジーループによる正確な待機 |
 | `Machine.sleep(sec)` | 指定秒数スリープ。2 秒以上 86400 秒未満 |
-| `Machine.deep_sleep(sec)` | ディープスリープ（**未実装**） |
+| `Machine.deep_sleep(sec)` | ディープスリープ（未実装） |
 
 !!! warning "`sleep_ms` の落とし穴"
-    Kernel の `sleep` / `sleep_ms` は **`_spin` の外（独立タスク中）では tick が進まず止まる** ことがあります。短時間の待機は **`Machine.delay_ms`** を使ってください。詳細は [制約事項](../limitations.md) を参照。
+    Kernel の `sleep` / `sleep_ms` は `_spin` の外（独立タスク中）では tick が進まず止まる ことがあります。短時間の待機は `Machine.delay_ms` を使ってください。詳細は [制約事項](../limitations.md) を参照。
 
 ### 時計
 

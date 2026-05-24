@@ -13,7 +13,7 @@ Family mruby が対応する音声ファイル形式と、その作成・変換�
 
 ## FMSQ
 
-FMSQ (Family mruby Sequence) は **NES APU 互換** の音楽データを記述する独自フォーマットです。短い効果音や BGM ループに向いています。
+FMSQ (Family mruby Sequence) は NES APU 互換 の音楽データを記述する独自フォーマットです。短い効果音や BGM ループに向いています。
 
 ### ファイル構造
 
@@ -107,7 +107,7 @@ NES Sound Format は実機ファミコン音楽を再生する標準フォーマ
 
 ## WAV / MP3
 
-**未対応** です。FMSQ または NSF に変換してください。
+未対応 です。FMSQ または NSF に変換してください。
 
 ## 直接合成 (`note_on` / `note_off`)
 

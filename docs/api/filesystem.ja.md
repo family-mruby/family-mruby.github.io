@@ -4,27 +4,12 @@
 
 ## ファイル名前空間
 
-ユーザーから見えるパスは Unix 風の単一名前空間です。アプリは `/data/...` のようなルート相対のパス、SD カードへは `/mnt/sd/...` を `File.open` / `Dir.open` に渡せます。HAL が ESP32 / Linux 両方の実際のマウントに解決します。
+ユーザーから見えるパスは Unix 風の単一名前空間です。アプリは `/home/...` のようなルート相対のパス、SD カードへは `/mnt/sd/...` を `File.open` / `Dir.open` に渡せます。HAL が ESP32 / Linux 両方の実際のマウントに解決します。
 
 | パス | デバイス | 用途 |
 |---|---|---|
-| `/...`（`/app`, `/data`, `/usr` 等） | 内蔵 LittleFS（16MB） | システムファイル、ユーザーアプリ、永続データ |
+| `/...`（`/app`, `/home`, `/usr` 等） | 内蔵 LittleFS（16MB） | システムファイル、ユーザーアプリ、永続データ |
 | `/mnt/sd/...` | SD カード（FAT32） | 大容量データ、音楽、画像 |
-
-```ruby
-# 内蔵 flash 上のファイル
-File.open("/data/log.txt", "r") { |f| f.read }
-
-# SD カード上のファイル
-File.open("/mnt/sd/song.nsf", "r") { |f| f.read }
-
-# `/mnt` を開くとマウント点が列挙される（仮想ディレクトリ）
-Dir.open("/mnt")     # → ["sd"]
-Dir.open("/mnt/sd")  # → SD カードの中身
-```
-
-!!! note "内部マウント点の名称（参考）"
-    HAL 内部では内蔵 flash を `/flash`、SD カードを `/sd` というマウント名で扱っており、`/flash/foo` や `/sd/foo` といった表記もエイリアスとして受け付けます。アプリコードでは混乱を避けるため、上記のルート相対 / `/mnt/sd` を使ってください。
 
 ## File クラス
 
@@ -60,10 +45,10 @@ Dir.open("/mnt/sd")  # → SD カードの中身
 
 ```ruby
 # 読み込み
-text = File.open("/data/log.txt", "r") { |f| f.read }
+text = File.open("/home/log.txt", "r") { |f| f.read }
 
 # 書き込み
-File.open("/data/score.txt", "w") do |f|
+File.open("/home/score.txt", "w") do |f|
   f.write("score=#{@score}\n")
 end
 
@@ -73,11 +58,8 @@ if File.exist?("/usr/share/icon/ruby.icon")
 end
 
 # 削除
-File.delete("/tmp/old.dat") if File.exist?("/tmp/old.dat")
+File.delete("/home/old.dat") if File.exist?("/home/old.dat")
 ```
-
-!!! warning "`File.binread` は無い"
-    picoruby には `File.binread` / `File.read` のクラスメソッドがありません。**`File.open(path, "r") { |f| f.read }`** を使ってください。
 
 ## Dir クラス
 
@@ -113,7 +95,7 @@ list_files("/usr/share/music")
 ```
 
 !!! note
-    `Dir#seek` / `Dir#tell` は ESP32 VFS が対応しないため `ENOSYS` を返します。`rewind` してからカウントし直す方法を使ってください。
+    `Dir#seek` / `Dir#tell` は ESP32 VFS が対応しないため `ENOSYS` を返します。
 
 ## IO クラス
 
@@ -128,8 +110,6 @@ list_files("/usr/share/music")
 | `close` | クローズ |
 | `flush` | バッファフラッシュ |
 
-通常は `File.open` 経由で使うため、`IO.new` を直接呼ぶことは少ないです。
-
 ## エラー処理
 
 ファイル操作系は失敗時に例外を上げます（ファイルが無い、権限不足など）。`rescue` で受けるのが基本です。
@@ -141,16 +121,6 @@ rescue => e
   Log.error("read failed: #{e.message}")
   return nil
 end
-```
-
-## 仮想パスはそのまま渡す
-
-ファイル選択ダイアログや BLE で受け取った仮想パスは、そのまま `File.open` / `Dir.open` に渡します。
-
-```ruby
-File.open("/mnt/sd/song.nsf", "r") { |f| f.read }    # SD カード
-File.open("/data/save.dat", "r")                     # 内蔵フラッシュ
-Dir.open("/mnt/sd")                                  # SD のルート
 ```
 
 ## 関連

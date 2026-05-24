@@ -11,11 +11,11 @@
 | `publish(topic, data = nil)` | トピックへメッセージを送信。`data` は `Hash` / `Array` / 数値 / `String` / `nil` |
 | `send_message(dest_pid, msg_type, data)` | カーネルや特定プロセスへの直接送信（低レベル） |
 
-`data` は内部で **MessagePack** に自動シリアライズされます（最大 176 バイト）。
+`data` は内部で MessagePack に自動シリアライズされます（最大 176 バイト）。
 
 ## 受信ハンドラ
 
-トピックメッセージは `on_event(ev)` ではなく **`on_control(msg)`** で受け取ります。
+トピックメッセージは `on_event(ev)` ではなく `on_control(msg)` で受け取ります。
 
 ```ruby
 def on_control(msg)
@@ -33,7 +33,7 @@ end
 | `"data"` | publish 側が渡したペイロード（Hash 等） |
 
 !!! note
-    `subscribe`、`publish`、`unsubscribe`、`send_message` の中身は **`send_message(PROC_ID_KERNEL, MSG_TYPE_APP_CONTROL, ...)`** でカーネルにコマンドを送る糖衣です。`on_control` はカーネルからのアプリ制御メッセージ全般を受ける入口で、Pub/Sub もそこを経由します。
+    `subscribe`、`publish`、`unsubscribe`、`send_message` の中身は `send_message(PROC_ID_KERNEL, MSG_TYPE_APP_CONTROL, ...)` でカーネルにコマンドを送る糖衣です。`on_control` はカーネルからのアプリ制御メッセージ全般を受ける入口で、Pub/Sub もそこを経由します。
 
 ## サンプル
 
@@ -116,7 +116,7 @@ SubDemo.new.start
 
 ## トピック設計
 
-トピック名は **任意の文字列**。アプリ同士で取り決めれば動きます。プロジェクトで広く使われる予約名は今のところありません。
+トピック名は 任意の文字列。アプリ同士で取り決めれば動きます。プロジェクトで広く使われる予約名は今のところありません。
 
 推奨される命名規則:
 
@@ -128,7 +128,7 @@ SubDemo.new.start
 
 | 項目 | 値 |
 |---|---|
-| ペイロード最大サイズ | **176 バイト**（MessagePack 後） |
+| ペイロード最大サイズ | 176 バイト（MessagePack 後） |
 | `data` に渡せる型 | `Hash`、`Array`、`Integer`、`Float`、`String`、`Boolean`、`nil` |
 | 送信タイムアウト | カーネル内部で 5 秒 |
 
@@ -136,7 +136,7 @@ SubDemo.new.start
 
 ## HID イベントとの違い
 
-キーボード／マウス／ゲームパッドの入力は **`on_event(ev)`** に直接届きます（カーネルが `MSG_TYPE_HID_EVENT` でルーティング）。Pub/Sub と混同しないでください。
+キーボード／マウス／ゲームパッドの入力は `on_event(ev)` に直接届きます（カーネルが `MSG_TYPE_HID_EVENT` でルーティング）。Pub/Sub と混同しないでください。
 
 | 仕組み | 受信ハンドラ | 用途 |
 |---|---|---|

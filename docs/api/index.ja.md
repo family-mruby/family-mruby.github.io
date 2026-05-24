@@ -91,7 +91,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 |---|---|
 | `SpriteImage` | `new(gfx, w, h, trans_color, use_trans:)` / `load_bmp(path)` / `set_target` / `reset_target` / `destroy` |
 | `SpriteInstance` | `new(gfx, frame_images, x, y, z_order)` / `move(x, y)` / `visible=` / `frame=` / `destroy` |
-| `GfxBlock` | `new(gfx, **kwargs) { |r, **kwargs| ... }` / `draw(**kwargs)` / `destroy` |
+| `GfxBlock` | `new(gfx, kwargs) { |r, kwargs| ... }` / `draw(**kwargs)` / `destroy` |
 
 ### `FmrbAudio` (`@audio`)
 
@@ -108,7 +108,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 
 `subscribe(topic)` / `unsubscribe(topic)` / `publish(topic, data=nil)` / `send_message(dest_pid, msg_type, data)`
 
-メッセージは `on_event` ではなく **`_handle_system_control(msg)` から `on_control(msg)` 経由** で受信。詳細は [Pub/Sub](pubsub.md) 参照。
+メッセージは `on_event` ではなく `_handle_system_control(msg)` から `on_control(msg)` 経由 で受信。詳細は [Pub/Sub](pubsub.md) 参照。
 
 ### `IO` / `File` / `Dir`
 
@@ -136,7 +136,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 `Task.pass`、`Machine.delay_ms(ms)`、`Machine.uptime_us`、`Machine.set_hwclock(epoch)`、`Machine._reboot`。
 
 !!! warning
-    `sleep` (Kernel) は `_spin` 外で tick が進まず止まることがあります。短時間の待機は **`Machine.delay_ms`** を使ってください（[制約事項](../limitations.md) 参照）。
+    `sleep` (Kernel) は `_spin` 外で tick が進まず止まることがあります。短時間の待機は `Machine.delay_ms` を使ってください（[制約事項](../limitations.md) 参照）。
 
 ## 主要インスタンス変数（`FmrbApp` 継承時）
 
@@ -154,12 +154,12 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `@user_area_width` / `@user_area_height` | 描画可能領域のサイズ |
 | `@canvas` | キャンバス ID（C 内部用） |
 
-`@user_area_*` はタイトルバーや枠線を除いた **アプリが自由に描いてよい領域** の座標。`@fullscreen` の場合は全画面が `@user_area_*`。
+`@user_area_*` はタイトルバーや枠線を除いた アプリが自由に描いてよい領域 の座標。`@fullscreen` の場合は全画面が `@user_area_*`。
 
 ## 座標系・色フォーマット
 
-- 座標系: **左上原点 (0, 0)**、X 右方向 / Y 下方向
-- 色: **RGB332**（8bit, R:3 G:3 B:2）。`FmrbGfx::WHITE` などの定数か `FmrbGfx.rgb_to_332(r, g, b)` で生成
+- 座標系: 左上原点 (0, 0)、X 右方向 / Y 下方向
+- 色: RGB332（8bit, R:3 G:3 B:2）。`FmrbGfx::WHITE` などの定数か `FmrbGfx.rgb_to_332(r, g, b)` で生成
 
 ## 描画の流れ
 
@@ -171,4 +171,4 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 ```
 
 !!! warning "`present` を呼ばないと表示されない"
-    描画系メソッドは **`@gfx.present` を呼ぶまで画面に出ません**。`SpriteInstance#move` 等のスプライト操作も `present` のタイミングで合成されます。
+    描画系メソッドは `@gfx.present` を呼ぶまで画面に出ません。`SpriteInstance#move` 等のスプライト操作も `present` のタイミングで合成されます。

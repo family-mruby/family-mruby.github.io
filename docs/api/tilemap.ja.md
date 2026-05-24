@@ -22,7 +22,7 @@ TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16)
 | 引数 | 用途 |
 |---|---|
 | `gfx` | `FmrbGfx` インスタンス |
-| `path` | **WROVER 側にすでに転送された** BMP のパス（`@gfx.transfer_file` で送る） |
+| `path` | WROVER 側にすでに転送された BMP のパス（`@gfx.transfer_file` で送る） |
 | `cols:` | シートの列数（タイル単位） |
 | `rows:` | 行数。`nil` なら BMP のサイズから自動推定（8bit BMP 前提） |
 | `tile_size:` | 1 タイルのピクセル幅・高さ（既定: 16） |
@@ -64,7 +64,7 @@ sheet.stamp(5, dst_x: 16, dst_y: 0)   # 5 番目のタイルを右に
 TileMap.new(json_path)
 ```
 
-`json_path` は **core 側 (内蔵 flash) の JSON パス**。WROVER 側ではないことに注意。
+`json_path` は core 側 (内蔵 flash) の JSON パス。WROVER 側ではないことに注意。
 
 ### メソッド
 
@@ -128,10 +128,10 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 
 ## マップを作るツール
 
-タイルシートとマップは **Web ツール** で作成できます（`fmruby-core/tool/web/` に同梱）:
+タイルシートとマップは Web ツール で作成できます（`fmruby-core/tool/web/` に同梱）:
 
-- **スプライトエディタ**: 16x16 RGB332 タイルを並べた BMP を作る
-- **マップエディタ**: タイル配置 + イベント編集 → `fmrb_map` JSON エクスポート
+- スプライトエディタ: 16x16 RGB332 タイルを並べた BMP を作る
+- マップエディタ: タイル配置 + イベント編集 → `fmrb_map` JSON エクスポート
 
 `ruby web_server.rb` で起動して `http://localhost:8080` から使えます（[コンソール](../getting_started/console.md) と同じサーバ）。
 
@@ -143,7 +143,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 - 右 128x240: プレイヤー座標 / 直前イベントの表示パネル
 - プレイヤーは別 BMP（16x16）を `SpriteInstance` で矢印キー / D-pad 操作
 
-このディレクトリには `.app.rb` / `.app.toml` と一緒に `world.bmp`、`world.map.json`、`player.bmp` が同梱されています。ランチャーは **3 階層スキャン** で `/app/<category>/<bundle>/*.app.toml` も拾うので、アプリと一緒にアセットを置けます。
+このディレクトリには `.app.rb` / `.app.toml` と一緒に `world.bmp`、`world.map.json`、`player.bmp` が同梱されています。ランチャーは 3 階層スキャン で `/app/<category>/<bundle>/*.app.toml` も拾うので、アプリと一緒にアセットを置けます。
 
 ## 関連
 

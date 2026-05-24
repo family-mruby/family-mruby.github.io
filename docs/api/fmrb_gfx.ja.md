@@ -3,12 +3,12 @@
 `FmrbGfx` は描画 API を提供するクラスです。`FmrbApp` を継承したアプリでは `@gfx` として参照できます。
 
 !!! warning "`present` を呼ぶまで画面に出ない"
-    描画コマンドはすべてバッファに蓄積されます。**`@gfx.present` を呼んだタイミング** で fmruby-graphics-audio に転送され、画面に反映されます。
+    描画コマンドはすべてバッファに蓄積されます。`@gfx.present` を呼んだタイミング で fmruby-graphics-audio に転送され、画面に反映されます。
 
 ## 座標系・カラーモデル
 
 - 座標系: 左上原点 (0, 0)、X が右方向、Y が下方向
-- 色: **RGB332**（8bit、R:3 G:3 B:2）。`0x00`〜`0xFF` の整数で指定
+- 色: RGB332（8bit、R:3 G:3 B:2）。`0x00`〜`0xFF` の整数で指定
 
 `FmrbGfx::WHITE` などの定数を使うか、`FmrbGfx.rgb_to_332(r, g, b)` で 24bit 値から変換します。
 
@@ -105,8 +105,8 @@ FmrbGfx.hsv_to_rgb(120, 255, 255) # → [r, g, b] (各 0..255)
 | `family` | `size` | 内容 |
 |---|---|---|
 | `:default` | （指定不可） | Font0 6x8 ASCII。起動時の既定 |
-| `:ja` | `8` | **misaki_8** 8x8、システム UI と同サイズ |
-| `:ja` | `12` | **efontJA_12** 12x12、読みやすい |
+| `:ja` | `8` | misaki_8 8x8、システム UI と同サイズ |
+| `:ja` | `12` | efontJA_12 12x12、読みやすい |
 
 ### ハイブリッド描画 (`mixed: true`)
 
@@ -120,7 +120,7 @@ ASCII と日本語が混ざった文字列を 1 回の `draw_text` で描けま�
 コード例や英日混在の UI 文字列に便利です。
 
 !!! tip "`draw_window_frame` はフォントを保存・復元"
-    `FmrbApp#draw_window_frame` はタイトルバーを必ず既定の 6x8 で描いてから **呼び出し前のフォント設定を復元** します。アプリ側で毎フレーム `set_font` を再指定する必要はありません。
+    `FmrbApp#draw_window_frame` はタイトルバーを必ず既定の 6x8 で描いてから 呼び出し前のフォント設定を復元 します。アプリ側で毎フレーム `set_font` を再指定する必要はありません。
 
 !!! note "JA フォントの読み込みコスト"
     `set_font(:ja, ...)` 初回は WROVER 側でフォントデータを準備するため数十 ms 程度かかります。`on_create` 内で一度だけ呼ぶのが理想です。
@@ -164,15 +164,15 @@ img = @gfx.create_image_from_file("/img.bmp")
 | `file_status(path)` | `{exists:, size:}` |
 | `create_image_from_file(path)` | `{id:, width:, height:}` または `nil` |
 | `draw_image(id, x, y, scale_x: 1.0, scale_y: 1.0)` | 画像描画 |
-| `draw_tile(image_id, src_x, src_y, w, h, dst_x:, dst_y:)` | **画像の部分領域** を `(dst_x, dst_y)` にコピー描画。タイルマップ用 |
+| `draw_tile(image_id, src_x, src_y, w, h, dst_x:, dst_y:)` | 画像の部分領域 を `(dst_x, dst_y)` にコピー描画。タイルマップ用 |
 | `delete_image(id)` | 解放 |
 
 !!! note "対応画像形式"
-    `create_image_from_file` は **RGB332 の BMP** に対応します。フォーマットの詳細は [画像・アイコンファイル](../file_formats/image_formats.md) を参照。
+    `create_image_from_file` は RGB332 の BMP に対応します。フォーマットの詳細は [画像・アイコンファイル](../file_formats/image_formats.md) を参照。
 
 ### `draw_tile` の使いどころ
 
-`SpriteInstance` を作らずに **SpriteImage の一部だけ** をキャンバスに直接スタンプできます。タイルシート画像から 16x16 のセルを 1 マスずつ並べていく BG 描画に向いています。`use_transparent: true` で作った SpriteImage の透過色は尊重されるので、上下レイヤを重ねた地図描画もできます。
+`SpriteInstance` を作らずに SpriteImage の一部だけ をキャンバスに直接スタンプできます。タイルシート画像から 16x16 のセルを 1 マスずつ並べていく BG 描画に向いています。`use_transparent: true` で作った SpriteImage の透過色は尊重されるので、上下レイヤを重ねた地図描画もできます。
 
 ```ruby
 sheet = SpriteImage.new(@gfx, width: 64, height: 32,
@@ -195,7 +195,7 @@ sheet.load_bmp("/usr/share/sprites/tilesheet.bmp")
 ])
 ```
 
-キャンバスの **どの矩形をどう合成するか**（透過モード / 不透明モード）を指定するパフォーマンス用 API。丸角ウィンドウなど、角だけ透過させて中央を高速 memcpy パスで合成したいときに使います。最大 8 領域。`nil` か `[]` を渡すとクリア。
+キャンバスの どの矩形をどう合成するか（透過モード / 不透明モード）を指定するパフォーマンス用 API。丸角ウィンドウなど、角だけ透過させて中央を高速 memcpy パスで合成したいときに使います。最大 8 領域。`nil` か `[]` を渡すとクリア。
 
 通常は `.toml` の `rounded_corners` フラグ（[アプリ設定 ▸ rounded_corners](../file_formats/app_toml.md)）でシステム側が設定するので、ユーザーアプリで直接触る機会は少ないです。
 
@@ -236,7 +236,7 @@ ShapesApp.new.start
 ## 注意事項
 
 !!! warning "描画は present でまとめる"
-    高頻度に呼び出される `on_update` 内では、複数の描画コマンドの後に **1 回だけ `present`** を呼ぶのが推奨です。コマンドごとに `present` すると UART 帯域を圧迫します。
+    高頻度に呼び出される `on_update` 内では、複数の描画コマンドの後に 1 回だけ `present` を呼ぶのが推奨です。コマンドごとに `present` すると UART 帯域を圧迫します。
 
 !!! warning "ウィンドウ枠を侵さない"
     `@user_area_x0/y0/width/height` の範囲内で描画してください。タイトルバーや枠線を上書きすると見た目が崩れます。

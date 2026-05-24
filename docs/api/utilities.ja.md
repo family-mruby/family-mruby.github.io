@@ -26,7 +26,7 @@ end
 ```
 
 !!! warning "`::JSON` と書く"
-    クラスの中で書く `JSON.parse(...)` は picoruby の定数探索で **クラス内の `JSON`** として解釈され、見つからず失敗することがあります。`::JSON.parse(...)` と先頭に `::` を付けてトップレベルを明示してください。
+    クラスの中で書く `JSON.parse(...)` は picoruby の定数探索で クラス内の `JSON` として解釈され、見つからず失敗することがあります。`::JSON.parse(...)` と先頭に `::` を付けてトップレベルを明示してください。
 
 [TileMap](tilemap.md) は内部で `JSON.parse` を使ってマップファイルを読みます。
 
@@ -95,7 +95,7 @@ Log.info("size: #{bmp[:width]}x#{bmp[:height]}")
 ```
 
 !!! note
-    通常の画像表示では **WROVER 側でデコードが完結する** `SpriteImage#load_bmp` または `FmrbGfx#create_image_from_file` を使うのが高速です。`BMP332.parse` はピクセル配列を Ruby 側で扱いたい時（編集・検査）に使います。
+    通常の画像表示では WROVER 側でデコードが完結する `SpriteImage#load_bmp` または `FmrbGfx#create_image_from_file` を使うのが高速です。`BMP332.parse` はピクセル配列を Ruby 側で扱いたい時（編集・検査）に使います。
 
 詳細仕様は [画像・アイコンファイル](../file_formats/image_formats.md#bmp) を参照。
 

@@ -1,6 +1,6 @@
 # FmrbAudio
 
-`FmrbAudio` は音声再生 API です。基底クラスでは自動生成されないため、**自分で `FmrbAudio.new(self)` を呼んで** インスタンスを作ります。
+`FmrbAudio` は音声再生 API です。`FmrbAudio.new(self)` を呼んで インスタンスを作ります。
 
 ```ruby
 class MyApp < FmrbApp
