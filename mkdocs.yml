@@ -45,8 +45,9 @@ plugins:
           nav_translations:
             Home: ホーム
             Architecture: アーキテクチャ
-            Getting Started: はじめに
-            Power & Connection: 起動と接続
+            Getting Started: 基本的な使い方
+            For BOOTH Buyers: BOOTHで購入した方へ
+            Setup: 起動まで
             Hello World: Hello World
             Simulator: シミュレータ
             Console: コンソール
@@ -79,7 +80,8 @@ plugins:
 nav:
   - Home: index.md
   - Getting Started:
-      - Power & Connection: getting_started/setup.md
+      - For BOOTH Buyers: getting_started/booth.md
+      - Setup: getting_started/setup.md
       - Simulator: getting_started/simulator.md
       - Hello World: getting_started/hello_world.md
       - Console: getting_started/console.md

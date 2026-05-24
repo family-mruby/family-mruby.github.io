@@ -1,6 +1,10 @@
 # ハードウェア
 
-narya-board の各端子・ピン配置の仕様をまとめます。
+narya-board の各端子・ピン配置の仕様です。
+
+!!! note
+    内容編集中です
+
 
 !!! note
     回路図・KiCAD 設計データ・基板写真は [narya-board リポジトリ](https://github.com/family-mruby/narya-board) を参照してください。

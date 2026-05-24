@@ -1,5 +1,9 @@
 # アーキテクチャ
 
+!!! note
+    内容編集中です
+
+
 <div align="center">
   <img src="../images/Architecture.png" alt="Family mruby Architecture" width="800">
 </div>
