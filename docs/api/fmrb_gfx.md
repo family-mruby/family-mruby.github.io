@@ -12,6 +12,18 @@
 
 Use constants like `FmrbGfx::WHITE`, or convert from 24-bit values with `FmrbGfx.rgb_to_332(r, g, b)`.
 
+You can also check colors on sites like [this one](https://roger-random.github.io/RGB332_color_wheel_three.js/).
+
+### Drawing Layer Overview
+
+Drawing layers in normal mode
+
+![Drawing layers](../images/window.png)
+
+Drawing layers in fullscreen mode
+
+![Drawing layers in fullscreen](../images/fullscreen.png)
+
 ### Color Constants
 
 | Constant | Value |

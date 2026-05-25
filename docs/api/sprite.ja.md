@@ -11,6 +11,10 @@
 !!! warning "`@gfx.present` を呼ぶ"
     `SpriteInstance#move`・`visible=`・`frame=` の後は `@gfx.present` を呼んで ください。スプライトの合成 (composite) は `present` のタイミングで実行されます。
 
+## スプライトのデータ構造イメージ
+
+![スプライトのデータ構造イメージ](../images/sprite.png)
+
 ## SpriteImage
 
 画像バッファを保持するクラスです。`SpriteInstance` から参照されます。

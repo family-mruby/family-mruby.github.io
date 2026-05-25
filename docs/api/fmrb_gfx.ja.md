@@ -12,6 +12,18 @@
 
 `FmrbGfx::WHITE` などの定数を使うか、`FmrbGfx.rgb_to_332(r, g, b)` で 24bit 値から変換します。
 
+[こちら](https://roger-random.github.io/RGB332_color_wheel_three.js/) のようなサイトで色を確認することもできます。
+
+### 描画レイヤーのイメージ
+
+通常の描画レイヤーのイメージ
+
+![描画レイヤーのイメージ](../images/window.png)
+
+フルスクリーン時の描画レイヤーのイメージ
+
+![フルスクリーン描画レイヤーのイメージ](../images/fullscreen.png)
+
 ### カラー定数
 
 | 定数 | 値 |

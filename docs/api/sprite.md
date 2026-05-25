@@ -11,6 +11,10 @@ This page covers the sprite and tile map APIs.
 !!! warning "Call `@gfx.present`"
     After `SpriteInstance#move`, `visible=`, or `frame=`, you must call `@gfx.present`. Sprite compositing is performed at the `present` timing.
 
+## Sprite Data Structure Overview
+
+![Sprite data structure](../images/sprite.png)
+
 ## SpriteImage
 
 A class that holds an image buffer. Referenced by `SpriteInstance`.
