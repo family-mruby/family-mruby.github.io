@@ -1,7 +1,7 @@
 # Family mruby ドキュメント
 
 <div align="center">
-  <img src="../images/topimage.png" width="500" alt="FMRuby Logo">
+  <img src="../images/topimage.png" width="500" alt="Family mruby Logo">
 </div>
 
 ## Family mrubyとは
@@ -38,7 +38,7 @@ PicoRubyでグラフィカルなアプリケーションを簡単に実装する
 - [ファームウェア](https://github.com/family-mruby/family-mruby)
 - [基板データ](https://github.com/family-mruby/narya-board)
 
-## Family mruby を作った動機
+## 開発の背景
 
 昔、子供が最初に触れるプログラミング言語といえば、BASICという時代がありました。 制約は多いですが、パソコン以外にも、MSXやファミコンでBASICができるFamily BASICという製品もあり、そこからプログラミングの面白さを知り、プログラマーになった方もたくさん居られると思います。
 

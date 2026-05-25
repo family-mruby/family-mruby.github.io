@@ -1,7 +1,7 @@
 # Family mruby Documentation
 
 <div align="center">
-  <img src="../images/topimage.png" width="500" alt="FMRuby Logo">
+  <img src="../images/topimage.png" width="500" alt="Family mruby Logo">
 </div>
 
 ## What is Family mruby?
@@ -38,7 +38,7 @@ See [Getting Started](getting_started/booth) for details.
 - [Firmware](https://github.com/family-mruby/family-mruby)
 - [Board Data](https://github.com/family-mruby/narya-board)
 
-## Motivation Behind Family mruby
+## Development Background
 
 Long ago, BASIC was often the first programming language that children encountered. Despite its limitations, there were products like Family BASIC, which allowed BASIC programming not only on PCs but also on platforms such as the MSX or the Famicom (NES). Many programmers discovered the joy of programming through these environments.
 

@@ -1,8 +1,17 @@
 # Limitations
 
-## Memory and PSRAM Constraints
+## Differences from R2P2
 
-Each Family mruby app runs as an independent Ruby VM, with its own heap and stack allocated on PSRAM. (Lua and BASIC are currently concept implementations.)
+Family mruby is based only on the core part of PicoRuby, and some gems used in PicoRuby's official R2P2 have been independently rewritten.
+As a result, there may be differences in the available classes and method behavior.
+
+## Differences Between PicoRuby and CRuby
+
+PicoRuby is based on mruby, so some methods that are standard in CRuby may not be available.
+
+## Heap Size
+
+Each Family mruby app runs as an independent Ruby VM, with its own heap and stack allocated on PSRAM.
 
 | Item | Guideline / Limit |
 |---|---|
@@ -12,13 +21,13 @@ Each Family mruby app runs as an independent Ruby VM, with its own heap and stac
 
 You can check heap usage in the Monitor app.
 
-## Differences Between PicoRuby and CRuby
+## Lua and BASIC Support Status
 
-PicoRuby is based on mruby, so some methods that are standard in CRuby may not be available.
+The current Lua and BASIC support is a concept implementation and is not suitable for building full-fledged applications.
 
 ## Task / sleep Constraints
 
-Currently, calling the tick processing (`mrb_tick`) needed for PicoRuby's task switching from a context outside the mruby VM can corrupt the VM stack, so it is temporarily disabled. As a result, the following constraints apply.
+In the current version, calling the tick processing (`mrb_tick`) needed for PicoRuby's task switching from a context outside the mruby VM can corrupt the VM stack, so it is temporarily disabled. As a result, the following constraints apply.
 
 Tick handling is planned to be addressed in the future.
 
