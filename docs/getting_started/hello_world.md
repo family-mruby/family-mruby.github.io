@@ -19,16 +19,23 @@ Place both files under `/app/<directory-of-your-choice>/`, then rescan from the 
 
 ## Step 1: A minimal app that just displays text
 
-Start with an app that simply puts text on screen, without worrying about window management.
+Let's write an app that simply draws "Hello, Family mruby!" on the screen.
 
-### `.rb` file
+!!! warning "This sample does not allow closing the window"
+    `@gfx.clear` fills the entire canvas including the title bar. The title bar and close button drawn by the `FmrbApp` base class at startup are overwritten and disappear, so the close button is no longer visible on screen. To exit, reset the board once.
+    The next sample adds window frame drawing.
+
+Create `/app/usr/hello.app.rb` and implement the code below.
+
+You can write the code in the default app editor or via the web console. See [Console](console.md) for details on the console.
+
+### `/app/usr/hello.app.rb` file
 
 ```ruby
-# hello.app.rb
 class HelloApp < FmrbApp
   def on_create
     @gfx.clear(FmrbGfx::BLACK)
-    @gfx.draw_text(0, 0, "Hello, mruby!", FmrbGfx::WHITE)
+    @gfx.draw_text(0, 0, "Hello, Family mruby!", FmrbGfx::WHITE)
     @gfx.present
   end
 end
@@ -47,12 +54,7 @@ Code explanation
 | `@gfx.present` | Flushes the buffer to the screen (required) |
 | `HelloApp.new.start` | Runs the app |
 
-
-!!! warning "This sample does not allow closing the window"
-    `@gfx.clear` fills the entire canvas including the title bar. The title bar and close button drawn by the `FmrbApp` base class at startup are overwritten and disappear, so the close button is no longer visible on screen.
-    The next sample adds window frame drawing.
-
-### `.app.toml` file
+### `hello.app.toml` file
 
 Create `hello.app.toml` in the same directory:
 
@@ -76,28 +78,31 @@ default_window_pos_y = 40
 
 See [App configuration file (.toml)](../file_formats/app_toml.md) for a full list of keys.
 
+### Launching and displaying on screen
+
+1. Once the implementation is done, open the launcher and right-click to rescan (or restart the board)
+2. The title bar shows "Rescanning..." — wait 1-2 seconds and the new "Hello" app icon will appear
+3. Double-click the icon (or click with the mouse then press Enter)
+4. "Hello, Family mruby!" is displayed on screen
+
 ## Step 2: Displaying the window frame
 
-To make a practical GUI app, you need to keep the title bar and close button visible by paying attention to the following:
+In Step 1 we only drew text. To make a practical GUI app, you need to draw the title bar and close button by paying attention to the following:
 
 1. Fill only the app's drawable area (user area) instead of the entire window (so the title bar and border are not erased)
 2. Call `draw_window_frame` after drawing (to re-render the title bar provided by the base class)
 
+Update the code as follows.
+
 ```ruby
-# hello.app.rb (Step 2)
 class HelloApp < FmrbApp
   def on_create
     redraw
   end
 
-  def on_update
-    500
-  end
-
   def redraw
     clear_user_area(FmrbGfx::WHITE)   # Fill user area with white
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Hello, mruby!", FmrbGfx::BLACK)
+    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4, "Hello, Family mruby!", FmrbGfx::BLACK)
     draw_window_frame                  # Redraw title bar and border
     @gfx.present # Flush to screen
   end
@@ -106,62 +111,21 @@ end
 HelloApp.new.start
 ```
 
-| Change | Reason |
+| Point | Description |
 |---|---|
-| `@gfx.clear(FmrbGfx::BLACK)` to `clear_user_area(FmrbGfx::WHITE)` | Limits the drawing range to the user area, protecting the title bar. Background changed to white |
-| Text color from `WHITE` to `BLACK` | Better readability on a white background |
-| Added `draw_window_frame` | Redraws the frame provided by the base class. The close button becomes visible |
+| `@gfx.clear(FmrbGfx::BLACK)` to `clear_user_area(FmrbGfx::WHITE)` | Clears the area outside the title bar with the specified color |
+| Added `draw_window_frame` | Redraws the frame provided by the base class. The title bar and close button are drawn |
 | Drawing logic extracted into `redraw` | Organized for easier redraws later |
 
-!!! tip "`clear_user_area(color)` helper"
-    `FmrbApp` provides a `clear_user_area(color = FmrbGfx::BLACK)` helper, which is syntactic sugar for `@gfx.fill_rect(@user_area_x0, @user_area_y0, @user_area_width, @user_area_height, color)`. To specify a color, pass it like `clear_user_area(FmrbGfx::BLUE)`.
-
-With this:
-
-- You can close the app by clicking the X button in the top-right of the title bar
-- You can reload (`request_reload`) by right-clicking the title bar
-- The drawing area stays within `@user_area_*` and does not interfere with the frame
-
 !!! tip "What are @user_area_* variables?"
-    `@user_area_x0`, `y0`, `x1`, `y1`, `width`, `height` are the coordinates of the area where the app is free to draw, excluding the title bar and borders. In `@fullscreen` mode, this covers the entire screen. See [FmrbApp > Key instance variables](../api/fmrb_app.md#主要インスタンス変数) for details.
+    Coordinates of the area where the app is free to draw, excluding the title bar and borders. See [FmrbApp > Key instance variables](../api/fmrb_app.md#主要インスタンス変数) for details.
 
-## Transferring files to the board
+Restart and run the app — the title bar and window frame will be drawn, and you should be able to close the app by clicking the button at the top right.
 
-Transfer the `hello.app.rb` and `hello.app.toml` files written on your PC to `/app/myapps/` on the board.
+## Reloading a running app after edits
 
-The standard transfer method is the Console (a web tool via BLE). See [Console](console.md) for details.
-
-Directory layout after transfer:
-
-```
-/app/
-├── demo/
-├── game/
-├── tool/
-└── myapps/         ← Directory you create
-    ├── hello.app.rb
-    └── hello.app.toml
-```
-
-
-## Launching and displaying on screen
-
-1. After the file transfer is complete, open the launcher and right-click to rescan (or restart the board)
-2. The title bar shows "Rescanning..." — wait 1-2 seconds and the new "Hello" app icon will appear
-3. Double-click the icon (or click with the mouse then press Enter)
-4. "Hello, mruby!" is displayed on screen
-
-With the Step 2 version, you can close the app by clicking the X button on the right side of the title bar.
-
-## Editing and reloading
-
-When you want to update an app:
-
-1. Edit `hello.app.rb` on your PC
-2. Re-upload via the Console (overwrite with the same name)
-3. Right-click the app's title bar — a confirmation dialog appears and the app reloads
-
-Since it restarts on a per-file basis, you can develop without waiting for a full reboot.
+After editing the code, right-click the title bar of the running app and a reload button will appear.
+Running reload saves you the trouble of closing and reopening the app.
 
 ## Shortcut: Generate a template with `create_app`
 
@@ -178,32 +142,18 @@ Created: /app/usr/my_clock.app.toml
 Tip: edit it with `edit /app/usr/my_clock.app.rb`
 ```
 
-This creates:
+This automatically creates the following files, which you can use as a template.
 
 - `/app/usr/my_clock.app.rb` — Based on Step 2 (includes `clear_user_area` + `draw_window_frame`, with templates for all `on_*` lifecycle methods)
 - `/app/usr/my_clock.app.toml` — Standard-sized window configuration
 
-These 2 files are generated. They become visible after following "Reflecting changes in the launcher" below.
-
 ### Reflecting changes in the launcher
 
-The launcher scans and fixes the app list at startup, so newly added files do not appear automatically. To trigger a rescan:
+The launcher scans and fixes the app list at startup, so newly added files do not appear automatically. To trigger a rescan, right-click inside the launcher window. A restart also updates the list.
 
-1. Open the launcher (menu bar: `Family mruby` > `Launcher`)
-2. Right-click inside the launcher window
-3. The title bar briefly changes to "Rescanning..." (indicating the request was accepted)
-4. Wait 1-2 seconds (rescanning `/app/` in the background)
-5. The title returns to "Launcher" and the new app icon has been added
+### App file naming conventions
 
-!!! tip "A restart also reflects changes"
-    Instead of the right-click rescan, restarting the board (unplug and replug USB) triggers a scan at boot that automatically adds apps to the launcher. The right-click method is more convenient when you want to move quickly.
-
-!!! note "Icon images are cached"
-    Existing icons (`ruby.icon` / `lua.icon` / `basic.icon`, etc.) use the cache already uploaded to the WROVER side, so they are not re-uploaded. The rescan time is mainly the cost of reading `.toml` files under `/app/`.
-
-### Naming conventions
-
-`<name>` must contain only lowercase alphanumeric characters and underscores, starting with a letter. Examples:
+The argument to the `create_app` command must contain only lowercase alphanumeric characters and underscores, starting with a letter. Examples:
 
 | Input | Generated class name | Display name |
 |---|---|---|
@@ -215,11 +165,7 @@ The class name is generated by converting snake_case to CamelCase with an `App` 
 
 ### Destination directory
 
-Templates are placed in `/app/usr/` (created automatically). This is a dedicated directory for user-created apps, separate from categories like `demo`/`game`/`tool`.
-
-### Existing file protection
-
-If a file with the same name already exists, the command stops with an error (to prevent accidental overwrites). To continue, either delete the file with `rm` or choose a different name.
+Templates are placed in `/app/usr/` (created automatically).
 
 ### Customizing the template
 
@@ -230,7 +176,7 @@ The template files themselves are located in `/usr/share/template/`:
 /usr/share/template/app.toml.template
 ```
 
-Editing these files directly lets you customize the output of subsequent `create_app` calls to your preference. Placeholders:
+Editing these files directly lets you customize the output of subsequent `create_app` calls to your preference.
 
 | Placeholder | Meaning |
 |---|---|
@@ -258,15 +204,9 @@ Editing these files directly lets you customize the output of subsequent `create
 
 - It may be crashing due to an exception. Check the logs:
     - Add `Log.info` in `on_create` to verify progress
-    - Call `FmrbApp._get_last_error` from another app to check the most recent error
 
 ### Nothing appears on screen
 
 - Check that `@gfx.present` is being called
 - Check that drawing coordinates are within the `@user_area_x0 / y0 / width / height` range
 
-### Close button is not visible
-
-- `@gfx.clear` is erasing the entire canvas. Instead, fill within the `@user_area_*` range as in Step 2 and call `draw_window_frame`
-
-See [Limitations](../limitations.md) for more details.

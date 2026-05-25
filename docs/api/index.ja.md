@@ -142,19 +142,18 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 
 | 変数 | 内容 |
 |---|---|
-| `@gfx` | `FmrbGfx` インスタンス（headless 時は `nil`） |
-| `@bg_gfx` | デスクトップ背景キャンバス用（通常 `nil`） |
+| `@gfx` | `FmrbGfx` インスタンス |
+| `@canvas` | キャンバス ID |
 | `@audio` | `FmrbAudio` インスタンス |
 | `@name` | アプリ表示名（`.toml` の `app_screen_name`） |
 | `@platform` | `:esp32` / `:linux` |
-| `@fullscreen` | フルスクリーンモード判定 |
+| `@fullscreen` | フルスクリーンモードか否か |
 | `@window_width` / `@window_height` | ウィンドウ全体のサイズ |
-| `@pos_x` / `@pos_y` | ウィンドウ左上座標 |
-| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | アプリ描画可能領域の境界 |
+| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | アプリ描画可能領域の境界（ウィンドウ座標系） |
 | `@user_area_width` / `@user_area_height` | 描画可能領域のサイズ |
-| `@canvas` | キャンバス ID（C 内部用） |
+| `@pos_x` / `@pos_y` | ウィンドウ左上座標（スクリーン座標系）。ウィンドウを移動すると変化する |
 
-`@user_area_*` はタイトルバーや枠線を除いた アプリが自由に描いてよい領域 の座標。`@fullscreen` の場合は全画面が `@user_area_*`。
+`@fullscreen` の場合は `(@pos_x,@pos_y)` が `(0,0)` であり、スクリーンの左上を指す。
 
 ## 座標系・色フォーマット
 

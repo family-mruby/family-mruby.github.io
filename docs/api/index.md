@@ -142,19 +142,18 @@ Key constants: `PLATFORM`, `PROC_ID_KERNEL`, etc., `MSG_TYPE_*`, `OS_VERSION`, `
 
 | Variable | Description |
 |---|---|
-| `@gfx` | `FmrbGfx` instance (`nil` in headless mode) |
-| `@bg_gfx` | Desktop background canvas (usually `nil`) |
+| `@gfx` | `FmrbGfx` instance |
+| `@canvas` | Canvas ID |
 | `@audio` | `FmrbAudio` instance |
 | `@name` | App display name (from `.toml` `app_screen_name`) |
 | `@platform` | `:esp32` / `:linux` |
 | `@fullscreen` | Whether the app is in fullscreen mode |
 | `@window_width` / `@window_height` | Overall window size |
-| `@pos_x` / `@pos_y` | Top-left coordinates of the window |
-| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | Boundaries of the drawable area for the app |
+| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | Boundaries of the drawable area for the app (window coordinate system) |
 | `@user_area_width` / `@user_area_height` | Size of the drawable area |
-| `@canvas` | Canvas ID (internal, used by C layer) |
+| `@pos_x` / `@pos_y` | Top-left coordinates of the window (screen coordinate system). Changes when the window is moved |
 
-`@user_area_*` represents the region the app can freely draw in, excluding the title bar and borders. In `@fullscreen` mode, the entire screen is `@user_area_*`.
+In `@fullscreen` mode, `(@pos_x, @pos_y)` is `(0, 0)`, pointing at the top-left of the screen.
 
 ## Coordinate System and Color Format
 

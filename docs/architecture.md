@@ -3,10 +3,7 @@
 !!! note
     This page is under construction.
 
-
-<div align="center">
-  <img src="../images/Architecture.png" alt="Family mruby Architecture" width="800">
-</div>
+![Family mruby Architecture](../../images/Architecture.png)
 
 Family mruby is a personal project implementing a "Multi-VM architecture based on MicroRuby," built on top of FreeRTOS. The system enables concurrent execution of multiple MicroRuby virtual machines.
 

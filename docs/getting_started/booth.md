@@ -44,3 +44,7 @@ If you want to supply power to the RTC, solder a CR2032 coin cell battery holder
 - Wiring on the back side looks clean, but be sure to insulate the battery holder's electrodes so they don't contact the solder pads on the back and cause a short circuit.
 
 ![Terminal diagram](../images/board_info.png)
+
+Installation example
+
+![Installation example](../images/RTC_power.JPG)

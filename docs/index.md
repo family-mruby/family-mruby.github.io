@@ -12,6 +12,12 @@ It is built on PicoRuby and features a built-in OS.
 
 You can easily create graphical applications with PicoRuby, control externally connected electronic devices, build standalone games, and explore many other possibilities.
 
+### Connected Devices
+
+Here is an example of various devices connected to the board. (These are not included with the product.)
+
+![Connected devices](images/connected.JPG)
+
 ## Demo Video
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/9vkRaOoxJJI?si=3cVBhbfFsFDwEQny" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -31,14 +37,6 @@ See [Getting Started](getting_started/booth) for details.
 
 - [Firmware](https://github.com/family-mruby/family-mruby)
 - [Board Data](https://github.com/family-mruby/narya-board)
-
-## Firmware Update
-
-A web installer is available that lets you flash firmware directly from your browser (Chrome / Edge / Opera).
-
-[https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
-
-See [Getting Started > Firmware Update](getting_started/firmware_update.md) for details.
 
 ## Motivation Behind Family mruby
 

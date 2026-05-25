@@ -12,6 +12,12 @@ PicoRubyをベースとして、OSが実装されていることが特徴です�
 
 PicoRubyでグラフィカルなアプリケーションを簡単に実装することができ、外部接続した電子デバイスを制御したり、単体でゲームを作るなど、いろいろな遊び方ができます。
 
+### 機器を接続した様子
+
+色々な機器を繋いでみた様子です。（販売品には付属してません）
+
+![機器を接続した様子](images/connected.JPG)
+
 ## デモ動画
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/9vkRaOoxJJI?si=3cVBhbfFsFDwEQny" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -32,16 +38,10 @@ PicoRubyでグラフィカルなアプリケーションを簡単に実装する
 - [ファームウェア](https://github.com/family-mruby/family-mruby)
 - [基板データ](https://github.com/family-mruby/narya-board)
 
-## ファームウェア更新
-
-ブラウザだけでファームウェアを書き込める Web インストーラがあります（Chrome / Edge / Opera 対応）。
-
-[https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
-
-詳細は [基本的な使い方 ▸ ファームウェア更新](getting_started/firmware_update.md) を参照。
-
 ## Family mruby を作った動機
 
 昔、子供が最初に触れるプログラミング言語といえば、BASICという時代がありました。 制約は多いですが、パソコン以外にも、MSXやファミコンでBASICができるFamily BASICという製品もあり、そこからプログラミングの面白さを知り、プログラマーになった方もたくさん居られると思います。
+
 そして現在は無料で大抵のプログラミング言語の開発環境はパソコンにインストールすることができる時代になりましたが、できることが多すぎて何をしたらよいのかわからなかったり、Hello Worldの先のゲームを作ったりするまでの環境構築ハードルが高かったり、するような気がしています。
+
 そこで、マイコン一つでちょっとしたゲームなどをスクリプト言語で作れる環境を作ってみたい、と思って開発したのが、Family mruby です。

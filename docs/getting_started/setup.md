@@ -14,10 +14,11 @@ This section describes the steps to get the first screen displayed.
     - CRT monitor, video capture device, LCD with composite input, etc.
     - If you want to display on an HDMI-compatible monitor, you can use a converter device such as the following:
     - [Amazon](https://www.amazon.co.jp/dp/B0DCJ84SVN)
-- RCA composite cable (cable with yellow connector)
+- RCA composite video cable (cable with yellow connector)
     - Shorter cables tend to produce more stable video
 - 3.5mm stereo mini-jack cable (for audio output)
     - For connecting to earphones or speakers
+    - If you use a cable that converts to red/white RCA plugs and connect it to the HDMI converter device, you can route audio over HDMI as well.
 - USB keyboard
     - For confirmed working devices, see [Verified Devices](../../compatibility). Some keyboards may not be recognized due to compatibility issues.
 - USB mouse

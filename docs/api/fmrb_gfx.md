@@ -5,14 +5,24 @@
 !!! warning "Nothing appears until `present` is called"
     All drawing commands are accumulated in a buffer. They are transferred to fmruby-graphics-audio and rendered on screen when `@gfx.present` is called.
 
-## Coordinate System and Color Model
+## Coordinate System
 
-- Coordinate system: origin at top-left (0, 0), X increases rightward, Y increases downward
-- Color: RGB332 (8-bit, R:3 G:3 B:2). Specified as an integer from `0x00` to `0xFF`
+The origin (0, 0) is at the top-left of the window, with X increasing to the right and Y increasing downward. You cannot draw outside the window.
 
-Use constants like `FmrbGfx::WHITE`, or convert from 24-bit values with `FmrbGfx.rgb_to_332(r, g, b)`.
+Each window has its own coordinate system. See the image below for reference.
+
+![Coordinate system](../images/window_coordinate.png)
+
+
+## Color
+
+Uses RGB332 (8-bit, R:3 G:3 B:2). Specified as an integer from `0x00` to `0xFF`.
+
+For some colors, constants like `FmrbGfx::WHITE` are also provided. A helper method `FmrbGfx.rgb_to_332(r, g, b)` is available to convert from 24-bit values.
 
 You can also check colors on sites like [this one](https://roger-random.github.io/RGB332_color_wheel_three.js/).
+
+A feature for using a single designated color as a transparent color is also available.
 
 ### Drawing Layer Overview
 

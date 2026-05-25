@@ -19,16 +19,23 @@ hello.app.toml     # 設定ファイル
 
 ## Step 1: 文字を表示するだけの最小アプリ
 
-まずはウィンドウ管理のことを考えず、画面に文字を出すだけ のアプリから始めます。
+画面上に"Hello, Family mruby!"と描画するだけのアプリを書いてみます。
 
-### `.rb` ファイル
+!!! warning "このサンプルではウィンドウを閉じられません"
+    `@gfx.clear` は キャンバス全体（タイトルバーを含む）を塗りつぶします。`FmrbApp` の基底クラスが起動時に描いてくれるタイトルバーと閉じるボタンが上書きされて消えてしまうため、画面上に閉じるボタンが見えなくなります。終了するには、一度リセットしてください。
+    次のサンプルではWindowの枠の描画も行います。
+
+`/app/usr/hello.app.rb` を作成して以下のようなコードを実装します。
+
+コードはデフォルトアプリのエディターで実装してもよいですし、Webコンソールを利用してもよいです。コンソールの詳細は [コンソール](console.md) を参照。
+
+### `/app/usr/hello.app.rb` ファイル
 
 ```ruby
-# hello.app.rb
 class HelloApp < FmrbApp
   def on_create
     @gfx.clear(FmrbGfx::BLACK)
-    @gfx.draw_text(0, 0, "Hello, mruby!", FmrbGfx::WHITE)
+    @gfx.draw_text(0, 0, "Hello, Family mruby!", FmrbGfx::WHITE)
     @gfx.present
   end
 end
@@ -47,12 +54,7 @@ HelloApp.new.start
 | `@gfx.present` | バッファを画面に反映（必須） |
 | `HelloApp.new.start` | アプリを実行 |
 
-
-!!! warning "このサンプルではウィンドウを閉じられません"
-    `@gfx.clear` は キャンバス全体（タイトルバーを含む）を塗りつぶします。`FmrbApp` の基底クラスが起動時に描いてくれるタイトルバーと閉じるボタンが上書きされて消えてしまうため、画面上に閉じるボタンが見えなくなります。
-    次のサンプルではWindowの枠の描画も行います。
-
-### `.app.toml` ファイル
+### `hello.app.toml` ファイル
 
 同じディレクトリに `hello.app.toml` を作成:
 
@@ -76,28 +78,31 @@ default_window_pos_y = 40
 
 全キーの説明は [アプリ設定ファイル (.toml)](../file_formats/app_toml.md) を参照。
 
+### 起動して画面に表示する
+
+1. 実装が完了したら、ランチャーを開いて 右クリック で再スキャン（または基板を再起動）
+2. タイトルバーが「Rescanning...」になり、1〜2 秒待つと新アプリ「Hello」のアイコンが追加される
+3. アイコンをダブルクリック（またはマウスでクリック → Enter）
+4. 画面に「Hello, Family mruby!」と表示されます
+
 ## Step 2: ウィンドウ枠を表示する
 
-実用的な GUI アプリにするには、以下の点に注意して タイトルバーと閉じるボタンを残す 必要があります。
+Step1では、文字を表示しただけなので、実用的な GUI アプリにするには、以下の点に注意して タイトルバーと閉じるボタンを描画する必要があります。
 
 1. ウィンドウ全体ではなく アプリの描画可能領域 (user area) だけ を塗りつぶす（タイトルバーや枠線を消さない）
 2. 描画後に `draw_window_frame` を呼ぶ（基底クラスが用意したタイトルバー描画を再実行）
 
+以下のように、更新してください。
+
 ```ruby
-# hello.app.rb (Step 2)
 class HelloApp < FmrbApp
   def on_create
     redraw
   end
 
-  def on_update
-    500
-  end
-
   def redraw
     clear_user_area(FmrbGfx::WHITE)   # user area を白で塗りつぶし
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Hello, mruby!", FmrbGfx::BLACK)
+    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4, "Hello, Family mruby!", FmrbGfx::BLACK)
     draw_window_frame                  # タイトルバー・枠線を再描画
     @gfx.present # 画面表示に反映
   end
@@ -106,62 +111,21 @@ end
 HelloApp.new.start
 ```
 
-| 変更点 | 理由 |
+| ポイント | 説明 |
 |---|---|
-| `@gfx.clear(FmrbGfx::BLACK)` → `clear_user_area(FmrbGfx::WHITE)` | 描画範囲を user area に限定し、タイトルバーを保護。背景は白に |
-| 文字色を `WHITE` → `BLACK` | 白背景に合わせて見やすく |
-| `draw_window_frame` の追加 | 基底クラスが用意したフレームを再描画。閉じるボタンが現れる |
+| `@gfx.clear(FmrbGfx::BLACK)` → `clear_user_area(FmrbGfx::WHITE)` | タイトルバー以外の領域を指定の色でクリアする |
+| `draw_window_frame` の追加 | 基底クラスが用意したフレームを再描画。タイトルバーや、閉じるボタンが描画される |
 | 描画ロジックを `redraw` に分離 | 後で再描画しやすくするための整理 |
 
-!!! tip "`clear_user_area(color)` ヘルパー"
-    `FmrbApp` には `clear_user_area(color = FmrbGfx::BLACK)` というヘルパーが用意されており、`@gfx.fill_rect(@user_area_x0, @user_area_y0, @user_area_width, @user_area_height, color)` の糖衣として使えます。色を指定したい場合は `clear_user_area(FmrbGfx::BLUE)` のように渡してください。
-
-これで:
-
-- タイトルバー右上の × ボタンをクリック でアプリを終了できる
-- タイトルバーを 右クリック で再ロード（`request_reload`）できる
-- 描画範囲は `@user_area_*` の中に収まり、枠と干渉しない
-
 !!! tip "@user_area_* とは"
-    `@user_area_x0`, `y0`, `x1`, `y1`, `width`, `height` はタイトルバーや枠線を除いた アプリが自由に描いてよい領域 の座標です。`@fullscreen` の場合は画面全体を指します。詳細は [FmrbApp ▸ 主要インスタンス変数](../api/fmrb_app.md#主要インスタンス変数) を参照。
+    タイトルバーや枠線を除いた アプリが自由に描いてよい領域の座標です。詳細は [FmrbApp ▸ 主要インスタンス変数](../api/fmrb_app.md#主要インスタンス変数) を参照。
 
-## ファイルを基板に送る
+再起動してアプリを実行すると、タイトルバーやウィンドウ枠が描画されて、右上のボタンをクリックしてアプリを終了できるはずです。
 
-PC で書いた `hello.app.rb` と `hello.app.toml` を基板の `/app/myapps/` 以下に転送します。
+## 起動中アプリを修正してリロードしたい場合
 
-転送方法は コンソール (BLE 経由の Web ツール) が標準です。詳細は [コンソール](console.md) を参照。
-
-転送後の配置イメージ:
-
-```
-/app/
-├── demo/
-├── game/
-├── tool/
-└── myapps/         ← 自分で作るディレクトリ
-    ├── hello.app.rb
-    └── hello.app.toml
-```
-
-
-## 起動して画面に表示する
-
-1. ファイル転送が完了したら、ランチャーを開いて 右クリック で再スキャン（または基板を再起動）
-2. タイトルバーが「Rescanning...」になり、1〜2 秒待つと新アプリ「Hello」のアイコンが追加される
-3. アイコンをダブルクリック（またはマウスでクリック → Enter）
-4. 画面に「Hello, mruby!」と表示されます
-
-Step 2 の版なら、タイトルバー右の × ボタン をクリックでアプリを終了できます。
-
-## 修正してリロードする
-
-アプリを更新したいときは:
-
-1. PC で `hello.app.rb` を書き換え
-2. コンソールで再アップロード（同じ名前で上書き）
-3. アプリのタイトルバーを 右クリック すると、確認ダイアログが出てリロード
-
-ファイル単位の再起動なので、再起動を待たずに開発できます。
+コードを書き換えて、起動中のアプリのタイトルバーを 右クリック すると、リロードするボタンが表示されます。
+リロードを実行することで、アプリを閉じて開きなおす手間が省けます。
 
 ## ショートカット: `create_app` でひな型を生成する
 
@@ -178,32 +142,18 @@ Created: /app/usr/my_clock.app.toml
 Tip: edit it with `edit /app/usr/my_clock.app.rb`
 ```
 
-これだけで:
+これで以下のファイルが自動作成されて、ひな形として利用できます。
 
 - `/app/usr/my_clock.app.rb` — Step 2 ベース（`clear_user_area` + `draw_window_frame` 入り、全 `on_*` ライフサイクルメソッドのひな型あり）
 - `/app/usr/my_clock.app.toml` — 標準サイズのウィンドウ設定
 
-の 2 ファイルが作られます。次節「ランチャーで反映する」で見えるようになります。
+### ランチャーに反映する
 
-### ランチャーで反映する
+ランチャーは起動時にアプリ一覧をスキャンして固定するため、ファイルを追加しても自動では出てきません。再スキャンを促すにはランチャーウィンドウ内で右クリックをおこなってください。再起動でも更新されます。
 
-ランチャーは起動時にアプリ一覧をスキャンして固定するため、ファイルを追加しても自動では出てきません。再スキャンを促すには:
+### アプリ用ファイルの命名規則
 
-1. ランチャーを開く（メニューバーの `Family mruby` → `Launcher`）
-2. ランチャーウィンドウ内で 右クリック
-3. タイトルバーが一瞬 「Rescanning...」 に変わる（=要求受付の合図）
-4. 1〜2 秒待つ（裏で `/app/` 配下を再スキャン中）
-5. タイトルが「Launcher」に戻り、新アプリのアイコンが追加されている
-
-!!! tip "再起動でも反映される"
-    右クリック再スキャンを使わず、本体を再起動すれば（USB を抜き差し）、起動時のスキャンで自動的にランチャーに乗ります。手早く済ませたいときは右クリックの方が便利です。
-
-!!! note "アイコン画像はキャッシュ済み"
-    既存のアイコン (`ruby.icon` / `lua.icon` / `basic.icon` 等) は WROVER 側にアップロード済みのキャッシュをそのまま使うので、再アップロードは行われません。再スキャンの所要時間は主に `/app/` 配下の `.toml` 読み込みコストです。
-
-### 命名規則
-
-`<name>` は 小文字英数字とアンダースコア のみ、先頭は英字。例:
+`create_app` コマンドの引数は 小文字英数字とアンダースコア のみ、先頭は英字。例:
 
 | 入力 | 生成されるクラス名 | 表示名 |
 |---|---|---|
@@ -215,11 +165,7 @@ snake_case → CamelCase + `App` でクラス名、Title Case で表示名 (`app
 
 ### 配置先
 
-ひな型は `/app/usr/`（自動作成）に置かれます。`demo`/`game`/`tool` などのカテゴリと混ぜたくない、ユーザー作成アプリ専用のディレクトリです。
-
-### 既存ファイルの保護
-
-同名のファイルが既にあると エラーで止まります（誤って上書きしないため）。続けるには `rm` で削除するか、別の名前を選んでください。
+ひな型は `/app/usr/`（自動作成）に置かれます。
 
 ### テンプレートのカスタマイズ
 
@@ -230,7 +176,7 @@ snake_case → CamelCase + `App` でクラス名、Title Case で表示名 (`app
 /usr/share/template/app.toml.template
 ```
 
-このファイルを直接編集すると、以後の `create_app` の出力を自分好みにカスタマイズできます。プレースホルダ:
+このファイルを直接編集すると、以後の `create_app` の出力を自分好みにカスタマイズできます。
 
 | プレースホルダ | 意味 |
 |---|---|
@@ -258,15 +204,9 @@ snake_case → CamelCase + `App` でクラス名、Title Case で表示名 (`app
 
 - 例外で落ちている可能性。ログを確認:
     - `Log.info` を `on_create` に追加して進行を確認
-    - `FmrbApp._get_last_error` を別アプリから呼んで直前のエラーを確認
 
 ### 画面に何も出ない
 
 - `@gfx.present` を呼んでいるか確認
 - 描画座標が `@user_area_x0 / y0 / width / height` の範囲内か確認
 
-### 閉じるボタンが見えない
-
-- `@gfx.clear` でキャンバス全体を消してしまっている → Step 2 のように `@user_area_*` の範囲で塗りつぶし、`draw_window_frame` を呼ぶ
-
-詳細は [制約事項](../limitations.md) を参照。
