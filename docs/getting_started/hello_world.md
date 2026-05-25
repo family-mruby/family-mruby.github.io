@@ -85,6 +85,8 @@ See [App configuration file (.toml)](../file_formats/app_toml.md) for a full lis
 3. Double-click the icon (or click with the mouse then press Enter)
 4. "Hello, Family mruby!" is displayed on screen
 
+![step1](../images/hello_step1.png)
+
 ## Step 2: Displaying the window frame
 
 In Step 1 we only drew text. To make a practical GUI app, you need to draw the title bar and close button by paying attention to the following:
@@ -121,6 +123,8 @@ HelloApp.new.start
     Coordinates of the area where the app is free to draw, excluding the title bar and borders. See [FmrbApp > Key instance variables](../api/fmrb_app.md#主要インスタンス変数) for details.
 
 Restart and run the app — the title bar and window frame will be drawn, and you should be able to close the app by clicking the button at the top right.
+
+![step2](../images/hello_step2.png)
 
 ## Reloading a running app after edits
 
