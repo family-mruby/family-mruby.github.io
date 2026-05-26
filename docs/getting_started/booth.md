@@ -48,3 +48,11 @@ If you want to supply power to the RTC, solder a CR2032 coin cell battery holder
 Installation example
 
 ![Installation example](../images/RTC_power.JPG)
+
+## Soldering Pin Headers (If Needed)
+
+The power lines of GROVE2 are not connected to anything by default.
+
+If you want to output power, solder a pin header to the GROVE2 power selection area shown in the diagram below, then attach a jumper pin (not included) to select either 5V or 3.3V power output.
+
+![Terminal diagram](../images/board_info.png)

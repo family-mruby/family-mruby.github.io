@@ -29,15 +29,21 @@ This section describes the steps to get the first screen displayed.
 - USB Hub
     - Required if the keyboard and mouse are not an integrated unit.
     - For confirmed working devices, see [Verified Devices](../../compatibility). Some hubs may not be recognized due to compatibility issues.
-- USB gamepad
-    - Details to be added later
 - SD card
     - For when you need to handle large data
+- USB gamepad
+    - Details to be added later
 
 ### If You Want to Retain the Clock
 
  - CR2032 button cell battery case & CR2032 button cell battery
     - By soldering a battery case and supplying power to the RTC, the device can retain the time even when the main power is turned off.
+
+### If You Want to Supply Power from GROVE2
+
+ - Jumper pin
+   - By soldering a pin header to the GROVE2 power selection area and attaching a jumper pin, you can output either 5V or 3.3V power.
+   - [Example product at Akizuki Denshi](https://akizukidenshi.com/catalog/g/g103687/)
 
 ## Connecting the Ports
 

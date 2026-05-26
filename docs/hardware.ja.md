@@ -60,7 +60,7 @@ NES APU エミュレータが動いており、矩形波 2 系統 + 三角波 + 
 
 GROVE 1 は RTC が接続されている I2C バスを共有するため、アドレスの衝突に注意してください。
 
-GROVE 2 は信号にプルアップなしで、電源の供給方法をピンヘッダで変更可能なので、UARTや[RMT](api/peripherals.md#rmt) など自由な用途で利用可能です。
+GROVE 2 は信号にプルアップなしで、電源の供給方法をピンヘッダで変更可能なので、GPIO、UARTや[RMT](api/peripherals.md#rmt) など自由な用途で利用可能です。
 
 ![Grove](images/Grove-pin.png)
 

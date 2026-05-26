@@ -59,7 +59,7 @@ The board has 2 GROVE connectors. Listed from left: GND, Power, Sig1, Sig2. The 
 
 GROVE 1 shares the I2C bus with the RTC, so be careful about address conflicts.
 
-GROVE 2 has no pull-up resistors on the signal lines, and the power supply method can be changed via pin headers, so it can be used freely for UART, [RMT](api/peripherals.md#rmt), and other purposes.
+GROVE 2 has no pull-up resistors on the signal lines, and the power supply method can be changed via pin headers, so it can be used freely for GPIO, UART, [RMT](api/peripherals.md#rmt), and other purposes.
 
 ![Grove](images/Grove-pin.png)
 
