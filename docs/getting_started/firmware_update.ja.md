@@ -1,9 +1,9 @@
 # ファームウェア更新
 
-ブラウザだけでファームウェアを書き込めるインストーラを公開しています。
-今後ファームウェアの更新を行った際は、こちらから更新が可能です。
+ブラウザだけでファームウェアを書き込めるインストーラを以下のURLで公開しています。
+今後新しいファームウェアが公開された際は、こちらから更新が可能です。
 
-公開 URL: [https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
+[https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
 
 ## 必要なもの
 
