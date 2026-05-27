@@ -82,8 +82,8 @@ nav:
   - Getting Started:
       - For BOOTH Buyers: getting_started/booth.md
       - Setup: getting_started/setup.md
-      - Simulator: getting_started/simulator.md
       - Hello World: getting_started/hello_world.md
+      - Simulator: getting_started/simulator.md
       - Console: getting_started/console.md
       - Default Apps: getting_started/default_apps.md
       - Firmware Update: getting_started/firmware_update.md
