@@ -1,7 +1,7 @@
 # File & I/O
 
 !!! note
-    This page is under construction.
+    Under construction.
 
 API for file and directory operations. Provides the `File` / `Dir` / `IO` classes.
 

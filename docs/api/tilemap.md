@@ -1,7 +1,7 @@
 # TileSheet / TileMap
 
 !!! note
-    This page is under construction.
+    Under construction.
 
 A library for easily writing tile-based map rendering. Suitable for RPG-style grid worlds, tiled backgrounds, stage-based puzzles, and more.
 

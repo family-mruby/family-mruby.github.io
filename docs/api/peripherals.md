@@ -1,7 +1,7 @@
 # Peripherals (GPIO / I2C / RMT)
 
 !!! note
-    This page is under construction.
+    Under construction.
 
 APIs for operating hardware peripherals from Ruby.
 

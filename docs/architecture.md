@@ -1,7 +1,7 @@
 # Architecture
 
 !!! note
-    This page is under construction.
+    Under construction.
 
 ![Family mruby Architecture](../../images/Architecture.png)
 

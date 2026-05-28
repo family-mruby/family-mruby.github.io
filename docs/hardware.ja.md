@@ -66,15 +66,19 @@ GROVE 2 は信号にプルアップなしで、電源の供給方法をピンヘ
 
 ## PIN配置
 
-ESP32-S3 PIN配置
+### ESP32-S3 PIN配置
 
 ![ESP32-S3 PIN配置](images/ESP32-S3-PIN.png)
 
-ESP32-WROVER PIN配置
+GPIO40は、プルアップされた状態でRX8900のINTピンに接続している。
+
+JTAGの機能は未検証だが、もし使いたい場合は0Ω抵抗を外す必要がある。詳細は回路図参照。
+
+### ESP32-WROVER PIN配置
 
 ![ESP32-WROVER PIN配置](images/ESP32-WROVER-PIN.png)
 
-### I2C
+## I2C
 
 | バス | SDA | SCL | 備考 |
 |---|---|---|---|
@@ -83,7 +87,7 @@ ESP32-WROVER PIN配置
 
 `I2C.new(unit: "ESP32_I2C0", ...)` 等で利用します（[周辺機器 ▸ I2C](api/peripherals.md#i2c) 参照）。
 
-### 外出しGPIO
+## 外出しGPIO
 
 ピン位置 (S3)
 

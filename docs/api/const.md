@@ -1,7 +1,7 @@
 # Constants and System Info (FmrbConst / FmrbHw)
 
 !!! note
-    This page is under construction.
+    Under construction.
 
 ## FmrbConst
 

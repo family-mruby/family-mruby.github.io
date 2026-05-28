@@ -1,7 +1,7 @@
 # Sprite
 
 !!! note
-    This page is under construction.
+    Under construction.
 
 This page covers the sprite and tile map APIs.
 

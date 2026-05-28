@@ -65,15 +65,19 @@ GROVE 2 has no pull-up resistors on the signal lines, and the power supply metho
 
 ## Pin Assignments
 
-ESP32-S3 Pin Assignment
+### ESP32-S3 Pin Assignment
 
 ![ESP32-S3 Pin Assignment](images/ESP32-S3-PIN.png)
 
-ESP32-WROVER Pin Assignment
+GPIO40 is connected to the INT pin of the RX8900 with a pull-up resistor.
+
+JTAG functionality has not been verified. If you want to use it, you need to remove the 0-ohm resistor. See the schematics for details.
+
+### ESP32-WROVER Pin Assignment
 
 ![ESP32-WROVER Pin Assignment](images/ESP32-WROVER-PIN.png)
 
-### I2C
+## I2C
 
 | Bus | SDA | SCL | Notes |
 |---|---|---|---|
@@ -82,7 +86,7 @@ ESP32-WROVER Pin Assignment
 
 Use with `I2C.new(unit: "ESP32_I2C0", ...)` etc. (see [Peripherals > I2C](api/peripherals.md#i2c)).
 
-### External GPIO
+## External GPIO
 
 Pin Locations (S3)
 

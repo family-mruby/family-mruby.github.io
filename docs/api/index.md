@@ -1,7 +1,7 @@
 # API Reference Overview
 
 !!! note
-    This page is under construction.
+    Under construction.
 
 Lists all public Ruby APIs provided by Family mruby. Click each API name to jump to its detail page.
 

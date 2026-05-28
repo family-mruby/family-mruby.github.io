@@ -1,7 +1,7 @@
 # Examples
 
 !!! note
-    This page is under construction.
+    Under construction.
 
 An introduction to the apps bundled under `/app/`. Each one demonstrates specific APIs and features, so try running them first and use the source code as a reference when building your own apps.
 
