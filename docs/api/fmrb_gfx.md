@@ -167,7 +167,7 @@ end
 HelloJaApp.new.start
 ```
 
-A sample that switches between modes (default / 8px / 12px / Mixed / Hybrid / Scaled) is available in `flash/app/demo/ja_text.app.rb`.
+A sample that switches between modes (default / 8px / 12px / Mixed / Hybrid / Scaled) is available in `/app/demo/ja_text.app.rb`.
 
 ## Image API
 

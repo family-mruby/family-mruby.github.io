@@ -198,7 +198,7 @@ NES Sound Format は実機ファミコン音楽を再生する標準フォーマ
 
 ### サンプル
 
-`flash/app/tool/nsf_player.app.rb` に NSF 再生 GUI のサンプルがあります（曲送り・トラック選択・一時停止 / 再開 を実装）。
+`/app/tool/nsf_player.app.rb` に NSF 再生 GUI のサンプルがあります（曲送り・トラック選択・一時停止 / 再開 を実装）。
 
 ## WAV / MP3
 
@@ -219,6 +219,6 @@ sleep_ms(200)
 ## 関連
 
 - [FmrbAudio](../api/audio.md)
-- ピアノアプリ: `flash/app/game/piano.app.rb`
-- 効果音 + BGM 例: `flash/app/game/flappy.rb`
-- NSF プレイヤー: `flash/app/tool/nsf_player.app.rb`
+- ピアノアプリ: `/app/game/piano.app.rb`
+- 効果音 + BGM 例: `/app/game/flappy.rb`
+- NSF プレイヤー: `/app/tool/nsf_player.app.rb`

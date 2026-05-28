@@ -115,7 +115,7 @@ end
 SubDemo.new.start
 ```
 
-`flash/app/demo/pub_demo.app.rb` と `sub_demo.app.rb` が同じ動作をする組のサンプルです。
+`/app/demo/pub_demo.app.rb` と `sub_demo.app.rb` が同じ動作をする組のサンプルです。
 
 ## トピック設計
 

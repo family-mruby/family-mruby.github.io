@@ -198,7 +198,7 @@ NES Sound Format is a standard format for playing actual NES music. Family mruby
 
 ### Sample
 
-A sample NSF player GUI is available at `flash/app/tool/nsf_player.app.rb` (implements track forward/backward, track selection, and pause/resume).
+A sample NSF player GUI is available at `/app/tool/nsf_player.app.rb` (implements track forward/backward, track selection, and pause/resume).
 
 ## WAV / MP3
 
@@ -219,6 +219,6 @@ See [FmrbAudio - note_on / note_off](../api/audio.md#direct-synthesis-note_on--n
 ## Related
 
 - [FmrbAudio](../api/audio.md)
-- Piano app: `flash/app/game/piano.app.rb`
-- Sound effects + BGM example: `flash/app/game/flappy.rb`
-- NSF player: `flash/app/tool/nsf_player.app.rb`
+- Piano app: `/app/game/piano.app.rb`
+- Sound effects + BGM example: `/app/game/flappy.rb`
+- NSF player: `/app/tool/nsf_player.app.rb`

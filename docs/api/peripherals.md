@@ -183,7 +183,7 @@ end
 LedStrip.new.start
 ```
 
-A WS2812B matrix sample is available in `flash/app/demo/led_matrix.app.rb`.
+A WS2812B matrix sample is available in `/app/demo/led_matrix.app.rb`.
 
 ## Pin Assignment Check
 

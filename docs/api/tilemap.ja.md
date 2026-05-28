@@ -140,7 +140,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 
 ## サンプル: 簡単な RPG
 
-`flash/app/game/rpg_demo/` に完全な RPG デモがあります。フルスクリーンで:
+`/app/game/rpg_demo/` に完全な RPG デモがあります。フルスクリーンで:
 
 - 左 176x176（11x11 タイル）: `TileMap` + `TileSheet` で描画したフィールド
 - 右 128x240: プレイヤー座標 / 直前イベントの表示パネル

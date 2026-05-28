@@ -167,7 +167,7 @@ end
 HelloJaApp.new.start
 ```
 
-`flash/app/demo/ja_text.app.rb` に各モード（default / 8px / 12px / Mixed / Hybrid / Scaled）を切り替えるサンプルがあります。
+`/app/demo/ja_text.app.rb` に各モード（default / 8px / 12px / Mixed / Hybrid / Scaled）を切り替えるサンプルがあります。
 
 ## 画像 API
 

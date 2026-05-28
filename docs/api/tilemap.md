@@ -140,7 +140,7 @@ Start with `ruby web_server.rb` and access `http://localhost:8080` (same server 
 
 ## Example: Simple RPG
 
-A complete RPG demo is available in `flash/app/game/rpg_demo/`. In fullscreen:
+A complete RPG demo is available in `/app/game/rpg_demo/`. In fullscreen:
 
 - Left 176x176 (11x11 tiles): Field drawn with `TileMap` + `TileSheet`
 - Right 128x240: Panel displaying player coordinates / last event

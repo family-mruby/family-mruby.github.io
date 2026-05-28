@@ -115,7 +115,7 @@ end
 SubDemo.new.start
 ```
 
-`flash/app/demo/pub_demo.app.rb` and `sub_demo.app.rb` are a matching pair of samples that demonstrate this behavior.
+`/app/demo/pub_demo.app.rb` and `sub_demo.app.rb` are a matching pair of samples that demonstrate this behavior.
 
 ## Topic Design
 

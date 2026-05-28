@@ -107,4 +107,4 @@ If `icon` is omitted in the `.toml`, a default icon is used based on the main fi
 
 - [BMP332 API](../api/utilities.md#bmp332)
 - [Sprite](../api/sprite.md)
-- Sprite editor: `flash/app/tool/sprite_editor.app.rb`
+- Sprite editor: `/app/tool/sprite_editor.app.rb`

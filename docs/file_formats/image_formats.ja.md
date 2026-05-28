@@ -106,4 +106,4 @@ icon = "/usr/share/icon/myapp.icon"
 
 - [BMP332 API](../api/utilities.md#bmp332)
 - [Sprite](../api/sprite.md)
-- スプライトエディタ: `flash/app/tool/sprite_editor.app.rb`
+- スプライトエディタ: `/app/tool/sprite_editor.app.rb`

@@ -183,7 +183,7 @@ end
 LedStrip.new.start
 ```
 
-`flash/app/demo/led_matrix.app.rb` に WS2812B マトリクスのサンプルがあります。
+`/app/demo/led_matrix.app.rb` に WS2812B マトリクスのサンプルがあります。
 
 ## ピン割り当て確認
 

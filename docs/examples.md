@@ -3,7 +3,7 @@
 !!! note
     This page is under construction.
 
-An introduction to the apps bundled under `flash/app/`. Each one demonstrates specific APIs and features, so try running them first and use the source code as a reference when building your own apps.
+An introduction to the apps bundled under `/app/`. Each one demonstrates specific APIs and features, so try running them first and use the source code as a reference when building your own apps.
 
 Source file locations:
 - mruby apps: `fmruby-core/app/<category>/<name>.app.rb`
@@ -27,7 +27,7 @@ Sample apps that showcase basic features.
 
 ## Debug (debug)
 
-Verification apps under `flash/app/debug/`.
+Verification apps under `/app/debug/`.
 
 | App | Description | APIs Covered |
 |---|---|---|
