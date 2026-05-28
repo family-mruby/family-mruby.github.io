@@ -1,7 +1,7 @@
 # FmrbAudio
 
 !!! note
-    内容編集中です
+    編集中です
 
 `FmrbAudio` は音声再生 API です。`FmrbAudio.new(self)` を呼んで インスタンスを作ります。
 

@@ -1,7 +1,7 @@
 # 定数・システム情報 (FmrbConst / FmrbHw)
 
 !!! note
-    内容編集中です
+    編集中です
 
 ## FmrbConst
 

@@ -1,7 +1,7 @@
 # アーキテクチャ
 
 !!! note
-    内容編集中です
+    編集中です
 
 ![Family mruby Architecture](../../images/Architecture.png)
 
