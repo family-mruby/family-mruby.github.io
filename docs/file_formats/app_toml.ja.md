@@ -1,9 +1,6 @@
-# アプリ設定ファイル (.toml)
+# アプリ設定ファイル (.app.toml)
 
-!!! note
-    内容編集中です
-
-Family mruby のアプリは、`.rb` （または `.lua` / `.bas`）の本体ファイルと 同名の `.toml` ファイル をペアで持ちます。`.toml` でアプリ名やウィンドウ設定を指定します。
+Family mruby のアプリは、`.app.rb` の本体ファイルと 同名の `.app.toml` ファイル をペアで持ちます。`.app.toml` でアプリ名やウィンドウ設定を指定します。
 
 ## ファイル名のルール
 
@@ -23,9 +20,9 @@ my_clock.app.toml
 
 | 言語 | 拡張子 |
 |---|---|
-| mruby | `.rb` |
-| Lua | `.lua` |
-| BASIC | `.bas` |
+| mruby | `.app.rb` |
+| Lua | `.app.lua` |
+| BASIC | `.app.bas` |
 
 ## キー一覧
 
@@ -86,7 +83,7 @@ end
 HelloApp.new.start
 ```
 
-## フルスクリーンサンプル
+## フルスクリーンアプリのサンプル
 
 ```toml
 app_handle_name = "shooter"
@@ -127,44 +124,13 @@ resizable = 1
 
 `1` でリサイズ可能。基底クラスは `on_resize(w, h)` を呼んでくれるので、サブクラスでオーバーライドして再描画してください。
 
-## 完全な例（全機能）
-
-```toml
-# 内部ハンドル名（ファイル名のベースと一致させる）
-app_handle_name = "myapp"
-
-# 画面表示名
-app_screen_name = "My App"
-
-# ウィンドウモード
-default_window_mode = "window"   # window / fullwindow / fullscreen / background
-
-# ウィンドウサイズ（fullscreen / fullwindow では無視される）
-default_window_width  = 200
-default_window_height = 150
-default_window_pos_x  = 20
-default_window_pos_y  = 30
-
-# リサイズ可能
-resizable = 1
-
-# 大きいヒープを確保
-large_memory = 0
-
-# ランチャー表示
-launcher_visible = true
-
-# カスタムアイコン
-icon = "usr/share/icon/myapp.icon"
-```
-
 ## アプリの配置先
 
 ```
 /app/
 ├── demo/                   # サンプル・デモ
 ├── game/                   # ゲーム
-│   └── rpg_demo/           # アプリと一緒にアセットを置くバンドル形式も可
+│   └── rpg_demo/           # アプリと一緒にアセットを置く形式も可
 │       ├── rpg_demo.app.rb
 │       ├── rpg_demo.app.toml
 │       ├── world.bmp
@@ -175,7 +141,7 @@ icon = "usr/share/icon/myapp.icon"
     └── myapp.app.toml
 ```
 
-ランチャーは `/app` 直下のサブディレクトリをスキャンして `.toml` を検出します。さらに 1 階層下 （`/app/<category>/<bundle>/*.app.toml`）もスキャン対象なので、画像・マップなどのアセットをアプリと同じディレクトリにまとめる バンドル形式 が使えます（[TileMap](../api/tilemap.md) の RPG デモを参照）。
+ランチャーは `/app` 直下のサブディレクトリをスキャンして `.app.toml` を検出します。さらに 1 階層下 （`/app/<category>/<bundle>/*.app.toml`）もスキャン対象なので、画像・マップなどのアセットをアプリと同じディレクトリにまとめる形式も有効です。
 
 !!! note "スキャンは起動時のみ"
     アプリ一覧は システム起動時に 1 回だけ スキャンされます。`create_app` や BLE で新規アプリを追加した後は、ランチャーを開いて右クリック で再スキャン、もしくは本体を再起動してください（[Hello World ▸ ランチャーで反映する](../getting_started/hello_world.md#ランチャーで反映する) 参照）。

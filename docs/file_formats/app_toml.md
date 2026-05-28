@@ -1,9 +1,6 @@
-# App Config File (.toml)
+# App Config File (.app.toml)
 
-!!! note
-    This page is under construction.
-
-A Family mruby app consists of a main file (`.rb`, `.lua`, or `.bas`) paired with a `.toml` file of the same name. The `.toml` file specifies the app name, window settings, and other options.
+A Family mruby app consists of an `.app.rb` main file paired with an `.app.toml` file of the same name. The `.app.toml` file specifies the app name, window settings, and other options.
 
 ## File Naming Rules
 
@@ -23,9 +20,9 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 
 | Language | Extension |
 |---|---|
-| mruby | `.rb` |
-| Lua | `.lua` |
-| BASIC | `.bas` |
+| mruby | `.app.rb` |
+| Lua | `.app.lua` |
+| BASIC | `.app.bas` |
 
 ## Key Reference
 
@@ -86,7 +83,7 @@ end
 HelloApp.new.start
 ```
 
-## Fullscreen Example
+## Fullscreen App Example
 
 ```toml
 app_handle_name = "shooter"
@@ -126,44 +123,13 @@ resizable = 1
 
 Set to `1` to enable resizing. The base class calls `on_resize(w, h)`, so override it in your subclass to handle redrawing.
 
-## Full Example (All Features)
-
-```toml
-# Internal handle name (should match the base file name)
-app_handle_name = "myapp"
-
-# Display name
-app_screen_name = "My App"
-
-# Window mode
-default_window_mode = "window"   # window / fullwindow / fullscreen / background
-
-# Window size (ignored in fullscreen / fullwindow)
-default_window_width  = 200
-default_window_height = 150
-default_window_pos_x  = 20
-default_window_pos_y  = 30
-
-# Resizable
-resizable = 1
-
-# Allocate a larger heap
-large_memory = 0
-
-# Launcher visibility
-launcher_visible = true
-
-# Custom icon
-icon = "usr/share/icon/myapp.icon"
-```
-
 ## App Placement
 
 ```
 /app/
 ├── demo/                   # Samples and demos
 ├── game/                   # Games
-│   └── rpg_demo/           # Bundle format: assets alongside the app
+│   └── rpg_demo/           # Assets can be placed alongside the app
 │       ├── rpg_demo.app.rb
 │       ├── rpg_demo.app.toml
 │       ├── world.bmp
@@ -174,7 +140,7 @@ icon = "usr/share/icon/myapp.icon"
     └── myapp.app.toml
 ```
 
-The launcher scans subdirectories directly under `/app` to detect `.toml` files. It also scans one level deeper (`/app/<category>/<bundle>/*.app.toml`), so you can use a bundle format that groups images, maps, and other assets together with the app in the same directory (see the RPG demo in [TileMap](../api/tilemap.md)).
+The launcher scans subdirectories directly under `/app` to detect `.app.toml` files. It also scans one level deeper (`/app/<category>/<bundle>/*.app.toml`), so you can group images, maps, and other assets together with the app in the same directory.
 
 !!! note "Scanning happens only at startup"
     The app list is scanned once at system startup. After adding a new app via `create_app` or BLE, open the launcher and right-click to rescan, or restart the device (see [Hello World - Reflecting changes in the launcher](../getting_started/hello_world.md#reflecting-changes-in-the-launcher)).
