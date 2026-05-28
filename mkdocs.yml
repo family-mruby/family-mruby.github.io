@@ -83,10 +83,10 @@ nav:
       - For BOOTH Buyers: getting_started/booth.md
       - Setup: getting_started/setup.md
       - Hello World: getting_started/hello_world.md
-      - Simulator: getting_started/simulator.md
-      - Console: getting_started/console.md
+      - BLE Web Console: getting_started/console.md
       - Default Apps: getting_started/default_apps.md
       - Firmware Update: getting_started/firmware_update.md
+      - Simulator: getting_started/simulator.md
   - API Reference:
       - Overview: api/index.md
       - FmrbApp: api/fmrb_app.md

@@ -1,36 +1,19 @@
-# Console
+# BLE Web Console
 
-A tool for reading and writing files on the board from a PC or smartphone via Bluetooth Low Energy (BLE). It can be operated from a web browser.
+A tool for reading and writing files on the board from a PC's browser via Bluetooth Low Energy (BLE).
 
-## Overview
-
-- Connection method: Web Bluetooth API (browser standard)
-- Device name: `Family-mruby-XXXXXX` (the last 6 characters are the tail of the MAC address)
-- Supported operations: Directory listing / File download / File upload / Delete / Directory creation / Sprite editing (in development)
+It can be operated from a web browser.
 
 ## Requirements
 
-| Item | Recommendation |
-|---|---|
-| PC with built-in Bluetooth or a Bluetooth USB adapter | Required |
-| Web Bluetooth compatible browser | Chrome / Edge (Firefox / Safari are not supported) |
-| A running Family mruby device | – |
+- A PC capable of BLE communication
+- Web Bluetooth compatible browser (Chrome / Edge) (Firefox / Safari are not supported)
 
 ## Starting the Client
 
 Open the following URL in your browser.
 
 [https://family-mruby.github.io/console/](/console/)
-
-### Running Locally
-
-The client HTML is included in the `fmruby-core/tool/web/` directory of the repository.
-
-```bash
-cd fmruby-core/tool
-ruby web_server.rb        # Starts on port 8080
-# → Open http://localhost:8080 in your browser
-```
 
 ## Connection Procedure
 
@@ -40,16 +23,18 @@ ruby web_server.rb        # Starts on port 8080
 4. Select "Family-mruby-XXXXXX" from the browser's BLE device selection dialog
 5. Press the "Pair" button (on some operating systems this may appear as "Connect")
 
+![Console connection](../images/console-pare.png)
+
 !!! warning "If you have trouble connecting on Windows"
     The Windows Bluetooth stack may retain old pairing information and prevent connection. Try deleting the existing `Family-mruby-*` entry from the OS Bluetooth settings and then reconnecting (this device does not retain pairing information).
 
 ## Uploading Files (PC to Board)
 
-1. Navigate to the destination directory in the client (e.g., `/app/myapps/`)
-2. Drag and drop files from your PC's file explorer into the browser
-3. A progress bar will appear — wait for it to complete
+![Console screen](../images/console1.png)
 
-You can drop multiple files at once.
+1. Navigate to the destination directory in the client
+2. Drag and drop files from your PC's file explorer into the browser
+3. Wait for the transfer to complete
 
 ## Downloading Files (Board to PC)
 
@@ -70,15 +55,11 @@ For details, see [Hello World > Applying in the Launcher](hello_world.md#ラン�
 
 ### Large Files
 
-The maximum chunk size for PUT / GET is 2KB. The frame size limit is 4KB. Large files are internally split into multiple chunks, but the transfer takes time.
+Communication speed is not very fast, so large files will take time to transfer.
 
 ### Simultaneous Connections
 
 Only one client can be connected at a time. If you want to connect from another browser, disconnect the current one first.
-
-### Frequency Interference
-
-Since it uses the same 2.4GHz band as WiFi, disconnections may occur in congested environments.
 
 ## Troubleshooting
 

@@ -1,36 +1,19 @@
-# コンソール
+# BLE Web コンソール
 
-PC やスマートフォンから Bluetooth Low Energy (BLE) 経由で基板内のファイルを読み書きするツールです。 Web ブラウザから操作できます。
+PCのブラウザから Bluetooth Low Energy (BLE) 経由で基板内のファイルを読み書きするツールです。 
 
-## 概要
-
-- 接続方式: Web Bluetooth API（ブラウザ標準）
-- デバイス名: `Family-mruby-XXXXXX`（最後の 6 文字は MAC アドレス末尾）
-- 対応操作: ディレクトリ表示 / ファイル取得 / ファイル送信 / 削除 / ディレクトリ作成 / スプライト編集（開発中） 
+Web ブラウザから操作できます。
 
 ## 必要なもの
 
-| 項目 | 推奨 |
-|---|---|
-| Bluetooth 内蔵 PC または Bluetooth USB アダプタ | 必須 |
-| Web Bluetooth 対応ブラウザ | Chrome / Edge （Firefox / Safari は不可） |
-| 起動中の Family mruby 本体 | – |
+- BLE通信できるPC
+- Web Bluetooth 対応ブラウザ ( Chrome / Edge )（Firefox / Safari は不可）
 
 ## クライアントの起動
 
 ブラウザで以下を開きます。
 
 [https://family-mruby.github.io/console/](/console/)
-
-### ローカルで起動したい場合
-
-リポジトリの `fmruby-core/tool/web/` にクライアント HTML が同梱されています。
-
-```bash
-cd fmruby-core/tool
-ruby web_server.rb        # ポート 8080 で起動
-# → ブラウザで http://localhost:8080 を開く
-```
 
 ## 接続手順
 
@@ -40,16 +23,18 @@ ruby web_server.rb        # ポート 8080 で起動
 4. ブラウザの BLE デバイス選択ダイアログから 「Family-mruby-XXXXXX」 を選択
 5. 「ペア設定」ボタンを押す（OS によっては「接続」と表示）
 
+![コンソール接続](../images/console-pare.png)
+
 !!! warning "Windows でうまく繋がらない場合"
     Windows の Bluetooth スタックは古いペアリング情報を保持して接続を妨げる場合があります。OS の Bluetooth 設定で 既存の `Family-mruby-*` を削除 してから再接続を試してください（本機はペアリングを保持しないため）。
 
 ## ファイルのアップロード（PC → 基板）
 
-1. クライアントで配置先ディレクトリへ移動（例: `/app/myapps/`）
-2. PC のエクスプローラからファイルをブラウザにドラッグ&ドロップ
-3. 進捗バーが表示されて完了を待つ
+![コンソール接続](../images/console1.png)
 
-複数ファイルを一度にドロップできます。
+1. クライアントで配置先ディレクトリへ移動
+2. PC のエクスプローラからファイルをブラウザにドラッグ&ドロップ
+3. 完了を待つ
 
 ## ファイルのダウンロード（基板 → PC）
 
@@ -70,15 +55,11 @@ ruby web_server.rb        # ポート 8080 で起動
 
 ### 大きいファイル
 
-PUT / GET の最大チャンクサイズは 2KB。フレームサイズ上限は 4KB。大きなファイルは内部で複数チャンクに分割されますが、転送時間がかかります。
+通信速度はあまり早くないため、大きなファイルは転送に時間がかかります。
 
 ### 同時接続
 
 同時に接続できるクライアントは 1 台です。別のブラウザで接続する場合は先に切断してください。
-
-### 周波数干渉
-
-WiFi と同じ 2.4GHz 帯を使うため、混雑環境では切断が起きることがあります。
 
 ## トラブル
 
