@@ -1,4 +1,4 @@
-# BLE Web コンソール
+# Family mruby コンソール
 
 PCのブラウザから Bluetooth Low Energy (BLE) 経由で基板内のファイルを読み書きするツールです。 
 

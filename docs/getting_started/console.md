@@ -1,4 +1,4 @@
-# BLE Web Console
+# Family mruby Console
 
 A tool for reading and writing files on the board from a PC's browser via Bluetooth Low Energy (BLE).
 
