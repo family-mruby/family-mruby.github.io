@@ -1,9 +1,5 @@
 # Audio File Formats
 
-!!! note
-    This page is under construction.
-
-
 This page describes the audio file formats supported by Family mruby, along with how to create and convert them.
 
 | Format | Purpose | API |

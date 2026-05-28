@@ -1,5 +1,8 @@
 # Task / Machine
 
+!!! note
+    内容編集中です
+
 タスク制御・システム制御の低レベル API です。`picoruby-machine` 由来。
 
 ## Task

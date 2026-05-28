@@ -1,5 +1,8 @@
 # FmrbGfx
 
+!!! note
+    内容編集中です
+
 `FmrbGfx` は描画 API を提供するクラスです。`FmrbApp` を継承したアプリでは `@gfx` として参照できます。
 
 !!! warning "`present` を呼ぶまで画面に出ない"

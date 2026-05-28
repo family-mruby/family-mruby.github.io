@@ -1,5 +1,8 @@
 # FmrbAudio
 
+!!! note
+    This page is under construction.
+
 `FmrbAudio` is the audio playback API. Create an instance by calling `FmrbAudio.new(self)`.
 
 ```ruby

@@ -1,5 +1,8 @@
 # Sprite
 
+!!! note
+    This page is under construction.
+
 This page covers the sprite and tile map APIs.
 
 | Class | Role |

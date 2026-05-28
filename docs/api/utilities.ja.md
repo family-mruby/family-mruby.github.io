@@ -1,5 +1,8 @@
 # ユーティリティ (JSON / MessagePack / BMP332 / RX8900)
 
+!!! note
+    内容編集中です
+
 汎用ユーティリティ系の API をまとめます。
 
 ## JSON

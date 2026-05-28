@@ -1,5 +1,8 @@
 # Pub/Sub
 
+!!! note
+    This page is under construction.
+
 A Publish / Subscribe mechanism for exchanging messages between applications. Provided as instance methods of `FmrbApp`.
 
 ## Methods
