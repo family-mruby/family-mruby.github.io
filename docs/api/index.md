@@ -15,7 +15,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `FmrbGfx` | Shape and text drawing (`@gfx`) | [FmrbGfx](fmrb_gfx.md) |
 | `SpriteImage` / `SpriteInstance` / `GfxBlock` | Sprites | [Sprite](sprite.md) |
 | `TileSheet` / `TileMap` | Tile map rendering + fmrb_map JSON loading | [TileMap](tilemap.md) |
-| `P5` | Processing/p5.js-style drawing DSL (`require "p5"`) | [P5](p5.md) |
+| `P5` | Processing/p5.js-style drawing DSL | [P5](p5.md) |
 | `FmrbAudio` | BGM, sound effects, tone synthesis (`@audio`) | [FmrbAudio](audio.md) |
 | Pub/Sub (`subscribe` / `publish`) | Inter-app messaging | [Pub/Sub](pubsub.md) |
 
