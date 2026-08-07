@@ -26,7 +26,7 @@ end
 | `pause` | 一時停止 |
 | `resume` | 再開 |
 
-`path` はファイルパス（例: `/usr/share/music/song.nsf`）。`track:` は曲番号（NSF など複数曲を含むファイルで指定）。
+`path` はファイルパス（例: `/usr/share/sounds/nsf/song.nsf`）。`track:` は曲番号（NSF など複数曲を含むファイルで指定）。
 
 ### FMSQ シーケンス
 
@@ -104,7 +104,7 @@ MiniPiano.new.start
 NES Sound Format に対応しています。
 
 ```ruby
-@audio.play("/usr/share/music/dq.nsf", track: 1)
+@audio.play("/usr/share/sounds/nsf/song.nsf", track: 1)
 ```
 
 `tool/nsf_player.app.rb` に再生 GUI のサンプルがあります。詳細は [音声ファイルフォーマット](../file_formats/audio_formats.md#nsf) を参照。

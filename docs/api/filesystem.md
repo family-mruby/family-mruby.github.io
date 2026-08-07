@@ -91,7 +91,7 @@ rescue => e
   []
 end
 
-list_files("/usr/share/music")
+list_files("/usr/share/sounds/nsf")
 ```
 
 !!! note

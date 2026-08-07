@@ -6,6 +6,7 @@ This page describes the audio file formats supported by Family mruby, along with
 |---|---|---|
 | FMSQ | Sequence data for short BGM / sound effects. Loaded into a slot for playback | `FmrbAudio#load_fmsq`, `play_slot` |
 | NSF | NES music (NES Sound Format) | `FmrbAudio#play(path, track:)` |
+| MID | Standard MIDI files. Played through the MIDI layer, on the internal sound chip or an external instrument | `FmrbMidi::SmfPlayer` |
 
 ## FMSQ
 
@@ -187,7 +188,7 @@ NES Sound Format is a standard format for playing actual NES music. Family mruby
 ### Playback
 
 ```ruby
-@audio.play("/usr/share/music/music.nsf", track: 1)
+@audio.play("/usr/share/sounds/nsf/song.nsf", track: 1)
 ```
 
 `track:` is the song number (1-based). Since an NSF file can contain multiple songs, you select the file first and then choose a specific song with the track parameter.
@@ -200,9 +201,42 @@ NES Sound Format is a standard format for playing actual NES music. Family mruby
 
 A sample NSF player GUI is available at `/app/tool/nsf_player.app.rb` (implements track forward/backward, track selection, and pause/resume).
 
+## MID (Standard MIDI File)
+
+New in 2.0. A `.mid` file is played by the [MIDI](../api/midi.md) layer rather than the audio
+slots, which means the same file can drive the internal sound chip or an external instrument
+on the GROVE port.
+
+```ruby
+player = FmrbMidi::SmfPlayer.new(@device)
+player.load("/usr/share/sounds/midi/song.mid")
+player.play
+```
+
+Seven public-domain songs ship in `/usr/share/sounds/midi`, and the SMF Player app
+(`/app/tool/smf_player.app.rb`) plays them with a file list.
+
+### On the internal sound chip
+
+The APU has four voices — two pulses, a triangle and noise — against MIDI's sixteen channels,
+so playing a general MIDI file through it is lossy by construction. Dense arrangements lose
+notes. An external General MIDI module has no such limit; see [MIDI](../api/midi.md).
+
+### Converting to FMSQ
+
+For music you want as a fixed sequence rather than live playback, `tool/midi/smf2fmsq.rb` in
+the repository converts a `.mid` into an [FMSQ](#fmsq) stream:
+
+```
+ruby tool/midi/smf2fmsq.rb input.mid -o out.fmsq
+```
+
+It emits register writes carrying full APU state, so the result plays identically on both
+FMSQ players. The same four-voice reduction applies.
+
 ## WAV / MP3
 
-Not supported. Please convert to FMSQ or NSF.
+Not supported. Convert to FMSQ, or use MID or NSF.
 
 ## Direct Synthesis (`note_on` / `note_off`)
 
@@ -219,6 +253,7 @@ See [FmrbAudio - note_on / note_off](../api/audio.md#direct-synthesis-note_on--n
 ## Related
 
 - [FmrbAudio](../api/audio.md)
+- [MIDI](../api/midi.md) — playing `.mid`, and sending MIDI to an external instrument
 - Piano app: `/app/game/piano.app.rb`
 - Sound effects + BGM example: `/app/game/flappy.rb`
 - NSF player: `/app/tool/nsf_player.app.rb`

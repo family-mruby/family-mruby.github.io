@@ -26,7 +26,7 @@ Internally, it sends `MSG_TYPE_APP_AUDIO` messages to the kernel, which are proc
 | `pause` | Pause playback |
 | `resume` | Resume playback |
 
-`path` is a file path (e.g. `/usr/share/music/song.nsf`). `track:` specifies the track number (used for files like NSF that contain multiple tracks).
+`path` is a file path (e.g. `/usr/share/sounds/nsf/song.nsf`). `track:` specifies the track number (used for files like NSF that contain multiple tracks).
 
 ### FMSQ Sequences
 
@@ -104,7 +104,7 @@ Calling `play(path, track:)` with different track numbers simultaneously enables
 NES Sound Format is supported.
 
 ```ruby
-@audio.play("/usr/share/music/dq.nsf", track: 1)
+@audio.play("/usr/share/sounds/nsf/song.nsf", track: 1)
 ```
 
 A playback GUI sample is available in `tool/nsf_player.app.rb`. For details, see [Audio File Formats](../file_formats/audio_formats.md#nsf).

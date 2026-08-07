@@ -6,6 +6,7 @@ Family mruby が対応する音声ファイル形式と、その作成・変換�
 |---|---|---|
 | FMSQ | 短い BGM / SE のシーケンスデータ。スロットにロードして再生 | `FmrbAudio#load_fmsq`, `play_slot` |
 | NSF | ファミコン音楽（NES Sound Format） | `FmrbAudio#play(path, track:)` |
+| MID | 標準 MIDI ファイル。MIDI 層を通して内蔵音源でも外部音源でも鳴らせます | `FmrbMidi::SmfPlayer` |
 
 ## FMSQ
 
@@ -187,7 +188,7 @@ NES Sound Format は実機ファミコン音楽を再生する標準フォーマ
 ### 再生
 
 ```ruby
-@audio.play("/usr/share/music/music.nsf", track: 1)
+@audio.play("/usr/share/sounds/nsf/song.nsf", track: 1)
 ```
 
 `track:` は曲番号（1 始まり）。NSF には複数曲が含まれるため、ファイル名で曲を選んだ後、track 指定で個別曲を選べます。
@@ -200,9 +201,41 @@ NES Sound Format は実機ファミコン音楽を再生する標準フォーマ
 
 `/app/tool/nsf_player.app.rb` に NSF 再生 GUI のサンプルがあります（曲送り・トラック選択・一時停止 / 再開 を実装）。
 
+## MID (標準 MIDI ファイル)
+
+2.0 で追加。`.mid` は音声スロットではなく [MIDI](../api/midi.md) 層が再生します。つまり同じ
+ファイルで、内蔵音源も GROVE 端子につないだ外部音源も鳴らせます。
+
+```ruby
+player = FmrbMidi::SmfPlayer.new(@device)
+player.load("/usr/share/sounds/midi/song.mid")
+player.play
+```
+
+`/usr/share/sounds/midi` に著作権の切れた曲が 7 つ入っています。SMF Player
+(`/app/tool/smf_player.app.rb`) が一覧から選んで鳴らします。
+
+### 内蔵音源で鳴らす場合
+
+APU は矩形波 2・三角波 1・雑音 1 の 4 声で、MIDI の 16 チャンネルには足りません。一般的な
+MIDI ファイルを内蔵音源で鳴らすと、原理的に音が落ちます。音数の多い曲ほど顕著です。外部の
+GM 音源にはこの制約がありません。[MIDI](../api/midi.md) を参照してください。
+
+### FMSQ に変換する
+
+その場で演奏するのではなく決まったシーケンスとして持ちたい場合は、リポジトリの
+`tool/midi/smf2fmsq.rb` で `.mid` を [FMSQ](#fmsq) に変換できます。
+
+```
+ruby tool/midi/smf2fmsq.rb input.mid -o out.fmsq
+```
+
+APU の状態を丸ごと運ぶレジスタ書き込みだけを出力するので、どちらの FMSQ 再生系でも同じに
+鳴ります。4 声への圧縮は同じように起こります。
+
 ## WAV / MP3
 
-未対応 です。FMSQ または NSF に変換してください。
+未対応です。FMSQ に変換するか、MID か NSF を使ってください。
 
 ## 直接合成 (`note_on` / `note_off`)
 
@@ -219,6 +252,7 @@ sleep_ms(200)
 ## 関連
 
 - [FmrbAudio](../api/audio.md)
+- [MIDI](../api/midi.md) — `.mid` の再生と、外部音源への MIDI 送信
 - ピアノアプリ: `/app/game/piano.app.rb`
 - 効果音 + BGM 例: `/app/game/flappy.rb`
 - NSF プレイヤー: `/app/tool/nsf_player.app.rb`
