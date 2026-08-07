@@ -1,14 +1,18 @@
 # HID Device Config (`/etc/hid_devices.toml`)
 
-Most USB mice, keyboards and gamepads just work. This file is for the ones that do not.
+**Whether a given USB device works is not a given.** The USB host stack here is limited, and
+so are a lot of the devices: some are not enumerated at all, some enumerate and then report
+in a format the generic path reads wrongly. [Verified Peripherals](../compatibility.md)
+lists what has actually been tested.
 
-A USB HID device describes its own report format, but plenty of cheap devices describe it
-badly, or pack their axes in a way the generic path does not expect. `/etc/hid_devices.toml`
-lets you spell out, per device, exactly which bits of the report mean what.
+`/etc/hid_devices.toml` is the tool for the second case. A USB HID device is supposed to
+describe its own report format, but plenty of them describe it badly, or pack their axes in a
+way the generic path does not expect. This file lets you spell out, per device, exactly which
+bits of the report mean what.
 
-**You do not need this file to use a normal mouse.** Reach for it only when a device is
-recognised but behaves wrongly — the cursor jumps, moves on the wrong axis, or does not move
-at all while the buttons work.
+It helps when a device **is** recognised but behaves wrongly — the cursor jumps, moves on the
+wrong axis, or does not move at all while the buttons work. It cannot help a device that
+never enumerates; that is a driver problem, not a layout one.
 
 ## How a device gets its layout
 
@@ -26,8 +30,9 @@ So a device only needs an entry here when all three fail.
 
 ## Writing an entry without a PC
 
-The **HID Inspector** app (press `I` on the desktop, or start it from the Launcher) does this
-interactively on the device itself:
+The **HID Inspector** app does this interactively on the device itself. It is built into the
+firmware rather than installed under `/app`, so it is **not in the launcher** — press `I` on
+the desktop to start it:
 
 1. **LIST** — pick the misbehaving device from the connected list
 2. **INSPECT** — watch the raw report bytes as you move and click
@@ -118,7 +123,7 @@ the `GP_*` constants name them. See
 
 ## Related
 
-- [Verified Peripherals](../compatibility.md) — devices known to work as they are
+- [Verified Peripherals](../compatibility.md) — what has been tested, and what failed
 - [System Configuration](system_conf.md) — `system_conf.toml` and `wifi.toml`
 - [Constants & System Info](../api/const.md) — the `GP_*` and `KEY_*` constants
 - [Default Apps](../getting_started/default_apps.md) — the HID Inspector

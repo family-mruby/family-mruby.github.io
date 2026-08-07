@@ -22,8 +22,9 @@ That is the whole list. The Tab5 has the screen, the speaker and the battery bui
 
 You need a keyboard, and there are two ways to get one:
 
-- **A USB keyboard** in the Tab5's USB-A port. Add a USB hub if you want a mouse as well.
-  See [Verified Devices](../compatibility.md) for what is known to work.
+- **A USB keyboard** in the Tab5's USB-A port, plus a USB hub if you want a mouse as well.
+  Not every keyboard or hub is recognised — check [Verified
+  Peripherals](../compatibility.md), and expect to try a couple.
 - **The M5Stack Tab5 Keyboard** accessory, which clips onto the body and needs no USB port.
 
 You do not need a mouse: the touch screen works as a trackpad (see [Using
