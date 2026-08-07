@@ -46,11 +46,15 @@ plugins:
             Home: ホーム
             Architecture: アーキテクチャ
             Getting Started: 基本的な使い方
+            Choose your hardware: 機種の選択
+            Modern (M5Stack Tab5): Modern (M5Stack Tab5)
+            Setup (Retro): 起動まで (Retro)
             For BOOTH Buyers: BOOTHで購入した方へ
             Setup: 起動まで
             Hello World: Hello World
             Simulator: シミュレータ
             Console: コンソール
+            Family mruby Console: Family mruby コンソール
             Default Apps: 標準アプリ
             Firmware Update: ファームウェア更新
             API Reference: API リファレンス
@@ -61,6 +65,8 @@ plugins:
             TileMap: TileMap
             P5: P5
             FmrbAudio: FmrbAudio
+            MIDI: MIDI
+            Network: ネットワーク
             Pub/Sub: Pub/Sub
             File & I/O: ファイル・I/O
             Log: ログ
@@ -72,6 +78,10 @@ plugins:
             App Config (.toml): アプリ設定ファイル (.toml)
             Audio File Formats: 音声ファイルフォーマット
             Image & Icon Files: 画像・アイコンファイル
+            Tools: 開発ツール
+            Remote Desktop: 遠隔画面
+            Debugging: デバッグ
+            BASIC and MicroPython: BASIC と MicroPython
             Limitations: 制約事項
             Examples: サンプル集
             Hardware: ハードウェア
@@ -80,8 +90,10 @@ plugins:
 nav:
   - Home: index.md
   - Getting Started:
+      - Choose your hardware: getting_started/choose_hardware.md
+      - Modern (M5Stack Tab5): getting_started/modern.md
+      - Setup (Retro): getting_started/setup.md
       - For BOOTH Buyers: getting_started/booth.md
-      - Setup: getting_started/setup.md
       - Hello World: getting_started/hello_world.md
       - Family mruby Console: getting_started/console.md
       - Default Apps: getting_started/default_apps.md
@@ -95,6 +107,8 @@ nav:
       - TileMap: api/tilemap.md
       - P5: api/p5.md
       - FmrbAudio: api/audio.md
+      - MIDI: api/midi.md
+      - Network: api/network.md
       - Pub/Sub: api/pubsub.md
       - File & I/O: api/filesystem.md
       - Log: api/log.md
@@ -106,6 +120,10 @@ nav:
       - App Config (.app.toml): file_formats/app_toml.md
       - Audio File Formats: file_formats/audio_formats.md
       - Image & Icon Files: file_formats/image_formats.md
+  - Tools:
+      - Remote Desktop: remote_desktop.md
+      - Debugging: debugging.md
+      - BASIC and MicroPython: other_languages.md
   - Examples: examples.md
   - Architecture: architecture.md
   - Hardware: hardware.md

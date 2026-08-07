@@ -1,61 +1,85 @@
 # Firmware Update
 
-A browser-based installer is available for writing firmware. When firmware updates are released in the future, you can use this page to apply them.
+Firmware is written from your browser. Nothing to install.
 
-Public URL: [https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
+Installer: [https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
 
 ## Requirements
 
-| Item | Recommendation |
+| Item | What works |
 |---|---|
-| Web Serial compatible browser | Chrome / Edge / Opera (desktop versions). Firefox / Safari are not supported |
-| USB Type-C cable | Must support data communication (charging-only cables will not work) |
+| Browser | Chrome, Edge or Opera (desktop). Firefox and Safari have no Web Serial and cannot flash |
+| USB cable | Must carry data. Charge-only cables never appear in the port dialog |
 
-## Flashing Procedure
+## How many chips you are flashing
 
-The Family mruby board has two MCUs (ESP32-S3 for main processing and ESP32-WROVER for video/audio), and each must be flashed independently. The installer screen provides buttons for each MCU.
+This differs between the two machines, and it is the thing people get wrong.
 
-1. Open the [installer](https://family-mruby.github.io/family-mruby-installer/) in your browser
-2. Connect the board to your PC with a USB Type-C cable (use a data-capable cable)
-3. Select the desired version from the dropdown
-4. Click the appropriate button for the target MCU:
-    - `fmruby-core` button: flash the ESP32-S3
-    - `fmruby-graphics-audio` button: flash the ESP32-WROVER
-5. Select the serial port in the browser dialog
-6. The chip is automatically detected and flashing begins
+| Machine | Chips to flash | Buttons in the installer |
+|---|---|---|
+| **Modern** (M5Stack Tab5) | One — the ESP32-P4 | `Connect & Flash Tab5 firmware` |
+| **Retro** (narya-board) | Two — the ESP32-S3 and the ESP32-WROVER, separately | `Connect & Flash fmruby-core`, `Connect & Flash fmruby-graphics-audio` |
 
-!!! note "Update target"
-    Update the firmware for both MCUs to the same version. If the versions do not match, the system will not boot correctly.
+The installer checks the chip family before writing (ESP32-P4 / ESP32-S3 / ESP32), so
+pressing the wrong button gives you an error, not a broken device.
 
-!!! warning "What happens if you select the wrong MCU?"
-    The installer automatically checks the chip family (ESP32-S3 / ESP32), so selecting the wrong one will result in an error.
+!!! warning "Flashing replaces the files on the device"
+    The image includes the flash filesystem. Your own apps and any config files you edited
+    on the device are replaced by the shipped contents. Copy anything you want to keep off
+    the device first — see [Console](console.md).
 
+## Modern (M5Stack Tab5)
 
-## Which USB Port to Connect
+1. Open the [installer](https://family-mruby.github.io/family-mruby-installer/)
+2. Connect the Tab5 to your PC with a USB-C data cable
+3. Go to the **Family mruby Modern (Tab5)** section
+4. Choose a version (newest is preselected)
+5. Press **Connect & Flash Tab5 firmware** and pick the port
+6. Wait for it to finish, then let the device restart
 
-The board has separate USB Type-C ports for different purposes:
+The Tab5 connects over USB-Serial-JTAG, so **no button has to be held** to enter download
+mode. If the device sits in download mode after flashing — the serial log shows
+`waiting for download` — press reset once.
 
-- Connecting to the ESP32-S3 side USB-C allows flashing fmruby-core
-- Connecting to the ESP32-WROVER side USB-C allows flashing fmruby-graphics-audio
+## Retro (narya-board)
+
+The board has two MCUs and they are flashed independently, through **different USB-C ports**
+on the board:
+
+- The **ESP32-S3 side** port flashes `fmruby-core`
+- The **ESP32-WROVER side** port flashes `fmruby-graphics-audio`
+
+1. Open the [installer](https://family-mruby.github.io/family-mruby-installer/)
+2. Connect a USB-C data cable to the port for the chip you are flashing
+3. Go to the **Family mruby Retro** section and choose a version
+4. Press the matching button, then pick the port in the browser dialog
+5. Repeat for the other chip, from the other port
+
+!!! note "Keep the two versions the same"
+    Flash both chips with the same version. A new `fmruby-core` against an old
+    `fmruby-graphics-audio` will not boot correctly — the link protocol between them has to
+    match.
 
 ## Troubleshooting
 
-### The browser does not recognize the serial port
+### The browser does not show a serial port
 
-- Check that the cable supports data communication (charging-only USB-C cables will not be recognized)
-- Use a USB-certified cable
-- Connect directly to the PC without a USB hub
-- Use as short a USB cable as possible
-- Try a different USB port
-- Verify that the USB serial driver for the ESP32 chip is installed on your OS (recent OS versions include it by default)
+- The cable must carry data. Charge-only USB-C cables are never offered
+- Use a USB-certified cable, as short as is practical
+- Connect straight to the PC, not through a hub
+- Try another USB port
+- Check that your OS has the USB-serial driver for the chip (recent OSes ship it)
 
-### Flashing fails midway
+### Flashing stops part way
 
-- Check the USB cable and connection (insufficient power or poor contact is often the cause)
-- Click again and re-select the port to retry
-- If it still fails, try a different PC or browser
+- Check the cable and the connection. Insufficient power or a loose contact is the usual cause
+- Press the button again and reselect the port
+- If it keeps failing, try another PC or another browser
 
-### No display after flashing
+### Nothing on screen after flashing
 
-- Verify that both MCUs are on the same protocol version. Combinations such as an old fmruby-core with a new fmruby-graphics-audio will fail to boot
-- Flash both MCUs with the latest version
+**Modern:** press reset once. If the log shows `boot:0x204 (DOWNLOAD...)` and
+`waiting for download`, the board stayed in download mode — reset is all it needs.
+
+**Retro:** check that both chips are on the same version. An old `fmruby-core` with a new
+`fmruby-graphics-audio` (or the reverse) fails to boot. Flash both with the same release.
