@@ -1,8 +1,7 @@
 # Family mruby Console
 
-A tool for reading and writing files on the board from a PC's browser via Bluetooth Low Energy (BLE).
-
-It can be operated from a web browser.
+A browser-based client that reaches the board over Bluetooth Low Energy: files, live logs,
+sprite and map editing, and a debug panel. Nothing to install.
 
 ## Requirements
 
@@ -49,7 +48,35 @@ After uploading app files (`.app.rb` / `.app.toml`) to `/app/<dir>/`, they will 
 - Open the launcher and right-click — the title bar will show "Rescanning..." and new apps will appear within 1–2 seconds
 - Restart the device — apps are automatically picked up during the startup scan
 
-For details, see [Hello World > Applying in the Launcher](hello_world.md#ランチャーで反映する).
+For details, see [Hello World > Applying in the Launcher](hello_world.md).
+
+## What the client can do
+
+Five tabs across the top:
+
+| Tab | What it is for |
+|---|---|
+| Files | Browse the flash filesystem. Upload by dropping files, download, rename, create and delete files and folders |
+| Logs | The device's log, streamed live, with a substring filter |
+| Sprite | Edit RGB332 sprite sheets in the browser and write them back |
+| Map | Edit tile maps |
+| Debug | List running apps (`ps`), kill one, spawn another by path, and send raw debug commands |
+
+The Debug tab talks to the same debug service the [remote debugger](../debugging.md) uses, so
+it is the quickest way to stop an app that has stopped responding — no breakpoints, no
+session.
+
+## Both machines
+
+The console works on Modern as well as Retro; on Modern, BLE runs on the ESP32-C6.
+
+The difference is what else can run at the same time. Modern's C6 handles BLE and Wi-Fi
+together, so the console and the [remote desktop](../remote_desktop.md) both work. Retro's
+ESP32-S3 has one radio, so BLE and Wi-Fi are a choice — see
+[Connecting to Wi-Fi](wifi.md).
+
+If the device does not appear in the browser's dialog at all, BLE may not be running. Check
+`ble_auto_start` in Config, or start it by hand from the system menu.
 
 ## Notes
 
@@ -77,4 +104,5 @@ Only one client can be connected at a time. If you want to connect from another 
 ## Related
 
 - Where to transfer your custom apps: [Hello World](hello_world.md)
-- File system structure: [Files and I/O](../api/filesystem.md#ファイル名前空間)
+- File system structure: [Files & I/O](../api/filesystem.md#file-namespace)
+- Stopping a misbehaving app: [Debugging](../debugging.md)
