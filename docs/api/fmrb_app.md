@@ -1,8 +1,5 @@
 # FmrbApp
 
-!!! note
-    Under construction.
-
 `FmrbApp` is the application base class for Family mruby. User apps must inherit from `FmrbApp` and implement lifecycle methods.
 
 ## Minimal Example

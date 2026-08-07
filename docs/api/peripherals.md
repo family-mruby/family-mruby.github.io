@@ -1,13 +1,24 @@
 # Peripherals (GPIO / I2C / RMT)
 
-!!! note
-    Under construction.
-
 APIs for operating hardware peripherals from Ruby.
 
 !!! note
     For pin layouts and electrical specifications, see [Hardware](../hardware.md).
     To check whether a pin is already in use by another function, use [`FmrbHw.pin_status`](const.md#fmrbhw).
+
+!!! warning "Pin numbers differ between the machines"
+    The GROVE pins are not the same on Retro and Modern, so an app that hardcodes a number
+    runs on one machine only. Branch on the board instead:
+
+    ```ruby
+    sda, scl = case FmrbConst::BOARD
+               when "tab5", "naryav4" then [53, 54]   # Tab5 GROVE
+               else                        [47, 48]   # narya-board GROVE 2
+               end
+    ```
+
+    Some pins are held by the system and cannot be acquired at all — see
+    [Hardware](../hardware.md) for the reserved list on each machine.
 
 ## GPIO
 

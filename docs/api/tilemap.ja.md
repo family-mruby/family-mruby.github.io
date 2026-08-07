@@ -1,8 +1,5 @@
 # TileSheet / TileMap
 
-!!! note
-    編集中です
-
 タイルベースのマップ描画を簡単に書くためのライブラリ。RPG のような格子状の世界、敷き詰めた背景、ステージ式パズルなどに向きます。
 
 | クラス | 役割 |
@@ -25,7 +22,7 @@ TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16)
 | 引数 | 用途 |
 |---|---|
 | `gfx` | `FmrbGfx` インスタンス |
-| `path` | WROVER 側にすでに転送された BMP のパス（`@gfx.transfer_file` で送る） |
+| `path` | グラフィックス側にすでに転送された BMP のパス（`@gfx.transfer_file` で送る） |
 | `cols:` | シートの列数（タイル単位） |
 | `rows:` | 行数。`nil` なら BMP のサイズから自動推定（8bit BMP 前提） |
 | `tile_size:` | 1 タイルのピクセル幅・高さ（既定: 16） |
@@ -67,7 +64,7 @@ sheet.stamp(5, dst_x: 16, dst_y: 0)   # 5 番目のタイルを右に
 TileMap.new(json_path)
 ```
 
-`json_path` は core 側 (内蔵 flash) の JSON パス。WROVER 側ではないことに注意。
+`json_path` は core 側 (内蔵 flash) の JSON パス。グラフィックス側ではないことに注意。
 
 ### メソッド
 
@@ -124,7 +121,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 | `version` | 1 |
 | `width` / `height` | マップサイズ（タイル単位） |
 | `tile_size` | 1 タイルピクセル数 |
-| `tilesheet` | 使用するシートの WROVER 側パス |
+| `tilesheet` | 使用するシートの グラフィックス側パス |
 | `tilesheet_cols` | シートの列数 |
 | `layers[]` | 各レイヤ。`data` は 2次元配列（`[row][col]` → タイル番号、`null` で空） |
 | `events[]` | 任意イベント。`event_at(x, y)` で取得 |

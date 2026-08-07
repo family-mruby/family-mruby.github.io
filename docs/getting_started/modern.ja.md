@@ -145,40 +145,30 @@ Retro の手順と、うまくいかないときの対処は [ファームウェ
 
 ## WiFi につなぐ
 
-WiFi の設定は実機の `/etc/wifi.toml` にあります。公開しているファームウェアにはこの
-ファイルが入っていません (ご自宅の合言葉を焼き込むわけにいかないので) 。実機のエディタで
-一度だけ作ってください。
+WiFi につなぐと [遠隔画面](../remote_desktop.md) と
+[ネットワーク API](../api/network.md) が使えるようになります。接続先は `/etc/wifi.toml` に
+書きます。このファイルは実機のエディタで一度だけ作ります。
 
-1. **エディタ**を起動する (デスクトップで `E`、またはランチャーから)
-2. **File** → **Open** で `/etc/wifi.toml` を開く。無ければ空の状態で中身を打ち込んで
-   **File** → **Save as** で保存する
-3. 自分のネットワークを書く
+```toml
+[wifi]
+enable = true
+ssid = "your-ssid"
+password = "your-password"
+hostname = "fmruby"
+```
 
-    ```toml
-    [wifi]
-    enable = true
-    ssid = "your-ssid"
-    password = "your-password"
-    # http://<hostname>.local/ でつながるようになります
-    hostname = "fmruby"
-    ```
-
-4. 保存して、システムメニューの **Reset** で再起動する
-
-再起動したら、システムメニューの **Network** を開きます。接続状態、割り当てられた
-アドレス、ホスト名が出ます。
+保存して **Reset** で再起動し、システムメニューの **Network** で確認します。
 
 <div align="center">
   <img src="../../images/tab5_network.png" width="600" alt="割り当てられたアドレスを表示する Network ダイアログ">
 </div>
 
+詳しい手順と、つながらないときの対処は [WiFi につなぐ](wifi.md) にあります。
+
 !!! tip "無線を 2 つ同時に使えます"
     Modern では ESP32-C6 が WiFi と BLE を同時に受け持つので、WiFi を使いながら BLE の
     [web コンソール](console.md) も使えます。(Retro の ESP32-S3 は無線が 1 系統なので、
     どちらか一方になります。)
-
-つながらないときは、`enable = true` になっているか、SSID の綴りが合っているかを確認して
-ください。対応しているのは 2.4GHz 帯だけです。
 
 ## パソコンから画面を見る
 

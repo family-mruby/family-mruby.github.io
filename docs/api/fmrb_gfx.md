@@ -1,12 +1,9 @@
 # FmrbGfx
 
-!!! note
-    Under construction.
-
 `FmrbGfx` is the class that provides drawing APIs. In apps that inherit from `FmrbApp`, it is accessible as `@gfx`.
 
 !!! warning "Nothing appears until `present` is called"
-    All drawing commands are accumulated in a buffer. They are transferred to fmruby-graphics-audio and rendered on screen when `@gfx.present` is called.
+    All drawing commands are accumulated in a buffer. They reach the graphics side and appear on screen when `@gfx.present` is called.
 
 ## Coordinate System
 
@@ -148,7 +145,7 @@ Convenient for code examples and bilingual UI strings.
     `FmrbApp#draw_window_frame` always draws the title bar with the default 6x8 font and then restores the font setting from before the call. There is no need to call `set_font` again each frame in your app.
 
 !!! note "JA font loading cost"
-    The first call to `set_font(:ja, ...)` takes several tens of milliseconds as the WROVER side prepares the font data. Ideally, call it once in `on_create`.
+    The first call to `set_font(:ja, ...)` takes several tens of milliseconds as the graphics side prepares the font data. Ideally, call it once in `on_create`.
 
 ### Example (Japanese)
 
@@ -224,7 +221,7 @@ A performance API that specifies which rectangles of the canvas are composited a
 
 Normally, the system configures this via the `rounded_corners` flag in `.toml` ([App Configuration > rounded_corners](../file_formats/app_toml.md)), so user apps rarely need to use this directly.
 
-## NTSC Output Adjustment (ESP32 Only)
+## NTSC Output Adjustment (Retro only)
 
 | Method | Purpose | Range |
 |---|---|---|

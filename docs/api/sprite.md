@@ -1,15 +1,12 @@
 # Sprite
 
-!!! note
-    Under construction.
-
 This page covers the sprite and tile map APIs.
 
 | Class | Role |
 |---|---|
 | `SpriteImage` | Sprite image buffer (reusable pixel data) |
 | `SpriteInstance` | A sprite instance placed on screen (position, frame, visibility) |
-| `GfxBlock` | A mechanism that caches drawing command sequences as bytecode on the WROVER side and re-sends only the variable parameters |
+| `GfxBlock` | A mechanism that caches drawing command sequences as bytecode on the graphics side and re-sends only the variable parameters |
 
 !!! warning "Call `@gfx.present`"
     After `SpriteInstance#move`, `visible=`, or `frame=`, you must call `@gfx.present`. Sprite compositing is performed at the `present` timing.
@@ -46,7 +43,7 @@ SpriteImage.new(gfx,
 | `set_target` | Subsequent `@gfx.fill_rect` etc. draw into this image |
 | `reset_target` | Restore the drawing target to the screen canvas |
 | `draw { |gfx| ... }` | Syntactic sugar that makes this image the drawing target only within the block |
-| `load_bmp(path)` | Load a BMP file into the image (decoded on the WROVER side, fast) |
+| `load_bmp(path)` | Load a BMP file into the image (decoded on the graphics side, fast) |
 | `destroy` | Release resources |
 
 | Attribute | Description |
@@ -131,7 +128,7 @@ Block bytecode for speeding up repeatedly redrawn UI elements (window frames, sc
 How it works:
 
 1. The given block is evaluated twice to detect integer arguments that change, which become "registers"
-2. The drawing command sequence is compiled and cached on the WROVER side
+2. The drawing command sequence is compiled and cached on the graphics side
 3. On `draw(kwargs)` calls, only the changed register values are sent for re-execution
 
 This is far more bandwidth-efficient than sending dozens of drawing commands every frame (`FmrbApp` itself uses this for drawing window frames).

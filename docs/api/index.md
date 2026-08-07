@@ -1,9 +1,18 @@
 # API Reference Overview
 
-!!! note
-    Under construction.
-
 Lists all public Ruby APIs provided by Family mruby. Click each API name to jump to its detail page.
+
+!!! note "How to read this reference"
+    **The API is the same on both machines.** An app written for one runs on the other.
+
+    Where these pages say "the graphics side", they mean whichever part of the hardware turns
+    your drawing commands into a picture: on **Retro** that is a second chip across a UART
+    link, and on **Modern** it is the same ESP32-P4 your code is running on. The calls are
+    identical; only the cost differs, and Modern is the cheaper of the two.
+
+    A handful of things exist on one machine only — NTSC output adjustment on Retro, touch on
+    Modern. Those are marked where they appear. See
+    [Choose your hardware](../getting_started/choose_hardware.md) for the full list.
 
 ## Quick Reference
 
@@ -83,7 +92,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `draw_text(x, y, text, color [, bg_color])` | Text drawing |
 | `FmrbGfx.hsv_to_rgb(h, s, v)` | Color conversion |
 | `FmrbGfx.rgb_to_332(r, g, b)` | 24-bit to RGB332 |
-| `set_output_level(0..255)` / `set_chroma_level(0..255)` | NTSC output adjustment |
+| `set_output_level(0..255)` / `set_chroma_level(0..255)` | NTSC output adjustment (Retro only) |
 
 Color constants: `BLACK 0x00 / WHITE 0xFF / RED 0xE0 / GREEN 0x1C / BLUE 0x03 / YELLOW 0xFC / CYAN 0x1F / MAGENTA 0xE3 / GRAY 0x6D`
 

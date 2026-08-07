@@ -1,8 +1,5 @@
 # Log
 
-!!! note
-    Under construction.
-
 The `Log` module is an API for outputting logs from applications. Output logs are stored in the system's log buffer and also flow to UART and the console (if connected).
 
 ## Output Methods

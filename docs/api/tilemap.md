@@ -1,8 +1,5 @@
 # TileSheet / TileMap
 
-!!! note
-    Under construction.
-
 A library for easily writing tile-based map rendering. Suitable for RPG-style grid worlds, tiled backgrounds, stage-based puzzles, and more.
 
 | Class | Role |
@@ -25,7 +22,7 @@ TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16)
 | Argument | Purpose |
 |---|---|
 | `gfx` | `FmrbGfx` instance |
-| `path` | Path to a BMP already transferred to the WROVER side (use `@gfx.transfer_file` to send it) |
+| `path` | Path to a BMP already transferred to the graphics side (use `@gfx.transfer_file` to send it) |
 | `cols:` | Number of columns in the sheet (in tiles) |
 | `rows:` | Number of rows. If `nil`, automatically estimated from the BMP size (assumes 8-bit BMP) |
 | `tile_size:` | Pixel width and height of a single tile (default: 16) |
@@ -67,7 +64,7 @@ Loads an `fmrb_map` v1 format JSON file and lays out tiles for each layer.
 TileMap.new(json_path)
 ```
 
-`json_path` is a JSON path on the core side (internal flash). Note that this is not on the WROVER side.
+`json_path` is a JSON path on the core side (internal flash). Note that this is not on the graphics side.
 
 ### Methods
 
@@ -124,7 +121,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 | `version` | 1 |
 | `width` / `height` | Map size (in tiles) |
 | `tile_size` | Pixel size of a single tile |
-| `tilesheet` | WROVER-side path of the sheet to use |
+| `tilesheet` | graphics-side path of the sheet to use |
 | `tilesheet_cols` | Number of columns in the sheet |
 | `layers[]` | Each layer. `data` is a 2D array (`[row][col]` -> tile number, `null` for empty) |
 | `events[]` | Arbitrary events. Retrieved via `event_at(x, y)` |

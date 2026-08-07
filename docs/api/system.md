@@ -1,8 +1,5 @@
 # Task / Machine
 
-!!! note
-    Under construction.
-
 Low-level APIs for task control and system control. Derived from `picoruby-machine`.
 
 ## Task

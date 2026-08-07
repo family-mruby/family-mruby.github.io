@@ -94,6 +94,7 @@ MIDI 層。標準 MIDI ファイルの演奏アプリと、Ruby から使える 
 - [Modern (M5Stack Tab5)](getting_started/modern.md) — Tab5 を箱から出してデスクトップが出るまで
 - [起動まで (Retro)](getting_started/setup.md) — narya-board の配線と初回起動
 - [Hello World](getting_started/hello_world.md) — 最初のアプリ
+- [WiFi につなぐ](getting_started/wifi.md) — 遠隔画面とネットワーク
 - [シミュレータ](getting_started/simulator.md) — 実機なしで Linux 上で動かす
 - [API リファレンス](api/index.md) — アプリから呼べるもの
 

@@ -1,9 +1,17 @@
 # API リファレンス 一覧
 
-!!! note
-    編集中です
-
 Family mruby が提供する Ruby 公開 API をすべて一覧します。各 API 名から詳細ページへ飛べます。
+
+!!! note "この文書の読み方"
+    **API は両機種で同じです。**片方向けに書いたアプリは、もう片方でもそのまま動きます。
+
+    この文書で「グラフィックス側」と書いているのは、描画命令を実際の絵に変える部分のことです。
+    **Retro** ではそれが UART の先にある別のチップで、**Modern** ではコードが動いているのと
+    同じ ESP32-P4 です。呼び方は同じで、違うのは費用だけです (Modern のほうが安く済みます)。
+
+    片方の機種にしか無いものもいくつかあります (Retro の NTSC 出力調整、Modern のタッチ)。
+    それぞれの箇所に印をつけてあります。一覧は
+    [機種の選択](../getting_started/choose_hardware.md) を参照してください。
 
 ## 早見表
 
@@ -83,7 +91,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `draw_text(x, y, text, color [, bg_color])` | 文字描画 |
 | `FmrbGfx.hsv_to_rgb(h, s, v)` | 色変換 |
 | `FmrbGfx.rgb_to_332(r, g, b)` | 24bit→RGB332 |
-| `set_output_level(0..255)` / `set_chroma_level(0..255)` | NTSC 出力調整 |
+| `set_output_level(0..255)` / `set_chroma_level(0..255)` | NTSC 出力調整 (Retro のみ) |
 
 カラー定数: `BLACK 0x00 / WHITE 0xFF / RED 0xE0 / GREEN 0x1C / BLUE 0x03 / YELLOW 0xFC / CYAN 0x1F / MAGENTA 0xE3 / GRAY 0x6D`
 

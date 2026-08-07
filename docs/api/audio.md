@@ -1,8 +1,5 @@
 # FmrbAudio
 
-!!! note
-    Under construction.
-
 `FmrbAudio` is the audio playback API. Create an instance by calling `FmrbAudio.new(self)`.
 
 ```ruby
@@ -13,7 +10,7 @@ class MyApp < FmrbApp
 end
 ```
 
-Internally, it sends `MSG_TYPE_APP_AUDIO` messages to the kernel, which are processed by the audio engine on the fmruby-graphics-audio side.
+Internally, it sends `MSG_TYPE_APP_AUDIO` messages to the kernel, which are processed by the audio engine on the graphics side.
 
 !!! note "Supported file formats"
     For details on supported audio file formats, see [Audio File Formats](../file_formats/audio_formats.md).
@@ -125,4 +122,5 @@ end
 ## Related
 
 - [Audio File Formats](../file_formats/audio_formats.md) -- FMSQ / NSF specifications and how to create them
+- [MIDI](midi.md) -- driving this same sound chip through a MIDI device, or sending MIDI to an external instrument
 - [Examples](../examples.md) -- `piano`, `flappy`, `nsf_player`, and more

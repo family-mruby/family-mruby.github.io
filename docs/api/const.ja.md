@@ -1,8 +1,5 @@
 # 定数・システム情報 (FmrbConst / FmrbHw)
 
-!!! note
-    編集中です
-
 ## FmrbConst
 
 システム全体で参照される定数を提供するモジュールです。
@@ -12,6 +9,7 @@
 | 定数 | 値 |
 |---|---|
 | `FmrbConst::PLATFORM` | `"linux"` または `"esp32"` |
+| `FmrbConst::BOARD` | `"tab5"` / `"naryav4"` / `"atom_display"` / `"narya_v3"` / `"linux"`。`PLATFORM` や `CHIP_MODEL` より細かく、基板ごとの配線を選ぶのに使います |
 | `FmrbConst::OS_VERSION` | OS バージョン文字列 |
 | `FmrbConst::GA_VERSION` | fmruby-graphics-audio 側のバージョン |
 | `FmrbConst::LINK_VERSION` | UART リンクプロトコルバージョン |
@@ -28,6 +26,7 @@
 | `FmrbConst::FLASH_SIZE_MB` | フラッシュ容量 (MB) |
 | `FmrbConst::PSRAM_SIZE_MB` | PSRAM 容量 (MB) |
 | `FmrbConst::RESET_REASON` | 直前のリセット理由 |
+| `FmrbConst::HAS_WIFI` | ネットワークにつなげる機種なら `true`。[ネットワーク](network.md) を参照 |
 
 ### プロセス管理
 

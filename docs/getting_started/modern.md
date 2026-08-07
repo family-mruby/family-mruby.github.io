@@ -148,40 +148,31 @@ Pointer speed is adjustable: **Config** → `mouse_scale_x` / `mouse_scale_y`.
 
 ## Connecting to Wi-Fi
 
-Wi-Fi credentials live in `/etc/wifi.toml` on the device. Released firmware ships without
-that file — your network's password is yours, not something we can bake in — so you create
-it once, on the device, with the editor.
+Wi-Fi gets you the [remote desktop](../remote_desktop.md) and the
+[networking API](../api/network.md). Credentials go in `/etc/wifi.toml`, which you create
+once on the device with the editor:
 
-1. Start the **Editor** (press `E` on the desktop, or open it from the Launcher)
-2. **File** → **Open**, and go to `/etc/wifi.toml`. If it is not there, just type the
-   contents into the empty buffer and use **File** → **Save as**
-3. Write your network in:
+```toml
+[wifi]
+enable = true
+ssid = "your-ssid"
+password = "your-password"
+hostname = "fmruby"
+```
 
-    ```toml
-    [wifi]
-    enable = true
-    ssid = "your-ssid"
-    password = "your-password"
-    # The device becomes reachable at http://<hostname>.local/
-    hostname = "fmruby"
-    ```
-
-4. Save, then reboot from the system menu (**Reset**)
-
-After the reboot, open **Network** in the system menu. It shows the connection state, the
-address the device was given and its hostname.
+Save it, reboot from **Reset**, then check the system menu → **Network**.
 
 <div align="center">
   <img src="../../images/tab5_network.png" width="600" alt="The Network dialog showing the address the Tab5 was given">
 </div>
 
-!!! tip "Both radios at once"
-    On Modern the ESP32-C6 handles Wi-Fi and BLE together, so the [web
-    console](console.md) over BLE keeps working while Wi-Fi is up. (On Retro the ESP32-S3
-    has one radio and runs one or the other.)
+Full instructions, and what to do when it will not connect, are in
+[Connecting to Wi-Fi](wifi.md).
 
-If the device does not connect, check `enable = true`, check the SSID for typos, and note
-that only 2.4 GHz networks are supported.
+!!! tip "Both radios at once"
+    On Modern the ESP32-C6 handles Wi-Fi and BLE together, so the [web console](console.md)
+    over BLE keeps working while Wi-Fi is up. (On Retro the ESP32-S3 has one radio and runs
+    one or the other.)
 
 ## Seeing the screen on your PC
 

@@ -9,8 +9,7 @@ actual machine run, and take screenshots without pointing a camera at a panel.
 
 ## Using it
 
-1. Get Wi-Fi working first — see [Modern: connecting to
-   Wi-Fi](getting_started/modern.md#connecting-to-wi-fi)
+1. Get Wi-Fi working first — see [Connecting to Wi-Fi](getting_started/wifi.md)
 2. Open the system menu → **Network** to confirm the address
 3. In a browser on the same network, open:
 

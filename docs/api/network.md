@@ -9,9 +9,8 @@ network and OpenSSL.
 
 ## Before you start
 
-The device needs Wi-Fi credentials in `/etc/wifi.toml`. See [Modern (M5Stack
-Tab5)](../getting_started/modern.md#connecting-to-wi-fi) for how to write that file on the
-device.
+The device needs Wi-Fi credentials in `/etc/wifi.toml`. See
+[Connecting to Wi-Fi](../getting_started/wifi.md) for how to write that file on the device.
 
 !!! note "Retro runs one radio at a time"
     The ESP32-S3 has a single radio, so Wi-Fi and BLE cannot both be up. If the BLE web
@@ -126,6 +125,6 @@ useful when something does not work.
 
 ## Related
 
-- [Modern: connecting to Wi-Fi](../getting_started/modern.md#connecting-to-wi-fi)
+- [Connecting to Wi-Fi](../getting_started/wifi.md)
 - [Remote Desktop](../remote_desktop.md) — the other thing Wi-Fi gets you
 - [Constants & System Info](const.md) — `FmrbConst::HAS_WIFI`

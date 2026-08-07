@@ -1,13 +1,15 @@
 # Examples
 
-!!! note
-    Under construction.
-
 An introduction to the apps bundled under `/app/`. Each one demonstrates specific APIs and features, so try running them first and use the source code as a reference when building your own apps.
 
 Source file locations:
-- mruby apps: `fmruby-core/app/<category>/<name>.app.rb`
-- Configuration: `<name>.app.toml` in the same directory
+
+- On the device: `/app/<category>/<name>.app.rb`
+- In the repository: `fmruby-core/flash/app/<category>/<name>.app.rb`
+- Configuration: `<name>.app.toml`, next to it
+
+A full list of what ships, including the BASIC and MicroPython samples, is in
+[Default Apps](getting_started/default_apps.md).
 
 ## Demo (demo)
 

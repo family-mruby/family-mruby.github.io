@@ -9,7 +9,7 @@ Linux のシミュレータでも、ホストのネットワークと OpenSSL �
 ## 使う前に
 
 実機の `/etc/wifi.toml` に接続先を書いておく必要があります。書き方は
-[Modern (M5Stack Tab5)](../getting_started/modern.md#wifi) を参照してください。
+[WiFi につなぐ](../getting_started/wifi.md) を参照してください。
 
 !!! note "Retro は無線を 1 つずつしか使えません"
     ESP32-S3 の無線は 1 系統なので、WiFi と BLE は同時に使えません。BLE の web コンソールが
@@ -124,6 +124,6 @@ JSON を解析して描画します。ネットワークを待ち、最初に成
 
 ## 関連
 
-- [Modern: WiFi につなぐ](../getting_started/modern.md#wifi)
+- [WiFi につなぐ](../getting_started/wifi.md)
 - [遠隔画面](../remote_desktop.md) — WiFi でできるもう一つのこと
 - [定数・システム情報](const.md) — `FmrbConst::HAS_WIFI`

@@ -96,6 +96,7 @@ board yourself.
 - [Modern (M5Stack Tab5)](getting_started/modern.md) — from an unboxed Tab5 to the desktop
 - [Setup (Retro)](getting_started/setup.md) — cabling and first boot on the narya-board
 - [Hello World](getting_started/hello_world.md) — your first app
+- [Connecting to Wi-Fi](getting_started/wifi.md) — remote desktop and networking
 - [Simulator](getting_started/simulator.md) — run the whole system on Linux, no hardware needed
 - [API Reference](api/index.md) — what your app can call
 

@@ -1,13 +1,24 @@
 # 周辺機器 (GPIO / I2C / RMT)
 
-!!! note
-    編集中です
-
 ハードウェア周辺機器を Ruby から操作するための API です。
 
 !!! note
     各端子のピン配置・電気的仕様は [ハードウェア](../hardware.md) を参照してください。  
     ピンが他の機能で使われていないかは [`FmrbHw.pin_status`](const.md#fmrbhw) で確認できます。
+
+!!! warning "ピン番号は機種で違います"
+    GROVE のピンは Retro と Modern で違うので、番号を決め打ちしたアプリは片方でしか
+    動きません。基板で分岐してください。
+
+    ```ruby
+    sda, scl = case FmrbConst::BOARD
+               when "tab5", "naryav4" then [53, 54]   # Tab5 の GROVE
+               else                        [47, 48]   # narya-board の GROVE 2
+               end
+    ```
+
+    システムが確保していて、そもそも取得できないピンもあります。機種ごとの一覧は
+    [ハードウェア](../hardware.md) を参照してください。
 
 ## GPIO
 

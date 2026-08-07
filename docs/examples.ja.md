@@ -1,13 +1,15 @@
 # サンプル集
 
-!!! note
-    編集中です
-
 `/app/` 以下に同梱されているアプリの紹介です。それぞれが特定の API・機能を実演しているので、まず動かしてみて、ソースを読みながら自分のアプリを作る参考にしてください。
 
 ソースファイルの場所:
-- mruby アプリ: `fmruby-core/app/<カテゴリ>/<名前>.app.rb`
-- 設定: 同じディレクトリの `<名前>.app.toml`
+
+- 実機上: `/app/<カテゴリ>/<名前>.app.rb`
+- リポジトリ: `fmruby-core/flash/app/<カテゴリ>/<名前>.app.rb`
+- 設定: 同じ場所の `<名前>.app.toml`
+
+BASIC や MicroPython の見本も含めた同梱アプリの全体像は
+[標準アプリ](getting_started/default_apps.md) にあります。
 
 ## デモ (demo)
 

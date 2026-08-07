@@ -101,6 +101,11 @@ the `[[shortcuts]]` section of `/etc/system_conf.toml`.
 In the launcher, **right-click** to rescan the filesystem after adding an app; the list is
 otherwise built once, when the desktop starts.
 
+## Connecting to Wi-Fi
+
+Retro has Wi-Fi as well — see [Connecting to Wi-Fi](wifi.md). Note that the ESP32-S3 has a
+single radio, so Wi-Fi and BLE cannot both be running; that page explains how to choose.
+
 ## Next Steps
 
 - Try out the pre-installed apps

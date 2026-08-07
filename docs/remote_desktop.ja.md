@@ -9,7 +9,7 @@
 
 ## 使い方
 
-1. 先に WiFi をつなぎます。[Modern: WiFi につなぐ](getting_started/modern.md#wifi) を参照
+1. 先に WiFi をつなぎます。[WiFi につなぐ](getting_started/wifi.md) を参照
 2. システムメニューの **Network** でアドレスを確認します
 3. 同じネットワークのブラウザで開きます
 

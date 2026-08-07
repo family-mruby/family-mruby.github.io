@@ -1,8 +1,5 @@
 # Constants and System Info (FmrbConst / FmrbHw)
 
-!!! note
-    Under construction.
-
 ## FmrbConst
 
 A module that provides constants referenced throughout the system.
@@ -12,6 +9,7 @@ A module that provides constants referenced throughout the system.
 | Constant | Value |
 |---|---|
 | `FmrbConst::PLATFORM` | `"linux"` or `"esp32"` |
+| `FmrbConst::BOARD` | `"tab5"`, `"naryav4"`, `"atom_display"`, `"narya_v3"` or `"linux"`. Finer-grained than `PLATFORM` and `CHIP_MODEL`: use it to pick board-specific wiring |
 | `FmrbConst::OS_VERSION` | OS version string |
 | `FmrbConst::GA_VERSION` | fmruby-graphics-audio version |
 | `FmrbConst::LINK_VERSION` | UART link protocol version |
@@ -28,6 +26,7 @@ A module that provides constants referenced throughout the system.
 | `FmrbConst::FLASH_SIZE_MB` | Flash capacity (MB) |
 | `FmrbConst::PSRAM_SIZE_MB` | PSRAM capacity (MB) |
 | `FmrbConst::RESET_REASON` | Reason for the last reset |
+| `FmrbConst::HAS_WIFI` | `true` on a machine that can join a network. See [Network](network.md) |
 
 ### Process Management
 

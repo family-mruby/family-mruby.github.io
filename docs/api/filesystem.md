@@ -1,8 +1,5 @@
 # File & I/O
 
-!!! note
-    Under construction.
-
 API for file and directory operations. Provides the `File` / `Dir` / `IO` classes.
 
 ## File Namespace

@@ -1,12 +1,9 @@
 # FmrbGfx
 
-!!! note
-    編集中です
-
 `FmrbGfx` は描画 API を提供するクラスです。`FmrbApp` を継承したアプリでは `@gfx` として参照できます。
 
 !!! warning "`present` を呼ぶまで画面に出ない"
-    描画コマンドはすべてバッファに蓄積されます。`@gfx.present` を呼んだタイミング で fmruby-graphics-audio に転送され、画面に反映されます。
+    描画コマンドはすべてバッファに蓄積されます。`@gfx.present` を呼んだタイミングでグラフィックス側に渡り、画面に反映されます。
 
 ## 座標系
 
@@ -148,7 +145,7 @@ ASCII と日本語が混ざった文字列を 1 回の `draw_text` で描けま�
     `FmrbApp#draw_window_frame` はタイトルバーを必ず既定の 6x8 で描いてから 呼び出し前のフォント設定を復元 します。アプリ側で毎フレーム `set_font` を再指定する必要はありません。
 
 !!! note "JA フォントの読み込みコスト"
-    `set_font(:ja, ...)` 初回は WROVER 側でフォントデータを準備するため数十 ms 程度かかります。`on_create` 内で一度だけ呼ぶのが理想です。
+    `set_font(:ja, ...)` 初回は グラフィックス側でフォントデータを準備するため数十 ms 程度かかります。`on_create` 内で一度だけ呼ぶのが理想です。
 
 ### サンプル（日本語）
 
@@ -224,7 +221,7 @@ sheet.load_bmp("/usr/share/sprites/tilesheet.bmp")
 
 通常は `.toml` の `rounded_corners` フラグ（[アプリ設定 ▸ rounded_corners](../file_formats/app_toml.md)）でシステム側が設定するので、ユーザーアプリで直接触る機会は少ないです。
 
-## NTSC 出力調整（ESP32 のみ）
+## NTSC 出力調整（Retro のみ）
 
 | メソッド | 用途 | 範囲 |
 |---|---|---|

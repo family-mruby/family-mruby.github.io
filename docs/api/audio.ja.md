@@ -1,8 +1,5 @@
 # FmrbAudio
 
-!!! note
-    編集中です
-
 `FmrbAudio` は音声再生 API です。`FmrbAudio.new(self)` を呼んで インスタンスを作ります。
 
 ```ruby
@@ -125,4 +122,5 @@ end
 ## 関連
 
 - [音声ファイルフォーマット](../file_formats/audio_formats.md) — FMSQ / NSF の仕様と作り方
+- [MIDI](midi.md) — この音源を MIDI 経由で鳴らす、あるいは外部音源へ MIDI を送る
 - [サンプル集](../examples.md) — `piano`, `flappy`, `nsf_player` ほか
