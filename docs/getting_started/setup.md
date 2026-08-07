@@ -34,7 +34,11 @@ this is, see [Choose your hardware](choose_hardware.md).
 - SD card
     - For when you need to handle large data
 - USB gamepad
-    - Details to be added later
+    - Plugs into the USB-A port like any other HID device. Apps receive
+      `:gamepad_down` / `:gamepad_up` / `:gamepad_axis` events with a button or axis number;
+      the numbers are the `GP_*` constants in
+      [Constants & System Info](../api/const.md#input-device-gamepad-gp_).
+    - The bundled **Raycaster** game reads one, so it is the quickest way to check yours works.
 
 ### If You Want to Retain the Clock
 
