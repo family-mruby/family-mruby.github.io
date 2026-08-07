@@ -6,16 +6,6 @@ SRC_REF="${FMRUBY_CORE_REF:-main}"
 SRC_BASE="https://raw.githubusercontent.com/family-mruby/fmruby-core/${SRC_REF}/tool/web"
 DEST_DIR="docs/console"
 
-# Asset files referenced from index.html (relative paths under tool/web/).
-ASSETS=(
-  "css/app.css"
-  "js/app.js"
-  "js/bmp332.js"
-  "js/sprite-editor.js"
-  "js/map-editor.js"
-  "vendor/prism.js"
-)
-
 mkdir -p "$DEST_DIR"
 
 # Fetch index.html and inject favicon <link> right after <head> opening tag.
@@ -26,6 +16,23 @@ curl -fsSL "${SRC_BASE}/index.html" \
   > "${DEST_DIR}/index.html"
 
 echo "Synced ${SRC_BASE}/index.html -> ${DEST_DIR}/index.html"
+
+# Derive the asset list from index.html itself, so a newly added script or
+# stylesheet upstream cannot silently go missing here (that failure mode is
+# invisible until a button stops working in the browser).
+# Only same-directory relative paths are ours to fetch; absolute URLs,
+# anchors and the injected favicon (../assets/) belong to the site.
+mapfile -t ASSETS < <(
+  grep -oE '(src|href)="[^"]+"' "${DEST_DIR}/index.html" \
+    | sed -E 's/^(src|href)="//; s/"$//' \
+    | grep -vE '^([a-zA-Z]+:|//|#|/|\.\./)' \
+    | sort -u
+)
+
+if [ "${#ASSETS[@]}" -eq 0 ]; then
+  echo "No assets found in ${DEST_DIR}/index.html - refusing to publish a broken console." >&2
+  exit 1
+fi
 
 # Fetch each asset, creating sub-directories as needed.
 for rel in "${ASSETS[@]}"; do
