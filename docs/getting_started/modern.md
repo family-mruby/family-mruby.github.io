@@ -45,15 +45,15 @@ Modern is a single chip, so there is a single firmware to write.
 1. Open the [Family mruby Web Installer](https://family-mruby.github.io/family-mruby-installer/)
    in Chrome, Edge or Opera
 2. Connect the Tab5 to your PC with a USB-C cable
-3. Scroll to the **Family mruby Modern (Tab5)** section
+3. Scroll to the Family mruby Modern (Tab5) section
 4. Pick the version you want (the newest is selected by default)
-5. Press **Connect & Flash Tab5 firmware**
+5. Press Connect & Flash Tab5 firmware
 6. Choose the Tab5's serial port in the dialog the browser opens
 7. Wait. The installer checks the chip is an ESP32-P4 and refuses if it is not, so you
    cannot flash the wrong image by mistake
 
-The Tab5 talks to your PC over USB-Serial-JTAG, which means **you do not have to hold any
-button** to put it into download mode — unlike many ESP32 boards. If flashing ever leaves
+The Tab5 talks to your PC over USB-Serial-JTAG, which means you do not have to hold any
+button to put it into download mode — unlike many ESP32 boards. If flashing ever leaves
 it stuck, press the reset button once and try again.
 
 !!! note "This erases the flash filesystem"
@@ -81,7 +81,7 @@ If you reach the desktop and the cursor follows your finger, everything works.
   <img src="../../images/tab5_menu.png" width="600" alt="The system menu, opened from the menu bar">
 </div>
 
-Click **Family mruby** at the top left for the system menu — Launcher, File Manager, Log
+Click Family mruby at the top left for the system menu — Launcher, File Manager, Log
 Viewer, Monitor, Set Clock, Config, Storage, Network, About and Reset. The right end of the
 bar carries free internal memory, the BLE and Wi-Fi indicators, and the clock, and the
 squares next to the title are the apps you have running.
@@ -109,7 +109,7 @@ title bars and scrollbars predictable.
 The hold that starts a drag is 150 ms, so an ordinary tap (about 100 ms) still reads as a
 click.
 
-Pointer speed is adjustable: **Config** → `mouse_scale_x` / `mouse_scale_y`.
+Pointer speed is adjustable: Config → `mouse_scale_x` / `mouse_scale_y`.
 
 ## Connecting to Wi-Fi
 
@@ -125,7 +125,7 @@ password = "your-password"
 hostname = "fmruby"
 ```
 
-Save it, reboot from **Reset**, then check the system menu → **Network**.
+Save it, reboot from Reset, then check the system menu → Network.
 
 <div align="center">
   <img src="../../images/tab5_network.png" width="600" alt="The Network dialog showing the address the Tab5 was given">
@@ -147,7 +147,7 @@ With Wi-Fi up, the Tab5 serves its own desktop. Open
 http://fmruby.local/
 ```
 
-in a browser on the same network — or the address shown in the **Network** dialog, if mDNS
+in a browser on the same network — or the address shown in the Network dialog, if mDNS
 does not resolve on your machine. You get the live screen, and your PC's keyboard and mouse
 drive the device, global shortcuts included.
 
@@ -185,13 +185,13 @@ The flash filesystem follows the usual Unix shape:
 
 - Check the keyboard is in the USB-A port, not the USB-C one
 - Some keyboards and hubs are not recognised; see [Verified Devices](../compatibility.md)
-- If the layout is wrong (symbols land in the wrong places), set **Config** →
+- If the layout is wrong (symbols land in the wrong places), set Config →
   `keyboard_layout` to `jp` or `us`
 
 ### The clock is wrong
 
-Set the date and time from **Set Clock** in the system menu. The timezone is a separate
-setting, under **Config**.
+Set the date and time from Set Clock in the system menu. The timezone is a separate
+setting, under Config.
 
 ## Next steps
 

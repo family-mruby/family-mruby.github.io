@@ -1,7 +1,7 @@
 # BASIC and MicroPython
 
 Ruby is the language Family mruby is built around, but it is not the only one that runs on
-it. As of 2.0 there are four: **Ruby**, **BASIC**, **MicroPython** and **Lua**.
+it. As of 2.0 there are four: Ruby, BASIC, MicroPython and Lua.
 
 They are not modes you switch into. A `.bas` file and a `.py` file sit in the launcher next
 to the Ruby apps, start the same way, and run at the same time as each other.
@@ -17,7 +17,7 @@ to the Ruby apps, start the same way, and run at the same time as each other.
 
 # FMRuby BASIC
 
-A BASIC interpreter built to be compatible with **Family BASIC** — the BASIC that shipped
+A BASIC interpreter built to be compatible with Family BASIC — the BASIC that shipped
 for the Famicom — down to its screen, its sprites and its sound statements.
 
 This is not Ruby with a BASIC syntax on top: it is a separate interpreter written in C++,
@@ -27,10 +27,10 @@ with Family BASIC's semantics, its 28 x 24 character screen, and its `PLAY` / `B
 
 ### Write it in the editor and press F5
 
-The quickest route. Open the **Editor**, type the program, press `F5`.
+The quickest route. Open the Editor, type the program, press `F5`.
 
-- If the file has no name yet you will be asked for one. Save it under **`/home` or
-  `/app`** — programs elsewhere will not run
+- If the file has no name yet you will be asked for one. Save it under `/home` or
+  `/app` — programs elsewhere will not run
 - `Ctrl` + `Q` returns you to the editor from a running program, even a fullscreen one.
   Then `F5` runs it again
 
@@ -51,7 +51,7 @@ app_screen_name_ja = "マイゲーム"
 #default_window_mode = "window"
 ```
 
-The launcher builds its list when the desktop starts, so **right-click inside the launcher**
+The launcher builds its list when the desktop starts, so right-click inside the launcher
 to rescan after adding a file.
 
 A `.bas` without a `.toml` still runs from `F5` or from the shell; it just uses the filename
@@ -59,7 +59,7 @@ as its name.
 
 ## The screen
 
-Family BASIC's screen is fixed at **28 characters by 24 lines (224 x 192 pixels)**. Started
+Family BASIC's screen is fixed at 28 characters by 24 lines (224 x 192 pixels). Started
 fullscreen, it is centred and the surrounding area is filled with black — the same shape the
 original had.
 
@@ -135,7 +135,7 @@ mymodule` fails. Keep an app to one file.
 Available: `array`, `builtins`, `collections`, `gc`, `io`, `math`, `micropython`, `struct`,
 `sys`.
 
-**Not** available: `time`, `json`, `os`, `re`, `random`, `binascii`, `hashlib`, `heapq`,
+Not available: `time`, `json`, `os`, `re`, `random`, `binascii`, `hashlib`, `heapq`,
 `deflate` — those live in MicroPython's `extmod/`, which this build does not include. For
 waiting, return a delay from `on_update` rather than sleeping.
 

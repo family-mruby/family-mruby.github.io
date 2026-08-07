@@ -6,7 +6,7 @@ memory or crashing does not take the system with it.
 
 ## One task, one VM
 
-The design rule is **one task = one VM**. Each VM has its own stack, its own memory pool and
+The design rule is one task = one VM. Each VM has its own stack, its own memory pool and
 its own allocator handle. That isolation is what makes it safe to let a user's half-finished
 program run next to the desktop.
 

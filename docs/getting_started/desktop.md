@@ -47,13 +47,10 @@ while it is frozen, so you can always click your way back to it.
 
 ### Free internal RAM
 
-The figure on the right — `137KB` in the example — is the **free internal RAM**, not the
-total free memory.
-
-This is the number worth watching. Apps get their heaps from PSRAM, which is plentiful, but
-every running app also costs roughly 25 KB of internal RAM for its task and buffers, and
-internal RAM is what runs out first. The readout answers "can I open one more app?" at a
-glance.
+The figure on the right — `137KB` in the example — is free *internal* RAM, not total free
+memory. App heaps come from PSRAM, which is plentiful, but each running app also costs about
+25 KB of internal RAM, and that is what runs out first. So this is the number that answers
+"can I open one more app?".
 
 The Linux simulator has no such limit and shows `---KB`.
 
@@ -65,7 +62,7 @@ The Linux simulator has no such limit and shows `---KB`.
 | Gray box, white `B` | BLE is on, waiting for something to connect |
 | White box, inverted `B` | A client is connected — the [web console](console.md), typically |
 
-Start and stop BLE from the system menu; `ble_auto_start` in **Config** decides whether it
+Start and stop BLE from the system menu; `ble_auto_start` in Config decides whether it
 comes up at boot.
 
 ### Wi-Fi
@@ -83,7 +80,7 @@ See [Connecting to Wi-Fi](wifi.md).
 
 ### Clock
 
-Date and time. Set it from **Set Clock**; the timezone is a separate setting under
+Date and time. Set it from Set Clock; the timezone is a separate setting under
 **Config**.
 
 ## The system menu
@@ -105,8 +102,8 @@ Date and time. Set it from **Set Clock**; the timezone is a separate setting und
 | About | Version and chip information |
 | Reset | Reboot |
 
-Whatever **Config** changes is written back into `/etc/system_conf.toml`, keeping your
-comments and other settings intact. On hardware the dialog offers **Save & Reboot** for the
+Whatever Config changes is written back into `/etc/system_conf.toml`, keeping your
+comments and other settings intact. On hardware the dialog offers Save & Reboot for the
 settings that only take effect at startup.
 
 ## The launcher
@@ -168,18 +165,15 @@ the app's path.
 ### Windowed apps: cycle
 
 It moves round-robin through the running apps, skipping the desktop. The window comes to the
-front **and takes the keyboard**, so you can `Ctrl` + `Tab` from the editor to your app, type
+front and takes the keyboard, so you can `Ctrl` + `Tab` from the editor to your app, type
 into it, and `Ctrl` + `Tab` back to keep editing.
 
 ### A fullscreen app: park it
 
-Pressing `Ctrl` + `Tab` inside a fullscreen app **parks** it: the app freezes exactly where
-it is, its canvas is hidden, and the desktop and the other apps come back.
-
-Parking is a freeze, not a restart. The app's state and the contents of its canvas are kept,
-so returning to it — by cycling round to it again, or by clicking its taskbar square —
-restores the screen it had. It does not have to redraw from scratch, and it does not lose
-your place.
+Pressing `Ctrl` + `Tab` inside a fullscreen app parks it: the app freezes where it is, its
+canvas is hidden, and the desktop comes back. Its state and canvas are kept, so cycling round
+to it again — or clicking its taskbar square — restores the screen it had, without a redraw
+and without losing your place.
 
 !!! note "An app has to opt in"
     Only an app that declares `fullscreen_switchable = 1` in its

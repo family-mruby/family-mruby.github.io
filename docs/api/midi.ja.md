@@ -1,8 +1,8 @@
 # MIDI (MIDI::Device / FmrbMidi)
 
-2.0 で追加。Family mruby は**鳴らさせる側**、つまり MIDI を送る制御機として振る舞います。
+2.0 で追加。Family mruby は鳴らさせる側、つまり MIDI を送る制御機として振る舞います。
 音を出すのは、本体の APU 音源でも、GROVE 端子につないだ外部音源でもかまいません。
-どちらも同じ `MIDI::Device` の後ろにいるので、**同じアプリのコードで両方を鳴らせます**。
+どちらも同じ `MIDI::Device` の後ろにいるので、同じアプリのコードで両方を鳴らせます。
 
 **両機種で使えます。**
 
@@ -62,7 +62,7 @@ end
 tx = FmrbConst::BOARD == "tab5" ? 53 : 47
 ```
 
-外部音源としては **M5Stack Unit MIDI** (SAM2695) を基準にしています。GM 音源で、GROVE
+外部音源としては M5Stack Unit MIDI (SAM2695) を基準にしています。GM 音源で、GROVE
 ケーブル 1 本でつながります (GROVE 2 から 5V を供給できます)。
 
 ## 標準 MIDI ファイルを鳴らす
@@ -81,7 +81,7 @@ end
 終わったかどうかは `player.playing?`、途中で止めるのは `player.stop` です (鳴りっぱなしの
 音は消してくれます)。
 
-同梱の曲は `/usr/share/sounds/midi` にあります。**SMF Player**
+同梱の曲は `/usr/share/sounds/midi` にあります。SMF Player
 (`/app/tool/smf_player.app.rb`) はファイルを選んで鳴らせる完成品なので、読むのにも使うのにも
 向いています。
 

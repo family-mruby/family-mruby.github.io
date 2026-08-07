@@ -19,7 +19,7 @@ The editor (`E` on the desktop) can debug an app without any PC involved.
 
 ### Attaching
 
-**Debug** → **Attach...** lists the running apps; pick one and the editor splits, showing a
+**Debug** → Attach... lists the running apps; pick one and the editor splits, showing a
 stack pane and a variables pane below the text.
 
 Once attached, a gutter appears down the left side of the text where breakpoints live:
@@ -34,8 +34,8 @@ Once attached, a gutter appears down the left side of the text where breakpoints
 | `F7` / `F8` | Move up and down the call stack |
 | `F4` | Switch between the stack pane and the variables pane |
 
-The **Debug** menu carries the same commands, plus **Toggle BP** for setting a breakpoint on
-the current line and **Detach** for ending the session.
+The Debug menu carries the same commands, plus Toggle BP for setting a breakpoint on
+the current line and Detach for ending the session.
 
 A breakpoint shows as a red dot in the gutter; the line where execution is parked is
 highlighted.

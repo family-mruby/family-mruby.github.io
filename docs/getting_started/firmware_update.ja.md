@@ -37,13 +37,13 @@
 5. **Connect & Flash Tab5 firmware** を押して、ポートを選ぶ
 6. 完了を待って、再起動させる
 
-Tab5 は USB-Serial-JTAG でつながるので、**ボタンを押しながら挿す必要はありません**。
+Tab5 は USB-Serial-JTAG でつながるので、ボタンを押しながら挿す必要はありません。
 書き込み後に書き込みモードのまま止まったとき — シリアルログに `waiting for download` が
 出ているとき — だけ、リセットを 1 回押してください。
 
 ## Retro (narya-board)
 
-基板に MCU が 2 つあり、それぞれ**基板上の別々の USB-C 端子**から書き込みます。
+基板に MCU が 2 つあり、それぞれ基板上の別々の USB-C 端子から書き込みます。
 
 - **ESP32-S3 側**の端子から `fmruby-core` を書き込む
 - **ESP32-WROVER 側**の端子から `fmruby-graphics-audio` を書き込む

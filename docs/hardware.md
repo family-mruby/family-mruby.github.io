@@ -43,7 +43,7 @@ See [FmrbAudio](api/audio.md) and [Audio File Formats](file_formats/audio_format
 
 ### GROVE (Modern)
 
-One GROVE port, on **GPIO53 (SDA side)** and **GPIO54 (SCL side)**.
+One GROVE port, on GPIO53 (SDA side) and GPIO54 (SCL side).
 
 The port is dual-purpose, the same convention as GROVE 2 on Retro: it is either an I2C bus
 or a serial [MIDI](api/midi.md) output, whichever your app opens first. The pin manager

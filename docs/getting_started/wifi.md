@@ -11,15 +11,15 @@ Only 2.4 GHz networks are supported.
 
 ## Write your network into `/etc/wifi.toml`
 
-Credentials live in a file on the device. Released firmware ships **without** that file —
+Credentials live in a file on the device. Released firmware ships without that file —
 your network's password is yours, not something that can be baked into a public build — so
 you create it once, on the device, using the editor.
 
-1. Start the **Editor**: press `E` on the desktop, or open it from the Launcher
+1. Start the Editor: press `E` on the desktop, or open it from the Launcher
 2. **File** → **Open**, and navigate to `/etc/wifi.toml`
 
-    If it is not there, type the contents into the empty buffer and use **File** → **Save
-    as** with the path `/etc/wifi.toml`
+    If it is not there, type the contents into the empty buffer and use File → Save
+    as with the path `/etc/wifi.toml`
 
 3. Fill in your network:
 
@@ -32,7 +32,7 @@ you create it once, on the device, using the editor.
     hostname = "fmruby"
     ```
 
-4. Save, then reboot: system menu → **Reset**
+4. Save, then reboot: system menu → Reset
 
 | Key | Meaning |
 |---|---|
@@ -46,7 +46,7 @@ you create it once, on the device, using the editor.
 
 ## Check it worked
 
-After the reboot, open the system menu → **Network**.
+After the reboot, open the system menu → Network.
 
 <div align="center">
   <img src="../../images/tab5_network.png" width="600" alt="The Network dialog, showing the address the device was given">
@@ -76,7 +76,7 @@ This is the difference that surprises people.
 | **Retro** (narya-board) | One or the other. The ESP32-S3 has a single radio |
 
 On Retro, if BLE started at boot, Wi-Fi will not start — the log says so. To use Wi-Fi
-there, open **Config** in the system menu, set `ble_auto_start` to off, and reboot. You can
+there, open Config in the system menu, set `ble_auto_start` to off, and reboot. You can
 still start BLE by hand later from the system menu when you need the console.
 
 `wifi_auto_start` in the same dialog controls whether Wi-Fi comes up at boot at all.

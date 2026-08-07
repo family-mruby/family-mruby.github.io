@@ -1,7 +1,7 @@
 # App Config File (.app.toml)
 
 !!! note
-    This page is about **per-app** settings. For the system's own settings —
+    This page is about per-app settings. For the system's own settings —
     `/etc/system_conf.toml` and `/etc/wifi.toml` — see
     [System Configuration](system_conf.md).
 

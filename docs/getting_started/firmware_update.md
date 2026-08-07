@@ -32,26 +32,26 @@ pressing the wrong button gives you an error, not a broken device.
 
 1. Open the [installer](https://family-mruby.github.io/family-mruby-installer/)
 2. Connect the Tab5 to your PC with a USB-C data cable
-3. Go to the **Family mruby Modern (Tab5)** section
+3. Go to the Family mruby Modern (Tab5) section
 4. Choose a version (newest is preselected)
-5. Press **Connect & Flash Tab5 firmware** and pick the port
+5. Press Connect & Flash Tab5 firmware and pick the port
 6. Wait for it to finish, then let the device restart
 
-The Tab5 connects over USB-Serial-JTAG, so **no button has to be held** to enter download
+The Tab5 connects over USB-Serial-JTAG, so no button has to be held to enter download
 mode. If the device sits in download mode after flashing — the serial log shows
 `waiting for download` — press reset once.
 
 ## Retro (narya-board)
 
-The board has two MCUs and they are flashed independently, through **different USB-C ports**
+The board has two MCUs and they are flashed independently, through different USB-C ports
 on the board:
 
-- The **ESP32-S3 side** port flashes `fmruby-core`
-- The **ESP32-WROVER side** port flashes `fmruby-graphics-audio`
+- The ESP32-S3 side port flashes `fmruby-core`
+- The ESP32-WROVER side port flashes `fmruby-graphics-audio`
 
 1. Open the [installer](https://family-mruby.github.io/family-mruby-installer/)
 2. Connect a USB-C data cable to the port for the chip you are flashing
-3. Go to the **Family mruby Retro** section and choose a version
+3. Go to the Family mruby Retro section and choose a version
 4. Press the matching button, then pick the port in the browser dialog
 5. Repeat for the other chip, from the other port
 

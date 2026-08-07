@@ -1,6 +1,6 @@
 # Setup (Retro)
 
-Getting the first screen out of the **narya-board**. If you have an M5Stack
+Getting the first screen out of the narya-board. If you have an M5Stack
 Tab5 instead, go to [Modern (M5Stack Tab5)](modern.md); if you are not sure which machine
 this is, see [Choose your hardware](choose_hardware.md).
 
@@ -38,7 +38,7 @@ this is, see [Choose your hardware](choose_hardware.md).
       `:gamepad_down` / `:gamepad_up` / `:gamepad_axis` events with a button or axis number;
       the numbers are the `GP_*` constants in
       [Constants & System Info](../api/const.md#input-device-gamepad-gp_).
-    - The bundled **Raycaster** game reads one, so it is the quickest way to check yours works.
+    - The bundled Raycaster game reads one, so it is the quickest way to check yours works.
 
 ### If You Want to Retain the Clock
 

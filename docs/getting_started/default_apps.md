@@ -1,6 +1,6 @@
 # Default Apps
 
-Everything below ships on the device. Open the **Launcher** from the system menu (or press
+Everything below ships on the device. Open the Launcher from the system menu (or press
 `L` on the desktop) and double-click an icon.
 
 <div align="center">

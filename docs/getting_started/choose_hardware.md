@@ -29,7 +29,7 @@ or drive the device from your PC's browser over Wi-Fi.
 
 A dedicated board, on sale at [BOOTH](https://booth.pm/ja/items/8128031), with the design
 files published so you can build your own. An ESP32-S3 runs the OS and hands the picture and
-the sound to a second ESP32 that generates **real NTSC composite video** — the signal a CRT
+the sound to a second ESP32 that generates real NTSC composite video — the signal a CRT
 television actually wants — and NES-style APU audio.
 
 **Pick Retro if you want to** put the output on a CRT, work in the 320x240 / 256-colour

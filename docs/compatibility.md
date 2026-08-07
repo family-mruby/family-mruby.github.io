@@ -7,15 +7,15 @@ Devices not listed here may also work, but due to limitations in the USB driver 
 !!! tip "A device that is recognised but behaves wrongly"
     If the cursor jumps, moves on the wrong axis, or does not move while the buttons work,
     the device is being read with the wrong report layout. You can work out the right one on
-    the device itself with the **HID Inspector** app — see
+    the device itself with the HID Inspector app — see
     [HID Device Config](file_formats/hid_devices.md).
 
 !!! note "Which machine these were tested on"
-    The results below were taken on **Retro** (narya-board). Both machines run the same USB
+    The results below were taken on Retro (narya-board). Both machines run the same USB
     host driver, so a device that works on one should work on the other, but the entries
     here have not been re-verified on a Tab5.
 
-    On **Modern** you have an alternative that sidesteps USB entirely: the M5Stack Tab5
+    On Modern you have an alternative that sidesteps USB entirely: the M5Stack Tab5
     Keyboard accessory attaches to the body over I2C, and the touch panel gives you a
     pointer. Neither needs the USB-A port.
 

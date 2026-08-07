@@ -51,7 +51,7 @@ Modern はチップが 1 個なので、書き込むファームウェアも 1 �
 7. 待つ。チップが ESP32-P4 であることを書き込みツールが確認するので、別機種向けの
    ファームウェアを誤って書き込むことはできません
 
-Tab5 はパソコンと USB-Serial-JTAG でつながるので、**ボタンを押しながら挿す必要はありません**
+Tab5 はパソコンと USB-Serial-JTAG でつながるので、ボタンを押しながら挿す必要はありません
 (多くの ESP32 基板とはここが違います)。書き込み後に止まってしまったときだけ、リセット
 ボタンを 1 回押してください。
 
@@ -80,7 +80,7 @@ Retro の手順と、うまくいかないときの対処は [ファームウェ
   <img src="../../images/tab5_menu.png" width="600" alt="メニューバーから開いたシステムメニュー">
 </div>
 
-左上の **Family mruby** を押すとシステムメニューが出ます (Launcher / File Manager /
+左上の Family mruby を押すとシステムメニューが出ます (Launcher / File Manager /
 Log Viewer / Monitor / Set Clock / Config / Storage / Network / About / Reset)。バーの
 右端には内蔵メモリの空き、BLE と WiFi の状態、時計が並びます。題字の右に出る四角は、
 動かしているアプリです。
@@ -107,7 +107,7 @@ Log Viewer / Monitor / Set Clock / Config / Storage / Network / About / Reset)�
 引きずり始めの押し続け時間は 150 ミリ秒なので、普通に叩く操作 (およそ 100 ミリ秒) は
 クリックとして扱われます。
 
-カーソルの速度は **Config** の `mouse_scale_x` / `mouse_scale_y` で変えられます。
+カーソルの速度は Config の `mouse_scale_x` / `mouse_scale_y` で変えられます。
 
 ## WiFi につなぐ
 
@@ -123,7 +123,7 @@ password = "your-password"
 hostname = "fmruby"
 ```
 
-保存して **Reset** で再起動し、システムメニューの **Network** で確認します。
+保存して Reset で再起動し、システムメニューの Network で確認します。
 
 <div align="center">
   <img src="../../images/tab5_network.png" width="600" alt="割り当てられたアドレスを表示する Network ダイアログ">
@@ -145,7 +145,7 @@ WiFi がつながっていれば、Tab5 は自分の画面を配信します。�
 http://fmruby.local/
 ```
 
-を開いてください。mDNS が引けない環境なら、**Network** ダイアログに出ているアドレスを
+を開いてください。mDNS が引けない環境なら、Network ダイアログに出ているアドレスを
 直接開きます。画面がそのまま出て、パソコンのキーボードとマウスで操作できます。
 `Ctrl` + `Q` などのキーもそのまま効きます。
 
@@ -184,12 +184,12 @@ http://fmruby.local/
 - USB-C ではなく USB-A 端子に挿さっているか確認してください
 - 認識されないキーボードやハブもあります。[動作確認済み機器](../compatibility.md) を
   参照してください
-- 記号の位置がずれるときは、**Config** の `keyboard_layout` を `jp` か `us` に合わせて
+- 記号の位置がずれるときは、Config の `keyboard_layout` を `jp` か `us` に合わせて
   ください
 
 ### 時計がずれている
 
-システムメニューの **Set Clock** で合わせてください。時間帯は別の設定で、**Config** に
+システムメニューの Set Clock で合わせてください。時間帯は別の設定で、Config に
 あります。
 
 ## 次に読むもの

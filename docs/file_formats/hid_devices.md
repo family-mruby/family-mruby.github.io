@@ -1,18 +1,13 @@
 # HID Device Config (`/etc/hid_devices.toml`)
 
-**Whether a given USB device works is not a given.** The USB host stack here is limited, and
-so are a lot of the devices: some are not enumerated at all, some enumerate and then report
-in a format the generic path reads wrongly. [Verified Peripherals](../compatibility.md)
-lists what has actually been tested.
+Not every USB device works. Some are never enumerated; others enumerate but report in a
+format the generic path reads wrongly. [Verified Peripherals](../compatibility.md) lists what
+has been tested.
 
-`/etc/hid_devices.toml` is the tool for the second case. A USB HID device is supposed to
-describe its own report format, but plenty of them describe it badly, or pack their axes in a
-way the generic path does not expect. This file lets you spell out, per device, exactly which
-bits of the report mean what.
-
-It helps when a device **is** recognised but behaves wrongly — the cursor jumps, moves on the
-wrong axis, or does not move at all while the buttons work. It cannot help a device that
-never enumerates; that is a driver problem, not a layout one.
+This file fixes the second case: it spells out, per device, which bits of the HID report are
+buttons and which are axes. The symptoms it addresses are a cursor that jumps, moves on the
+wrong axis, or does not move while the buttons work. A device that never enumerates is a
+driver problem and this will not help.
 
 ## How a device gets its layout
 
@@ -30,8 +25,8 @@ So a device only needs an entry here when all three fail.
 
 ## Writing an entry without a PC
 
-The **HID Inspector** app does this interactively on the device itself. It is built into the
-firmware rather than installed under `/app`, so it is **not in the launcher** — press `I` on
+The HID Inspector app does this interactively on the device itself. It is built into the
+firmware rather than installed under `/app`, so it is not in the launcher — press `I` on
 the desktop to start it:
 
 1. **LIST** — pick the misbehaving device from the connected list
@@ -41,8 +36,7 @@ the desktop to start it:
 4. **RESULT** — it shows the `[[mouse]]` block it generated; press `S` to append it to
    `/etc/hid_devices.toml`
 
-No serial cable, no PC. This is the intended way to produce an entry; the format below is
-for reading and hand-editing what it writes.
+The format below is for reading and hand-editing what it writes.
 
 ## `[[mouse]]`
 

@@ -3,7 +3,7 @@
 New in 2.0. Apps can talk to the internet with the API you already know from CRuby:
 `Net::HTTP`, WebSocket, and TLS underneath both.
 
-Available on **both machines** — Modern reaches the network through the ESP32-C6, Retro
+Available on both machines — Modern reaches the network through the ESP32-C6, Retro
 through the ESP32-S3's own radio — and in the Linux simulator, which uses the host's
 network and OpenSSL.
 
@@ -14,7 +14,7 @@ The device needs Wi-Fi credentials in `/etc/wifi.toml`. See
 
 !!! note "Retro runs one radio at a time"
     The ESP32-S3 has a single radio, so Wi-Fi and BLE cannot both be up. If the BLE web
-    console is running, Wi-Fi will not start; set `ble_auto_start` to false in **Config**
+    console is running, Wi-Fi will not start; set `ble_auto_start` to false in Config
     and reboot. On Modern the ESP32-C6 handles both at once and there is no conflict.
 
 ## Checking the connection
@@ -116,11 +116,11 @@ on a timer, keep the result, and draw from the copy.
 
 ## A worked example
 
-The bundled **Weather** app (`/app/demo/weather.app.rb`) fetches a forecast over HTTPS from
+The bundled Weather app (`/app/demo/weather.app.rb`) fetches a forecast over HTTPS from
 Open-Meteo, parses the JSON and draws it. It waits for the network, retries until the first
 success, and is a good starting point to copy.
 
-The **Net Test** app (`/app/tool/net_test.app.rb`) exercises the API piece by piece and is
+The Net Test app (`/app/tool/net_test.app.rb`) exercises the API piece by piece and is
 useful when something does not work.
 
 ## Related

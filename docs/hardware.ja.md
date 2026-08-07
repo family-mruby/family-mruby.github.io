@@ -42,7 +42,7 @@ Retro と同じファミコン風の APU ですが、P4 自身で合成して内
 
 ### GROVE (Modern)
 
-GROVE 端子が 1 つ、**GPIO53 (SDA 側)** と **GPIO54 (SCL 側)** に出ています。
+GROVE 端子が 1 つ、GPIO53 (SDA 側) と GPIO54 (SCL 側) に出ています。
 
 この端子は Retro の GROVE 2 と同じ考え方で二役あり、I2C バスとしても、シリアルの
 [MIDI](api/midi.md) 出力としても使えます。どちらになるかは先に開いたほうで決まり、

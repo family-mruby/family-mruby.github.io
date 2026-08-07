@@ -6,8 +6,8 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
     **The API is the same on both machines.** An app written for one runs on the other.
 
     Where these pages say "the graphics side", they mean whichever part of the hardware turns
-    your drawing commands into a picture: on **Retro** that is a second chip across a UART
-    link, and on **Modern** it is the same ESP32-P4 your code is running on. The calls are
+    your drawing commands into a picture: on Retro that is a second chip across a UART
+    link, and on Modern it is the same ESP32-P4 your code is running on. The calls are
     identical; only the cost differs, and Modern is the cheaper of the two.
 
     A handful of things exist on one machine only — NTSC output adjustment on Retro, touch on

@@ -14,13 +14,13 @@ device's flash, and both can be edited with the on-device editor.
 
 ## Editing
 
-**From the Config dialog.** The system menu → **Config** covers the settings people actually
+**From the Config dialog.** The system menu → Config covers the settings people actually
 change (below), and writes them back line by line, so your comments and everything else in
-the file survive. On hardware it also offers **Save & Reboot**, because several of these only
+the file survive. On hardware it also offers Save & Reboot, because several of these only
 take effect at startup.
 
 **From the editor.** For anything the dialog does not offer, open the file in the
-**Editor**, change it, save, and reboot from **Reset**.
+**Editor**, change it, save, and reboot from Reset.
 
 ## `/etc/system_conf.toml`
 

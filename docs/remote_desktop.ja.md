@@ -10,7 +10,7 @@
 ## 使い方
 
 1. 先に WiFi をつなぎます。[WiFi につなぐ](getting_started/wifi.md) を参照
-2. システムメニューの **Network** でアドレスを確認します
+2. システムメニューの Network でアドレスを確認します
 3. 同じネットワークのブラウザで開きます
 
     ```
@@ -53,7 +53,7 @@ h264_gop = 30
 ## MJPEG と H.264
 
 経路は 2 つあります。MJPEG は必ず動きます。H.264 は通信量が少ないのですが、これを復号する
-ブラウザの機能 (WebCodecs の `VideoDecoder`) は**安全な文脈 (secure context) でしか使えず**、
+ブラウザの機能 (WebCodecs の `VideoDecoder`) は安全な文脈 (secure context) でしか使えず、
 `http://fmruby.local/` はそれに当たりません。平文 HTTP の LAN のアドレスでは Chrome でも
 `VideoDecoder` が無いことになり、表示側は黙って MJPEG に切り替わります。
 

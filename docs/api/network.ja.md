@@ -13,7 +13,7 @@ Linux のシミュレータでも、ホストのネットワークと OpenSSL �
 
 !!! note "Retro は無線を 1 つずつしか使えません"
     ESP32-S3 の無線は 1 系統なので、WiFi と BLE は同時に使えません。BLE の web コンソールが
-    動いていると WiFi は起動しません。**Config** で `ble_auto_start` を off にして再起動して
+    動いていると WiFi は起動しません。Config で `ble_auto_start` を off にして再起動して
     ください。Modern は ESP32-C6 が両方を受け持つので、この制約はありません。
 
 ## つながっているか調べる
@@ -115,7 +115,7 @@ end
 
 ## 実例
 
-同梱の **Weather** (`/app/demo/weather.app.rb`) は Open-Meteo から HTTPS で天気を取得し、
+同梱の Weather (`/app/demo/weather.app.rb`) は Open-Meteo から HTTPS で天気を取得し、
 JSON を解析して描画します。ネットワークを待ち、最初に成功するまで再試行する作りなので、
 写して始めるのに向いています。
 

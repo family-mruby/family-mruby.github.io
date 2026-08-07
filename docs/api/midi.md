@@ -1,11 +1,11 @@
 # MIDI (MIDI::Device / FmrbMidi)
 
-New in 2.0. Family mruby plays the part of the instrument's **controller**: it sends MIDI,
+New in 2.0. Family mruby plays the part of the instrument's controller: it sends MIDI,
 and something makes the sound. That something can be the machine's own APU sound chip, or an
 external synth on the GROVE port — and because both sit behind the same `MIDI::Device`, the
 same app code drives either one.
 
-Works on **both machines**.
+Works on both machines.
 
 ```ruby
 device = FmrbMidi.device(self)     # the built-in APU
@@ -63,7 +63,7 @@ Serial MIDI runs at 31250 baud, the MIDI standard rate. The pin depends on the b
 tx = FmrbConst::BOARD == "tab5" ? 53 : 47
 ```
 
-The reference external instrument is the **M5Stack Unit MIDI** (SAM2695), a General MIDI
+The reference external instrument is the M5Stack Unit MIDI (SAM2695), a General MIDI
 module that needs only a GROVE cable — GROVE port 2 can supply its 5 V.
 
 ## Playing a standard MIDI file
@@ -82,7 +82,7 @@ end
 `player.playing?` tells you when it is done, and `player.stop` cuts it short (silencing any
 note left sounding).
 
-Bundled songs live in `/usr/share/sounds/midi`. The **SMF Player** app
+Bundled songs live in `/usr/share/sounds/midi`. The SMF Player app
 (`/app/tool/smf_player.app.rb`) is a full file-picking player you can read or just use.
 
 ## MML
@@ -104,7 +104,7 @@ The timing does not come from your update loop. The player hands the C layer com
 stamped with the microsecond they are due, and a timer sends them at that microsecond
 without entering the VM, so the beat holds steady even when the app is busy.
 
-The **MML** demo (`/app/demo/mml.app.rb`) plays the same tune on the APU or on an external
+The MML demo (`/app/demo/mml.app.rb`) plays the same tune on the APU or on an external
 instrument, switchable at runtime.
 
 !!! note "This MML is not BASIC's MML"
