@@ -4,6 +4,12 @@ This page lists USB devices that have been verified to work with actual hardware
 
 Devices not listed here may also work, but due to limitations in the USB driver functionality, some devices may not be recognized.
 
+!!! tip "A device that is recognised but behaves wrongly"
+    If the cursor jumps, moves on the wrong axis, or does not move while the buttons work,
+    the device is being read with the wrong report layout. You can work out the right one on
+    the device itself with the **HID Inspector** app — see
+    [HID Device Config](file_formats/hid_devices.md).
+
 !!! note "Which machine these were tested on"
     The results below were taken on **Retro** (narya-board). Both machines run the same USB
     host driver, so a device that works on one should work on the other, but the entries

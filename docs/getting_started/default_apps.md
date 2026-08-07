@@ -26,6 +26,7 @@ system menu or by pressing a letter on the desktop.
 | File Manager | | Browse the flash filesystem |
 | Log Viewer | | The system log |
 | Monitor | | Running tasks and memory |
+| HID Inspector | `I` | Works out the report layout of a misbehaving USB mouse and writes it to [`/etc/hid_devices.toml`](../file_formats/hid_devices.md) |
 
 ## Demos — `/app/demo`
 

@@ -152,7 +152,7 @@ BLE の起動・停止はシステムメニューから行います。起動時�
 | `S` | シェル |
 | `E` | エディタ |
 | `N` | NSF 再生 |
-| `I` | HID Inspector |
+| `I` | HID Inspector — [HID 機器設定](../file_formats/hid_devices.md) を参照 |
 
 この割り当ては `/etc/system_conf.toml` の `[[shortcuts]]` にあります。アプリの場所を
 書けば自分の割り当ても足せます。

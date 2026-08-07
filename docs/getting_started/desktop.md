@@ -156,7 +156,7 @@ With no app focused and no dialog open, a single letter starts an app:
 | `S` | Shell |
 | `E` | Editor |
 | `N` | NSF player |
-| `I` | HID Inspector |
+| `I` | HID Inspector — see [HID Device Config](../file_formats/hid_devices.md) |
 
 That list is the `[[shortcuts]]` section of `/etc/system_conf.toml`. Add your own by naming
 the app's path.

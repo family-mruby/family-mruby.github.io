@@ -26,6 +26,7 @@
 | File Manager | | フラッシュの中を見る |
 | Log Viewer | | システムログ |
 | Monitor | | 動いているタスクとメモリ |
+| HID Inspector | `I` | 動きのおかしい USB マウスの報告形式を割り出して [`/etc/hid_devices.toml`](../file_formats/hid_devices.md) に書き出す |
 
 ## デモ — `/app/demo`
 
