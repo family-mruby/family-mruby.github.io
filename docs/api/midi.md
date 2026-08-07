@@ -1,4 +1,4 @@
-# MIDI
+# MIDI (MIDI::Device / FmrbMidi)
 
 New in 2.0. Family mruby plays the part of the instrument's **controller**: it sends MIDI,
 and something makes the sound. That something can be the machine's own APU sound chip, or an

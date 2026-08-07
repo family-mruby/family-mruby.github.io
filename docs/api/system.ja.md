@@ -1,4 +1,4 @@
-# Task / Machine
+# タスク・時間 (Task / Machine)
 
 タスク制御・システム制御の低レベル API です。`picoruby-machine` 由来。
 

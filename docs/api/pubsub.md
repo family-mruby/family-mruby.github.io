@@ -1,4 +1,4 @@
-# Pub/Sub
+# Inter-App Messaging (Pub/Sub)
 
 A Publish / Subscribe mechanism for exchanging messages between applications. Provided as instance methods of `FmrbApp`.
 

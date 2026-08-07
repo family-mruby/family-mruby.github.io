@@ -1,4 +1,4 @@
-# FmrbAudio
+# Sound (FmrbAudio)
 
 `FmrbAudio` is the audio playback API. Create an instance by calling `FmrbAudio.new(self)`.
 

@@ -1,4 +1,4 @@
-# Pub/Sub
+# アプリ間通信 (Pub/Sub)
 
 アプリケーション間でメッセージをやり取りするための Publish / Subscribe 機構です。`FmrbApp` のインスタンスメソッドとして提供されます。
 

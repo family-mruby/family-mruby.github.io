@@ -1,4 +1,4 @@
-# File & I/O
+# Files & I/O (File / Dir / IO)
 
 API for file and directory operations. Provides the `File` / `Dir` / `IO` classes.
 

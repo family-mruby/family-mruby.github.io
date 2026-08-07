@@ -1,4 +1,4 @@
-# Task / Machine
+# Tasks & Timing (Task / Machine)
 
 Low-level APIs for task control and system control. Derived from `picoruby-machine`.
 

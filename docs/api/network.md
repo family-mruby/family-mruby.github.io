@@ -1,4 +1,4 @@
-# Network
+# Network (Net::HTTP / WebSocket / TLS)
 
 New in 2.0. Apps can talk to the internet with the API you already know from CRuby:
 `Net::HTTP`, WebSocket, and TLS underneath both.

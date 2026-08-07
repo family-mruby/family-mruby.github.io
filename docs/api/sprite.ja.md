@@ -1,4 +1,4 @@
-# Sprite
+# スプライト (SpriteImage / SpriteInstance / GfxBlock)
 
 スプライト・タイルマップ系の API をまとめたページです。
 

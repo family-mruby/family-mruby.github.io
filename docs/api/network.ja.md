@@ -1,4 +1,4 @@
-# ネットワーク
+# ネットワーク (Net::HTTP / WebSocket / TLS)
 
 2.0 で追加。CRuby と同じ書き方 — `Net::HTTP`、WebSocket、その下の TLS — でアプリから
 インターネットにつながります。

@@ -1,4 +1,4 @@
-# FmrbApp
+# アプリ (FmrbApp)
 
 `FmrbApp` は Family mruby のアプリケーション基底クラスです。ユーザーアプリは 必ず `FmrbApp` を継承して ライフサイクルメソッドを実装します。
 

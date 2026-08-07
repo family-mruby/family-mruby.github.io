@@ -1,4 +1,4 @@
-# FmrbGfx
+# Drawing (FmrbGfx)
 
 `FmrbGfx` is the class that provides drawing APIs. In apps that inherit from `FmrbApp`, it is accessible as `@gfx`.
 

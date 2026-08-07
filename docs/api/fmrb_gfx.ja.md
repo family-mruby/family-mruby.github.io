@@ -1,4 +1,4 @@
-# FmrbGfx
+# 描画 (FmrbGfx)
 
 `FmrbGfx` は描画 API を提供するクラスです。`FmrbApp` を継承したアプリでは `@gfx` として参照できます。
 

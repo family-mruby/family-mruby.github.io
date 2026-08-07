@@ -61,23 +61,23 @@ plugins:
             Firmware Update: ファームウェア更新
             API Reference: API リファレンス
             Overview: 一覧
-            FmrbApp: FmrbApp
-            FmrbGfx: FmrbGfx
-            Sprite: Sprite
-            TileMap: TileMap
-            P5: P5
-            FmrbAudio: FmrbAudio
+            Application: アプリ
+            Drawing: 描画
+            Sprites: スプライト
+            Tile Maps: タイルマップ
+            Processing-style Drawing: Processing 風の描画
+            Sound: 音声
             MIDI: MIDI
             Network: ネットワーク
-            Pub/Sub: Pub/Sub
-            File & I/O: ファイル・I/O
-            Log: ログ
+            Inter-App Messaging: アプリ間通信
+            Files & I/O: ファイル・I/O
+            Logging: ログ
             Peripherals: 周辺機器
             Utilities: ユーティリティ
             Constants & System Info: 定数・システム情報
-            Task & Machine: Task / Machine
+            Tasks & Timing: タスク・時間
             File Formats: ファイル形式
-            App Config (.toml): アプリ設定ファイル (.toml)
+            App Config (.app.toml): アプリ設定ファイル (.app.toml)
             Audio File Formats: 音声ファイルフォーマット
             Image & Icon Files: 画像・アイコンファイル
             Tools: 開発ツール
@@ -105,21 +105,21 @@ nav:
       - Simulator: getting_started/simulator.md
   - API Reference:
       - Overview: api/index.md
-      - FmrbApp: api/fmrb_app.md
-      - FmrbGfx: api/fmrb_gfx.md
-      - Sprite: api/sprite.md
-      - TileMap: api/tilemap.md
-      - P5: api/p5.md
-      - FmrbAudio: api/audio.md
+      - Application: api/fmrb_app.md
+      - Drawing: api/fmrb_gfx.md
+      - Sprites: api/sprite.md
+      - Tile Maps: api/tilemap.md
+      - Processing-style Drawing: api/p5.md
+      - Sound: api/audio.md
       - MIDI: api/midi.md
       - Network: api/network.md
-      - Pub/Sub: api/pubsub.md
-      - File & I/O: api/filesystem.md
-      - Log: api/log.md
+      - Inter-App Messaging: api/pubsub.md
+      - Files & I/O: api/filesystem.md
+      - Logging: api/log.md
       - Peripherals: api/peripherals.md
       - Utilities: api/utilities.md
       - Constants & System Info: api/const.md
-      - Task & Machine: api/system.md
+      - Tasks & Timing: api/system.md
   - File Formats:
       - App Config (.app.toml): file_formats/app_toml.md
       - Audio File Formats: file_formats/audio_formats.md

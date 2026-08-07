@@ -20,21 +20,21 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 
 | Class / Module | Role | Details |
 |---|---|---|
-| `FmrbApp` | Application base class. Lifecycle, window, messaging | [FmrbApp](fmrb_app.md) |
-| `FmrbGfx` | Shape and text drawing (`@gfx`) | [FmrbGfx](fmrb_gfx.md) |
-| `SpriteImage` / `SpriteInstance` / `GfxBlock` | Sprites | [Sprite](sprite.md) |
-| `TileSheet` / `TileMap` | Tile map rendering + fmrb_map JSON loading | [TileMap](tilemap.md) |
-| `P5` | Processing/p5.js-style drawing DSL | [P5](p5.md) |
-| `FmrbAudio` | BGM, sound effects, tone synthesis (`@audio`) | [FmrbAudio](audio.md) |
+| `FmrbApp` | Application base class. Lifecycle, window, messaging | [Application](fmrb_app.md) |
+| `FmrbGfx` | Shape and text drawing (`@gfx`) | [Drawing](fmrb_gfx.md) |
+| `SpriteImage` / `SpriteInstance` / `GfxBlock` | Sprites | [Sprites](sprite.md) |
+| `TileSheet` / `TileMap` | Tile map rendering + fmrb_map JSON loading | [Tile Maps](tilemap.md) |
+| `P5` | Processing/p5.js-style drawing DSL | [Processing-style Drawing](p5.md) |
+| `FmrbAudio` | BGM, sound effects, tone synthesis (`@audio`) | [Sound](audio.md) |
 | `MIDI::Device` / `FmrbMidi` | MIDI out, to the built-in APU or an external instrument | [MIDI](midi.md) |
-| Pub/Sub (`subscribe` / `publish`) | Inter-app messaging | [Pub/Sub](pubsub.md) |
+| Pub/Sub (`subscribe` / `publish`) | Inter-app messaging | [Inter-App Messaging](pubsub.md) |
 
 ### Files and Data
 
 | Class / Module | Role | Details |
 |---|---|---|
-| `IO` / `File` / `Dir` | File and directory operations | [File & I/O](filesystem.md) |
-| `Log` | Logging | [Log](log.md) |
+| `IO` / `File` / `Dir` | File and directory operations | [Files & I/O](filesystem.md) |
+| `Log` | Logging | [Logging](log.md) |
 | `Net::HTTP` / WebSocket / TLS | Talking to the network | [Network](network.md) |
 | `JSON` | JSON parsing and generation | [Utilities](utilities.md#json) |
 | `MessagePack` | Binary serialization | [Utilities](utilities.md#messagepack) |
@@ -50,8 +50,8 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `RMT` | RMT (infrared, WS2812B, etc.) | [Peripherals](peripherals.md#rmt) |
 | `FmrbConst` | System constants (version, theme colors, PROC_ID, etc.) | [Constants & System Info](const.md) |
 | `FmrbHw` | Pin usage queries | [Constants & System Info](const.md#fmrbhw) |
-| `Task` | Task control | [Task / Machine](system.md#task) |
-| `Machine` | System control (clock, delay, reset, etc.) | [Task / Machine](system.md#machine) |
+| `Task` | Task control | [Tasks & Timing](system.md#task) |
+| `Machine` | System control (clock, delay, reset, etc.) | [Tasks & Timing](system.md#machine) |
 
 ## Cross-Method Index
 
@@ -119,7 +119,7 @@ Color constants: `BLACK 0x00 / WHITE 0xFF / RED 0xE0 / GREEN 0x1C / BLUE 0x03 / 
 
 `subscribe(topic)` / `unsubscribe(topic)` / `publish(topic, data=nil)` / `send_message(dest_pid, msg_type, data)`
 
-Messages are received via `_handle_system_control(msg)` through `on_control(msg)`, not `on_event`. See [Pub/Sub](pubsub.md) for details.
+Messages are received via `_handle_system_control(msg)` through `on_control(msg)`, not `on_event`. See [Inter-App Messaging](pubsub.md) for details.
 
 ### `IO` / `File` / `Dir`
 

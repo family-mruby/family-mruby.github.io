@@ -1,4 +1,4 @@
-# MIDI
+# MIDI (MIDI::Device / FmrbMidi)
 
 2.0 で追加。Family mruby は**鳴らさせる側**、つまり MIDI を送る制御機として振る舞います。
 音を出すのは、本体の APU 音源でも、GROVE 端子につないだ外部音源でもかまいません。

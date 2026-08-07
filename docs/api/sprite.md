@@ -1,4 +1,4 @@
-# Sprite
+# Sprites (SpriteImage / SpriteInstance / GfxBlock)
 
 This page covers the sprite and tile map APIs.
 

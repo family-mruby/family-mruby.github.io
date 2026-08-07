@@ -19,14 +19,14 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 
 | クラス / モジュール | 役割 | 詳細 |
 |---|---|---|
-| `FmrbApp` | アプリ基底クラス。ライフサイクル、ウィンドウ、メッセージング | [FmrbApp](fmrb_app.md) |
-| `FmrbGfx` | 図形・テキスト描画（`@gfx`） | [FmrbGfx](fmrb_gfx.md) |
-| `SpriteImage` / `SpriteInstance` / `GfxBlock` | スプライト | [Sprite](sprite.md) |
-| `TileSheet` / `TileMap` | タイルマップ描画 + fmrb_map JSON 読込 | [TileMap](tilemap.md) |
-| `P5` | Processing/p5.js 風の描画 DSL | [P5](p5.md) |
-| `FmrbAudio` | BGM・効果音・音声合成（`@audio`） | [FmrbAudio](audio.md) |
+| `FmrbApp` | アプリ基底クラス。ライフサイクル、ウィンドウ、メッセージング | [アプリ](fmrb_app.md) |
+| `FmrbGfx` | 図形・テキスト描画（`@gfx`） | [描画](fmrb_gfx.md) |
+| `SpriteImage` / `SpriteInstance` / `GfxBlock` | スプライト | [スプライト](sprite.md) |
+| `TileSheet` / `TileMap` | タイルマップ描画 + fmrb_map JSON 読込 | [タイルマップ](tilemap.md) |
+| `P5` | Processing/p5.js 風の描画 DSL | [Processing 風の描画](p5.md) |
+| `FmrbAudio` | BGM・効果音・音声合成（`@audio`） | [音声](audio.md) |
 | `MIDI::Device` / `FmrbMidi` | MIDI 出力。内蔵 APU にも外部音源にも | [MIDI](midi.md) |
-| Pub/Sub (`subscribe` / `publish`) | アプリ間メッセージング | [Pub/Sub](pubsub.md) |
+| Pub/Sub (`subscribe` / `publish`) | アプリ間メッセージング | [アプリ間通信](pubsub.md) |
 
 ### ファイル・データ
 
@@ -49,8 +49,8 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `RMT` | RMT（赤外線・WS2812B など） | [周辺機器](peripherals.md#rmt) |
 | `FmrbConst` | システム定数（バージョン、テーマ色、PROC_ID 等） | [定数・システム情報](const.md) |
 | `FmrbHw` | ピン使用状況の問い合わせ | [定数・システム情報](const.md#fmrbhw) |
-| `Task` | タスク制御 | [Task / Machine](system.md#task) |
-| `Machine` | システム制御（時計・遅延・リセット等） | [Task / Machine](system.md#machine) |
+| `Task` | タスク制御 | [タスク・時間](system.md#task) |
+| `Machine` | システム制御（時計・遅延・リセット等） | [タスク・時間](system.md#machine) |
 
 ## メソッド横断索引
 
@@ -118,7 +118,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 
 `subscribe(topic)` / `unsubscribe(topic)` / `publish(topic, data=nil)` / `send_message(dest_pid, msg_type, data)`
 
-メッセージは `on_event` ではなく `_handle_system_control(msg)` から `on_control(msg)` 経由 で受信。詳細は [Pub/Sub](pubsub.md) 参照。
+メッセージは `on_event` ではなく `_handle_system_control(msg)` から `on_control(msg)` 経由 で受信。詳細は [アプリ間通信](pubsub.md) 参照。
 
 ### `IO` / `File` / `Dir`
 
