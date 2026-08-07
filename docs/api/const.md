@@ -242,4 +242,4 @@ There is a sample in `tool/gpio_viewer.app.rb` that visualizes pin states with a
 ## Related
 
 - For pin specifications (electrical characteristics, external connections), see [Hardware](../hardware.md)
-- For GPIO usage, see [Peripherals](peripherals.md#gpio)
+- For GPIO usage, see [Hardware Control](peripherals.md#gpio)

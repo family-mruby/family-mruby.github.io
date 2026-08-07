@@ -196,5 +196,6 @@ something else, and come back to the same slide.
 
 - [Modern (M5Stack Tab5)](modern.md) / [Setup (Retro)](setup.md)
 - [Default Apps](default_apps.md) — what is in the launcher
+- [System Configuration](../file_formats/system_conf.md) — what Config writes, and everything it does not offer
 - [App Config (.app.toml)](../file_formats/app_toml.md) — how your app declares its window
 - [Connecting to Wi-Fi](wifi.md)

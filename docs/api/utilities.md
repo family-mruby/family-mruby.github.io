@@ -1,4 +1,4 @@
-# Utilities (JSON / MessagePack / BMP332 / RX8900)
+# Utilities (JSON / MessagePack / BMP332)
 
 A collection of general-purpose utility APIs.
 
@@ -99,56 +99,7 @@ Log.info("size: #{bmp[:width]}x#{bmp[:height]}")
 
 For detailed specifications, see [Image & Icon Files](../file_formats/image_formats.md#bmp).
 
-## RX8900
-
-A driver for the I2C-connected RTC (Real Time Clock) IC. Allows accessing the on-board clock from Ruby.
-
-I2C address: fixed at `0x32`
-
-### Constructor
-
-```ruby
-RX8900.new(i2c)
-```
-
-Argument: an `I2C` instance (see [Peripherals > I2C](peripherals.md#i2c))
-
-### Methods
-
-| Method | Return Value / Purpose |
-|---|---|
-| `init` | RTC initialization (WEEK ALARM mode, 1Hz FOUT output, etc.) |
-| `read_time` | `{year:, month:, day:, hour:, minute:, second:, wday:}` |
-| `write_time(hash)` | Write a time value |
-| `sync_system_clock` | Sync the RTC to the system epoch. Returns `true` on success |
-| `temperature` | Temperature sensor value (Celsius `Float`) |
-| `vlf?` | Low battery flag. If `true`, clock data may have been lost |
-
-### Example: Clock Sync at Startup
-
-```ruby
-class ClockSyncApp < FmrbApp
-  def on_create
-    i2c = I2C.new(unit: "ESP32_I2C0")
-    rtc = RX8900.new(i2c)
-    if rtc.vlf?
-      Log.warn("RTC battery low; resetting")
-      rtc.write_time(year: 2026, month: 1, day: 1,
-                     hour: 0, minute: 0, second: 0, wday: 4)
-    end
-    rtc.sync_system_clock
-    now = rtc.read_time
-    Log.info("time: #{now[:year]}-#{now[:month]}-#{now[:day]} #{now[:hour]}:#{now[:minute]}")
-  end
-end
-
-ClockSyncApp.new.start
-```
-
-!!! note
-    You can also get and set the time via `FmrbApp.wallclock` / `FmrbApp.set_wallclock`. These go through the system clock (POSIX epoch) and also sync with the RTC. For everyday "get the current time" use cases, `FmrbApp.wallclock` is more convenient.
-
 ## Related
 
 - For direct binary operations, see [`File` / `IO`](filesystem.md)
-- For I2C device usage, also see [Peripherals > I2C](peripherals.md#i2c)
+- For I2C device usage, also see [Hardware Control > I2C](peripherals.md#i2c)

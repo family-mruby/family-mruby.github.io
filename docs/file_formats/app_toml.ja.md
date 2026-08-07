@@ -1,5 +1,9 @@
 # アプリ設定ファイル (.app.toml)
 
+!!! note
+    このページは**アプリごと**の設定です。システム自体の設定 (`/etc/system_conf.toml` と
+    `/etc/wifi.toml`) は [システム設定](system_conf.md) を参照してください。
+
 Family mruby のアプリは、`.app.rb` の本体ファイルと 同名の `.app.toml` ファイル をペアで持ちます。`.app.toml` でアプリ名やウィンドウ設定を指定します。
 
 ## ファイル名のルール

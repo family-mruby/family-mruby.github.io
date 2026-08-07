@@ -1,5 +1,10 @@
 # App Config File (.app.toml)
 
+!!! note
+    This page is about **per-app** settings. For the system's own settings —
+    `/etc/system_conf.toml` and `/etc/wifi.toml` — see
+    [System Configuration](system_conf.md).
+
 A Family mruby app consists of an `.app.rb` main file paired with an `.app.toml` file of the same name. The `.app.toml` file specifies the app name, window settings, and other options.
 
 ## File Naming Rules

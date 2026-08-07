@@ -1,4 +1,4 @@
-# Peripherals (GPIO / I2C / RMT)
+# Hardware Control (GPIO / I2C / RMT / RTC)
 
 APIs for operating hardware peripherals from Ruby.
 
@@ -195,6 +195,62 @@ LedStrip.new.start
 ```
 
 A WS2812B matrix sample is available in `/app/demo/led_matrix.app.rb`.
+
+## Real-Time Clock (RX8900 / RX8130)
+
+Both machines carry a battery-backed RTC on the I2C bus, at address `0x32`. The part differs:
+
+| Machine | Part | Class |
+|---|---|---|
+| Retro (narya-board) | RX8900, on I2C1, shared with GROVE 1 | `RX8900` |
+| Modern (M5Stack Tab5) | RX8130, on the internal bus | `RX8130` |
+
+The two classes take the same arguments and answer to the same methods, so an app that picks
+the class by board runs on either:
+
+```ruby
+i2c = I2C.new(unit: "ESP32_I2C0")
+rtc = FmrbConst::BOARD == "tab5" ? RX8130.new(i2c) : RX8900.new(i2c)
+rtc.sync_system_clock
+```
+
+### Methods
+
+| Method | Return value / purpose |
+|---|---|
+| `init` | Initialise the RTC |
+| `read_time` | `{year:, month:, day:, hour:, minute:, second:, wday:}` |
+| `write_time(hash)` | Write a time |
+| `sync_system_clock` | Set the system clock from the RTC. `true` on success |
+| `vlf?` | Low-voltage flag. `true` means the stored time may be lost |
+| `temperature` | Temperature in Celsius (`Float`). RX8900 only |
+
+### Example: sync the clock at startup
+
+```ruby
+class ClockSyncApp < FmrbApp
+  def on_create
+    i2c = I2C.new(unit: "ESP32_I2C0")
+    rtc = FmrbConst::BOARD == "tab5" ? RX8130.new(i2c) : RX8900.new(i2c)
+    if rtc.vlf?
+      Log.warn("RTC battery low; resetting")
+      rtc.write_time(year: 2026, month: 1, day: 1,
+                     hour: 0, minute: 0, second: 0, wday: 4)
+    end
+    rtc.sync_system_clock
+    now = rtc.read_time
+    Log.info("time: #{now[:year]}-#{now[:month]}-#{now[:day]} #{now[:hour]}:#{now[:minute]}")
+  end
+end
+
+ClockSyncApp.new.start
+```
+
+!!! note "You usually do not need this"
+    The system syncs from the RTC at boot, and `FmrbApp.wallclock` /
+    `FmrbApp.set_wallclock` go through the system clock (POSIX epoch), which also writes
+    back to the RTC. Reach for the driver classes only when you want the chip's own
+    features — the low-voltage flag, or the RX8900's temperature sensor.
 
 ## Pin Assignment Check
 

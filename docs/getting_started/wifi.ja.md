@@ -95,4 +95,5 @@ WiFi を使うには、システムメニューの **Config** で `ble_auto_star
 - [遠隔画面](../remote_desktop.md) — 画面をブラウザに出す
 - [ネットワーク](../api/network.md) — アプリ向けの API
 - [Modern (M5Stack Tab5)](modern.md)
+- [システム設定](../file_formats/system_conf.md) — `wifi.toml` と `system_conf.toml` の全項目
 - [コンソール](console.md) — BLE でファイルを実機に送る

@@ -72,11 +72,12 @@ plugins:
             Inter-App Messaging: アプリ間通信
             Files & I/O: ファイル・I/O
             Logging: ログ
-            Peripherals: 周辺機器
+            Hardware Control: ハードウェア制御
             Utilities: ユーティリティ
             Constants & System Info: 定数・システム情報
             Tasks & Timing: タスク・時間
             File Formats: ファイル形式
+            System Config (system_conf.toml / wifi.toml): システム設定 (system_conf.toml / wifi.toml)
             App Config (.app.toml): アプリ設定ファイル (.app.toml)
             Audio File Formats: 音声ファイルフォーマット
             Image & Icon Files: 画像・アイコンファイル
@@ -116,11 +117,12 @@ nav:
       - Inter-App Messaging: api/pubsub.md
       - Files & I/O: api/filesystem.md
       - Logging: api/log.md
-      - Peripherals: api/peripherals.md
+      - Hardware Control: api/peripherals.md
       - Utilities: api/utilities.md
       - Constants & System Info: api/const.md
       - Tasks & Timing: api/system.md
   - File Formats:
+      - System Config (system_conf.toml / wifi.toml): file_formats/system_conf.md
       - App Config (.app.toml): file_formats/app_toml.md
       - Audio File Formats: file_formats/audio_formats.md
       - Image & Icon Files: file_formats/image_formats.md

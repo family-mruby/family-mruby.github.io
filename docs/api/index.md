@@ -39,15 +39,15 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `JSON` | JSON parsing and generation | [Utilities](utilities.md#json) |
 | `MessagePack` | Binary serialization | [Utilities](utilities.md#messagepack) |
 | `BMP332` | RGB332 BMP image parsing | [Utilities](utilities.md#bmp332) |
-| `RX8900` | RTC (I2C-connected) driver | [Utilities](utilities.md#rx8900) |
 
 ### Hardware and System
 
 | Class / Module | Role | Details |
 |---|---|---|
-| `GPIO` | Digital I/O | [Peripherals](peripherals.md#gpio) |
-| `I2C` | I2C communication | [Peripherals](peripherals.md#i2c) |
-| `RMT` | RMT (infrared, WS2812B, etc.) | [Peripherals](peripherals.md#rmt) |
+| `GPIO` | Digital I/O | [Hardware Control](peripherals.md#gpio) |
+| `I2C` | I2C communication | [Hardware Control](peripherals.md#i2c) |
+| `RMT` | RMT (infrared, WS2812B, etc.) | [Hardware Control](peripherals.md#rmt) |
+| `RX8900` / `RX8130` | Battery-backed real-time clock | [Hardware Control](peripherals.md#real-time-clock-rx8900-rx8130) |
 | `FmrbConst` | System constants (version, theme colors, PROC_ID, etc.) | [Constants & System Info](const.md) |
 | `FmrbHw` | Pin usage queries | [Constants & System Info](const.md#fmrbhw) |
 | `Task` | Task control | [Tasks & Timing](system.md#task) |

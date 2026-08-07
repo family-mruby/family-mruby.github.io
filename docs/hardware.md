@@ -160,7 +160,7 @@ JTAG functionality has not been verified. If you want to use it, you need to rem
 | I2C1 | GPIO 14 | GPIO 21 | Shared with RTC (RX8900) |
 | I2C2 | GPIO 47 | GPIO 48 | General purpose |
 
-Use with `I2C.new(unit: "ESP32_I2C0", ...)` etc. (see [Peripherals > I2C](api/peripherals.md#i2c)).
+Use with `I2C.new(unit: "ESP32_I2C0", ...)` etc. (see [Hardware Control > I2C](api/peripherals.md#i2c)).
 
 ### External GPIO
 
@@ -182,10 +182,10 @@ rtc = RX8900.new(i2c)
 rtc.sync_system_clock
 ```
 
-See [RX8900 API](api/utilities.md#rx8900) for details.
+See [RX8900 API](api/peripherals.md#real-time-clock-rx8900-rx8130) for details.
 
 ## Related
 
 - Check before using pins: [FmrbHw](api/const.md#fmrbhw)
-- Peripheral API: [Peripherals](api/peripherals.md)
+- Peripheral API: [Hardware Control](api/peripherals.md)
 - From boot to your first app: [Setup and Connection](getting_started/setup.md)

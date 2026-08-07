@@ -1,4 +1,4 @@
-# 周辺機器 (GPIO / I2C / RMT)
+# ハードウェア制御 (GPIO / I2C / RMT / RTC)
 
 ハードウェア周辺機器を Ruby から操作するための API です。
 
@@ -195,6 +195,61 @@ LedStrip.new.start
 ```
 
 `/app/demo/led_matrix.app.rb` に WS2812B マトリクスのサンプルがあります。
+
+## 時計 (RX8900 / RX8130)
+
+両機種とも I2C の `0x32` に電池つきの RTC を持っています。部品は違います。
+
+| 機種 | 部品 | クラス |
+|---|---|---|
+| Retro (narya-board) | RX8900。I2C1 上で GROVE 1 と共有 | `RX8900` |
+| Modern (M5Stack Tab5) | RX8130。内部のバスに接続 | `RX8130` |
+
+2 つのクラスは引数もメソッドも同じなので、基板でクラスを選べば同じアプリが両方で動きます。
+
+```ruby
+i2c = I2C.new(unit: "ESP32_I2C0")
+rtc = FmrbConst::BOARD == "tab5" ? RX8130.new(i2c) : RX8900.new(i2c)
+rtc.sync_system_clock
+```
+
+### メソッド
+
+| メソッド | 戻り値 / 用途 |
+|---|---|
+| `init` | RTC の初期化 |
+| `read_time` | `{year:, month:, day:, hour:, minute:, second:, wday:}` |
+| `write_time(hash)` | 時刻を書き込む |
+| `sync_system_clock` | RTC からシステム時計を合わせる。成功なら `true` |
+| `vlf?` | 電圧低下フラグ。`true` なら保持していた時刻が失われた可能性があります |
+| `temperature` | 摂氏の温度 (`Float`)。RX8900 のみ |
+
+### サンプル: 起動時に時計を合わせる
+
+```ruby
+class ClockSyncApp < FmrbApp
+  def on_create
+    i2c = I2C.new(unit: "ESP32_I2C0")
+    rtc = FmrbConst::BOARD == "tab5" ? RX8130.new(i2c) : RX8900.new(i2c)
+    if rtc.vlf?
+      Log.warn("RTC battery low; resetting")
+      rtc.write_time(year: 2026, month: 1, day: 1,
+                     hour: 0, minute: 0, second: 0, wday: 4)
+    end
+    rtc.sync_system_clock
+    now = rtc.read_time
+    Log.info("time: #{now[:year]}-#{now[:month]}-#{now[:day]} #{now[:hour]}:#{now[:minute]}")
+  end
+end
+
+ClockSyncApp.new.start
+```
+
+!!! note "普段は使わなくて済みます"
+    システムは起動時に RTC から時刻を取り込みますし、`FmrbApp.wallclock` /
+    `FmrbApp.set_wallclock` はシステム時計 (POSIX epoch) 経由で RTC にも書き戻します。
+    このクラスを直接使うのは、電圧低下フラグや RX8900 の温度センサなど、部品自身の機能が
+    要るときだけです。
 
 ## ピン割り当て確認
 

@@ -1,4 +1,4 @@
-# ユーティリティ (JSON / MessagePack / BMP332 / RX8900)
+# ユーティリティ (JSON / MessagePack / BMP332)
 
 汎用ユーティリティ系の API をまとめます。
 
@@ -99,56 +99,7 @@ Log.info("size: #{bmp[:width]}x#{bmp[:height]}")
 
 詳細仕様は [画像・アイコンファイル](../file_formats/image_formats.md#bmp) を参照。
 
-## RX8900
-
-I2C 接続の RTC（Real Time Clock）IC のドライバです。基板上に搭載されている時計を Ruby から扱います。
-
-I2C アドレス: `0x32` 固定
-
-### コンストラクタ
-
-```ruby
-RX8900.new(i2c)
-```
-
-引数: `I2C` インスタンス（[周辺機器 ▸ I2C](peripherals.md#i2c) 参照）
-
-### メソッド
-
-| メソッド | 戻り値 / 用途 |
-|---|---|
-| `init` | RTC 初期化（WEEK ALARM モード、1Hz FOUT 出力など） |
-| `read_time` | `{year:, month:, day:, hour:, minute:, second:, wday:}` |
-| `write_time(hash)` | 時刻を書き込み |
-| `sync_system_clock` | RTC をシステム epoch に同期。成功なら `true` |
-| `temperature` | 温度センサ値（摂氏 `Float`） |
-| `vlf?` | 電池低下フラグ。`true` なら時計データ消失の可能性 |
-
-### サンプル: 起動時に時計同期
-
-```ruby
-class ClockSyncApp < FmrbApp
-  def on_create
-    i2c = I2C.new(unit: "ESP32_I2C0")
-    rtc = RX8900.new(i2c)
-    if rtc.vlf?
-      Log.warn("RTC battery low; resetting")
-      rtc.write_time(year: 2026, month: 1, day: 1,
-                     hour: 0, minute: 0, second: 0, wday: 4)
-    end
-    rtc.sync_system_clock
-    now = rtc.read_time
-    Log.info("time: #{now[:year]}-#{now[:month]}-#{now[:day]} #{now[:hour]}:#{now[:minute]}")
-  end
-end
-
-ClockSyncApp.new.start
-```
-
-!!! note
-    `FmrbApp.wallclock` / `FmrbApp.set_wallclock` でも時刻取得・設定ができます。これらはシステム時計（POSIX epoch）を経由して RTC とも同期します。日常的な「現在時刻が知りたい」用途では `FmrbApp.wallclock` のほうが手軽です。
-
 ## 関連
 
 - 直接バイナリ操作は [`File` / `IO`](filesystem.md) を参照
-- I2C デバイス利用には [周辺機器 ▸ I2C](peripherals.md#i2c) も参照
+- I2C デバイス利用には [ハードウェア制御 ▸ I2C](peripherals.md#i2c) も参照

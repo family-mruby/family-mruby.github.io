@@ -95,4 +95,5 @@ still start BLE by hand later from the system menu when you need the console.
 - [Remote Desktop](../remote_desktop.md) — the screen in a browser
 - [Network](../api/network.md) — the API for your apps
 - [Modern (M5Stack Tab5)](modern.md)
+- [System Configuration](../file_formats/system_conf.md) — every key in `wifi.toml` and `system_conf.toml`
 - [Console](console.md) — moving files onto the device over BLE

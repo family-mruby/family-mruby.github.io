@@ -242,4 +242,4 @@ gpio = GPIO.new(PIN, GPIO::OUT)
 ## 関連
 
 - ピン仕様（電気的特性、外部接続）は [ハードウェア](../hardware.md) を参照
-- GPIO の使い方は [周辺機器](peripherals.md#gpio) を参照
+- GPIO の使い方は [ハードウェア制御](peripherals.md#gpio) を参照

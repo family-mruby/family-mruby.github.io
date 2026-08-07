@@ -191,5 +191,6 @@ BLE の起動・停止はシステムメニューから行います。起動時�
 
 - [Modern (M5Stack Tab5)](modern.md) / [起動まで (Retro)](setup.md)
 - [標準アプリ](default_apps.md) — ランチャーに入っているもの
+- [システム設定](../file_formats/system_conf.md) — Config が書き換えるもの、ダイアログに無いもの
 - [アプリ設定ファイル (.toml)](../file_formats/app_toml.md) — 自分のアプリの窓の宣言
 - [WiFi につなぐ](wifi.md)

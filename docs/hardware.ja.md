@@ -160,7 +160,7 @@ JTAGの機能は未検証だが、もし使いたい場合は0Ω抵抗を外す�
 | I2C1 | GPIO 14 | GPIO 21 | RTC (RX8900) が共有 |
 | I2C2 | GPIO 47 | GPIO 48 | 自由用途 |
 
-`I2C.new(unit: "ESP32_I2C0", ...)` 等で利用します（[周辺機器 ▸ I2C](api/peripherals.md#i2c) 参照）。
+`I2C.new(unit: "ESP32_I2C0", ...)` 等で利用します（[ハードウェア制御 ▸ I2C](api/peripherals.md#i2c) 参照）。
 
 ### 外出しGPIO
 
@@ -182,10 +182,10 @@ rtc = RX8900.new(i2c)
 rtc.sync_system_clock
 ```
 
-詳細は [RX8900 API](api/utilities.md#rx8900) を参照。
+詳細は [RX8900 API](api/peripherals.md#rx8900-rx8130) を参照。
 
 ## 関連
 
 - ピンを使う前の確認 → [FmrbHw](api/const.md#fmrbhw)
-- 周辺機器 API → [周辺機器](api/peripherals.md)
+- 周辺機器 API → [ハードウェア制御](api/peripherals.md)
 - 起動から最初のアプリまで → [起動と接続](getting_started/setup.md)
