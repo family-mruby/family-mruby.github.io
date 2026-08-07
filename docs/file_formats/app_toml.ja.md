@@ -43,6 +43,8 @@ my_clock.app.toml
 | `default_window_pos_x` | integer | 任意 | `50` | ウィンドウ左上 X 座標 |
 | `default_window_pos_y` | integer | 任意 | `50` | ウィンドウ左上 Y 座標 |
 | `resizable` | integer (0/1) | 任意 | `0` | `1` でユーザーがリサイズ可能 |
+| `min_window_width` | integer | 任意 | `0` | ユーザーが縮められる下限の幅。`0` ならシステム既定 (64) |
+| `min_window_height` | integer | 任意 | `0` | ユーザーが縮められる下限の高さ。`0` ならシステム既定 (64) |
 | `large_memory` | integer (0/1) | 任意 | `0` | `1` で大きいヒープ領域を確保（メモリを多く使うアプリ用） |
 | `launcher_visible` | bool / string | 任意 | `true` | `false` または `0` でランチャーから非表示 |
 | `rounded_corners` | bool / string | 任意 | `true` | `false` でウィンドウ角の透過処理を無効化（fps を稼ぎたいときの最適化） |
@@ -61,6 +63,10 @@ my_clock.app.toml
 | `background` | 未サポート：画面表示なし（headless） | 不要 |
 
 `fullscreen` の場合、`@user_area_*` は画面全体を指します。`window` ではタイトルバー（11px）と枠線を除いた部分が `@user_area_*` です。
+
+全画面のアプリは `fullscreen_switchable = 1` を宣言できます。宣言すると `Ctrl` + `Tab` で
+退避して、後から同じ状態に戻れるようになります。
+[デスクトップ > アプリの切り替え](../getting_started/desktop.md#_11) を参照してください。
 
 ## 最小サンプル
 

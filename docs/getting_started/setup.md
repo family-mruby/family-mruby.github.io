@@ -92,14 +92,12 @@ If the POWER LED does not light up, the power supply is not connected. Please ch
 | Key | Effect |
 |---|---|
 | `Ctrl` + `Q` | Close the app in the foreground, even a fullscreen one |
-| `Ctrl` + `Tab` | Cycle focus between running apps |
+| `Ctrl` + `Tab` | Switch between running apps |
 
-On the desktop itself — with no app focused and no dialog open — a single letter starts an
-app: `L` launcher, `S` shell, `E` editor, `N` NSF player, `I` HID Inspector. That list is
-the `[[shortcuts]]` section of `/etc/system_conf.toml`.
+On the desktop itself a single letter starts an app: `L` launcher, `S` shell, `E` editor.
 
-In the launcher, **right-click** to rescan the filesystem after adding an app; the list is
-otherwise built once, when the desktop starts.
+The menu bar, the launcher and the rest of the desktop work the same on both machines and
+are described in [The Desktop](desktop.md).
 
 ## Connecting to Wi-Fi
 

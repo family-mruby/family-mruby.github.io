@@ -43,6 +43,8 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 | `default_window_pos_x` | integer | Optional | `50` | Window top-left X coordinate |
 | `default_window_pos_y` | integer | Optional | `50` | Window top-left Y coordinate |
 | `resizable` | integer (0/1) | Optional | `0` | Set to `1` to allow user resizing |
+| `min_window_width` | integer | Optional | `0` | Smallest width the user may resize to. `0` uses the system default (64) |
+| `min_window_height` | integer | Optional | `0` | Smallest height the user may resize to. `0` uses the system default (64) |
 | `large_memory` | integer (0/1) | Optional | `0` | Set to `1` to allocate a larger heap (for memory-intensive apps) |
 | `launcher_visible` | bool / string | Optional | `true` | Set to `false` or `0` to hide the app from the launcher |
 | `rounded_corners` | bool / string | Optional | `true` | Set to `false` to disable window corner transparency (optimization to gain fps) |
@@ -61,6 +63,10 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 | `background` | Not supported: headless (no display) | Not applicable |
 
 In `fullscreen` mode, `@user_area_*` refers to the entire screen. In `window` mode, `@user_area_*` is the area excluding the title bar (11px) and borders.
+
+A fullscreen app can also declare `fullscreen_switchable = 1`, which lets the user park it
+with `Ctrl` + `Tab` and come back to it later. See
+[The Desktop > Switching between apps](../getting_started/desktop.md#switching-between-apps).
 
 ## Minimal Example
 

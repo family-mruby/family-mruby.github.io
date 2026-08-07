@@ -80,53 +80,17 @@ If you reach the desktop and the cursor follows your finger, everything works.
   <img src="../../images/tab5_menu.png" width="600" alt="The system menu, opened from the menu bar">
 </div>
 
-Click **Family mruby** at the top left for the system menu:
+Click **Family mruby** at the top left for the system menu — Launcher, File Manager, Log
+Viewer, Monitor, Set Clock, Config, Storage, Network, About and Reset. The right end of the
+bar carries free internal memory, the BLE and Wi-Fi indicators, and the clock, and the
+squares next to the title are the apps you have running.
 
-| Item | What it does |
-|---|---|
-| Launcher | The grid of installed apps. This is where you start things |
-| File Manager | Browse the flash filesystem |
-| Log Viewer | The system log |
-| Monitor | Running tasks and memory |
-| Set Clock | Set the date and time |
-| Config | Language, keyboard layout, pointer speed, theme, timezone, Wi-Fi and BLE autostart |
-| Storage | Clear cached files |
-| Network | Wi-Fi status, IP address and hostname |
-| About | Version and chip information |
-| Reset | Reboot |
+`Ctrl` + `Q` closes the app in front, `Ctrl` + `Tab` switches between them, and on the
+desktop a single letter starts one (`L` launcher, `S` shell, `E` editor).
 
-The right end of the menu bar shows free internal memory, the BLE indicator, the Wi-Fi
-indicator and the clock.
-
-### Starting an app
-
-Open **Launcher** and double-click an icon. Right-click inside the launcher window to rescan
-the filesystem after you add an app.
-
-<div align="center">
-  <img src="../../images/tab5_launcher.png" width="600" alt="The launcher">
-</div>
-
-### Keys that always work
-
-| Key | Effect |
-|---|---|
-| `Ctrl` + `Q` | Close the app in the foreground |
-| `Ctrl` + `Tab` | Cycle focus between running apps |
-
-And on the desktop itself — with no app focused and no dialog open — a single letter starts
-an app:
-
-| Key | Starts |
-|---|---|
-| `L` | Launcher |
-| `S` | Shell |
-| `E` | Editor |
-| `N` | NSF player |
-| `I` | HID Inspector |
-
-That list is the `[[shortcuts]]` section of `/etc/system_conf.toml`, and you can change it
-there.
+The desktop is identical on both machines and is described in full in
+[The Desktop](desktop.md) — what every element of the menu bar means, how the launcher
+behaves, and what `Ctrl` + `Tab` does to a fullscreen app.
 
 ## Using touch
 

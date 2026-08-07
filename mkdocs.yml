@@ -51,6 +51,7 @@ plugins:
             Setup (Retro): 起動まで (Retro)
             For BOOTH Buyers: BOOTHで購入した方へ
             Setup: 起動まで
+            The Desktop: デスクトップ
             Hello World: Hello World
             Connecting to Wi-Fi: WiFi につなぐ
             Simulator: シミュレータ
@@ -95,6 +96,7 @@ nav:
       - Modern (M5Stack Tab5): getting_started/modern.md
       - Setup (Retro): getting_started/setup.md
       - For BOOTH Buyers: getting_started/booth.md
+      - The Desktop: getting_started/desktop.md
       - Hello World: getting_started/hello_world.md
       - Connecting to Wi-Fi: getting_started/wifi.md
       - Family mruby Console: getting_started/console.md
