@@ -17,6 +17,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `TileSheet` / `TileMap` | タイルマップ描画 + fmrb_map JSON 読込 | [TileMap](tilemap.md) |
 | `P5` | Processing/p5.js 風の描画 DSL | [P5](p5.md) |
 | `FmrbAudio` | BGM・効果音・音声合成（`@audio`） | [FmrbAudio](audio.md) |
+| `MIDI::Device` / `FmrbMidi` | MIDI 出力。内蔵 APU にも外部音源にも | [MIDI](midi.md) |
 | Pub/Sub (`subscribe` / `publish`) | アプリ間メッセージング | [Pub/Sub](pubsub.md) |
 
 ### ファイル・データ
@@ -25,6 +26,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 |---|---|---|
 | `IO` / `File` / `Dir` | ファイル・ディレクトリ操作 | [ファイル・I/O](filesystem.md) |
 | `Log` | ロギング | [ログ](log.md) |
+| `Net::HTTP` / WebSocket / TLS | ネットワーク通信 | [ネットワーク](network.md) |
 | `JSON` | JSON のパース・生成 | [ユーティリティ](utilities.md#json) |
 | `MessagePack` | バイナリシリアライズ | [ユーティリティ](utilities.md#messagepack) |
 | `BMP332` | RGB332 BMP 画像のパース | [ユーティリティ](utilities.md#bmp332) |

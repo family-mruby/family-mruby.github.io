@@ -181,7 +181,7 @@ when :gamepad_axis
 
 ## ファイル・ディレクトリのパス
 
-`File.open` / `Dir.open` にはルート相対のパス（`/data/foo.txt` など）や SD カードの `/mnt/sd/...` をそのまま渡します。詳細は [ファイル・I/O ▸ ファイル名前空間](filesystem.md#ファイル名前空間) を参照。
+`File.open` / `Dir.open` にはルート相対のパス（`/home/foo.txt` など）や SD カードの `/mnt/sd/...` をそのまま渡します。詳細は [ファイル・I/O ▸ ファイル名前空間](filesystem.md#ファイル名前空間) を参照。
 
 ## クラスメソッド
 

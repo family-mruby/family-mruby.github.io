@@ -17,6 +17,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `TileSheet` / `TileMap` | Tile map rendering + fmrb_map JSON loading | [TileMap](tilemap.md) |
 | `P5` | Processing/p5.js-style drawing DSL | [P5](p5.md) |
 | `FmrbAudio` | BGM, sound effects, tone synthesis (`@audio`) | [FmrbAudio](audio.md) |
+| `MIDI::Device` / `FmrbMidi` | MIDI out, to the built-in APU or an external instrument | [MIDI](midi.md) |
 | Pub/Sub (`subscribe` / `publish`) | Inter-app messaging | [Pub/Sub](pubsub.md) |
 
 ### Files and Data
@@ -25,6 +26,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 |---|---|---|
 | `IO` / `File` / `Dir` | File and directory operations | [File & I/O](filesystem.md) |
 | `Log` | Logging | [Log](log.md) |
+| `Net::HTTP` / WebSocket / TLS | Talking to the network | [Network](network.md) |
 | `JSON` | JSON parsing and generation | [Utilities](utilities.md#json) |
 | `MessagePack` | Binary serialization | [Utilities](utilities.md#messagepack) |
 | `BMP332` | RGB332 BMP image parsing | [Utilities](utilities.md#bmp332) |

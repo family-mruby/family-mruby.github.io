@@ -1,6 +1,8 @@
-# Setup
+# Setup (Retro)
 
-This section describes the steps to get the first screen displayed.
+Getting the first screen out of the **narya-board**. If you have an M5Stack
+Tab5 instead, go to [Modern (M5Stack Tab5)](modern.md); if you are not sure which machine
+this is, see [Choose your hardware](choose_hardware.md).
 
 ## Items to Prepare Separately
 
@@ -84,6 +86,20 @@ If the POWER LED does not light up, the power supply is not connected. Please ch
 ### Keyboard or Mouse Not Responding
 
 - If possible, try a different keyboard, try connecting without going through a USB hub, etc. Please restart the device after swapping peripherals.
+
+## Keys that always work
+
+| Key | Effect |
+|---|---|
+| `Ctrl` + `Q` | Close the app in the foreground, even a fullscreen one |
+| `Ctrl` + `Tab` | Cycle focus between running apps |
+
+On the desktop itself — with no app focused and no dialog open — a single letter starts an
+app: `L` launcher, `S` shell, `E` editor, `N` NSF player, `I` HID Inspector. That list is
+the `[[shortcuts]]` section of `/etc/system_conf.toml`.
+
+In the launcher, **right-click** to rescan the filesystem after adding an app; the list is
+otherwise built once, when the desktop starts.
 
 ## Next Steps
 

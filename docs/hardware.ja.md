@@ -92,7 +92,7 @@ narya-board の各端子・ピン配置の仕様です。
 | 音声出力 | I2S DAC（NES APU エミュレータ） |
 | ストレージ | 内蔵 LittleFS (16MB) + SD カード (FAT32, SPI 接続) |
 
-![Narya board](../../images/board_block_diagram.png)
+![Narya board](images/board_block_diagram.png)
 
 ### 電源
 

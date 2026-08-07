@@ -18,11 +18,18 @@ my_clock.app.toml
 
 ペアで `/app/<category>/` 以下に置きます（`category` は任意のサブディレクトリ。`demo`, `game`, `tool` 等が標準）。
 
+
+!!! note "`.toml` が要るのはどの場合か"
+    ファイルを直接起動するとき — ファイル管理から実体をダブルクリックするとき — は同名の
+    `.app.toml` が必要です。無いと起動が断られ、理由がデスクトップに出ます。エディタの `F5`
+    やシェルからは `.toml` が無くても動き、その場合はファイル名がアプリ名になります。
+
 | 言語 | 拡張子 |
 |---|---|
 | mruby | `.app.rb` |
 | Lua | `.app.lua` |
 | BASIC | `.app.bas` |
+| MicroPython | `.app.py` |
 
 ## キー一覧
 
@@ -39,6 +46,9 @@ my_clock.app.toml
 | `large_memory` | integer (0/1) | 任意 | `0` | `1` で大きいヒープ領域を確保（メモリを多く使うアプリ用） |
 | `launcher_visible` | bool / string | 任意 | `true` | `false` または `0` でランチャーから非表示 |
 | `rounded_corners` | bool / string | 任意 | `true` | `false` でウィンドウ角の透過処理を無効化（fps を稼ぎたいときの最適化） |
+| `app_screen_name_<lang>` | string | 任意 | （なし） | 言語別の表示名。例: `app_screen_name_ja`。システムの言語と一致するときに使われ、無ければ `app_screen_name` |
+| `task_stack_kb` | integer | 任意 | 16 | アプリのタスクが使う C スタックの KB 数。スタック保護の例外が出るときだけ上げます。16〜64 に収められます |
+| `fullscreen_switchable` | integer (0/1) | 任意 | `0` | 全画面アプリを `Ctrl` + `Tab` で退避・復帰させてよいなら `1`（`on_resume` で描画面を作り直す必要があります） |
 | `icon` | string | 任意 | (拡張子別の既定) | アイコンファイルパス（`.icon` 形式） |
 
 ## ウィンドウモード

@@ -181,7 +181,7 @@ Normally, writing just `MyApp.new.start` is sufficient.
 
 ## File and Directory Paths
 
-Pass root-relative paths (e.g. `/data/foo.txt`) or SD card paths like `/mnt/sd/...` directly to `File.open` / `Dir.open`. See [File & I/O > File Namespace](filesystem.md#ファイル名前空間) for details.
+Pass root-relative paths (e.g. `/home/foo.txt`) or SD card paths like `/mnt/sd/...` directly to `File.open` / `Dir.open`. See [File & I/O > File Namespace](filesystem.md#file-namespace) for details.
 
 ## Class Methods
 

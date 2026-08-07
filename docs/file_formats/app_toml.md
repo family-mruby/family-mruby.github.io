@@ -18,11 +18,18 @@ my_clock.app.toml
 
 Place the pair under `/app/<category>/` (where `category` is any subdirectory such as `demo`, `game`, `tool`, etc.).
 
+
+!!! note "When the `.toml` is required"
+    Launching a file directly — double-clicking it in the File Manager — needs the matching
+    `.app.toml`; without it the spawn is refused and the desktop says why. Running from the
+    editor with `F5`, or from the shell, works without one; the filename becomes the app name.
+
 | Language | Extension |
 |---|---|
 | mruby | `.app.rb` |
 | Lua | `.app.lua` |
 | BASIC | `.app.bas` |
+| MicroPython | `.app.py` |
 
 ## Key Reference
 
@@ -39,6 +46,9 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 | `large_memory` | integer (0/1) | Optional | `0` | Set to `1` to allocate a larger heap (for memory-intensive apps) |
 | `launcher_visible` | bool / string | Optional | `true` | Set to `false` or `0` to hide the app from the launcher |
 | `rounded_corners` | bool / string | Optional | `true` | Set to `false` to disable window corner transparency (optimization to gain fps) |
+| `app_screen_name_<lang>` | string | Optional | (none) | Localized display name, e.g. `app_screen_name_ja`. Used when the system language matches; otherwise `app_screen_name` |
+| `task_stack_kb` | integer | Optional | 16 | The app task's C stack, in KB. Raise it only if the app hits a stack protection fault. Clamped to 16-64 |
+| `fullscreen_switchable` | integer (0/1) | Optional | `0` | Set to `1` if a fullscreen app can be parked and restored on `Ctrl` + `Tab` (it must rebuild its canvas in `on_resume`) |
 | `icon` | string | Optional | (default per extension) | Icon file path (`.icon` format) |
 
 ## Window Modes

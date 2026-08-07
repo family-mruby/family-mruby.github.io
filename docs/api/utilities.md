@@ -19,11 +19,11 @@ JSON string parsing and generation. Used for configuration files, map data, comm
 ### Example
 
 ```ruby
-text = File.open("/data/conf.json", "r") { |f| f.read }
+text = File.open("/home/conf.json", "r") { |f| f.read }
 conf = ::JSON.parse(text)
 Log.info("user=#{conf["user"]}")
 
-File.open("/data/conf.json", "w") do |f|
+File.open("/home/conf.json", "w") do |f|
   f.write(::JSON.generate({"user" => "kishima", "score" => 100}))
 end
 ```

@@ -1,155 +1,113 @@
 # Default Apps
 
-!!! note
-    This page is under revision.
+Everything below ships on the device. Open the **Launcher** from the system menu (or press
+`L` on the desktop) and double-click an icon.
 
+<div align="center">
+  <img src="../../images/tab5_launcher.png" width="600" alt="The launcher">
+</div>
 
-Family mruby comes with built-in apps for common tasks. You can use these apps to develop your own applications.
+!!! tip "The list is built at boot"
+    The launcher scans for apps once, when the desktop starts. After you add a file,
+    **right-click inside the launcher window** to rescan.
 
-## How to Launch
+Apps live under `/app`, grouped into directories. What follows is grouped the same way.
 
-| Location | Apps |
-|---|---|
-| Launcher icons (menu bar -> `Launcher`) | Shell, Editor |
-| Menu bar (top-left `Family mruby` drop-down) | Launcher, File Manager, Log Viewer, Monitor, Set Clock, Config, About |
+## Always there
 
-## Shell
+These are not in the launcher grid — they are the system's own apps, reachable from the
+system menu or by pressing a letter on the desktop.
 
-A terminal for file operations, script execution, and interactive use. It is based on R2P2 but has its own implementation.
-
-| Category | Commands |
-|---|---|
-| Directory | `cd [path]` / `pwd` / `ls [path]` |
-| File viewing | `cat <file>` / `less <file>` |
-| File operations | `mkdir <dir>` / `rm <path...>` / `cp <src> <dst>` / `mv <src> <dst>` |
-| Editing | `edit <file>` (launches Editor) |
-| App creation | `create_app <name>` (see [Hello World](hello_world.md#shortcut-generate-a-template-with-create_app)) |
-| Execution | `run <script>` / `run <script> &` (background) / `run <script> > <file>` (output redirect) |
-| Interactive Ruby | `irb` |
-| Processes | `ps` / `kill_job <id>` |
-| Help | `help` |
-
-Tab completion and history navigation with the up/down arrow keys are available in the shell.
-
-### `less` Controls
-
-After opening a file with `less <file>`:
-
-| Key | Action |
-|---|---|
-| `Space` / `PgDn` / `j` | Forward one page |
-| `b` / `PgUp` / `k` | Back one page |
-| `g` | Go to beginning |
-| `G` | Go to end |
-| `?` | Toggle key list display |
-| `q` / `ESC` | Quit |
-
-## FM-Editor
-
-An MS-DOS-style text editor. It features Ruby syntax highlighting, selection, copy and paste, search, and other standard editing capabilities.
-
-- Launch: type `edit foo.app.rb` in the shell, or open an empty file from the Editor icon in the launcher
-- Hotkeys are shown as yellow characters in the menus
-
-### Menus
-
-The menu bar can be opened with Alt + the initial letter. In an open drop-down, select items with the arrow keys + Enter, or press the initial letter (yellow character) of each item to execute it directly. Press ESC to close.
-
-| Menu | Open with | Items |
+| App | Key | What it does |
 |---|---|---|
-| File | `Alt+F` | Open / Save / Save as / Exit |
-| Edit | `Alt+E` | Cut / Copy / Paste / Select All |
-| Search | `Alt+S` | Find (modal dialog) |
-| Highlight | `Alt+H` | Syntax highlighting ON/OFF toggle |
+| Launcher | `L` | The app grid |
+| Shell | `S` | A command line |
+| Editor | `E` | Write, run (`F5`) and debug your code |
+| File Manager | | Browse the flash filesystem |
+| Log Viewer | | The system log |
+| Monitor | | Running tasks and memory |
 
-### Main Keyboard Shortcuts
+## Demos — `/app/demo`
 
-| Action | Key |
+| App | What it shows |
 |---|---|
-| Save | `Ctrl+S` |
-| Exit (prompts if unsaved) | `Ctrl+X` |
-| Copy | `Ctrl+C` |
-| Paste | `Ctrl+V` |
-| Select all | `Ctrl+A` |
-| Open search dialog | `Alt+S` |
-| Find next | `F3` |
-| Highlight ON/OFF | `Alt+H` |
-| Range selection | `Shift + arrow keys` |
+| **Ruby app demo** | The Ruby app framework, as a starting point to copy |
+| **Python** | The same, written in MicroPython |
+| **Lua app demo** | The same, in Lua |
+| **BASIC app demo** | A BASIC program launched as an ordinary app |
+| **Shapes** | Drawing primitives |
+| **Bounce** | Sprite movement |
+| **P5 Test** | The [P5](../api/p5.md) drawing API |
+| **JA Text** | Japanese text rendering with the bundled fonts |
+| **Kamon** | Generates Japanese family crests from five motifs with rotational symmetry |
+| **Weather** | Fetches a forecast over HTTPS and draws it — the [network API](../api/network.md) end to end |
+| **MIDI APU** | Plays the built-in sound chip through the [MIDI](../api/midi.md) layer, switchable to an external instrument |
+| **MML** | The same tune on the APU or an external instrument, written as MML text |
+| **StackChan** | A parametric face with expressions and emotes |
+| **StackChan Remote** | The same face, driven over [pub/sub](../api/pubsub.md) |
+| **PubDemo** / **SubDemo** | A publisher and a subscriber, to run together |
+| **LED Matrix** | Drives a WS2812B matrix from the GROVE port |
+| **I2C Kbd** | Reads an I2C keyboard |
 
-### Selection and Clipboard
+## Games — `/app/game`
 
-Selecting a range with `Shift + arrow keys` displays a light-blue highlight (multi-line selections wrap). The selected range can be:
+| App | |
+|---|---|
+| **RPG Demo** | A tile world with smooth scrolling, collisions, BGM and sound effects |
+| **Raycaster** | A Wolfenstein-style first-person demo. Keyboard or gamepad |
+| **Tetris** | |
+| **Shooter** | |
+| **Piano** | Play the sound chip from the keyboard |
 
-- Replaced or deleted with `Backspace` / `Delete` / `Enter`
-- Replaced with typed characters
-- Copied with `Ctrl+C` and pasted with `Ctrl+V`
+<div align="center">
+  <img src="../../images/tab5_rpg_demo.png" width="600" alt="The RPG demo running on a Tab5">
+</div>
 
-The clipboard is internal to the editor (separate from the OS clipboard).
+## Tools — `/app/tool`
 
-### Search
+| App | What it does |
+|---|---|
+| **SMF Player** | Plays standard MIDI files, with a file list. Songs are in `/usr/share/sounds/midi` |
+| **NSF Player** | Plays NSF (Famicom sound) files from `/usr/share/sounds/nsf` |
+| **Sprite Editor** | Edits a 16x16 RGB332 tile sheet: load a BMP, pick a tile, edit pixels, save back |
+| **PicoRabbit** | A fullscreen presentation tool, reading PicoRabbit-compatible Markdown |
+| **GPIO Viewer** | Live pin status for every GPIO, colour-coded by what is using it |
+| **Net Test** | Exercises the networking API piece by piece. Useful when something will not connect |
 
-`Alt+S` opens the `Find` dialog. Type a string and press `Enter` to jump to the next match. When the end of the file is reached, the search wraps around to the beginning. Press `F3` to find the next occurrence using the previous query.
+## BASIC samples — `/app/basic`
 
-### Syntax Highlighting
+Six programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 
-Syntax highlighting is enabled automatically when a Ruby file is opened. For files larger than 1 KB, it is turned off automatically to reduce load. You can toggle it manually with `Alt+H`.
+| App | |
+|---|---|
+| **Kana** | The character screen and kana rendering |
+| **Dodge** | Avoid the obstacles |
+| **Shoot** | A shooting game |
+| **Maze** | |
+| **Music** | `PLAY` and `BEEP` |
+| **Hit** | Collision detection |
 
-### Development Flow
+## Test and diagnostic apps
 
-The basic workflow is to edit a template generated with `create_app` in the Editor, then reload by right-clicking:
+`/app/debug` and `/app/test` hold apps that exist to exercise or break something on purpose
+— an app that raises, one that fails to compile, one that saturates the input queue, MIDI
+timing benchmarks, an NTSC colour chart, SD card and tile-map checks. They are shipped
+because they are useful when a device misbehaves, not because they do anything for you day
+to day.
 
-```
-Shell> create_app my_app
-Shell> edit /app/usr/my_app.app.rb     # Launch Editor
-(Edit) -> Ctrl+S (Save) -> Ctrl+X (Exit)
-Launch the my_app icon in the launcher / if already running, right-click the title bar -> Reload
-```
+## Machine-specific apps
 
-## File Manager
+Most apps run on both machines. A few depend on hardware only one of them has:
 
-Browse and manage files under `/` or `/mnt/sd/` in a tree view. While the console (via BLE) is operated from a PC, the File Manager is operated directly on the device.
-
-## Log Viewer
-
-Displays system-wide log output in real time.
-
-- Color-coded by level (ERROR=red / WARN=yellow / INFO=gray / DEBUG=dark gray)
-- Switch display level from the toolbar (`E/W/I` or `E/W/I/D`)
-- Ideal for checking output from `Log.info` and similar calls in your own apps
-
-## Monitor
-
-A monitor that visualizes system status. Switch pages with `<` / `>` at the bottom.
-
-- Page 1: Heap usage bars (each memory pool, IRAM, PSRAM)
-- Page 2: Graphics statistics (commands/sec, presents/sec, last 30 seconds)
-
-Useful for diagnosing when an app is sluggish or unresponsive.
-
-## Set Clock
-
-A dialog for manually setting the RTC time. Enter year, month, day, hour, minute, and second to apply.
-
-Normally the onboard RX8900 RTC keeps time, but this is available for initial setup or correcting clock drift.
-
-## Config
-
-An app for changing system-wide settings (theme color, display margins, etc.).
-
-## About
-
-A dialog that displays system information such as the OS version, GA-side firmware version, IDF version, and MAC address.
-
-## Choosing the Right File Operations Tool
-
-| Tool | Location | Primary Use |
-|---|---|---|
-| Shell `ls` / `cd` etc. | Shell on the device | Batch operations via scripts, for command-line users |
-| File Manager | Menu on the device | GUI file browsing (local) |
-| Console (BLE) | Browser on PC | File transfer and log display from PC ([guide](console.md)) |
+| App | Note |
+|---|---|
+| **NTSC Test** | Retro only — it adjusts the composite video output |
+| **SD Test** | Retro only — Modern's microSD is not wired up in the firmware yet |
+| **Weather**, **Net Test** | Need Wi-Fi configured. See [Network](../api/network.md) |
+| **LED Matrix**, **I2C Kbd** | Need something wired to the GROVE port |
 
 ## Related
 
-- [Hello World](hello_world.md) -- Write your first app with Shell + create_app
-- [Console](console.md) -- File transfer / log display from PC
-- [Log API](../api/log.md) -- Output API such as Log.info (visible in Log Viewer)
+- [Hello World](hello_world.md) — write your own
+- [App Config (.app.toml)](../file_formats/app_toml.md) — how an app gets into the launcher
+- [Examples](../examples.md) — annotated code

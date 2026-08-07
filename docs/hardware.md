@@ -93,7 +93,7 @@ Specifications for the connectors and pin assignments of the narya-board.
 | Audio Output | I2S DAC (NES APU emulator) |
 | Storage | Internal LittleFS (16MB) + SD card (FAT32, SPI connection) |
 
-![Narya board](../../images/board_block_diagram.png)
+![Narya board](images/board_block_diagram.png)
 
 ### Power Supply
 

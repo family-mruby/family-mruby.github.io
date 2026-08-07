@@ -21,34 +21,33 @@ Each Family mruby app runs as an independent Ruby VM, with its own heap and stac
 
 You can check heap usage in the Monitor app.
 
-## Lua and BASIC Support Status
+## Language support status
 
-The current Lua and BASIC support is a concept implementation and is not suitable for building full-fledged applications.
+| Language | Status |
+|---|---|
+| Ruby (PicoRuby) | The main language. Everything documented here |
+| BASIC | Feature-complete as of 2.0. Every known difference from Family BASIC V3 is catalogued. See [BASIC and MicroPython](other_languages.md) |
+| MicroPython | Usable, with real limits: one Python app at a time, built-in modules only, no `open()`, 256 KB heap. See [BASIC and MicroPython](other_languages.md) |
+| Lua | A concept implementation. Not suitable for building a substantial application |
 
-## Task / sleep Constraints
+## Waiting inside an app
 
-In the current version, calling the tick processing (`mrb_tick`) needed for PicoRuby's task switching from a context outside the mruby VM can corrupt the VM stack, so it is temporarily disabled. As a result, the following constraints apply.
-
-Tick handling is planned to be addressed in the future.
-
-### `sleep_ms` may hang
-
-The Kernel `sleep_ms` (provided by PicoRuby) may stop progressing outside of `_spin` (i.e., in independent tasks outside the `FmrbApp` main loop) because ticks do not advance.
-
-Use `Machine.delay_ms` instead.
+Prefer `Machine.delay_ms`, which is FreeRTOS `vTaskDelay` underneath:
 
 ```ruby
-# NG: may hang inside an independent task
-sleep_ms(500)
-
-# OK: based on FreeRTOS vTaskDelay
 Machine.delay_ms(500)
 ```
 
-### Task feature constraints
+Better still, do not block at all: return the number of milliseconds until you want to be
+called again from `on_update`, and let the message pump do the waiting. An app that blocks
+processes no events while it does.
 
-Since `mrb_tick` is called within `on_update`, it is possible to drive the Task feature by looping `on_update` at a high frequency, but this may cause unexpected behavior.
-(The Editor and Shell apps make use of the Task feature.)
+!!! note "This was worse before 2.0"
+    In 1.0 the tick that drives PicoRuby's task switching had to be disabled: calling it
+    from outside the VM corrupted the VM stack. That is fixed — ticks are now accumulated
+    by a signal source and applied at one point in the scheduler — and the Task feature
+    works. The `Machine.delay_ms` recommendation above is about not blocking, not about the
+    old corruption.
 
 ## File System Limitations
 
@@ -62,3 +61,25 @@ Since `mrb_tick` is called within `on_update`, it is possible to drive the Task 
 ## Inter-App Message Size Limit
 
 The payload for [Pub/Sub](api/pubsub.md) `publish` / `send_message` is limited to 176 bytes after MessagePack encoding. If you exceed this limit, consider transferring data via files or splitting it across multiple messages.
+
+## Machine-specific limitations
+
+Most limits apply to both machines. These do not.
+
+### Modern (M5Stack Tab5)
+
+| | |
+|---|---|
+| microSD | The slot is not wired up in the firmware yet. Internal flash only |
+| Video out | The built-in panel is the only output. No composite video |
+| GROVE | One port, not two |
+| Battery-backed clock | Present (RX8130), but set the time once from **Set Clock** |
+
+### Retro (narya-board)
+
+| | |
+|---|---|
+| Wi-Fi and BLE | One radio, one at a time. Running the BLE console means Wi-Fi will not start, and vice versa |
+| Touch | No touch panel. A USB mouse is the pointer |
+| Remote desktop | Not available |
+| Firmware | Two chips to flash, and both must be on the same version or the system will not boot |
