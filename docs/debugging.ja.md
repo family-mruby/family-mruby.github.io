@@ -10,7 +10,7 @@
 エディタ (デスクトップで `E`) だけで、パソコンを使わずにデバッグできます。
 
 <div align="center">
-  <img src="images/tab5_editor.png" width="600" alt="メニューバーに Debug を持つ FM-Editor">
+  <img src="/images/tab5_editor.png" width="600" alt="メニューバーに Debug を持つ FM-Editor">
 </div>
 
 ### 実行

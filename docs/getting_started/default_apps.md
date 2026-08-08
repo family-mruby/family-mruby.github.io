@@ -4,7 +4,7 @@ Everything below ships on the device. Open the Launcher from the system menu (or
 `L` on the desktop) and double-click an icon.
 
 <div align="center">
-  <img src="../../images/tab5_launcher.png" width="600" alt="The launcher">
+  <img src="/images/tab5_launcher.png" width="600" alt="The launcher">
 </div>
 
 !!! tip "The list is built at boot"
@@ -61,7 +61,7 @@ system menu or by pressing a letter on the desktop.
 | **Piano** | Play the sound chip from the keyboard |
 
 <div align="center">
-  <img src="../../images/tab5_rpg_demo.png" width="600" alt="The RPG demo running on a Tab5">
+  <img src="/images/tab5_rpg_demo.png" width="600" alt="The RPG demo running on a Tab5">
 </div>
 
 ## Tools — `/app/tool`

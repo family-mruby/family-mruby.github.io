@@ -49,7 +49,7 @@
 再起動したら、システムメニューの Network を開きます。
 
 <div align="center">
-  <img src="../../images/tab5_network.png" width="600" alt="割り当てられたアドレスを表示する Network ダイアログ">
+  <img src="/images/tab5_network.png" width="600" alt="割り当てられたアドレスを表示する Network ダイアログ">
 </div>
 
 接続できたか、割り当てられたアドレス、ホスト名が出ます。Refresh で読み直します。

@@ -4,7 +4,7 @@
 `L` を押しても同じ)、アイコンをダブルクリックしてください。
 
 <div align="center">
-  <img src="../../images/tab5_launcher.png" width="600" alt="ランチャー">
+  <img src="/images/tab5_launcher.png" width="600" alt="ランチャー">
 </div>
 
 !!! tip "一覧は起動時に作られます"
@@ -61,7 +61,7 @@
 | **Piano** | キーボードから音源を鳴らします |
 
 <div align="center">
-  <img src="../../images/tab5_rpg_demo.png" width="600" alt="Tab5 で動く RPG デモ">
+  <img src="/images/tab5_rpg_demo.png" width="600" alt="Tab5 で動く RPG デモ">
 </div>
 
 ## 道具 — `/app/tool`

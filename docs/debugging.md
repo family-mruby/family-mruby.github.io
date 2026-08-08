@@ -10,7 +10,7 @@ Both work on real hardware and in the [simulator](getting_started/simulator.md).
 The editor (`E` on the desktop) can debug an app without any PC involved.
 
 <div align="center">
-  <img src="images/tab5_editor.png" width="600" alt="FM-Editor, with the Debug menu in its menu bar">
+  <img src="/images/tab5_editor.png" width="600" alt="FM-Editor, with the Debug menu in its menu bar">
 </div>
 
 ### Running

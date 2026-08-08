@@ -49,7 +49,7 @@ you create it once, on the device, using the editor.
 After the reboot, open the system menu → Network.
 
 <div align="center">
-  <img src="../../images/tab5_network.png" width="600" alt="The Network dialog, showing the address the device was given">
+  <img src="/images/tab5_network.png" width="600" alt="The Network dialog, showing the address the device was given">
 </div>
 
 It shows whether the connection came up, the address the device was given, and its hostname.

@@ -4,7 +4,7 @@ The desktop is the same on both machines: a menu bar across the top, the wallpap
 and windows on top of that.
 
 <div align="center">
-  <img src="../../images/tab5_desktop.png" width="640" alt="The desktop">
+  <img src="/images/tab5_desktop.png" width="640" alt="The desktop">
 </div>
 
 ## The menu bar
@@ -86,7 +86,7 @@ Date and time. Set it from Set Clock; the timezone is a separate setting under
 ## The system menu
 
 <div align="center">
-  <img src="../../images/tab5_menu.png" width="600" alt="The system menu">
+  <img src="/images/tab5_menu.png" width="600" alt="The system menu">
 </div>
 
 | Item | What it does |
@@ -109,7 +109,7 @@ settings that only take effect at startup.
 ## The launcher
 
 <div align="center">
-  <img src="../../images/tab5_launcher.png" width="600" alt="The launcher">
+  <img src="/images/tab5_launcher.png" width="600" alt="The launcher">
 </div>
 
 Double-click an icon to start an app. Arrow keys move the selection and `Enter` starts it.

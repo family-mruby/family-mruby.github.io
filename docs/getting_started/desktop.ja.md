@@ -3,7 +3,7 @@
 デスクトップは両機種で同じです。上端にメニューバー、その下に壁紙、その上に窓が乗ります。
 
 <div align="center">
-  <img src="../../images/tab5_desktop.png" width="640" alt="デスクトップ">
+  <img src="/images/tab5_desktop.png" width="640" alt="デスクトップ">
 </div>
 
 ## メニューバー
@@ -82,7 +82,7 @@ BLE の起動・停止はシステムメニューから行います。起動時�
 ## システムメニュー
 
 <div align="center">
-  <img src="../../images/tab5_menu.png" width="600" alt="システムメニュー">
+  <img src="/images/tab5_menu.png" width="600" alt="システムメニュー">
 </div>
 
 | 項目 | 内容 |
@@ -105,7 +105,7 @@ BLE の起動・停止はシステムメニューから行います。起動時�
 ## ランチャー
 
 <div align="center">
-  <img src="../../images/tab5_launcher.png" width="600" alt="ランチャー">
+  <img src="/images/tab5_launcher.png" width="600" alt="ランチャー">
 </div>
 
 アイコンをダブルクリックするとアプリが起動します。矢印キーで選択を動かし、`Enter` でも
