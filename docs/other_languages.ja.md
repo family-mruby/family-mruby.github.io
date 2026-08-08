@@ -6,6 +6,11 @@ Family mruby は Ruby を中心に作られていますが、動く言語は Rub
 切り替えて使う「モード」ではありません。`.bas` も `.py` も、Ruby のアプリと並んで
 ランチャーに出て、同じように起動し、互いに同時に動きます。
 
+<div align="center">
+  <img src="/images/tab5_three_vms.png" width="620" alt="1 つのデスクトップに 3 つの窓。Ruby、Lua、Python のデモが同時に動いている">
+  <br><em>VM が 3 つ同時に動いているところ。Ruby、Lua、MicroPython が、それぞれ別の窓と別のヒープで動きます</em>
+</div>
+
 | 拡張子 | 実行系 | 備考 |
 |---|---|---|
 | `.rb` | PicoRuby | 中心となる言語。[API リファレンス](api/index.md) の全部が使えます |
@@ -61,6 +66,11 @@ app_screen_name_ja = "マイゲーム"
 
 Family BASIC の画面は 28 文字 x 24 行 (224 x 192 ドット) で固定です。全画面で起動した
 ときは画面の中央に置かれ、周りは黒で塗られます。元と同じ形です。
+
+<div align="center">
+  <img src="/images/tab5_basic_maze.png" width="620" alt="全画面で動く maze のサンプル。28x24 の文字画面が黒の中央に置かれている">
+  <br><em><code>/app/basic</code> の <code>maze</code>。全部が文字で描かれています</em>
+</div>
 
 ## 入っているもの
 

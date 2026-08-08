@@ -6,6 +6,11 @@ it. As of 2.0 there are four: Ruby, BASIC, MicroPython and Lua.
 They are not modes you switch into. A `.bas` file and a `.py` file sit in the launcher next
 to the Ruby apps, start the same way, and run at the same time as each other.
 
+<div align="center">
+  <img src="/images/tab5_three_vms.png" width="620" alt="Three windows on one desktop: a Ruby demo, a Lua demo and a Python demo, all running">
+  <br><em>Three VMs at once — Ruby, Lua and MicroPython, each in its own window and its own heap</em>
+</div>
+
 | Extension | Runs on | Notes |
 |---|---|---|
 | `.rb` | PicoRuby | The main language. Everything in the [API Reference](api/index.md) |
@@ -62,6 +67,11 @@ as its name.
 Family BASIC's screen is fixed at 28 characters by 24 lines (224 x 192 pixels). Started
 fullscreen, it is centred and the surrounding area is filled with black — the same shape the
 original had.
+
+<div align="center">
+  <img src="/images/tab5_basic_maze.png" width="620" alt="The maze sample running fullscreen: a 28x24 character screen centred on black">
+  <br><em>The <code>maze</code> sample from <code>/app/basic</code>, drawn entirely out of characters</em>
+</div>
 
 ## What is in it
 
