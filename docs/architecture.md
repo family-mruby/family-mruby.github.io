@@ -4,6 +4,8 @@ Family mruby is a small multi-VM operating system on top of FreeRTOS. Several sc
 run side by side, one per FreeRTOS task, each with its own heap — so one app running out of
 memory or crashing does not take the system with it.
 
+![The Family mruby software stack](images/Architecture.png)
+
 ## One task, one VM
 
 The design rule is one task = one VM. Each VM has its own stack, its own memory pool and
@@ -61,8 +63,6 @@ ESP32-WROVER ── graphics + audio
 The S3 sends drawing and sound commands over a serial link; the WROVER turns them into a
 composite video signal and audio. Both chips have to be flashed, and both have to be on the
 same version, because that link is a protocol.
-
-![Family mruby Architecture](images/Architecture.png)
 
 ## What the app sees
 
