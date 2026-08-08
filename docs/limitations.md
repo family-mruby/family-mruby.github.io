@@ -15,8 +15,9 @@ welcome to use it.
 | **Apps** | An app you download runs with the same rights as any other. There is no sandbox between apps and the filesystem |
 
 Use these features only on a network you trust, and at your own risk. Do not forward a port
-to the device from the internet, and turn Wi-Fi or BLE off (`wifi_auto_start` /
-`ble_auto_start` in Config) when you are somewhere you would rather not be reachable.
+to the device from the internet. Wi-Fi can be kept off at boot with `wifi_auto_start` in
+Config, and on Retro BLE likewise with `ble_auto_start`; on Modern BLE always starts at
+boot and cannot be stopped while the machine is on.
 
 ## Differences from R2P2
 

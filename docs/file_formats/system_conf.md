@@ -56,7 +56,7 @@ take effect at startup.
 | `language` | `"en"` / `"ja"` | `"en"` | UI language. Apps that provide `app_screen_name_<lang>` follow it |
 | `timezone` | string | | POSIX timezone, e.g. `JST-9`, `UTC`, `EST5` |
 | `debug_mode` | bool | `true` | Extra logging |
-| `ble_auto_start` | bool | `true` | Start BLE at boot |
+| `ble_auto_start` | bool | `true` | Start BLE at boot. Retro only -- on Modern BLE starts regardless |
 | `wifi_auto_start` | bool | `false` | Start Wi-Fi at boot |
 
 !!! note "On Retro these two conflict"

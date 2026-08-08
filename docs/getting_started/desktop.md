@@ -62,8 +62,9 @@ The Linux simulator has no such limit and shows `---KB`.
 | Gray box, white `B` | BLE is on, waiting for something to connect |
 | White box, inverted `B` | A client is connected — the [web console](console.md), typically |
 
-Start and stop BLE from the system menu; `ble_auto_start` in Config decides whether it
-comes up at boot.
+On Retro the system menu starts BLE and `ble_auto_start` in Config decides whether it comes
+up at boot; there is no way to stop it again short of a reboot. On Modern BLE always starts
+at boot.
 
 ### Wi-Fi
 
