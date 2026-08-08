@@ -248,7 +248,7 @@ sleep_ms(200)
 @audio.note_off(0)
 ```
 
-See [FmrbAudio - note_on / note_off](../api/audio.md#direct-synthesis-note_on--note_off) for details.
+See [FmrbAudio - note_on / note_off](../api/audio.md#tone-synthesis-note_on--note_off) for details.
 
 ## Related
 

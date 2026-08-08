@@ -9,6 +9,15 @@ Both machines can join a network. What it gets you:
 
 Only 2.4 GHz networks are supported.
 
+!!! danger "What joining a network exposes"
+    None of it is access-controlled. Once the device is on the network, anyone else on that
+    network can open the remote desktop and operate the machine, and anyone in BLE range can
+    read and write its files — no password is involved anywhere. The credentials you write
+    below are stored in plain text on the device.
+
+    Use this on a network you trust, and read [Security](../limitations.md#security) before
+    putting the device on a network you share with strangers.
+
 ## Write your network into `/etc/wifi.toml`
 
 Credentials live in a file on the device. Released firmware ships without that file —

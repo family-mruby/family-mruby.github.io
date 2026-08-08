@@ -46,7 +46,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `GPIO` | デジタル入出力 | [ハードウェア制御](peripherals.md#gpio) |
 | `I2C` | I2C 通信 | [ハードウェア制御](peripherals.md#i2c) |
 | `RMT` | RMT（赤外線・WS2812B など） | [ハードウェア制御](peripherals.md#rmt) |
-| `RX8900` / `RX8130` | 電池つきの時計 (RTC) | [ハードウェア制御](peripherals.md#rx8900-rx8130) |
+| `RX8900` / `RX8130` | 電池つきの時計 (RTC) | [ハードウェア制御](peripherals.md#時計-rx8900--rx8130) |
 | `FmrbConst` | システム定数（バージョン、テーマ色、PROC_ID 等） | [定数・システム情報](const.md) |
 | `FmrbHw` | ピン使用状況の問い合わせ | [定数・システム情報](const.md#fmrbhw) |
 | `Task` | タスク制御 | [タスク・時間](system.md#task) |

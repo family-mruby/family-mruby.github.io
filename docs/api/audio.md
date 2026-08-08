@@ -107,7 +107,7 @@ NES Sound Format is supported.
 @audio.play("/usr/share/sounds/nsf/song.nsf", track: 1)
 ```
 
-A playback GUI sample is available in `tool/nsf_player.app.rb`. For details, see [Audio File Formats](../file_formats/audio_formats.md#nsf).
+A playback GUI sample is available in `tool/nsf_player.app.rb`. For details, see [Audio File Formats](../file_formats/audio_formats.md#nsf-nes-sound-format).
 
 ## Cleanup
 

@@ -57,5 +57,5 @@
 
 ## 関連
 
-- [ハードウェア ▸ USB](hardware.md#usb) — 接続仕様
+- [ハードウェア](hardware.md) — 接続仕様
 - [起動と接続](getting_started/setup.md) — 接続手順

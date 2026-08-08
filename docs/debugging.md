@@ -53,6 +53,12 @@ The device runs a debug service that speaks a msgpack protocol over one of two t
 | **TCP** | The Linux simulator, and any target reachable over the network |
 | **BLE** | ESP32 hardware, over a GATT service — no cable needed |
 
+!!! danger "The debug service has no authentication"
+    Neither transport asks who is connecting. The TCP service listens on every interface,
+    and the BLE service uses no pairing or encryption. Anyone who can reach the device can
+    attach to a running app, read its variables, and stop or start apps. Use it on a network
+    you trust. See [Security](limitations.md#security).
+
 ### The command-line client
 
 `tool/debug/fmrb_dbg_client.py` in the repository is both a library and a small interactive

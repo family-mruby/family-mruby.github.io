@@ -59,5 +59,5 @@ Devices not listed here may also work, but due to limitations in the USB driver 
 
 ## Related
 
-- [Hardware > USB](hardware.md#usb) -- Connection specifications
+- [Hardware](hardware.md) -- Connection specifications
 - [Setup and Connection](getting_started/setup.md) -- Connection procedure

@@ -97,7 +97,7 @@ Log.info("size: #{bmp[:width]}x#{bmp[:height]}")
 !!! note
     通常の画像表示では グラフィックス側でデコードが完結する `SpriteImage#load_bmp` または `FmrbGfx#create_image_from_file` を使うのが高速です。`BMP332.parse` はピクセル配列を Ruby 側で扱いたい時（編集・検査）に使います。
 
-詳細仕様は [画像・アイコンファイル](../file_formats/image_formats.md#bmp) を参照。
+詳細仕様は [画像・アイコンファイル](../file_formats/image_formats.md#bmp-rgb332) を参照。
 
 ## 関連
 

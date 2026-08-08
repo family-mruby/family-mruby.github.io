@@ -112,5 +112,5 @@ end
 
 ## Related
 
-- For lifecycle control (controlling wait time via `on_update` return value), see [FmrbApp](fmrb_app.md#ライフサイクル)
+- For lifecycle control (controlling wait time via `on_update` return value), see [FmrbApp](fmrb_app.md#lifecycle)
 - For sleep-related limitations, see [Limitations](../limitations.md)

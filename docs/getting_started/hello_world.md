@@ -120,7 +120,7 @@ HelloApp.new.start
 | Drawing logic extracted into `redraw` | Organized for easier redraws later |
 
 !!! tip "What are @user_area_* variables?"
-    Coordinates of the area where the app is free to draw, excluding the title bar and borders. See [FmrbApp > Key instance variables](../api/fmrb_app.md#主要インスタンス変数) for details.
+    Coordinates of the area where the app is free to draw, excluding the title bar and borders. See [FmrbApp > Key instance variables](../api/fmrb_app.md#key-instance-variables) for details.
 
 Restart and run the app — the title bar and window frame will be drawn, and you should be able to close the app by clicking the button at the top right.
 
@@ -191,7 +191,7 @@ Editing these files directly lets you customize the output of subsequent `create
 ## Next steps
 
 - Try drawing shapes: [FmrbGfx](../api/fmrb_gfx.md)
-- Add event handling: [FmrbApp > Event handling](../api/fmrb_app.md#イベントハンドリング-on_eventev)
+- Add event handling: [FmrbApp > Event handling](../api/fmrb_app.md#event-handling-on_eventev)
 - Read existing samples: [Sample collection](../examples.md)
 
 ## Troubleshooting checklist

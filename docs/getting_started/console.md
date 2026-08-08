@@ -24,6 +24,14 @@ Open the following URL in your browser.
 
 ![Console connection](../images/console-pare.png)
 
+!!! danger "The BLE link is open to anyone in range"
+    The device does not pair, bond or encrypt — that is what keeps Web Bluetooth working on
+    Windows, and it also means the connection asks nothing of whoever makes it. Anyone with a
+    browser in radio range can read and write the files on the board, read its log, and start
+    or stop apps. Turn BLE off (`ble_auto_start` in Config, or the system menu) when you are
+    somewhere you would rather not be reachable. See
+    [Security](../limitations.md#security).
+
 !!! warning "If you have trouble connecting on Windows"
     The Windows Bluetooth stack may retain old pairing information and prevent connection. Try deleting the existing `Family-mruby-*` entry from the OS Bluetooth settings and then reconnecting (this device does not retain pairing information).
 

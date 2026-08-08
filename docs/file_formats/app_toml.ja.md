@@ -70,7 +70,7 @@ my_clock.app.toml
 
 全画面のアプリは `fullscreen_switchable = 1` を宣言できます。宣言すると `Ctrl` + `Tab` で
 退避して、後から同じ状態に戻れるようになります。
-[デスクトップ > アプリの切り替え](../getting_started/desktop.md#_11) を参照してください。
+[デスクトップ > アプリの切り替え](../getting_started/desktop.md#アプリの切り替え) を参照してください。
 
 ## 最小サンプル
 
@@ -125,7 +125,7 @@ icon = "usr/share/icon/tetris.icon"
 ```
 
 - ファイルは `/usr/share/icon/` 以下に置きます
-- 形式は テキスト形式。詳細は [画像・アイコンファイル](image_formats.md#アイコンファイル) を参照
+- 形式は テキスト形式。詳細は [画像・アイコンファイル](image_formats.md#アイコンファイル-icon) を参照
 - `icon` を省略すると、本体ファイルの拡張子に応じた既定アイコンが使われます (`.rb` → ruby、`.lua` → lua、`.bas` → basic)
 
 ## ランチャーから隠す
@@ -164,9 +164,9 @@ resizable = 1
 ランチャーは `/app` 直下のサブディレクトリをスキャンして `.app.toml` を検出します。さらに 1 階層下 （`/app/<category>/<bundle>/*.app.toml`）もスキャン対象なので、画像・マップなどのアセットをアプリと同じディレクトリにまとめる形式も有効です。
 
 !!! note "スキャンは起動時のみ"
-    アプリ一覧は システム起動時に 1 回だけ スキャンされます。`create_app` や BLE で新規アプリを追加した後は、ランチャーを開いて右クリック で再スキャン、もしくは本体を再起動してください（[Hello World ▸ ランチャーで反映する](../getting_started/hello_world.md#ランチャーで反映する) 参照）。
+    アプリ一覧は システム起動時に 1 回だけ スキャンされます。`create_app` や BLE で新規アプリを追加した後は、ランチャーを開いて右クリック で再スキャン、もしくは本体を再起動してください（[Hello World ▸ ランチャーで反映する](../getting_started/hello_world.md#ランチャーに反映する) 参照）。
 
 ## 関連
 
 - アプリの作り方は [Hello World](../getting_started/hello_world.md) を参照
-- アイコンファイルの作り方は [画像・アイコンファイル](image_formats.md#アイコンファイル) を参照
+- アイコンファイルの作り方は [画像・アイコンファイル](image_formats.md#アイコンファイル-icon) を参照

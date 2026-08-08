@@ -182,7 +182,7 @@ rtc = RX8900.new(i2c)
 rtc.sync_system_clock
 ```
 
-詳細は [RX8900 API](api/peripherals.md#rx8900-rx8130) を参照。
+詳細は [RX8900 API](api/peripherals.md#時計-rx8900--rx8130) を参照。
 
 ## 関連
 

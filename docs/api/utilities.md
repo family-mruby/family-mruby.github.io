@@ -97,7 +97,7 @@ Log.info("size: #{bmp[:width]}x#{bmp[:height]}")
 !!! note
     For normal image display, `SpriteImage#load_bmp` or `FmrbGfx#create_image_from_file` is faster because decoding is done entirely on the graphics side. Use `BMP332.parse` when you need to work with the pixel array on the Ruby side (editing, inspection).
 
-For detailed specifications, see [Image & Icon Files](../file_formats/image_formats.md#bmp).
+For detailed specifications, see [Image & Icon Files](../file_formats/image_formats.md#bmp-rgb332).
 
 ## Related
 

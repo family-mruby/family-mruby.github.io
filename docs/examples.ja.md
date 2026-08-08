@@ -33,7 +33,7 @@ BASIC や MicroPython の見本も含めた同梱アプリの全体像は
 
 | アプリ | 内容 | 学べる API |
 |---|---|---|
-| `ntsc_color_test.app.rb` | NTSC カラーバー出力テスト | [`FmrbGfx#set_output_level`/`set_chroma_level`](api/fmrb_gfx.md#ntsc-出力調整esp32-のみ) |
+| `ntsc_color_test.app.rb` | NTSC カラーバー出力テスト | [`FmrbGfx#set_output_level`/`set_chroma_level`](api/fmrb_gfx.md#ntsc-出力調整retro-のみ) |
 | `sd_test.app.rb` | SD カードへ `/mnt/sd/sd_test.txt` を書き → 読み → 比較。Space で再実行 | [ファイル・I/O ▸ ファイル名前空間](api/filesystem.md#ファイル名前空間) |
 | `tile_map_test.app.rb` | TileMap + TileSheet + JSON でマップ描画 | [TileMap / TileSheet](api/tilemap.md) |
 | `draw_tile_test.app.rb` | `FmrbGfx#draw_tile` の最小検証 | [FmrbGfx ▸ draw_tile](api/fmrb_gfx.md#draw_tile-の使いどころ) |
@@ -80,5 +80,5 @@ BASIC や MicroPython の見本も含めた同梱アプリの全体像は
 ## 関連
 
 - アプリの作り方 → [Hello World](getting_started/hello_world.md)
-- アイコンファイル → [画像・アイコンファイル](file_formats/image_formats.md#アイコンファイル)
+- アイコンファイル → [画像・アイコンファイル](file_formats/image_formats.md#アイコンファイル-icon)
 - アプリ設定 → [アプリ設定ファイル (.toml)](file_formats/app_toml.md)

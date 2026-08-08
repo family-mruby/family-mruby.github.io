@@ -34,6 +34,15 @@ exactly as they do on the device.
     Whoever is holding the Tab5 and whoever is in the browser are driving the same cursor.
     If someone else might be using the device, say so before you start clicking.
 
+!!! danger "Anyone on the network can do this"
+    There is no password and no access control. Any device on the same network can open the
+    address, watch the screen and send input — nothing distinguishes them from you. The
+    stream is plain HTTP, so it is readable on the wire as well.
+
+    Use this only on a network you trust, never forward a port to the device from the
+    internet, and set `enable = false` below (or turn Wi-Fi off) when you do not want to be
+    reachable. See [Security](limitations.md#security).
+
 ## Settings
 
 The `[remote_desktop]` section of `/etc/system_conf.toml`:

@@ -147,6 +147,6 @@ This directory includes `.app.rb` / `.app.toml` along with `world.bmp`, `world.m
 
 ## Related
 
-- [FmrbGfx > `draw_tile`](fmrb_gfx.md#画像-api) -- Low-level tile drawing API
+- [FmrbGfx > `draw_tile`](fmrb_gfx.md#image-api) -- Low-level tile drawing API
 - [Sprite](sprite.md) -- SpriteImage / SpriteInstance / GfxBlock
 - [App Configuration (.toml)](../file_formats/app_toml.md) -- Per-app settings

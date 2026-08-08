@@ -144,3 +144,10 @@ markdown_extensions:
   - meta
   - toc:
       permalink: true
+      # The default slugify drops non-ASCII, which turns every Japanese heading
+      # into an opaque "_1" / "_2" anchor and breaks in-page links on the ja
+      # pages. This one keeps the characters (and matches the anchors the ja
+      # pages already link to).
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower

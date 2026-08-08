@@ -182,7 +182,7 @@ rtc = RX8900.new(i2c)
 rtc.sync_system_clock
 ```
 
-See [RX8900 API](api/peripherals.md#real-time-clock-rx8900-rx8130) for details.
+See [RX8900 API](api/peripherals.md#real-time-clock-rx8900--rx8130) for details.
 
 ## Related
 

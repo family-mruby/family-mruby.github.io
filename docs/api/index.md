@@ -47,7 +47,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `GPIO` | Digital I/O | [Hardware Control](peripherals.md#gpio) |
 | `I2C` | I2C communication | [Hardware Control](peripherals.md#i2c) |
 | `RMT` | RMT (infrared, WS2812B, etc.) | [Hardware Control](peripherals.md#rmt) |
-| `RX8900` / `RX8130` | Battery-backed real-time clock | [Hardware Control](peripherals.md#real-time-clock-rx8900-rx8130) |
+| `RX8900` / `RX8130` | Battery-backed real-time clock | [Hardware Control](peripherals.md#real-time-clock-rx8900--rx8130) |
 | `FmrbConst` | System constants (version, theme colors, PROC_ID, etc.) | [Constants & System Info](const.md) |
 | `FmrbHw` | Pin usage queries | [Constants & System Info](const.md#fmrbhw) |
 | `Task` | Task control | [Tasks & Timing](system.md#task) |

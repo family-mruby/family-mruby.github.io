@@ -19,7 +19,7 @@ Sample apps that showcase basic features.
 |---|---|---|
 | `mruby.app.rb` | Minimal mruby verification sample | `FmrbApp`, `FmrbGfx` basics |
 | `shapes.app.rb` | Comprehensive shape drawing demo (rectangles, circles, ellipses, triangles, arcs, text) | [`FmrbGfx`](api/fmrb_gfx.md) |
-| `ja_text.app.rb` | Japanese text rendering. Switches between Default / misaki_8 / efontJA_12 / Mixed / Hybrid / Scaled | [`FmrbGfx#set_font`](api/fmrb_gfx.md#japanese-text-font-switching) |
+| `ja_text.app.rb` | Japanese text rendering. Switches between Default / misaki_8 / efontJA_12 / Mixed / Hybrid / Scaled | [`FmrbGfx#set_font`](api/fmrb_gfx.md#japanese-text-and-font-switching) |
 | `p5_test.app.rb` | Demo of a Processing/p5.js-style drawing library (basic shapes / affine transforms / Bezier curves / text / blend / get_pixel) | [P5](api/p5.md) |
 | `i2c_kbd.app.rb` | Reading input from an I2C keyboard (address `0x5F`) | [`I2C`](api/peripherals.md#i2c) + [Pub/Sub](api/pubsub.md) |
 | `led_matrix.app.rb` | Controlling a WS2812B 8x8 RGB LED matrix + on-screen preview | [`RMT`](api/peripherals.md#rmt), Pub/Sub |
@@ -33,10 +33,10 @@ Verification apps under `/app/debug/`.
 
 | App | Description | APIs Covered |
 |---|---|---|
-| `ntsc_color_test.app.rb` | NTSC color bar output test | [`FmrbGfx#set_output_level`/`set_chroma_level`](api/fmrb_gfx.md#ntsc-output-adjustment-esp32-only) |
+| `ntsc_color_test.app.rb` | NTSC color bar output test | [`FmrbGfx#set_output_level`/`set_chroma_level`](api/fmrb_gfx.md#ntsc-output-adjustment-retro-only) |
 | `sd_test.app.rb` | Writes to `/mnt/sd/sd_test.txt`, reads back, and compares. Press Space to re-run | [File I/O > File Namespace](api/filesystem.md#file-namespace) |
 | `tile_map_test.app.rb` | Map rendering with TileMap + TileSheet + JSON | [TileMap / TileSheet](api/tilemap.md) |
-| `draw_tile_test.app.rb` | Minimal verification of `FmrbGfx#draw_tile` | [FmrbGfx > draw_tile](api/fmrb_gfx.md#draw_tile-usage) |
+| `draw_tile_test.app.rb` | Minimal verification of `FmrbGfx#draw_tile` | [FmrbGfx > draw_tile](api/fmrb_gfx.md#when-to-use-draw_tile) |
 
 ## Games (game)
 
@@ -46,7 +46,7 @@ Verification apps under `/app/debug/`.
 | `tetris.app.rb` | Tetris-style falling block puzzle. Arrow key controls | `FmrbGfx`, board drawing patterns |
 | `shooter.app.rb` | Full-screen shooter | [`Sprite`](api/sprite.md), collision detection |
 | `raycaster.app.rb` | Wolfenstein 3D-style pseudo-3D. Requires `large_memory = 1` | Fixed-point arithmetic, high-speed `FmrbGfx` rendering |
-| `piano.app.rb` | A piano you can play with the keyboard | [`FmrbAudio#note_on/off`](api/audio.md#audio-synthesis-note_on--note_off) |
+| `piano.app.rb` | A piano you can play with the keyboard | [`FmrbAudio#note_on/off`](api/audio.md#tone-synthesis-note_on--note_off) |
 | `rpg_demo/` | JRPG-style sample. Assets bundled in `/app/<cat>/<bundle>/` format | [TileMap / TileSheet](api/tilemap.md), `FmrbApp.set_cursor_visible` |
 
 ## Tools (tool)
@@ -80,5 +80,5 @@ See [Hello World](getting_started/hello_world.md) for how to start a new app.
 ## Related
 
 - How to create apps: [Hello World](getting_started/hello_world.md)
-- Icon files: [Image and Icon Files](file_formats/image_formats.md#icon-files)
+- Icon files: [Image and Icon Files](file_formats/image_formats.md#icon-files-icon)
 - App configuration: [App Configuration File (.toml)](file_formats/app_toml.md)

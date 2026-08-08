@@ -1,5 +1,23 @@
 # Limitations
 
+## Security
+
+**Nothing on this machine is access-controlled.** The network features were built for a
+hobby machine on a home network, and they assume everyone who can reach the device is
+welcome to use it.
+
+| | |
+|---|---|
+| **Remote desktop** | No authentication. Anyone on the same network can open the address, watch the screen and send keyboard and mouse input — that is, operate the machine |
+| **BLE console and debug service** | No pairing, no bonding, no encryption (deliberately, because pairing breaks Web Bluetooth on Windows). Anyone in radio range can read and write files, read the log, and start or stop apps |
+| **Remote debugger over TCP** | No authentication. It listens on all interfaces |
+| **Wi-Fi credentials** | Stored in plain text in `/etc/wifi.toml` on the device |
+| **Apps** | An app you download runs with the same rights as any other. There is no sandbox between apps and the filesystem |
+
+Use these features only on a network you trust, and at your own risk. Do not forward a port
+to the device from the internet, and turn Wi-Fi or BLE off (`wifi_auto_start` /
+`ble_auto_start` in Config) when you are somewhere you would rather not be reachable.
+
 ## Differences from R2P2
 
 Family mruby is based only on the core part of PicoRuby, and some gems used in PicoRuby's official R2P2 have been independently rewritten.

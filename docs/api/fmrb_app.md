@@ -92,7 +92,7 @@ ev_alt?(ev)    # Alt is pressed
     Use `scancode` when identifying character keys. `keycode` values vary between platforms (e.g. SDL2 returns ASCII values).
 
 !!! tip "`FmrbConst::KEY_*` / `MOD_*` constants"
-    Since `scancode` values are USB HID Usage IDs, you can use constants like `FmrbConst::KEY_ESC` instead of writing raw values like `0x29` (ESC). Modifier key mask constants such as `FmrbConst::MOD_CTRL` are also available. See [Constants > KEY_* / MOD_*](const.md#入力デバイス-キーボード-key_) for a full list.
+    Since `scancode` values are USB HID Usage IDs, you can use constants like `FmrbConst::KEY_ESC` instead of writing raw values like `0x29` (ESC). Modifier key mask constants such as `FmrbConst::MOD_CTRL` are also available. See [Constants > KEY_* / MOD_*](const.md#input-device-keyboard-key_) for a full list.
 
 ### Mouse
 
@@ -120,7 +120,7 @@ when :gamepad_axis
 ```
 
 !!! tip "`FmrbConst::GP_*` constants"
-    Button numbers have constants like `FmrbConst::GP_SQUARE` / `GP_CROSS` / `GP_START`, and axis numbers have `GP_AXIS_LX` / `GP_AXIS_LY`, etc. See [Constants > GP_*](const.md#入力デバイス-ゲームパッド-gp_) for details.
+    Button numbers have constants like `FmrbConst::GP_SQUARE` / `GP_CROSS` / `GP_START`, and axis numbers have `GP_AXIS_LX` / `GP_AXIS_LY`, etc. See [Constants > GP_*](const.md#input-device-gamepad-gp_) for details.
 
 ## Window Operations
 
