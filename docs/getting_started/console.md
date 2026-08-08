@@ -66,6 +66,8 @@ The Debug tab talks to the same debug service the [remote debugger](../debugging
 it is the quickest way to stop an app that has stopped responding — no breakpoints, no
 session.
 
+![The Debug tab, listing the running apps](../images/photo_console_debug.jpg)
+
 ## Both machines
 
 The console works on Modern as well as Retro; on Modern, BLE runs on the ESP32-C6.

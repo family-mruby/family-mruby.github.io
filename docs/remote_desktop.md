@@ -7,6 +7,11 @@ drive the real hardware.
 This is the fastest way to work on the device: type on a full-size keyboard, watch the
 actual machine run, and take screenshots without pointing a camera at a panel.
 
+<div align="center">
+  <img src="/images/photo_remote_desktop.jpg" width="620" alt="A laptop browser showing the Tab5 screen, with the Tab5 itself next to it">
+  <br><em>The browser and the device, the same frame. The status line reads <code>connected · mode: h264</code></em>
+</div>
+
 ## Using it
 
 1. Get Wi-Fi working first — see [Connecting to Wi-Fi](getting_started/wifi.md)

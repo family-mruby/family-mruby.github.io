@@ -6,7 +6,8 @@ what differs is how the picture gets out, how you hold the thing, and what it is
 ## Modern — M5Stack Tab5
 
 <div align="center">
-  <img src="../../images/tab5_desktop.png" width="600" alt="Family mruby running on an M5Stack Tab5">
+  <img src="/images/photo_tab5_hand.jpg" width="600" alt="A Tab5 held in one hand, running the Family mruby shell">
+  <br><em>Modern, with the Tab5 Keyboard attached</em>
 </div>
 
 A stock [M5Stack Tab5](https://docs.m5stack.com/en/core/Tab5). No modification and no
@@ -24,7 +25,7 @@ or drive the device from your PC's browser over Wi-Fi.
 ## Retro — narya-board
 
 <div align="center">
-  <img src="../../images/connected.JPG" width="600" alt="The narya-board with peripherals connected">
+  <img src="/images/connected.JPG" width="600" alt="The narya-board with peripherals connected">
 </div>
 
 A dedicated board, on sale at [BOOTH](https://booth.pm/ja/items/8128031), with the design

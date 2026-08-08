@@ -4,7 +4,7 @@
 はんだ付けもビルドも要りません。書き込みはブラウザから、数分で終わります。
 
 <div align="center">
-  <img src="../../images/tab5_desktop.png" width="640" alt="M5Stack Tab5 で動く Family mruby のデスクトップ">
+  <img src="/images/photo_tab5.jpg" width="560" alt="Tab5 Keyboard を取り付けた M5Stack Tab5 で Family mruby のデスクトップが動いている">
 </div>
 
 ## 用意するもの
@@ -29,6 +29,11 @@
 
 マウスは必須ではありません。画面のタッチがそのままトラックパッドとして使えます
 ([タッチで操作する](#_10) 参照)。ただし窓を動かすような操作は実際のマウスのほうが楽です。
+
+<div align="center">
+  <img src="/images/photo_tab5_usb.jpg" width="560" alt="ワイヤレスのキーボードとマウス。受信機を Tab5 の USB-A 端子に挿している">
+  <br><em>キーボードとマウスのワイヤレスセットも使えます。受信機 1 個を USB-A 端子に挿すだけで、ハブは要りません</em>
+</div>
 
 ### あると良いもの
 
@@ -72,12 +77,17 @@ Retro の手順と、うまくいかないときの対処は [ファームウェ
 2. **ロゴ**。中央から開いていき、起動音が鳴ります
 3. **デスクトップ**。上端にメニューバー、その下に壁紙、そしてマウスカーソル
 
+<div align="center">
+  <img src="/images/photo_tab5_boot.jpg" width="480" alt="テキストの起動画面。コアの版数、チップ、空きヒープと PSRAM、画面と音声">
+  <br><em>起動画面。起動に失敗したときは、ここのどこで止まったかが分かります</em>
+</div>
+
 デスクトップが出て、指の動きにカーソルがついてくれば、正常に動いています。
 
 ## 画面の見方
 
 <div align="center">
-  <img src="../../images/tab5_menu.png" width="600" alt="メニューバーから開いたシステムメニュー">
+  <img src="/images/tab5_menu.png" width="600" alt="メニューバーから開いたシステムメニュー">
 </div>
 
 左上の Family mruby を押すとシステムメニューが出ます (Launcher / File Manager /
@@ -96,6 +106,10 @@ Log Viewer / Monitor / Set Clock / Config / Storage / Network / About / Reset)�
 タッチ画面は、スマートフォンではなくノートパソコンのトラックパッドのように動きます。
 指でカーソルを動かすのであって、触った場所にカーソルが飛ぶわけではありません。こうすると
 窓の見出しやスクロールの棒をつかむ操作が思ったとおりに動きます。
+
+<div align="center">
+  <img src="/images/photo_tab5_touch.jpg" width="560" alt="Tab5 の画面に指を置き、ランチャーの上でカーソルを動かしているところ">
+</div>
 
 | 操作 | 結果 |
 |---|---|
@@ -126,7 +140,7 @@ hostname = "fmruby"
 保存して Reset で再起動し、システムメニューの Network で確認します。
 
 <div align="center">
-  <img src="../../images/tab5_network.png" width="600" alt="割り当てられたアドレスを表示する Network ダイアログ">
+  <img src="/images/tab5_network.png" width="600" alt="割り当てられたアドレスを表示する Network ダイアログ">
 </div>
 
 詳しい手順と、つながらないときの対処は [WiFi につなぐ](wifi.md) にあります。

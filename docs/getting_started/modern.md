@@ -4,7 +4,7 @@ From an unmodified M5Stack Tab5 to the Family mruby desktop. Nothing to solder, 
 build — flashing happens from your browser and takes a couple of minutes.
 
 <div align="center">
-  <img src="../../images/tab5_desktop.png" width="640" alt="The Family mruby desktop on an M5Stack Tab5">
+  <img src="/images/photo_tab5.jpg" width="560" alt="An M5Stack Tab5 running the Family mruby desktop, with the Tab5 Keyboard attached">
 </div>
 
 ## What you need
@@ -29,6 +29,11 @@ You need a keyboard, and there are two ways to get one:
 
 You do not need a mouse: the touch screen works as a trackpad (see [Using
 touch](#using-touch) below). A real mouse is still more comfortable for dragging windows.
+
+<div align="center">
+  <img src="/images/photo_tab5_usb.jpg" width="560" alt="A Tab5 with a wireless keyboard and mouse, their receiver in the USB-A port">
+  <br><em>A wireless keyboard-and-mouse combo works too: one receiver in the USB-A port, no hub</em>
+</div>
 
 ### Nice to have
 
@@ -73,12 +78,17 @@ Press the power button. You will see, in order:
 2. **The logo**, opening from the centre, with the startup sound
 3. **The desktop**: a menu bar along the top, the wallpaper below it, and a mouse cursor
 
+<div align="center">
+  <img src="/images/photo_tab5_boot.jpg" width="480" alt="The text boot screen: core version, chip, free heap and PSRAM, display and audio">
+  <br><em>The boot screen. If a boot fails, this is where it stops</em>
+</div>
+
 If you reach the desktop and the cursor follows your finger, everything works.
 
 ## Finding your way around
 
 <div align="center">
-  <img src="../../images/tab5_menu.png" width="600" alt="The system menu, opened from the menu bar">
+  <img src="/images/tab5_menu.png" width="600" alt="The system menu, opened from the menu bar">
 </div>
 
 Click Family mruby at the top left for the system menu — Launcher, File Manager, Log
@@ -98,6 +108,10 @@ behaves, and what `Ctrl` + `Tab` does to a fullscreen app.
 The touch panel behaves like a laptop trackpad, not like a phone. Your finger moves the
 cursor; it does not teleport the cursor to where you touched. This keeps dragging window
 title bars and scrollbars predictable.
+
+<div align="center">
+  <img src="/images/photo_tab5_touch.jpg" width="560" alt="A finger on the Tab5 screen, moving the cursor over the launcher">
+</div>
 
 | Gesture | Result |
 |---|---|
@@ -128,7 +142,7 @@ hostname = "fmruby"
 Save it, reboot from Reset, then check the system menu → Network.
 
 <div align="center">
-  <img src="../../images/tab5_network.png" width="600" alt="The Network dialog showing the address the Tab5 was given">
+  <img src="/images/tab5_network.png" width="600" alt="The Network dialog showing the address the Tab5 was given">
 </div>
 
 Full instructions, and what to do when it will not connect, are in

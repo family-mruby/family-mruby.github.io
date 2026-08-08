@@ -196,6 +196,12 @@ LedStrip.new.start
 
 A WS2812B matrix sample is available in `/app/demo/led_matrix.app.rb`.
 
+![An 8x8 WS2812B matrix driven from the device, with the source open in the editor](../images/photo_led_matrix.jpg)
+
+The app draws the same pattern on screen as it sends to the panel, so you can see what it
+intends to do even with nothing wired up. Note the `LED_PIN` branch on `FmrbConst::BOARD`
+near the top of the source — the GROVE pins differ between the machines.
+
 ## Real-Time Clock (RX8900 / RX8130)
 
 Both machines carry a battery-backed RTC on the I2C bus, at address `0x32`. The part differs:

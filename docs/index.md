@@ -1,7 +1,7 @@
 # Family mruby Documentation
 
 <div align="center">
-  <img src="../images/topimage.png" width="500" alt="Family mruby Logo">
+  <img src="/images/topimage.png" width="500" alt="Family mruby Logo">
 </div>
 
 ## What is Family mruby?
@@ -12,6 +12,11 @@ Plug in a keyboard and a mouse, connect a screen, and you get a desktop, a launc
 editor, and a shell — all running on a single microcontroller. Everything you write runs
 on the same machine you write it on. There is no PC toolchain in the loop, no cross
 compiler, no flashing cycle: press F5 in the editor and your program starts.
+
+<div align="center">
+  <img src="/images/photo_editor_run.jpg" width="620" alt="The editor with flappy.rb open, and the game it just started running in the window next to it">
+  <br><em>The editor and the app it just started, side by side on the device</em>
+</div>
 
 It is built on [PicoRuby](https://github.com/picoruby/picoruby) and ships with its own
 multitasking OS, so several apps can run side by side, each in its own isolated heap.
@@ -40,8 +45,8 @@ picture and the NES-style 4-channel sound chip that goes with it.
 Not sure which to read? See [Choose your hardware](getting_started/choose_hardware.md).
 
 <div align="center">
-  <img src="../images/tab5_desktop.png" width="640" alt="The Family mruby desktop on an M5Stack Tab5">
-  <br><em>The desktop, running on an M5Stack Tab5</em>
+  <img src="/images/photo_two_machines.jpg" width="700" alt="Retro on the left, Modern on the right, both showing the same shell">
+  <br><em>Retro (narya-board, into a monitor) and Modern (M5Stack Tab5) — the same shell on both</em>
 </div>
 
 ## What's new in 2.0

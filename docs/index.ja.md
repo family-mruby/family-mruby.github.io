@@ -1,7 +1,7 @@
 # Family mruby ドキュメント
 
 <div align="center">
-  <img src="../images/topimage.png" width="500" alt="Family mruby Logo">
+  <img src="/images/topimage.png" width="500" alt="Family mruby Logo">
 </div>
 
 ## Family mruby とは
@@ -11,6 +11,11 @@ Family mruby は、電源を入れるとそのまま Ruby の開発環境が立�
 キーボードとマウスを挿して画面をつなげば、デスクトップ、ランチャー、エディタ、シェルが
 出てきます。書いたプログラムは、書いたその機械の上で動きます。パソコン側の開発環境も、
 クロスコンパイラも、書き込みの往復も要りません。エディタで F5 を押せばその場で動きます。
+
+<div align="center">
+  <img src="/images/photo_editor_run.jpg" width="620" alt="flappy.rb を開いたエディタと、そこから起動したゲームが隣の窓で動いている">
+  <br><em>エディタと、そこから起動したアプリ。実機の画面に並んでいます</em>
+</div>
 
 [PicoRuby](https://github.com/picoruby/picoruby) をベースに、独自の OS を載せています。
 複数のアプリを同時に動かすことができ、それぞれが別々のメモリ領域を持ちます。
@@ -39,8 +44,8 @@ Family mruby は、電源を入れるとそのまま Ruby の開発環境が立�
 どちらを読めばよいか迷ったら [機種の選択](getting_started/choose_hardware.md) へ。
 
 <div align="center">
-  <img src="../images/tab5_desktop.png" width="640" alt="M5Stack Tab5 で動く Family mruby のデスクトップ">
-  <br><em>M5Stack Tab5 で動くデスクトップ</em>
+  <img src="/images/photo_two_machines.jpg" width="700" alt="左が Retro、右が Modern。同じシェルが動いている">
+  <br><em>左が Retro (narya-board をモニタにつないだところ)、右が Modern (M5Stack Tab5)。動いているシェルは同じもの</em>
 </div>
 
 ## 2.0 の新機能

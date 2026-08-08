@@ -7,6 +7,11 @@
 実機での作業はこれが一番速いです。普通の大きさのキーボードで書きながら、実機が動くのを
 そのまま見られますし、画面写真も液晶にカメラを向けずに撮れます。
 
+<div align="center">
+  <img src="/images/photo_remote_desktop.jpg" width="620" alt="ノートパソコンのブラウザに Tab5 の画面が出ていて、その隣に Tab5 本体がある">
+  <br><em>ブラウザと実機を並べたところ。状態表示は <code>connected · mode: h264</code></em>
+</div>
+
 ## 使い方
 
 1. 先に WiFi をつなぎます。[WiFi につなぐ](getting_started/wifi.md) を参照

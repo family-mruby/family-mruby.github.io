@@ -6,7 +6,8 @@ Family mruby は 2 種類の機械で動きます。OS も API もアプリも�
 ## Modern — M5Stack Tab5
 
 <div align="center">
-  <img src="../../images/tab5_desktop.png" width="600" alt="M5Stack Tab5 で動く Family mruby">
+  <img src="/images/photo_tab5_hand.jpg" width="600" alt="片手で持った Tab5 で Family mruby のシェルが動いている">
+  <br><em>Modern。Tab5 Keyboard を取り付けた状態</em>
 </div>
 
 市販の [M5Stack Tab5](https://docs.m5stack.com/ja/core/Tab5) をそのまま使います。改造も
@@ -23,7 +24,7 @@ ESP32-P4 が 1 個で OS・描画・音・入力の全部を動かし、その�
 ## Retro — narya-board
 
 <div align="center">
-  <img src="../../images/connected.JPG" width="600" alt="narya-board に機器を接続した様子">
+  <img src="/images/connected.JPG" width="600" alt="narya-board に機器を接続した様子">
 </div>
 
 専用基板です。[BOOTH](https://booth.pm/ja/items/8128031) で販売していて、設計データも公開

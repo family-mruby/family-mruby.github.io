@@ -66,6 +66,11 @@ tx = FmrbConst::BOARD == "tab5" ? 53 : 47
 The reference external instrument is the M5Stack Unit MIDI (SAM2695), a General MIDI
 module that needs only a GROVE cable — GROVE port 2 can supply its 5 V.
 
+![A Tab5 playing an SMF through an M5Stack Unit MIDI](../images/photo_midi_unit.jpg)
+
+Above: the SMF player app driving a Unit MIDI over the GROVE port, with the module's own
+audio output going to a speaker.
+
 ## Playing a standard MIDI file
 
 ```ruby

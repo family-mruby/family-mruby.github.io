@@ -65,6 +65,11 @@ tx = FmrbConst::BOARD == "tab5" ? 53 : 47
 外部音源としては M5Stack Unit MIDI (SAM2695) を基準にしています。GM 音源で、GROVE
 ケーブル 1 本でつながります (GROVE 2 から 5V を供給できます)。
 
+![M5Stack Unit MIDI で SMF を鳴らしている Tab5](../images/photo_midi_unit.jpg)
+
+上の写真は、SMF プレイヤーのアプリから GROVE 経由で Unit MIDI を鳴らし、モジュールの
+音声出力をスピーカーにつないだところです。
+
 ## 標準 MIDI ファイルを鳴らす
 
 ```ruby
