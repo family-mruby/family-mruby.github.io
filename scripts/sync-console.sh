@@ -41,3 +41,26 @@ for rel in "${ASSETS[@]}"; do
   curl -fsSL "${SRC_BASE}/${rel}" -o "$dest"
   echo "Synced ${SRC_BASE}/${rel} -> ${dest}"
 done
+
+# The editor's type support loads wasm/ti.js, wasm/ti.wasm and wasm/help.json at
+# runtime (js/ti.js resolves them relative to itself, so they never appear as a
+# src/href in index.html and the loop above cannot discover them). They are also
+# gitignored in fmruby-core, so they are not on GitHub to fetch. We keep the
+# built copies in this repo under console-wasm/ (see its README) and place them
+# here. Missing files are a hard error: without them the console loads but its
+# completion/hover/F1 silently stop working, exactly the invisible failure the
+# asset check above guards against.
+WASM_SRC="console-wasm"
+WASM_FILES=(ti.js ti.wasm help.json)
+for f in "${WASM_FILES[@]}"; do
+  if [ ! -f "${WASM_SRC}/${f}" ]; then
+    echo "Missing ${WASM_SRC}/${f} - refusing to publish a console whose type support cannot load." >&2
+    echo "Rebuild it with 'rake ti:wasm' in fmruby-core and commit it here (see ${WASM_SRC}/README.md)." >&2
+    exit 1
+  fi
+done
+mkdir -p "${DEST_DIR}/wasm"
+for f in "${WASM_FILES[@]}"; do
+  cp "${WASM_SRC}/${f}" "${DEST_DIR}/wasm/${f}"
+  echo "Placed ${WASM_SRC}/${f} -> ${DEST_DIR}/wasm/${f}"
+done
