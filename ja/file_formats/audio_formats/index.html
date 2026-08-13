@@ -1,0 +1,3057 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Family mruby project documentation">
+      
+      
+        <meta name="author" content="kishima">
+      
+      
+        <link rel="canonical" href="https://family-mruby.github.io/ja/file_formats/audio_formats/">
+      
+      
+        <link rel="prev" href="../hid_devices/">
+      
+      
+        <link rel="next" href="../image_formats/">
+      
+      
+        
+          <link rel="alternate" href="../../../file_formats/audio_formats/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>音声ファイルフォーマット - Family mruby project</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#音声ファイルフォーマット" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../../" title="Family mruby project" class="md-header__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Family mruby project
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              音声ファイルフォーマット
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="言語切り替え">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../file_formats/audio_formats/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="タブ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ホーム
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting_started/choose_hardware/" class="md-tabs__link">
+          
+  
+  
+  基本的な使い方
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
+          
+  
+  
+  API リファレンス
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../system_conf/" class="md-tabs__link">
+          
+  
+  
+  ファイル形式
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../remote_desktop/" class="md-tabs__link">
+          
+  
+  
+  開発ツール
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../examples/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  サンプル集
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  アーキテクチャ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../hardware/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ハードウェア
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../compatibility/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  動作確認済み機器
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../limitations/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  制約事項
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="Family mruby project" class="md-nav__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Family mruby project
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基本的な使い方
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    基本的な使い方
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/choose_hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    機種の選択
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/modern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modern (M5Stack Tab5)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    起動まで (Retro)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/booth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BOOTHで購入した方へ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    デスクトップ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/hello_world/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi につなぐ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Family mruby コンソール
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/default_apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    標準アプリ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/firmware_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファームウェア更新
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/simulator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    シミュレータ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API リファレンス
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API リファレンス
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一覧
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fmrb_app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アプリ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fmrb_gfx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    描画
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/sprite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    スプライト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tilemap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    タイルマップ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/p5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processing 風の描画
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音声
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/midi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MIDI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ネットワーク
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/pubsub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アプリ間通信
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファイル・I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ログ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/peripherals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ハードウェア制御
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/utilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ユーティリティ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/const/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    定数・システム情報
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    タスク・時間
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファイル形式
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ファイル形式
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    システム設定 (system_conf.toml / wifi.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../app_toml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アプリ設定ファイル (.app.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hid_devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HID 機器設定 (hid_devices.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音声ファイルフォーマット
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音声ファイルフォーマット
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fmsq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FMSQ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FMSQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ファイル構造" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ファイル構造
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#命令コード一覧" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        命令コード一覧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="命令コード一覧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wait命令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAIT命令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#チャンネル命令-note_on--note_off--param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        チャンネル命令 (NOTE_ON / NOTE_OFF / PARAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note_on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NOTE_ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NOTE_OFF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pulse-param-pulse1--pulse2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pulse PARAM (Pulse1 / Pulse2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triangle-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triangle PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#noise-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Noise PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reg_write命令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REG_WRITE命令
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#再生" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        再生
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nsf-nes-sound-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NSF (NES Sound Format)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NSF (NES Sound Format)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#入手方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        入手方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#再生_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        再生
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#制限" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        制限
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#サンプル" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        サンプル
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mid-標準-midi-ファイル" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MID (標準 MIDI ファイル)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MID (標準 MIDI ファイル)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#内蔵音源で鳴らす場合" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内蔵音源で鳴らす場合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fmsq-に変換する" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FMSQ に変換する
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wav--mp3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAV / MP3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#直接合成-note_on--note_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直接合成 (note_on / note_off)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#関連" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        関連
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    画像・アイコンファイル
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    開発ツール
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    開発ツール
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../remote_desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    遠隔画面
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    デバッグ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other_languages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BASIC と MicroPython
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    サンプル集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アーキテクチャ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ハードウェア
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    動作確認済み機器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    制約事項
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fmsq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FMSQ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FMSQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ファイル構造" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ファイル構造
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#命令コード一覧" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        命令コード一覧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="命令コード一覧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wait命令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAIT命令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#チャンネル命令-note_on--note_off--param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        チャンネル命令 (NOTE_ON / NOTE_OFF / PARAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note_on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NOTE_ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NOTE_OFF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pulse-param-pulse1--pulse2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pulse PARAM (Pulse1 / Pulse2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triangle-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triangle PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#noise-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Noise PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reg_write命令" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REG_WRITE命令
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#参考" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#再生" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        再生
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nsf-nes-sound-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NSF (NES Sound Format)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NSF (NES Sound Format)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#入手方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        入手方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#再生_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        再生
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#制限" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        制限
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#サンプル" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        サンプル
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mid-標準-midi-ファイル" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MID (標準 MIDI ファイル)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MID (標準 MIDI ファイル)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#内蔵音源で鳴らす場合" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内蔵音源で鳴らす場合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fmsq-に変換する" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FMSQ に変換する
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wav--mp3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAV / MP3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#直接合成-note_on--note_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直接合成 (note_on / note_off)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#関連" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        関連
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="音声ファイルフォーマット">音声ファイルフォーマット<a class="headerlink" href="#音声ファイルフォーマット" title="Permanent link">&para;</a></h1>
+<p>Family mruby が対応する音声ファイル形式と、その作成・変換方法を説明します。</p>
+<table>
+<thead>
+<tr>
+<th>形式</th>
+<th>用途</th>
+<th>API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FMSQ</td>
+<td>短い BGM / SE のシーケンスデータ。スロットにロードして再生</td>
+<td><code>FmrbAudio#load_fmsq</code>, <code>play_slot</code></td>
+</tr>
+<tr>
+<td>NSF</td>
+<td>ファミコン音楽（NES Sound Format）</td>
+<td><code>FmrbAudio#play(path, track:)</code></td>
+</tr>
+<tr>
+<td>MID</td>
+<td>標準 MIDI ファイル。MIDI 層を通して内蔵音源でも外部音源でも鳴らせます</td>
+<td><code>FmrbMidi::SmfPlayer</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="fmsq">FMSQ<a class="headerlink" href="#fmsq" title="Permanent link">&para;</a></h2>
+<p>FMSQ (Family mruby Sequence) は NES APU 互換 の音楽データを記述する独自フォーマットです。短い効果音や BGM ループに向いています。</p>
+<p>レジスタの意味は以下参照。</p>
+<p><a href="https://www.nesdev.org/wiki/APU_registers">https://www.nesdev.org/wiki/APU_registers</a></p>
+<h3 id="ファイル構造">ファイル構造<a class="headerlink" href="#ファイル構造" title="Permanent link">&para;</a></h3>
+<p>12 バイトのヘッダ + 可変長コマンド列。すべて little-endian。</p>
+<div class="codehilite"><pre><span></span><code>+------+----------------+
+| 0..3 | &quot;FMSQ&quot;         |  magic
+| 4    | version (=1)   |
+| 5    | flags (=0)     |  reserved
+| 6..7 | frame_count    |  total frames
+| 8..9 | data_size      |  command bytes
+| 10..11 | loop_offset  |  0 = no loop
++------+----------------+
+| 12.. | command stream |
++------+----------------+
+</code></pre></div>
+
+<h3 id="命令コード一覧">命令コード一覧<a class="headerlink" href="#命令コード一覧" title="Permanent link">&para;</a></h3>
+<p><code>cc</code> = チャンネル番号 (00=Pulse1, 01=Pulse2, 10=Triangle, 11=Noise)、
+<code>aaaaa</code> = <code>$4000</code> からのレジスタオフセット (0x00-0x17)。</p>
+<table>
+<thead>
+<tr>
+<th>ビットパターン</th>
+<th>命令</th>
+<th>後続バイト</th>
+<th>合計サイズ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0xxxxxxx</code></td>
+<td>WAIT (1-128フレーム)</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>10cc0000</code></td>
+<td>NOTE_ON</td>
+<td>チャンネル別 2-4</td>
+<td>3-5</td>
+</tr>
+<tr>
+<td><code>10cc0001</code></td>
+<td>NOTE_OFF</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>10cc0010</code></td>
+<td>PARAM</td>
+<td>MASK + 可変</td>
+<td>2 以上</td>
+</tr>
+<tr>
+<td><code>110aaaaa</code></td>
+<td>REG_WRITE (<code>$4000</code>+aaaaa)</td>
+<td>1 (DATA)</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>11100000</code></td>
+<td>DPCM_PLAY</td>
+<td>3 (RATE_FLAGS, ADDR, LENGTH)</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>11100001</code></td>
+<td>DPCM_STOP</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>11100010</code></td>
+<td>DPCM_RAW</td>
+<td>1 (VALUE)</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>11111110</code></td>
+<td>END</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>11111111</code></td>
+<td>LOOP</td>
+<td>2 (OFFSET)</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>APU エミュレータ側の制限: 現状の APU エミュレータ側ではDPCMの機能がサポートされてない</p>
+<h4 id="wait命令">WAIT命令<a class="headerlink" href="#wait命令" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="mf">0</span><span class="n">xxxxxxx</span>
+</code></pre></div>
+
+<ul>
+<li>上位1ビット = 0 -&gt; WAIT</li>
+<li>下位7ビット = 待ちフレーム数 - 1</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>値</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x00</td>
+<td>1フレーム待ち</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>2フレーム待ち</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>0x7F</td>
+<td>128フレーム待ち</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="チャンネル命令-note_on--note_off--param">チャンネル命令 (NOTE_ON / NOTE_OFF / PARAM)<a class="headerlink" href="#チャンネル命令-note_on--note_off--param" title="Permanent link">&para;</a></h4>
+<p><code>10ccxxxx</code> 形式の高レベルコマンド。<code>cc</code> がチャンネル（Pulse1=0, Pulse2=1, Triangle=2, Noise=3）、下位4ビットがサブコマンド。
+NOTE_ON / NOTE_OFF は内部で <code>$4015</code>（Status）の対応ビットも更新する。</p>
+<h4 id="note_on">NOTE_ON<a class="headerlink" href="#note_on" title="Permanent link">&para;</a></h4>
+<p><code>10cc0000</code> 後続バイトはチャンネル別:</p>
+<table>
+<thead>
+<tr>
+<th>チャンネル</th>
+<th>後続バイト</th>
+<th>書き込み順</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pulse1 / Pulse2</td>
+<td><code>TIMER_LO</code>, <code>TIMER_HI</code>, <code>VOL_ENV</code>, <code>SWEEP</code> (4 バイト)</td>
+<td><code>VOL</code> → <code>SWEEP</code> → <code>LO</code> → <code>HI</code></td>
+</tr>
+<tr>
+<td>Triangle</td>
+<td><code>TIMER_LO</code>, <code>TIMER_HI</code>, <code>LINEAR</code> (3 バイト)</td>
+<td><code>LINEAR</code> → <code>LO</code> → <code>HI</code></td>
+</tr>
+<tr>
+<td>Noise</td>
+<td><code>PERIOD_MODE</code>, <code>VOL_ENV</code> (2 バイト)</td>
+<td><code>VOL</code> → <code>LO</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="note_off">NOTE_OFF<a class="headerlink" href="#note_off" title="Permanent link">&para;</a></h4>
+<p><code>10cc0001</code> 後続バイトなし。<code>$4015</code> の該当チャンネルビットをクリアするのみ（APUレジスタ自体は変更しない）。</p>
+<h4 id="param">PARAM<a class="headerlink" href="#param" title="Permanent link">&para;</a></h4>
+<p><code>10cc0010 [MASK] [DATA...]</code></p>
+<p>マスクで指定したサブパラメータだけを差分更新する。マスクビットと後続データは以下:</p>
+<h4 id="pulse-param-pulse1--pulse2">Pulse PARAM (Pulse1 / Pulse2)<a class="headerlink" href="#pulse-param-pulse1--pulse2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>mask bit</th>
+<th>後続データ</th>
+<th>書き込み先</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x01</code> (TIMER)</td>
+<td><code>LO</code>, <code>HI</code> (2 バイト)</td>
+<td><code>$4002/3</code> または <code>$4006/7</code></td>
+</tr>
+<tr>
+<td><code>0x02</code> (VOL)</td>
+<td><code>VOL_ENV</code> (1 バイト)</td>
+<td><code>$4000</code> または <code>$4004</code></td>
+</tr>
+<tr>
+<td><code>0x04</code> (SWEEP)</td>
+<td><code>SWEEP</code> (1 バイト)</td>
+<td><code>$4001</code> または <code>$4005</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="triangle-param">Triangle PARAM<a class="headerlink" href="#triangle-param" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>mask bit</th>
+<th>後続データ</th>
+<th>書き込み先</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x01</code> (TIMER)</td>
+<td><code>LO</code>, <code>HI</code> (2 バイト)</td>
+<td><code>$400A/B</code></td>
+</tr>
+<tr>
+<td><code>0x02</code> (LINEAR)</td>
+<td><code>LINEAR</code> (1 バイト)</td>
+<td><code>$4008</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="noise-param">Noise PARAM<a class="headerlink" href="#noise-param" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>mask bit</th>
+<th>後続データ</th>
+<th>書き込み先</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x01</code> (PERIOD)</td>
+<td><code>PERIOD_MODE</code> (1 バイト)</td>
+<td><code>$400E</code></td>
+</tr>
+<tr>
+<td><code>0x02</code> (VOL)</td>
+<td><code>VOL_ENV</code> (1 バイト)</td>
+<td><code>$400C</code></td>
+</tr>
+</tbody>
+</table>
+<p>マスクの bit 順に後続バイトを読み出して書き込む。指定されていないビットの後続バイトは存在しない。</p>
+<h4 id="reg_write命令">REG_WRITE命令<a class="headerlink" href="#reg_write命令" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="mi">110</span><span class="n">aaaaa</span><span class="w"> </span><span class="o">[</span><span class="n">DATA</span><span class="o">]</span>
+</code></pre></div>
+
+<p>APUレジスタへの直接書き込み。NSFのAPUレジスタ操作を順序・値ともに完全に保持する。</p>
+<ul>
+<li><code>aaaaa</code>: $4000からのオフセット (0-23)</li>
+<li><code>DATA</code>: 書き込む値 (1バイト)</li>
+<li>合計: 2バイト/書き込み</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>offset (aaaaa)</th>
+<th>APUレジスタ</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x00</td>
+<td>$4000</td>
+<td>Pulse1 Volume/Envelope/Duty</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>$4001</td>
+<td>Pulse1 Sweep</td>
+</tr>
+<tr>
+<td>0x02</td>
+<td>$4002</td>
+<td>Pulse1 Timer Low</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>$4003</td>
+<td>Pulse1 Timer High + Length</td>
+</tr>
+<tr>
+<td>0x04</td>
+<td>$4004</td>
+<td>Pulse2 Volume/Envelope/Duty</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>$4005</td>
+<td>Pulse2 Sweep</td>
+</tr>
+<tr>
+<td>0x06</td>
+<td>$4006</td>
+<td>Pulse2 Timer Low</td>
+</tr>
+<tr>
+<td>0x07</td>
+<td>$4007</td>
+<td>Pulse2 Timer High + Length</td>
+</tr>
+<tr>
+<td>0x08</td>
+<td>$4008</td>
+<td>Triangle Linear Counter</td>
+</tr>
+<tr>
+<td>0x0A</td>
+<td>$400A</td>
+<td>Triangle Timer Low</td>
+</tr>
+<tr>
+<td>0x0B</td>
+<td>$400B</td>
+<td>Triangle Timer High + Length</td>
+</tr>
+<tr>
+<td>0x0C</td>
+<td>$400C</td>
+<td>Noise Volume/Envelope</td>
+</tr>
+<tr>
+<td>0x0E</td>
+<td>$400E</td>
+<td>Noise Period + Mode</td>
+</tr>
+<tr>
+<td>0x0F</td>
+<td>$400F</td>
+<td>Noise Length</td>
+</tr>
+<tr>
+<td>0x10</td>
+<td>$4010</td>
+<td>DMC Frequency/Flags</td>
+</tr>
+<tr>
+<td>0x11</td>
+<td>$4011</td>
+<td>DMC DAC (7bit)</td>
+</tr>
+<tr>
+<td>0x12</td>
+<td>$4012</td>
+<td>DMC Sample Address</td>
+</tr>
+<tr>
+<td>0x13</td>
+<td>$4013</td>
+<td>DMC Sample Length</td>
+</tr>
+<tr>
+<td>0x15</td>
+<td>$4015</td>
+<td>Status (Channel Enable)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h3>
+<p><code>fmruby-graphics-audio/tools/</code> 以下に Ruby のジェネレータがあります（PC で実行）。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">fmruby</span><span class="o">-</span><span class="n">graphics</span><span class="o">-</span><span class="n">audio</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">gen_test_fmsq</span><span class="o">.</span><span class="n">rb</span><span class="w">     </span><span class="c1"># スケールパターン</span>
+<span class="n">fmruby</span><span class="o">-</span><span class="n">graphics</span><span class="o">-</span><span class="n">audio</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">gen_intro_fmsq</span><span class="o">.</span><span class="n">rb</span><span class="w">    </span><span class="c1"># ジングル</span>
+</code></pre></div>
+
+<p>これらを参考に音階・コードを記述すると <code>.fmsq</code> バイナリが生成できます。</p>
+<h3 id="再生">再生<a class="headerlink" href="#再生" title="Permanent link">&para;</a></h3>
+<p>スロット（番号 ID）にロードしてから再生します。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/sfx.fmsq&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">|</span><span class="n">f</span><span class="o">|</span><span class="w"> </span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="w"> </span><span class="p">}</span>
+<span class="vi">@audio</span><span class="o">.</span><span class="n">load_fmsq</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w">   </span><span class="c1"># スロット 0 に登録</span>
+<span class="vi">@audio</span><span class="o">.</span><span class="n">play_slot</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w">         </span><span class="c1"># 再生</span>
+</code></pre></div>
+
+<p>詳細は <a href="../../api/audio/">FmrbAudio</a> を参照。</p>
+<h2 id="nsf-nes-sound-format">NSF (NES Sound Format)<a class="headerlink" href="#nsf-nes-sound-format" title="Permanent link">&para;</a></h2>
+<p>NES Sound Format は実機ファミコン音楽を再生する標準フォーマットです。Family mruby は NSF ファイルの再生に対応しています。</p>
+<h3 id="入手方法">入手方法<a class="headerlink" href="#入手方法" title="Permanent link">&para;</a></h3>
+<ul>
+<li>自分で作る場合は <a href="https://famistudio.org/">FamiStudio</a> などの DAW から NSF エクスポート</li>
+</ul>
+<h3 id="再生_1">再生<a class="headerlink" href="#再生_1" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="vi">@audio</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="s2">&quot;/usr/share/sounds/nsf/song.nsf&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">track</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+<p><code>track:</code> は曲番号（1 始まり）。NSF には複数曲が含まれるため、ファイル名で曲を選んだ後、track 指定で個別曲を選べます。</p>
+<h3 id="制限">制限<a class="headerlink" href="#制限" title="Permanent link">&para;</a></h3>
+<ul>
+<li>再生できないNSFファイルもあります</li>
+</ul>
+<h3 id="サンプル">サンプル<a class="headerlink" href="#サンプル" title="Permanent link">&para;</a></h3>
+<p><code>/app/tool/nsf_player.app.rb</code> に NSF 再生 GUI のサンプルがあります（曲送り・トラック選択・一時停止 / 再開 を実装）。</p>
+<h2 id="mid-標準-midi-ファイル">MID (標準 MIDI ファイル)<a class="headerlink" href="#mid-標準-midi-ファイル" title="Permanent link">&para;</a></h2>
+<p>2.0 で追加。<code>.mid</code> は音声スロットではなく <a href="../../api/midi/">MIDI</a> 層が再生します。つまり同じ
+ファイルで、内蔵音源も GROVE 端子につないだ外部音源も鳴らせます。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FmrbMidi</span><span class="o">::</span><span class="no">SmfPlayer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@device</span><span class="p">)</span>
+<span class="n">player</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/usr/share/sounds/midi/song.mid&quot;</span><span class="p">)</span>
+<span class="n">player</span><span class="o">.</span><span class="n">play</span>
+</code></pre></div>
+
+<p><code>/usr/share/sounds/midi</code> に著作権の切れた曲が 7 つ入っています。SMF Player
+(<code>/app/tool/smf_player.app.rb</code>) が一覧から選んで鳴らします。</p>
+<h3 id="内蔵音源で鳴らす場合">内蔵音源で鳴らす場合<a class="headerlink" href="#内蔵音源で鳴らす場合" title="Permanent link">&para;</a></h3>
+<p>APU は矩形波 2・三角波 1・雑音 1 の 4 声で、MIDI の 16 チャンネルには足りません。一般的な
+MIDI ファイルを内蔵音源で鳴らすと、原理的に音が落ちます。音数の多い曲ほど顕著です。外部の
+GM 音源にはこの制約がありません。<a href="../../api/midi/">MIDI</a> を参照してください。</p>
+<h3 id="fmsq-に変換する">FMSQ に変換する<a class="headerlink" href="#fmsq-に変換する" title="Permanent link">&para;</a></h3>
+<p>その場で演奏するのではなく決まったシーケンスとして持ちたい場合は、リポジトリの
+<code>tool/midi/smf2fmsq.rb</code> で <code>.mid</code> を <a href="#fmsq">FMSQ</a> に変換できます。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ruby</span><span class="w"> </span><span class="k">tool</span><span class="o">/</span><span class="n">midi</span><span class="o">/</span><span class="n">smf2fmsq</span><span class="o">.</span><span class="n">rb</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="n">mid</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">out</span><span class="o">.</span><span class="n">fmsq</span>
+</code></pre></div>
+
+<p>APU の状態を丸ごと運ぶレジスタ書き込みだけを出力するので、どちらの FMSQ 再生系でも同じに
+鳴ります。4 声への圧縮は同じように起こります。</p>
+<h2 id="wav--mp3">WAV / MP3<a class="headerlink" href="#wav--mp3" title="Permanent link">&para;</a></h2>
+<p>未対応です。FMSQ に変換するか、MID か NSF を使ってください。</p>
+<h2 id="直接合成-note_on--note_off">直接合成 (<code>note_on</code> / <code>note_off</code>)<a class="headerlink" href="#直接合成-note_on--note_off" title="Permanent link">&para;</a></h2>
+<p>ファイルを使わずに、<code>FmrbAudio#note_on</code> で APU を直接駆動できます。リズムやセリフの効果音、ボタンクリック音などに向きます。</p>
+<div class="codehilite"><pre><span></span><code><span class="vi">@audio</span><span class="o">.</span><span class="n">note_on</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">440</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">   </span><span class="c1"># 矩形波 1ch で A4</span>
+<span class="n">sleep_ms</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="vi">@audio</span><span class="o">.</span><span class="n">note_off</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p>詳細は <a href="../../api/audio/#音声合成-note_on--note_off">FmrbAudio ▸ note_on / note_off</a> を参照。</p>
+<h2 id="関連">関連<a class="headerlink" href="#関連" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../api/audio/">FmrbAudio</a></li>
+<li><a href="../../api/midi/">MIDI</a> — <code>.mid</code> の再生と、外部音源への MIDI 送信</li>
+<li>ピアノアプリ: <code>/app/game/piano.app.rb</code></li>
+<li>効果音 + BGM 例: <code>/app/game/flappy.rb</code></li>
+<li>NSF プレイヤー: <code>/app/tool/nsf_player.app.rb</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2774 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Family mruby project documentation">
+      
+      
+        <meta name="author" content="kishima">
+      
+      
+        <link rel="canonical" href="https://family-mruby.github.io/api/fmrb_app/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../fmrb_gfx/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../../ja/api/fmrb_app/" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Application - Family mruby project</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#application-fmrbapp" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Family mruby project" class="md-header__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Family mruby project
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Application
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ja/api/fmrb_app/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting_started/choose_hardware/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../file_formats/system_conf/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../remote_desktop/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../examples/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Examples
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../hardware/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Hardware
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../compatibility/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Verified Peripherals
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../limitations/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Limitations
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Family mruby project" class="md-nav__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Family mruby project
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/choose_hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choose your hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/modern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modern (M5Stack Tab5)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup (Retro)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/booth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    For BOOTH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/hello_world/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting to Wi-Fi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Family mruby Console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/default_apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Default Apps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/firmware_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware Update
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/simulator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#minimal-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-handling-on_eventev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Handling (on_event(ev))
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Handling (on_event(ev))">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#keyboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keyboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mouse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mouse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gamepad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gamepad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#window-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Window Operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Messaging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-instance-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Instance Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-and-directory-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File and Directory Paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-increment-a-counter-on-button-press" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Increment a Counter on Button Press
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fmrb_gfx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drawing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sprite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tilemap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tile Maps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../p5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processing-style Drawing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../midi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MIDI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pubsub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inter-App Messaging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files & I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../peripherals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../const/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Constants & System Info
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks & Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_formats/system_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Config (system_conf.toml / wifi.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_formats/app_toml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    App Config (.app.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_formats/hid_devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HID Device Config (hid_devices.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_formats/audio_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_formats/image_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image & Icon Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../remote_desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other_languages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BASIC and MicroPython
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verified Peripherals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#minimal-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-handling-on_eventev" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Handling (on_event(ev))
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Handling (on_event(ev))">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#keyboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keyboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mouse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mouse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gamepad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gamepad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#window-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Window Operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Messaging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-instance-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Instance Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-and-directory-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File and Directory Paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-increment-a-counter-on-button-press" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Increment a Counter on Button Press
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="application-fmrbapp">Application (FmrbApp)<a class="headerlink" href="#application-fmrbapp" title="Permanent link">&para;</a></h1>
+<p><code>FmrbApp</code> is the application base class for Family mruby. User apps must inherit from <code>FmrbApp</code> and implement lifecycle methods.</p>
+<h2 id="minimal-example">Minimal Example<a class="headerlink" href="#minimal-example" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">FmrbApp</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">on_create</span>
+<span class="w">    </span><span class="n">clear_user_area</span><span class="p">(</span><span class="no">FmrbGfx</span><span class="o">::</span><span class="no">WHITE</span><span class="p">)</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span><span class="vi">@user_area_x0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="vi">@user_area_y0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">                   </span><span class="s2">&quot;Hello, mruby!&quot;</span><span class="p">,</span><span class="w"> </span><span class="no">FmrbGfx</span><span class="o">::</span><span class="no">BLACK</span><span class="p">)</span>
+<span class="w">    </span><span class="n">draw_window_frame</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">present</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">on_update</span>
+<span class="w">    </span><span class="mi">100</span><span class="w">  </span><span class="c1"># Wait 100ms</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">MyApp</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">start</span>
+</code></pre></div>
+
+<p>Window size and other settings are specified in a <code>.toml</code> file (see <a href="../../file_formats/app_toml/">App Configuration File (.toml)</a>).</p>
+<h2 id="lifecycle">Lifecycle<a class="headerlink" href="#lifecycle" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>When Called</th>
+<th>Return Value Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>on_create</code></td>
+<td>Once when the app starts</td>
+<td>Any (ignored)</td>
+</tr>
+<tr>
+<td><code>on_update</code></td>
+<td>Repeatedly within the main loop</td>
+<td>Wait time in milliseconds until the next <code>on_update</code>. Default 330ms</td>
+</tr>
+<tr>
+<td><code>on_event(ev)</code></td>
+<td>On keyboard / mouse / gamepad / HID input</td>
+<td>Any</td>
+</tr>
+<tr>
+<td><code>on_suspend</code></td>
+<td>When switching to a fullscreen app</td>
+<td>Any</td>
+</tr>
+<tr>
+<td><code>on_resume</code></td>
+<td>When returning from a suspended state</td>
+<td>Any</td>
+</tr>
+<tr>
+<td><code>on_destroy</code></td>
+<td>Once when the app exits</td>
+<td>Any</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span><code><span class="k">start</span>
+<span class="w">  </span><span class="o">+</span><span class="c1">-- on_create</span>
+<span class="w">       </span><span class="o">+</span><span class="c1">-- main_loop:</span>
+<span class="w">            </span><span class="o">+</span><span class="c1">-- on_update  -&gt; wait for return value ms via _spin</span>
+<span class="w">            </span><span class="o">+</span><span class="c1">-- _spin dispatches on_event(ev), _handle_system_control(msg)</span>
+<span class="w">            </span><span class="o">+</span><span class="c1">-- repeats until @running becomes false</span>
+<span class="w">  </span><span class="o">+</span><span class="c1">-- destroy -&gt; on_destroy</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title"><code>on_update</code> return value</p>
+<p>A short value (10-30ms) increases the frame rate but consumes more CPU. For games, 16-33ms is a good target; for static UIs, 100-500ms is appropriate.</p>
+</div>
+<h2 id="event-handling-on_eventev">Event Handling (<code>on_event(ev)</code>)<a class="headerlink" href="#event-handling-on_eventev" title="Permanent link">&para;</a></h2>
+<p><code>ev</code> is a Hash, and you determine the event type with <code>ev[:type]</code>.</p>
+<h3 id="keyboard">Keyboard<a class="headerlink" href="#keyboard" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_event</span><span class="p">(</span><span class="n">ev</span><span class="p">)</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:type</span><span class="o">]</span>
+<span class="w">  </span><span class="k">when</span><span class="w"> </span><span class="ss">:key_down</span>
+<span class="w">    </span><span class="n">keycode</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:keycode</span><span class="o">]</span><span class="w">    </span><span class="c1"># Character code (platform-dependent)</span>
+<span class="w">    </span><span class="n">scancode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:scancode</span><span class="o">]</span><span class="w">   </span><span class="c1"># USB HID Usage ID (platform-independent)</span>
+<span class="w">    </span><span class="n">modifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:modifier</span><span class="o">]</span><span class="w">   </span><span class="c1"># Modifier key bits (see below)</span>
+<span class="w">    </span><span class="n">char</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:character</span><span class="o">]</span><span class="w">  </span><span class="c1"># Character (if available)</span>
+<span class="w">    </span><span class="no">Log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;key down: </span><span class="si">#{</span><span class="n">char</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">when</span><span class="w"> </span><span class="ss">:key_up</span>
+<span class="w">    </span><span class="c1"># ...</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Modifier key bits (<code>ev[:modifier]</code>) layout:</p>
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0x01</td>
+<td>LSHIFT</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0x02</td>
+<td>RSHIFT</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0x04</td>
+<td>LCTRL</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0x08</td>
+<td>RCTRL</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0x10</td>
+<td>LALT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0x20</td>
+<td>RALT</td>
+</tr>
+</tbody>
+</table>
+<p>Helper methods are provided:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ev_ctrl?</span><span class="p">(</span><span class="n">ev</span><span class="p">)</span><span class="w">   </span><span class="c1"># Ctrl is pressed</span>
+<span class="n">ev_shift?</span><span class="p">(</span><span class="n">ev</span><span class="p">)</span><span class="w">  </span><span class="c1"># Shift is pressed</span>
+<span class="n">ev_alt?</span><span class="p">(</span><span class="n">ev</span><span class="p">)</span><span class="w">    </span><span class="c1"># Alt is pressed</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use <code>scancode</code> when identifying character keys. <code>keycode</code> values vary between platforms (e.g. SDL2 returns ASCII values).</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title"><code>FmrbConst::KEY_*</code> / <code>MOD_*</code> constants</p>
+<p>Since <code>scancode</code> values are USB HID Usage IDs, you can use constants like <code>FmrbConst::KEY_ESC</code> instead of writing raw values like <code>0x29</code> (ESC). Modifier key mask constants such as <code>FmrbConst::MOD_CTRL</code> are also available. See <a href="../const/#input-device-keyboard-key_">Constants &gt; KEY_<em> / MOD_</em></a> for a full list.</p>
+</div>
+<h3 id="mouse">Mouse<a class="headerlink" href="#mouse" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">when</span><span class="w"> </span><span class="ss">:mouse_down</span><span class="p">,</span><span class="w"> </span><span class="ss">:mouse_up</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:button</span><span class="o">]</span><span class="w">  </span><span class="c1"># 1=left, 2=middle, 3=right</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:x</span><span class="o">]</span><span class="w">       </span><span class="c1"># X coordinate within the window</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:y</span><span class="o">]</span><span class="w">       </span><span class="c1"># Y coordinate within the window</span>
+<span class="k">when</span><span class="w"> </span><span class="ss">:mouse_move</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:x</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:y</span><span class="o">]</span>
+</code></pre></div>
+
+<p>Clicks on the title bar (left-click to close / right-click to reload) are already handled by the base class, so these actions work even if the subclass does not call <code>super</code>.</p>
+<h3 id="gamepad">Gamepad<a class="headerlink" href="#gamepad" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">when</span><span class="w"> </span><span class="ss">:gamepad_down</span><span class="p">,</span><span class="w"> </span><span class="ss">:gamepad_up</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:gamepad_id</span><span class="o">]</span><span class="w">  </span><span class="c1"># 0 and above</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:button</span><span class="o">]</span><span class="w">      </span><span class="c1"># 0..15</span>
+<span class="k">when</span><span class="w"> </span><span class="ss">:gamepad_axis</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:gamepad_id</span><span class="o">]</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:axis</span><span class="o">]</span><span class="w">        </span><span class="c1"># 0..5</span>
+<span class="w">  </span><span class="n">ev</span><span class="o">[</span><span class="ss">:value</span><span class="o">]</span><span class="w">       </span><span class="c1"># Axis value</span>
+</code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title"><code>FmrbConst::GP_*</code> constants</p>
+<p>Button numbers have constants like <code>FmrbConst::GP_SQUARE</code> / <code>GP_CROSS</code> / <code>GP_START</code>, and axis numbers have <code>GP_AXIS_LX</code> / <code>GP_AXIS_LY</code>, etc. See <a href="../const/#input-device-gamepad-gp_">Constants &gt; GP_*</a> for details.</p>
+</div>
+<h2 id="window-operations">Window Operations<a class="headerlink" href="#window-operations" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>set_window_position(x, y)</code></td>
+<td>Change the window position</td>
+</tr>
+<tr>
+<td><code>draw_window_frame</code></td>
+<td>Draw the window frame (title bar + border). Reuses a <code>GfxBlock</code> managed by the base class</td>
+</tr>
+<tr>
+<td><code>clear_user_area(color = FmrbGfx::BLACK)</code></td>
+<td>Fill the drawable area (excluding title bar and border) with the specified color</td>
+</tr>
+<tr>
+<td><code>draw_scrollbar(scroll, total, visible, x=..., y=..., w=..., h=...)</code></td>
+<td>Draw a scrollbar</td>
+</tr>
+<tr>
+<td><code>scrollbar_hit(click_x, click_y, x=..., y=..., w=..., h=...)</code></td>
+<td>Scrollbar hit detection (returns <code>:up</code> / <code>:down</code> / <code>nil</code>)</td>
+</tr>
+<tr>
+<td><code>request_file_select(mode = "open")</code></td>
+<td>Invoke the system file selection dialog</td>
+</tr>
+<tr>
+<td><code>request_reload</code></td>
+<td>Reload the script (automatically called on title bar right-click)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Use <code>clear_user_area</code> instead of <code>@gfx.clear</code></p>
+<p><code>@gfx.clear(color)</code> fills the entire canvas, which also erases the title bar and close button. To preserve the window frame, use <code>clear_user_area(color)</code> instead.</p>
+</div>
+<h2 id="messaging">Messaging<a class="headerlink" href="#messaging" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subscribe(topic)</code> / <code>unsubscribe(topic)</code></td>
+<td>Subscribe to a topic</td>
+</tr>
+<tr>
+<td><code>publish(topic, data=nil)</code></td>
+<td>Send to a topic</td>
+</tr>
+<tr>
+<td><code>send_message(dest_pid, msg_type, data)</code></td>
+<td>Direct message to the kernel or a specific app. <code>data</code> is automatically serialized via MessagePack</td>
+</tr>
+</tbody>
+</table>
+<p>For details and receive handlers, see <a href="../pubsub/">Pub/Sub</a>.</p>
+<h2 id="execution-control">Execution Control<a class="headerlink" href="#execution-control" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>start</code></td>
+<td>Sets <code>@running = true</code> and starts the event loop (<code>on_create</code> is called)</td>
+</tr>
+<tr>
+<td><code>stop</code></td>
+<td>Sets <code>@running = false</code> (proceeds to <code>destroy</code> after the next <code>_spin</code>)</td>
+</tr>
+<tr>
+<td><code>destroy</code></td>
+<td>Notifies the kernel of exit, calls <code>@gfx.destroy</code>, <code>on_destroy</code>, <code>_cleanup</code></td>
+</tr>
+</tbody>
+</table>
+<p>Normally, writing just <code>MyApp.new.start</code> is sufficient.</p>
+<h2 id="key-instance-variables">Key Instance Variables<a class="headerlink" href="#key-instance-variables" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@gfx</code></td>
+<td><code>FmrbGfx</code> instance (drawing API; <code>nil</code> in headless mode)</td>
+</tr>
+<tr>
+<td><code>@audio</code></td>
+<td><code>FmrbAudio</code> instance</td>
+</tr>
+<tr>
+<td><code>@name</code></td>
+<td>App display name (from <code>.toml</code> <code>app_screen_name</code>)</td>
+</tr>
+<tr>
+<td><code>@platform</code></td>
+<td><code>:esp32</code> or <code>:linux</code></td>
+</tr>
+<tr>
+<td><code>@fullscreen</code></td>
+<td><code>true</code> if in fullscreen mode</td>
+</tr>
+<tr>
+<td><code>@window_width</code> / <code>@window_height</code></td>
+<td>Overall window size</td>
+</tr>
+<tr>
+<td><code>@pos_x</code> / <code>@pos_y</code></td>
+<td>Absolute coordinates of the window's top-left corner</td>
+</tr>
+<tr>
+<td><code>@user_area_x0</code> / <code>@user_area_y0</code> / <code>@user_area_x1</code> / <code>@user_area_y1</code></td>
+<td>Boundaries of the drawable area, excluding title bar and borders</td>
+</tr>
+<tr>
+<td><code>@user_area_width</code> / <code>@user_area_height</code></td>
+<td>Size of the drawable area</td>
+</tr>
+<tr>
+<td><code>@running</code></td>
+<td><code>true</code> while the app is running</td>
+</tr>
+<tr>
+<td><code>@suspended</code></td>
+<td><code>true</code> while suspended</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Drawing within the window frame</p>
+<p>In windowed mode with a title bar, always draw within the <code>@user_area_*</code> bounds. Start from <code>@user_area_x0</code>, <code>@user_area_y0</code> and stay within <code>@user_area_width</code> and <code>@user_area_height</code>.</p>
+</div>
+<h2 id="file-and-directory-paths">File and Directory Paths<a class="headerlink" href="#file-and-directory-paths" title="Permanent link">&para;</a></h2>
+<p>Pass root-relative paths (e.g. <code>/home/foo.txt</code>) or SD card paths like <code>/mnt/sd/...</code> directly to <code>File.open</code> / <code>Dir.open</code>. See <a href="../filesystem/#file-namespace">File &amp; I/O &gt; File Namespace</a> for details.</p>
+<h2 id="class-methods">Class Methods<a class="headerlink" href="#class-methods" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FmrbApp.ps</code></td>
+<td>Array of Hash showing all process states (id, name, state, vm_type, mem_*, stack_water, etc.)</td>
+</tr>
+<tr>
+<td><code>FmrbApp.config(section)</code></td>
+<td>Read a specified section from the app's <code>.toml</code></td>
+</tr>
+<tr>
+<td><code>FmrbApp.wallclock</code></td>
+<td>Current time (<code>{year, month, day, hour, minute, second}</code>)</td>
+</tr>
+<tr>
+<td><code>FmrbApp.set_wallclock(year, month, day, hour, minute, second)</code></td>
+<td>Set RTC / system time</td>
+</tr>
+<tr>
+<td><code>FmrbApp.gfx_stats</code></td>
+<td>Drawing statistics <code>{cmds:, presents:}</code></td>
+</tr>
+<tr>
+<td><code>FmrbApp.sys_pool_info</code></td>
+<td>System memory pool information</td>
+</tr>
+<tr>
+<td><code>FmrbApp.heap_info</code></td>
+<td>ESP-IDF heap info (<code>free</code>, <code>total</code>, <code>min_free</code>, <code>largest_block</code>, etc.)</td>
+</tr>
+<tr>
+<td><code>FmrbApp.enable_cursor</code></td>
+<td>Show mouse cursor (delayed until the first mouse movement)</td>
+</tr>
+<tr>
+<td><code>FmrbApp.set_cursor_visible(visible)</code></td>
+<td>Immediately show/hide cursor. Useful for hiding in fullscreen games and restoring on exit</td>
+</tr>
+<tr>
+<td><code>FmrbApp._get_last_error</code></td>
+<td>Last app error (returns <code>{name:, error:}</code> if present)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="constants">Constants<a class="headerlink" href="#constants" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TITLE_BAR_H</code></td>
+<td>11</td>
+<td>Title bar height (px)</td>
+</tr>
+<tr>
+<td><code>CORNER_R</code></td>
+<td>4</td>
+<td>Window corner radius</td>
+</tr>
+<tr>
+<td><code>TRANSPARENT_COLOR</code></td>
+<td>0x01</td>
+<td>Transparent color (passes through during compositing)</td>
+</tr>
+<tr>
+<td><code>SCROLLBAR_W</code></td>
+<td>10</td>
+<td>Scrollbar width</td>
+</tr>
+<tr>
+<td><code>SCROLLBAR_BTN_H</code></td>
+<td>10</td>
+<td>Scrollbar button height</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-increment-a-counter-on-button-press">Example: Increment a Counter on Button Press<a class="headerlink" href="#example-increment-a-counter-on-button-press" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CounterApp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">FmrbApp</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">on_create</span>
+<span class="w">    </span><span class="vi">@count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="n">redraw</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">on_event</span><span class="p">(</span><span class="n">ev</span><span class="p">)</span>
+<span class="w">    </span><span class="k">super</span><span class="w">  </span><span class="c1"># Inherit close button handling</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:type</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">:mouse_down</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:button</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="vi">@count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="n">redraw</span>
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:type</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">:key_down</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">ev</span><span class="o">[</span><span class="ss">:character</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;r&quot;</span>
+<span class="w">      </span><span class="vi">@count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">      </span><span class="n">redraw</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">on_update</span>
+<span class="w">    </span><span class="mi">300</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="kp">private</span>
+
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">redraw</span>
+<span class="w">    </span><span class="n">clear_user_area</span><span class="p">(</span><span class="no">FmrbGfx</span><span class="o">::</span><span class="no">WHITE</span><span class="p">)</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span><span class="vi">@user_area_x0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="vi">@user_area_y0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">                   </span><span class="s2">&quot;Count: </span><span class="si">#{</span><span class="vi">@count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="w"> </span><span class="no">FmrbGfx</span><span class="o">::</span><span class="no">BLACK</span><span class="p">)</span>
+<span class="w">    </span><span class="n">draw_window_frame</span>
+<span class="w">    </span><span class="vi">@gfx</span><span class="o">.</span><span class="n">present</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">CounterApp</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">start</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3057 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Family mruby project documentation">
+      
+      
+        <meta name="author" content="kishima">
+      
+      
+        <link rel="canonical" href="https://family-mruby.github.io/file_formats/audio_formats/">
+      
+      
+        <link rel="prev" href="../hid_devices/">
+      
+      
+        <link rel="next" href="../image_formats/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../../ja/file_formats/audio_formats/" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Audio File Formats - Family mruby project</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#audio-file-formats" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Family mruby project" class="md-header__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Family mruby project
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Audio File Formats
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ja/file_formats/audio_formats/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting_started/choose_hardware/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../system_conf/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../remote_desktop/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../examples/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Examples
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../hardware/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Hardware
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../compatibility/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Verified Peripherals
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../limitations/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Limitations
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Family mruby project" class="md-nav__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Family mruby project
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/choose_hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choose your hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/modern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modern (M5Stack Tab5)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup (Retro)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/booth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    For BOOTH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/hello_world/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting to Wi-Fi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Family mruby Console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/default_apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Default Apps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/firmware_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware Update
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/simulator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fmrb_app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fmrb_gfx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drawing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/sprite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tilemap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tile Maps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/p5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processing-style Drawing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/midi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MIDI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/pubsub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inter-App Messaging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files & I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/peripherals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/utilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/const/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Constants & System Info
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks & Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Config (system_conf.toml / wifi.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../app_toml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    App Config (.app.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hid_devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HID Device Config (hid_devices.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio File Formats
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fmsq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FMSQ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FMSQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opcode-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opcode List
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Opcode List">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wait-instruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAIT instruction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-instructions-note_on--note_off--param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Channel instructions (NOTE_ON / NOTE_OFF / PARAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note_on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NOTE_ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NOTE_OFF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pulse-param-pulse1--pulse2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pulse PARAM (Pulse1 / Pulse2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triangle-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triangle PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#noise-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Noise PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reg_write-instruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REG_WRITE instruction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nsf-nes-sound-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NSF (NES Sound Format)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NSF (NES Sound Format)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#obtaining-nsf-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Obtaining NSF Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#playback_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mid-standard-midi-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MID (Standard MIDI File)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MID (Standard MIDI File)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-the-internal-sound-chip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On the internal sound chip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-to-fmsq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting to FMSQ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wav--mp3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAV / MP3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#direct-synthesis-note_on--note_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Direct Synthesis (note_on / note_off)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image & Icon Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../remote_desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other_languages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BASIC and MicroPython
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verified Peripherals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fmsq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FMSQ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FMSQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opcode-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opcode List
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Opcode List">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wait-instruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAIT instruction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#channel-instructions-note_on--note_off--param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Channel instructions (NOTE_ON / NOTE_OFF / PARAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note_on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NOTE_ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NOTE_OFF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pulse-param-pulse1--pulse2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pulse PARAM (Pulse1 / Pulse2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triangle-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triangle PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#noise-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Noise PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reg_write-instruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REG_WRITE instruction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nsf-nes-sound-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NSF (NES Sound Format)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NSF (NES Sound Format)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#obtaining-nsf-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Obtaining NSF Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#playback_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Playback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mid-standard-midi-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MID (Standard MIDI File)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MID (Standard MIDI File)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-the-internal-sound-chip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On the internal sound chip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-to-fmsq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting to FMSQ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wav--mp3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAV / MP3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#direct-synthesis-note_on--note_off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Direct Synthesis (note_on / note_off)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="audio-file-formats">Audio File Formats<a class="headerlink" href="#audio-file-formats" title="Permanent link">&para;</a></h1>
+<p>This page describes the audio file formats supported by Family mruby, along with how to create and convert them.</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Purpose</th>
+<th>API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FMSQ</td>
+<td>Sequence data for short BGM / sound effects. Loaded into a slot for playback</td>
+<td><code>FmrbAudio#load_fmsq</code>, <code>play_slot</code></td>
+</tr>
+<tr>
+<td>NSF</td>
+<td>NES music (NES Sound Format)</td>
+<td><code>FmrbAudio#play(path, track:)</code></td>
+</tr>
+<tr>
+<td>MID</td>
+<td>Standard MIDI files. Played through the MIDI layer, on the internal sound chip or an external instrument</td>
+<td><code>FmrbMidi::SmfPlayer</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="fmsq">FMSQ<a class="headerlink" href="#fmsq" title="Permanent link">&para;</a></h2>
+<p>FMSQ (Family mruby Sequence) is a proprietary format for writing NES APU-compatible music data. It is suited for short sound effects and BGM loops.</p>
+<p>See <a href="https://www.nesdev.org/wiki/APU_registers">https://www.nesdev.org/wiki/APU_registers</a></p>
+<h3 id="file-structure">File Structure<a class="headerlink" href="#file-structure" title="Permanent link">&para;</a></h3>
+<p>12-byte header + variable-length command stream. All values are little-endian.</p>
+<div class="codehilite"><pre><span></span><code>+------+----------------+
+| 0..3 | &quot;FMSQ&quot;         |  magic
+| 4    | version (=1)   |
+| 5    | flags (=0)     |  reserved
+| 6..7 | frame_count    |  total frames
+| 8..9 | data_size      |  command bytes
+| 10..11 | loop_offset  |  0 = no loop
++------+----------------+
+| 12.. | command stream |
++------+----------------+
+</code></pre></div>
+
+<h3 id="opcode-list">Opcode List<a class="headerlink" href="#opcode-list" title="Permanent link">&para;</a></h3>
+<p><code>cc</code> = channel number (00=Pulse1, 01=Pulse2, 10=Triangle, 11=Noise),
+<code>aaaaa</code> = register offset from <code>$4000</code> (0x00-0x17).</p>
+<table>
+<thead>
+<tr>
+<th>Bit Pattern</th>
+<th>Instruction</th>
+<th>Following Bytes</th>
+<th>Total Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0xxxxxxx</code></td>
+<td>WAIT (1-128 frames)</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>10cc0000</code></td>
+<td>NOTE_ON</td>
+<td>2-4 per channel</td>
+<td>3-5</td>
+</tr>
+<tr>
+<td><code>10cc0001</code></td>
+<td>NOTE_OFF</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>10cc0010</code></td>
+<td>PARAM</td>
+<td>MASK + variable</td>
+<td>2 or more</td>
+</tr>
+<tr>
+<td><code>110aaaaa</code></td>
+<td>REG_WRITE (<code>$4000</code>+aaaaa)</td>
+<td>1 (DATA)</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>11100000</code></td>
+<td>DPCM_PLAY</td>
+<td>3 (RATE_FLAGS, ADDR, LENGTH)</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>11100001</code></td>
+<td>DPCM_STOP</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>11100010</code></td>
+<td>DPCM_RAW</td>
+<td>1 (VALUE)</td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>11111110</code></td>
+<td>END</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>11111111</code></td>
+<td>LOOP</td>
+<td>2 (OFFSET)</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>APU emulator limitation: DPCM functionality is not currently supported by the APU emulator side.</p>
+<h4 id="wait-instruction">WAIT instruction<a class="headerlink" href="#wait-instruction" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="mf">0</span><span class="n">xxxxxxx</span>
+</code></pre></div>
+
+<ul>
+<li>Upper 1 bit = 0 -&gt; WAIT</li>
+<li>Lower 7 bits = number of frames to wait minus 1</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x00</td>
+<td>Wait 1 frame</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>Wait 2 frames</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>0x7F</td>
+<td>Wait 128 frames</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="channel-instructions-note_on--note_off--param">Channel instructions (NOTE_ON / NOTE_OFF / PARAM)<a class="headerlink" href="#channel-instructions-note_on--note_off--param" title="Permanent link">&para;</a></h4>
+<p>High-level commands in the form <code>10ccxxxx</code>. <code>cc</code> selects the channel (Pulse1=0, Pulse2=1, Triangle=2, Noise=3), and the lower 4 bits select the subcommand.
+NOTE_ON / NOTE_OFF also update the corresponding bit of <code>$4015</code> (Status) internally.</p>
+<h4 id="note_on">NOTE_ON<a class="headerlink" href="#note_on" title="Permanent link">&para;</a></h4>
+<p><code>10cc0000</code>. Following bytes depend on the channel:</p>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Following Bytes</th>
+<th>Write order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pulse1 / Pulse2</td>
+<td><code>TIMER_LO</code>, <code>TIMER_HI</code>, <code>VOL_ENV</code>, <code>SWEEP</code> (4 bytes)</td>
+<td><code>VOL</code> -&gt; <code>SWEEP</code> -&gt; <code>LO</code> -&gt; <code>HI</code></td>
+</tr>
+<tr>
+<td>Triangle</td>
+<td><code>TIMER_LO</code>, <code>TIMER_HI</code>, <code>LINEAR</code> (3 bytes)</td>
+<td><code>LINEAR</code> -&gt; <code>LO</code> -&gt; <code>HI</code></td>
+</tr>
+<tr>
+<td>Noise</td>
+<td><code>PERIOD_MODE</code>, <code>VOL_ENV</code> (2 bytes)</td>
+<td><code>VOL</code> -&gt; <code>LO</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="note_off">NOTE_OFF<a class="headerlink" href="#note_off" title="Permanent link">&para;</a></h4>
+<p><code>10cc0001</code>. No following bytes. Only clears the corresponding channel bit in <code>$4015</code> (the APU registers themselves are not modified).</p>
+<h4 id="param">PARAM<a class="headerlink" href="#param" title="Permanent link">&para;</a></h4>
+<p><code>10cc0010 [MASK] [DATA...]</code></p>
+<p>Updates only the sub-parameters specified by the mask. The mask bits and their following data are as follows:</p>
+<h4 id="pulse-param-pulse1--pulse2">Pulse PARAM (Pulse1 / Pulse2)<a class="headerlink" href="#pulse-param-pulse1--pulse2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>mask bit</th>
+<th>Following data</th>
+<th>Write target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x01</code> (TIMER)</td>
+<td><code>LO</code>, <code>HI</code> (2 bytes)</td>
+<td><code>$4002/3</code> or <code>$4006/7</code></td>
+</tr>
+<tr>
+<td><code>0x02</code> (VOL)</td>
+<td><code>VOL_ENV</code> (1 byte)</td>
+<td><code>$4000</code> or <code>$4004</code></td>
+</tr>
+<tr>
+<td><code>0x04</code> (SWEEP)</td>
+<td><code>SWEEP</code> (1 byte)</td>
+<td><code>$4001</code> or <code>$4005</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="triangle-param">Triangle PARAM<a class="headerlink" href="#triangle-param" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>mask bit</th>
+<th>Following data</th>
+<th>Write target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x01</code> (TIMER)</td>
+<td><code>LO</code>, <code>HI</code> (2 bytes)</td>
+<td><code>$400A/B</code></td>
+</tr>
+<tr>
+<td><code>0x02</code> (LINEAR)</td>
+<td><code>LINEAR</code> (1 byte)</td>
+<td><code>$4008</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="noise-param">Noise PARAM<a class="headerlink" href="#noise-param" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>mask bit</th>
+<th>Following data</th>
+<th>Write target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x01</code> (PERIOD)</td>
+<td><code>PERIOD_MODE</code> (1 byte)</td>
+<td><code>$400E</code></td>
+</tr>
+<tr>
+<td><code>0x02</code> (VOL)</td>
+<td><code>VOL_ENV</code> (1 byte)</td>
+<td><code>$400C</code></td>
+</tr>
+</tbody>
+</table>
+<p>Following bytes are read and written in mask bit order. No following byte is present for bits that are not set.</p>
+<h4 id="reg_write-instruction">REG_WRITE instruction<a class="headerlink" href="#reg_write-instruction" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="mi">110</span><span class="n">aaaaa</span><span class="w"> </span><span class="o">[</span><span class="n">DATA</span><span class="o">]</span>
+</code></pre></div>
+
+<p>Direct write to an APU register. Preserves both the order and the values of APU register operations from NSF.</p>
+<ul>
+<li><code>aaaaa</code>: offset from $4000 (0-23)</li>
+<li><code>DATA</code>: value to write (1 byte)</li>
+<li>Total: 2 bytes per write</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>offset (aaaaa)</th>
+<th>APU register</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x00</td>
+<td>$4000</td>
+<td>Pulse1 Volume/Envelope/Duty</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>$4001</td>
+<td>Pulse1 Sweep</td>
+</tr>
+<tr>
+<td>0x02</td>
+<td>$4002</td>
+<td>Pulse1 Timer Low</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>$4003</td>
+<td>Pulse1 Timer High + Length</td>
+</tr>
+<tr>
+<td>0x04</td>
+<td>$4004</td>
+<td>Pulse2 Volume/Envelope/Duty</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>$4005</td>
+<td>Pulse2 Sweep</td>
+</tr>
+<tr>
+<td>0x06</td>
+<td>$4006</td>
+<td>Pulse2 Timer Low</td>
+</tr>
+<tr>
+<td>0x07</td>
+<td>$4007</td>
+<td>Pulse2 Timer High + Length</td>
+</tr>
+<tr>
+<td>0x08</td>
+<td>$4008</td>
+<td>Triangle Linear Counter</td>
+</tr>
+<tr>
+<td>0x0A</td>
+<td>$400A</td>
+<td>Triangle Timer Low</td>
+</tr>
+<tr>
+<td>0x0B</td>
+<td>$400B</td>
+<td>Triangle Timer High + Length</td>
+</tr>
+<tr>
+<td>0x0C</td>
+<td>$400C</td>
+<td>Noise Volume/Envelope</td>
+</tr>
+<tr>
+<td>0x0E</td>
+<td>$400E</td>
+<td>Noise Period + Mode</td>
+</tr>
+<tr>
+<td>0x0F</td>
+<td>$400F</td>
+<td>Noise Length</td>
+</tr>
+<tr>
+<td>0x10</td>
+<td>$4010</td>
+<td>DMC Frequency/Flags</td>
+</tr>
+<tr>
+<td>0x11</td>
+<td>$4011</td>
+<td>DMC DAC (7bit)</td>
+</tr>
+<tr>
+<td>0x12</td>
+<td>$4012</td>
+<td>DMC Sample Address</td>
+</tr>
+<tr>
+<td>0x13</td>
+<td>$4013</td>
+<td>DMC Sample Length</td>
+</tr>
+<tr>
+<td>0x15</td>
+<td>$4015</td>
+<td>Status (Channel Enable)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h3>
+<p>Ruby generators are available under <code>fmruby-graphics-audio/tools/</code> (run on PC).</p>
+<div class="codehilite"><pre><span></span><code><span class="n">fmruby</span><span class="o">-</span><span class="n">graphics</span><span class="o">-</span><span class="n">audio</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">gen_test_fmsq</span><span class="o">.</span><span class="n">rb</span><span class="w">     </span><span class="c1"># Scale pattern</span>
+<span class="n">fmruby</span><span class="o">-</span><span class="n">graphics</span><span class="o">-</span><span class="n">audio</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">gen_intro_fmsq</span><span class="o">.</span><span class="n">rb</span><span class="w">    </span><span class="c1"># Jingle</span>
+</code></pre></div>
+
+<p>Use these as a reference to write scales and chords, and generate <code>.fmsq</code> binary files.</p>
+<h3 id="playback">Playback<a class="headerlink" href="#playback" title="Permanent link">&para;</a></h3>
+<p>Load the data into a slot (by numeric ID), then play it.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/sfx.fmsq&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">|</span><span class="n">f</span><span class="o">|</span><span class="w"> </span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="w"> </span><span class="p">}</span>
+<span class="vi">@audio</span><span class="o">.</span><span class="n">load_fmsq</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w">   </span><span class="c1"># Register in slot 0</span>
+<span class="vi">@audio</span><span class="o">.</span><span class="n">play_slot</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w">         </span><span class="c1"># Play</span>
+</code></pre></div>
+
+<p>See <a href="../../api/audio/">FmrbAudio</a> for details.</p>
+<h2 id="nsf-nes-sound-format">NSF (NES Sound Format)<a class="headerlink" href="#nsf-nes-sound-format" title="Permanent link">&para;</a></h2>
+<p>NES Sound Format is a standard format for playing actual NES music. Family mruby supports playback of NSF files.</p>
+<h3 id="obtaining-nsf-files">Obtaining NSF Files<a class="headerlink" href="#obtaining-nsf-files" title="Permanent link">&para;</a></h3>
+<ul>
+<li>To create your own, export as NSF from a DAW like <a href="https://famistudio.org/">FamiStudio</a></li>
+</ul>
+<h3 id="playback_1">Playback<a class="headerlink" href="#playback_1" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="vi">@audio</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="s2">&quot;/usr/share/sounds/nsf/song.nsf&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">track</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+<p><code>track:</code> is the song number (1-based). Since an NSF file can contain multiple songs, you select the file first and then choose a specific song with the track parameter.</p>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Some NSF files cannot be played</li>
+</ul>
+<h3 id="sample">Sample<a class="headerlink" href="#sample" title="Permanent link">&para;</a></h3>
+<p>A sample NSF player GUI is available at <code>/app/tool/nsf_player.app.rb</code> (implements track forward/backward, track selection, and pause/resume).</p>
+<h2 id="mid-standard-midi-file">MID (Standard MIDI File)<a class="headerlink" href="#mid-standard-midi-file" title="Permanent link">&para;</a></h2>
+<p>New in 2.0. A <code>.mid</code> file is played by the <a href="../../api/midi/">MIDI</a> layer rather than the audio
+slots, which means the same file can drive the internal sound chip or an external instrument
+on the GROVE port.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">FmrbMidi</span><span class="o">::</span><span class="no">SmfPlayer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@device</span><span class="p">)</span>
+<span class="n">player</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/usr/share/sounds/midi/song.mid&quot;</span><span class="p">)</span>
+<span class="n">player</span><span class="o">.</span><span class="n">play</span>
+</code></pre></div>
+
+<p>Seven public-domain songs ship in <code>/usr/share/sounds/midi</code>, and the SMF Player app
+(<code>/app/tool/smf_player.app.rb</code>) plays them with a file list.</p>
+<h3 id="on-the-internal-sound-chip">On the internal sound chip<a class="headerlink" href="#on-the-internal-sound-chip" title="Permanent link">&para;</a></h3>
+<p>The APU has four voices — two pulses, a triangle and noise — against MIDI's sixteen channels,
+so playing a general MIDI file through it is lossy by construction. Dense arrangements lose
+notes. An external General MIDI module has no such limit; see <a href="../../api/midi/">MIDI</a>.</p>
+<h3 id="converting-to-fmsq">Converting to FMSQ<a class="headerlink" href="#converting-to-fmsq" title="Permanent link">&para;</a></h3>
+<p>For music you want as a fixed sequence rather than live playback, <code>tool/midi/smf2fmsq.rb</code> in
+the repository converts a <code>.mid</code> into an <a href="#fmsq">FMSQ</a> stream:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ruby</span><span class="w"> </span><span class="k">tool</span><span class="o">/</span><span class="n">midi</span><span class="o">/</span><span class="n">smf2fmsq</span><span class="o">.</span><span class="n">rb</span><span class="w"> </span><span class="n">input</span><span class="o">.</span><span class="n">mid</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">out</span><span class="o">.</span><span class="n">fmsq</span>
+</code></pre></div>
+
+<p>It emits register writes carrying full APU state, so the result plays identically on both
+FMSQ players. The same four-voice reduction applies.</p>
+<h2 id="wav--mp3">WAV / MP3<a class="headerlink" href="#wav--mp3" title="Permanent link">&para;</a></h2>
+<p>Not supported. Convert to FMSQ, or use MID or NSF.</p>
+<h2 id="direct-synthesis-note_on--note_off">Direct Synthesis (<code>note_on</code> / <code>note_off</code>)<a class="headerlink" href="#direct-synthesis-note_on--note_off" title="Permanent link">&para;</a></h2>
+<p>You can drive the APU directly using <code>FmrbAudio#note_on</code> without any files. This is useful for rhythm, dialogue sound effects, button click sounds, and similar.</p>
+<div class="codehilite"><pre><span></span><code><span class="vi">@audio</span><span class="o">.</span><span class="n">note_on</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">440</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">   </span><span class="c1"># A4 on Pulse 1 channel</span>
+<span class="n">sleep_ms</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="vi">@audio</span><span class="o">.</span><span class="n">note_off</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p>See <a href="../../api/audio/#tone-synthesis-note_on--note_off">FmrbAudio - note_on / note_off</a> for details.</p>
+<h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../api/audio/">FmrbAudio</a></li>
+<li><a href="../../api/midi/">MIDI</a> — playing <code>.mid</code>, and sending MIDI to an external instrument</li>
+<li>Piano app: <code>/app/game/piano.app.rb</code></li>
+<li>Sound effects + BGM example: <code>/app/game/flappy.rb</code></li>
+<li>NSF player: <code>/app/tool/nsf_player.app.rb</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

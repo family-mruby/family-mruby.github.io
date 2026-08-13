@@ -1,0 +1,2891 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Family mruby project documentation">
+      
+      
+        <meta name="author" content="kishima">
+      
+      
+        <link rel="canonical" href="https://family-mruby.github.io/api/">
+      
+      
+        <link rel="prev" href="../getting_started/simulator/">
+      
+      
+        <link rel="next" href="fmrb_app/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../ja/api/" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Overview - Family mruby project</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Family mruby project" class="md-header__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Family mruby project
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../ja/api/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../getting_started/choose_hardware/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../file_formats/system_conf/" class="md-tabs__link">
+          
+  
+  
+  File Formats
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../remote_desktop/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../examples/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Examples
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../hardware/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Hardware
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../compatibility/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Verified Peripherals
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../limitations/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Limitations
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Family mruby project" class="md-nav__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Family mruby project
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/choose_hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choose your hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/modern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modern (M5Stack Tab5)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup (Retro)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/booth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    For BOOTH Buyers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/hello_world/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting to Wi-Fi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Family mruby Console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/default_apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Default Apps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/firmware_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware Update
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/simulator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#files-and-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files and Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-and-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware and System
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-method-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Method Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Method Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fmrbapp-lifecycle-window-messaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FmrbApp (Lifecycle, Window, Messaging)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fmrbgfx-drawing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FmrbGfx (Drawing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spriteimage--spriteinstance--gfxblock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SpriteImage / SpriteInstance / GfxBlock
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fmrbaudio-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FmrbAudio (@audio)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pubsub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pub/Sub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io--file--dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IO / File / Dir
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpio--i2c--rmt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPIO / I2C / RMT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fmrbconst--fmrbhw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FmrbConst / FmrbHw
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task--machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task / Machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-instance-variables-when-inheriting-fmrbapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Instance Variables (when inheriting FmrbApp)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coordinate-system-and-color-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordinate System and Color Format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drawing-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drawing Flow
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fmrb_app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fmrb_gfx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drawing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sprite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sprites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tilemap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tile Maps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="p5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processing-style Drawing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="midi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MIDI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pubsub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inter-App Messaging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files & I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="peripherals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="const/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Constants & System Info
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks & Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file_formats/system_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Config (system_conf.toml / wifi.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file_formats/app_toml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    App Config (.app.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file_formats/hid_devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HID Device Config (hid_devices.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file_formats/audio_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio File Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file_formats/image_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image & Icon Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote_desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../other_languages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BASIC and MicroPython
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verified Peripherals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#files-and-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Files and Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-and-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware and System
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-method-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Method Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Method Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fmrbapp-lifecycle-window-messaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FmrbApp (Lifecycle, Window, Messaging)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fmrbgfx-drawing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FmrbGfx (Drawing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spriteimage--spriteinstance--gfxblock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SpriteImage / SpriteInstance / GfxBlock
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fmrbaudio-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FmrbAudio (@audio)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pubsub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pub/Sub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io--file--dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IO / File / Dir
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpio--i2c--rmt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPIO / I2C / RMT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fmrbconst--fmrbhw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FmrbConst / FmrbHw
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task--machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task / Machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-instance-variables-when-inheriting-fmrbapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Instance Variables (when inheriting FmrbApp)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coordinate-system-and-color-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordinate System and Color Format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drawing-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drawing Flow
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="api-reference-overview">API Reference Overview<a class="headerlink" href="#api-reference-overview" title="Permanent link">&para;</a></h1>
+<p>Lists all public Ruby APIs provided by Family mruby. Click each API name to jump to its detail page.</p>
+<div class="admonition note">
+<p class="admonition-title">How to read this reference</p>
+<p><strong>The API is the same on both machines.</strong> An app written for one runs on the other.</p>
+<p>Where these pages say "the graphics side", they mean whichever part of the hardware turns
+your drawing commands into a picture: on Retro that is a second chip across a UART
+link, and on Modern it is the same ESP32-P4 your code is running on. The calls are
+identical; only the cost differs, and Modern is the cheaper of the two.</p>
+<p>A handful of things exist on one machine only — NTSC output adjustment on Retro, touch on
+Modern. Those are marked where they appear. See
+<a href="../getting_started/choose_hardware/">Choose your hardware</a> for the full list.</p>
+</div>
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<h3 id="application">Application<a class="headerlink" href="#application" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class / Module</th>
+<th>Role</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FmrbApp</code></td>
+<td>Application base class. Lifecycle, window, messaging</td>
+<td><a href="fmrb_app/">Application</a></td>
+</tr>
+<tr>
+<td><code>FmrbGfx</code></td>
+<td>Shape and text drawing (<code>@gfx</code>)</td>
+<td><a href="fmrb_gfx/">Drawing</a></td>
+</tr>
+<tr>
+<td><code>SpriteImage</code> / <code>SpriteInstance</code> / <code>GfxBlock</code></td>
+<td>Sprites</td>
+<td><a href="sprite/">Sprites</a></td>
+</tr>
+<tr>
+<td><code>TileSheet</code> / <code>TileMap</code></td>
+<td>Tile map rendering + fmrb_map JSON loading</td>
+<td><a href="tilemap/">Tile Maps</a></td>
+</tr>
+<tr>
+<td><code>P5</code></td>
+<td>Processing/p5.js-style drawing DSL</td>
+<td><a href="p5/">Processing-style Drawing</a></td>
+</tr>
+<tr>
+<td><code>FmrbAudio</code></td>
+<td>BGM, sound effects, tone synthesis (<code>@audio</code>)</td>
+<td><a href="audio/">Sound</a></td>
+</tr>
+<tr>
+<td><code>MIDI::Device</code> / <code>FmrbMidi</code></td>
+<td>MIDI out, to the built-in APU or an external instrument</td>
+<td><a href="midi/">MIDI</a></td>
+</tr>
+<tr>
+<td>Pub/Sub (<code>subscribe</code> / <code>publish</code>)</td>
+<td>Inter-app messaging</td>
+<td><a href="pubsub/">Inter-App Messaging</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="files-and-data">Files and Data<a class="headerlink" href="#files-and-data" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class / Module</th>
+<th>Role</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IO</code> / <code>File</code> / <code>Dir</code></td>
+<td>File and directory operations</td>
+<td><a href="filesystem/">Files &amp; I/O</a></td>
+</tr>
+<tr>
+<td><code>Log</code></td>
+<td>Logging</td>
+<td><a href="log/">Logging</a></td>
+</tr>
+<tr>
+<td><code>Net::HTTP</code> / WebSocket / TLS</td>
+<td>Talking to the network</td>
+<td><a href="network/">Network</a></td>
+</tr>
+<tr>
+<td><code>JSON</code></td>
+<td>JSON parsing and generation</td>
+<td><a href="utilities/#json">Utilities</a></td>
+</tr>
+<tr>
+<td><code>MessagePack</code></td>
+<td>Binary serialization</td>
+<td><a href="utilities/#messagepack">Utilities</a></td>
+</tr>
+<tr>
+<td><code>BMP332</code></td>
+<td>RGB332 BMP image parsing</td>
+<td><a href="utilities/#bmp332">Utilities</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="hardware-and-system">Hardware and System<a class="headerlink" href="#hardware-and-system" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class / Module</th>
+<th>Role</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GPIO</code></td>
+<td>Digital I/O</td>
+<td><a href="peripherals/#gpio">Hardware Control</a></td>
+</tr>
+<tr>
+<td><code>I2C</code></td>
+<td>I2C communication</td>
+<td><a href="peripherals/#i2c">Hardware Control</a></td>
+</tr>
+<tr>
+<td><code>RMT</code></td>
+<td>RMT (infrared, WS2812B, etc.)</td>
+<td><a href="peripherals/#rmt">Hardware Control</a></td>
+</tr>
+<tr>
+<td><code>RX8900</code> / <code>RX8130</code></td>
+<td>Battery-backed real-time clock</td>
+<td><a href="peripherals/#real-time-clock-rx8900--rx8130">Hardware Control</a></td>
+</tr>
+<tr>
+<td><code>FmrbConst</code></td>
+<td>System constants (version, theme colors, PROC_ID, etc.)</td>
+<td><a href="const/">Constants &amp; System Info</a></td>
+</tr>
+<tr>
+<td><code>FmrbHw</code></td>
+<td>Pin usage queries</td>
+<td><a href="const/#fmrbhw">Constants &amp; System Info</a></td>
+</tr>
+<tr>
+<td><code>Task</code></td>
+<td>Task control</td>
+<td><a href="system/#task">Tasks &amp; Timing</a></td>
+</tr>
+<tr>
+<td><code>Machine</code></td>
+<td>System control (clock, delay, reset, etc.)</td>
+<td><a href="system/#machine">Tasks &amp; Timing</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="cross-method-index">Cross-Method Index<a class="headerlink" href="#cross-method-index" title="Permanent link">&para;</a></h2>
+<h3 id="fmrbapp-lifecycle-window-messaging"><code>FmrbApp</code> (Lifecycle, Window, Messaging)<a class="headerlink" href="#fmrbapp-lifecycle-window-messaging" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initialize</code></td>
+<td>Framework initialization (prepares <code>@gfx</code>, <code>@user_area_*</code>, etc.)</td>
+</tr>
+<tr>
+<td><code>on_create</code></td>
+<td>Called once when the app starts (initialization logic)</td>
+</tr>
+<tr>
+<td><code>on_update</code></td>
+<td>Called every frame (return value = wait time in ms until next call)</td>
+</tr>
+<tr>
+<td><code>on_event(ev)</code></td>
+<td>Called on keyboard / mouse / gamepad / HID input</td>
+</tr>
+<tr>
+<td><code>on_suspend</code> / <code>on_resume</code></td>
+<td>Called when switching to/from a fullscreen app</td>
+</tr>
+<tr>
+<td><code>on_destroy</code></td>
+<td>Called once when the app exits</td>
+</tr>
+<tr>
+<td><code>start</code> / <code>stop</code> / <code>destroy</code></td>
+<td>Execution control</td>
+</tr>
+<tr>
+<td><code>subscribe(topic)</code> / <code>unsubscribe(topic)</code> / <code>publish(topic, data)</code></td>
+<td>Pub/Sub</td>
+</tr>
+<tr>
+<td><code>send_message(dest_pid, msg_type, data)</code></td>
+<td>Direct message sending</td>
+</tr>
+<tr>
+<td><code>set_window_position(x, y)</code></td>
+<td>Window position</td>
+</tr>
+<tr>
+<td><code>draw_window_frame</code> / <code>draw_scrollbar</code> / <code>scrollbar_hit</code></td>
+<td>Window decorations</td>
+</tr>
+<tr>
+<td><code>request_file_select(mode)</code></td>
+<td>File selection dialog</td>
+</tr>
+<tr>
+<td><code>request_reload</code></td>
+<td>Reload the app</td>
+</tr>
+<tr>
+<td><code>ev_ctrl?(ev)</code> / <code>ev_shift?(ev)</code> / <code>ev_alt?(ev)</code></td>
+<td>Modifier key checks</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fmrbgfx-drawing"><code>FmrbGfx</code> (Drawing)<a class="headerlink" href="#fmrbgfx-drawing" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clear(color)</code> / <code>present</code></td>
+<td>Clear / commit frame</td>
+</tr>
+<tr>
+<td><code>set_pixel(x, y, color)</code></td>
+<td>Draw a single pixel</td>
+</tr>
+<tr>
+<td><code>draw_line(x1, y1, x2, y2, color)</code></td>
+<td>Line</td>
+</tr>
+<tr>
+<td><code>draw_rect</code> / <code>fill_rect(x, y, w, h, color)</code></td>
+<td>Rectangle</td>
+</tr>
+<tr>
+<td><code>draw_round_rect</code> / <code>fill_round_rect(x, y, w, h, r, color)</code></td>
+<td>Rounded rectangle</td>
+</tr>
+<tr>
+<td><code>draw_circle</code> / <code>fill_circle(x, y, r, color)</code></td>
+<td>Circle</td>
+</tr>
+<tr>
+<td><code>draw_ellipse</code> / <code>fill_ellipse(x, y, rx, ry, color)</code></td>
+<td>Ellipse</td>
+</tr>
+<tr>
+<td><code>draw_triangle</code> / <code>fill_triangle(x0,y0,x1,y1,x2,y2,color)</code></td>
+<td>Triangle</td>
+</tr>
+<tr>
+<td><code>draw_arc</code> / <code>fill_arc(x, y, r0, r1, ang0, ang1, color)</code></td>
+<td>Arc</td>
+</tr>
+<tr>
+<td><code>blend_rect(x, y, w, h, color, mode:)</code></td>
+<td>Semi-transparent rectangle (mode: 0=ADD, 1=XOR)</td>
+</tr>
+<tr>
+<td><code>set_text_size(size)</code></td>
+<td>Text size (1 to 4)</td>
+</tr>
+<tr>
+<td><code>draw_text(x, y, text, color [, bg_color])</code></td>
+<td>Text drawing</td>
+</tr>
+<tr>
+<td><code>FmrbGfx.hsv_to_rgb(h, s, v)</code></td>
+<td>Color conversion</td>
+</tr>
+<tr>
+<td><code>FmrbGfx.rgb_to_332(r, g, b)</code></td>
+<td>24-bit to RGB332</td>
+</tr>
+<tr>
+<td><code>set_output_level(0..255)</code> / <code>set_chroma_level(0..255)</code></td>
+<td>NTSC output adjustment (Retro only)</td>
+</tr>
+</tbody>
+</table>
+<p>Color constants: <code>BLACK 0x00 / WHITE 0xFF / RED 0xE0 / GREEN 0x1C / BLUE 0x03 / YELLOW 0xFC / CYAN 0x1F / MAGENTA 0xE3 / GRAY 0x6D</code></p>
+<h3 id="spriteimage--spriteinstance--gfxblock"><code>SpriteImage</code> / <code>SpriteInstance</code> / <code>GfxBlock</code><a class="headerlink" href="#spriteimage--spriteinstance--gfxblock" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Key Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SpriteImage</code></td>
+<td><code>new(gfx, w, h, trans_color, use_trans:)</code> / <code>load_bmp(path)</code> / <code>set_target</code> / <code>reset_target</code> / <code>destroy</code></td>
+</tr>
+<tr>
+<td><code>SpriteInstance</code></td>
+<td><code>new(gfx, frame_images, x, y, z_order)</code> / <code>move(x, y)</code> / <code>visible=</code> / <code>frame=</code> / <code>destroy</code></td>
+</tr>
+<tr>
+<td><code>GfxBlock</code></td>
+<td><code>new(gfx, kwargs) { |r, kwargs| ... }</code> / <code>draw(**kwargs)</code> / <code>destroy</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="fmrbaudio-audio"><code>FmrbAudio</code> (<code>@audio</code>)<a class="headerlink" href="#fmrbaudio-audio" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>play(path, track: 0)</code></td>
+<td>Play a file</td>
+</tr>
+<tr>
+<td><code>stop</code> / <code>pause</code> / <code>resume</code></td>
+<td>Playback control</td>
+</tr>
+<tr>
+<td><code>load_fmsq(slot_id, binary)</code></td>
+<td>Load FMSQ into a slot</td>
+</tr>
+<tr>
+<td><code>play_slot(slot_id)</code></td>
+<td>Play a slot</td>
+</tr>
+<tr>
+<td><code>note_on(channel, freq, volume=10, duty=2, sweep=0)</code></td>
+<td>Tone synthesis</td>
+</tr>
+<tr>
+<td><code>note_off(channel)</code></td>
+<td>Stop tone</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pubsub">Pub/Sub<a class="headerlink" href="#pubsub" title="Permanent link">&para;</a></h3>
+<p><code>subscribe(topic)</code> / <code>unsubscribe(topic)</code> / <code>publish(topic, data=nil)</code> / <code>send_message(dest_pid, msg_type, data)</code></p>
+<p>Messages are received via <code>_handle_system_control(msg)</code> through <code>on_control(msg)</code>, not <code>on_event</code>. See <a href="pubsub/">Inter-App Messaging</a> for details.</p>
+<h3 id="io--file--dir"><code>IO</code> / <code>File</code> / <code>Dir</code><a class="headerlink" href="#io--file--dir" title="Permanent link">&para;</a></h3>
+<p><code>File.open(path, mode, &amp;block)</code>, <code>File.exist?</code> / <code>file?</code> / <code>directory?</code> / <code>size</code> / <code>delete</code>, <code>Dir.open(path)</code> / <code>Dir.read</code> / <code>Dir.mkdir</code>, etc.</p>
+<h3 id="log"><code>Log</code><a class="headerlink" href="#log" title="Permanent link">&para;</a></h3>
+<p><code>Log.error(msg)</code> / <code>Log.warn(msg)</code> / <code>Log.info(msg)</code> / <code>Log.debug(msg)</code> (or shorthand <code>e</code> / <code>w</code> / <code>i</code> / <code>d</code>; two-argument form allows specifying a tag)</p>
+<h3 id="gpio--i2c--rmt"><code>GPIO</code> / <code>I2C</code> / <code>RMT</code><a class="headerlink" href="#gpio--i2c--rmt" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Signature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GPIO.new(pin, flags)</code></td>
+<td><code>flags</code> = OR combination of <code>GPIO::IN</code>, <code>GPIO::OUT</code>, <code>GPIO::PULL_UP</code>, etc.</td>
+</tr>
+<tr>
+<td><code>I2C.new(unit:, frequency: 100_000, sda_pin:, scl_pin:, timeout: 500)</code></td>
+<td><code>unit:</code> is e.g. <code>"ESP32_I2C0"</code></td>
+</tr>
+<tr>
+<td><code>RMT.new(pin, t0h_ns:, t0l_ns:, t1h_ns:, t1l_ns:, reset_ns:)</code></td>
+<td>NRZ encoding timing</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fmrbconst--fmrbhw"><code>FmrbConst</code> / <code>FmrbHw</code><a class="headerlink" href="#fmrbconst--fmrbhw" title="Permanent link">&para;</a></h3>
+<p>Key constants: <code>PLATFORM</code>, <code>PROC_ID_KERNEL</code>, etc., <code>MSG_TYPE_*</code>, <code>OS_VERSION</code>, <code>MAC_ADDRESS</code>, <code>THEME_*</code>.
+<code>FmrbHw.pin_status(pin)</code> / <code>pin_available?(pin)</code> / <code>pin_status_all</code> / <code>pin_count</code>.</p>
+<h3 id="task--machine"><code>Task</code> / <code>Machine</code><a class="headerlink" href="#task--machine" title="Permanent link">&para;</a></h3>
+<p><code>Task.pass</code>, <code>Machine.delay_ms(ms)</code>, <code>Machine.uptime_us</code>, <code>Machine.set_hwclock(epoch)</code>, <code>Machine._reboot</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>sleep</code> (Kernel) may stall when used outside <code>_spin</code> because tick does not advance. Use <code>Machine.delay_ms</code> for short waits (see <a href="../limitations/">Limitations</a>).</p>
+</div>
+<h2 id="key-instance-variables-when-inheriting-fmrbapp">Key Instance Variables (when inheriting <code>FmrbApp</code>)<a class="headerlink" href="#key-instance-variables-when-inheriting-fmrbapp" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@gfx</code></td>
+<td><code>FmrbGfx</code> instance</td>
+</tr>
+<tr>
+<td><code>@canvas</code></td>
+<td>Canvas ID</td>
+</tr>
+<tr>
+<td><code>@audio</code></td>
+<td><code>FmrbAudio</code> instance</td>
+</tr>
+<tr>
+<td><code>@name</code></td>
+<td>App display name (from <code>.toml</code> <code>app_screen_name</code>)</td>
+</tr>
+<tr>
+<td><code>@platform</code></td>
+<td><code>:esp32</code> / <code>:linux</code></td>
+</tr>
+<tr>
+<td><code>@fullscreen</code></td>
+<td>Whether the app is in fullscreen mode</td>
+</tr>
+<tr>
+<td><code>@window_width</code> / <code>@window_height</code></td>
+<td>Overall window size</td>
+</tr>
+<tr>
+<td><code>@user_area_x0</code> / <code>@user_area_y0</code> / <code>@user_area_x1</code> / <code>@user_area_y1</code></td>
+<td>Boundaries of the drawable area for the app (window coordinate system)</td>
+</tr>
+<tr>
+<td><code>@user_area_width</code> / <code>@user_area_height</code></td>
+<td>Size of the drawable area</td>
+</tr>
+<tr>
+<td><code>@pos_x</code> / <code>@pos_y</code></td>
+<td>Top-left coordinates of the window (screen coordinate system). Changes when the window is moved</td>
+</tr>
+</tbody>
+</table>
+<p>In <code>@fullscreen</code> mode, <code>(@pos_x, @pos_y)</code> is <code>(0, 0)</code>, pointing at the top-left of the screen.</p>
+<h2 id="coordinate-system-and-color-format">Coordinate System and Color Format<a class="headerlink" href="#coordinate-system-and-color-format" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Coordinate system: origin at top-left (0, 0), X increases rightward, Y increases downward</li>
+<li>Color: RGB332 (8-bit, R:3 G:3 B:2). Use constants like <code>FmrbGfx::WHITE</code> or generate with <code>FmrbGfx.rgb_to_332(r, g, b)</code></li>
+</ul>
+<h2 id="drawing-flow">Drawing Flow<a class="headerlink" href="#drawing-flow" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Drawing</span><span class="w"> </span><span class="n">commands</span><span class="w"> </span><span class="p">(</span><span class="n">fill_rect</span><span class="p">,</span><span class="w"> </span><span class="n">etc</span><span class="p">.)</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">Accumulated</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">buffer</span>
+<span class="nv">@gfx</span><span class="p">.</span><span class="n">present</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">Applied</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">screen</span>
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">Nothing appears until <code>present</code> is called</p>
+<p>Drawing methods are not displayed on screen until <code>@gfx.present</code> is called. Sprite operations such as <code>SpriteInstance#move</code> are also composited at the <code>present</code> timing.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
