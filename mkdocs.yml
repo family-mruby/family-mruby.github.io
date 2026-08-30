@@ -57,6 +57,7 @@ plugins:
             Simulator: シミュレータ
             Console: コンソール
             Family mruby Console: Family mruby コンソール
+            Family mruby Studio (Web): Family mruby スタジオ (Web)
             Default Apps: 標準アプリ
             Firmware Update: ファームウェア更新
             API Reference: API リファレンス
@@ -102,6 +103,7 @@ nav:
       - Hello World: getting_started/hello_world.md
       - Connecting to Wi-Fi: getting_started/wifi.md
       - Family mruby Console: getting_started/console.md
+      - Family mruby Studio (Web): getting_started/studio.md
       - Default Apps: getting_started/default_apps.md
       - Firmware Update: getting_started/firmware_update.md
       - Simulator: getting_started/simulator.md
