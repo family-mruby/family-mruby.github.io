@@ -61,6 +61,8 @@ y       = { offset = 28, size = 12, min = -2048, max = 2047, relative = true }
 | `skip_control_transfer` | `true` to skip USB control transfers for this device. A few devices stall on them |
 | `buttons` | Where the button bits are |
 | `x` / `y` | Where the axes are |
+| `wheel` | Where the wheel is. Optional, and the switch that turns it on |
+| `protocol` | `boot` (the default) or `report` |
 
 Field tables take:
 
@@ -73,6 +75,38 @@ Field tables take:
 
 **Offsets are in bits, not bytes.** A 12-bit axis starting halfway through byte 2 is
 `offset = 20`, and that is exactly the case the generic path gets wrong.
+
+### The wheel
+
+The wheel is opt-in, per device. Leave `wheel` out and the mouse behaves exactly as it
+always has, even if its descriptor has one; write it and the notches go to the focused
+window.
+
+```toml
+wheel = { offset = 24, size = 8, min = -127, max = 127, relative = true }
+```
+
+Plug the mouse in and the log says whether it reports a wheel, and where, in a line you can
+paste:
+
+```
+usb_task: Mouse VID=0x.... PID=0x.... reports a wheel (offset=24 size=8);
+  add wheel = { offset = 24, size = 8, ... } to /etc/hid_devices.toml to use it
+```
+
+One notch is `1`, and turning the wheel away from you is positive.
+
+A Boot Interface mouse answers with three bytes — buttons, X, Y — and its wheel is simply
+not among them, so no offset can reach it. `protocol = "report"` asks that one device for
+its own format instead, which is where its wheel lives. Only a device named here is asked;
+every other mouse keeps the boot path it has always taken. Use the HID Inspector to read
+the report it then sends, because that layout is the device's own and not the standard
+three bytes. Over-declare `report_len` while measuring so the Inspector shows the whole
+report, then write the real length.
+
+Do not expect the report descriptor to settle it: for a Boot Interface device the USB host
+stack returns garbage for the descriptor, so the bits have to be measured from live
+reports.
 
 ## `[[gamepad]]`
 

@@ -31,13 +31,31 @@ normal.
   (`Ctrl+Space` toggles kana, typed as romaji)
 - Play the bundled apps and hear the internal sound chip
 - Pick a theme (the web default is a neon look of its own; Classic is the
-  device palette) and a screen size up to 852x480 — a larger screen means more
-  room, not bigger pixels
+  device palette), a screen size up to 852x480, and a zoom — a larger screen
+  means more room, not bigger pixels
+- Go full screen. Where the browser allows it the machine keeps `Esc` for
+  itself; where it does not, `Esc` leaves full screen instead of reaching the
+  app
+
+Theme and resolution are applied at boot, so changing one reloads the page.
+
+## Your files
+
+What you write is kept. Everything under `/home` — the programs you save,
+your colours, your service list — stays in this browser between visits, and
+goes nowhere else: it never leaves the machine you are reading this on.
+
+The buttons under the screen download all of it as a single `.tar`, restore
+it from that file, or erase it. Downloading is worth doing for anything you
+care about: a private window keeps nothing, a browser may reclaim the space
+after a long absence, and if you open the page twice only the first tab
+saves. The same file restores your work here, or in another browser.
+
+Everything outside `/home` is built fresh every time. Files written anywhere
+else, and `/tmp` above all, are gone on the next reload.
 
 ## Limits
 
-- Files you create live in browser memory and are gone on reload —
-  copy anything you care about out through the editor before leaving
 - No network access from inside the machine (yet)
 - This is the Modern-family machine; boards are still where the hardware fun
   is — see [Getting Started](choose_hardware.md)

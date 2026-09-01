@@ -13,10 +13,16 @@ Everything the system wants to tell you lives in this 13-pixel strip.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│ Family mruby  ▪▪            137KB  B  ▂▄▆   08/07 21:04:11          │
+│ Family mruby  ▪▪          137KB  A  B  ▂▄▆   08/07 21:04:11         │
 └─────────────────────────────────────────────────────────────────────┘
-  ↑             ↑             ↑      ↑  ↑     ↑
-  system menu   running apps  RAM    BLE Wi-Fi clock
+  ↑             ↑           ↑      ↑  ↑  ↑     ↑
+  |             |           |      |  |  |     clock
+  |             |           |      |  |  Wi-Fi
+  |             |           |      |  BLE
+  |             |           |      kana
+  |             |           RAM
+  |             taskbar
+  system menu
 ```
 
 ### Family mruby
@@ -27,6 +33,10 @@ Click it for the system menu. See [the list below](#the-system-menu).
 
 Each running app gets a small square, in the order they started, immediately right of the
 title. This is the taskbar.
+
+It is a list of windows, not of processes: a square is something you can click to bring to
+the front and type into. An app with no window — the service host, for one — has nothing to
+raise, so it is not listed. `ps` and the Monitor still show it.
 
 - **The letter** is the first character of the app's name
 - **The colour** is the language it runs on:
@@ -53,6 +63,13 @@ memory. App heaps come from PSRAM, which is plentiful, but each running app also
 "can I open one more app?".
 
 The Linux simulator has no such limit and shows `---KB`.
+
+### Kana input
+
+`A` when you are typing ASCII, `あ` for hiragana, `ア` for katakana. Click it to step
+through the three. It is there from boot, in every language, because on a keyboard with no
+half-width/full-width key — or with no keyboard at all — that click is the way in.
+`Ctrl` + `Space` does the same thing from the keyboard.
 
 ### BLE
 
@@ -90,18 +107,21 @@ Date and time. Set it from Set Clock; the timezone is a separate setting under
   <img src="/images/tab5_menu.png" width="600" alt="The system menu">
 </div>
 
-| Item | What it does |
-|---|---|
-| Launcher | The grid of installed apps |
-| File Manager | Browse the flash filesystem |
-| Log Viewer | The system log |
-| Monitor | Running tasks and memory |
-| Set Clock | Date and time |
-| Config | Language, keyboard layout, pointer speed, theme, timezone, Wi-Fi and BLE autostart, display margins |
-| Storage | Clear cached files |
-| Network | Wi-Fi state, address, hostname |
-| About | Version and chip information |
-| Reset | Reboot |
+  | Item | What it does |
+  |---|---|
+  | Launcher | The grid of installed apps |
+  | Editor | The editor. It is built in, so it is not in the launcher |
+  | File Manager | Browse the flash filesystem |
+  | Log Viewer | The system log |
+  | Monitor | Running tasks, memory and [services](../file_formats/services.md) |
+  | Set Clock | Date and time |
+  | Config | Language, keyboard layout, pointer speed, theme, timezone, Wi-Fi and BLE autostart, display margins |
+  | Storage | Clear cached files |
+  | Network | Wi-Fi state, address, hostname |
+  | BLE Start | Retro only, and only when BLE did not start at boot |
+  | Shortcuts | Every key that works here, in one list |
+  | About | Version and chip information |
+  | Reset | Reboot |
 
 Whatever Config changes is written back into `/etc/system_conf.toml`, keeping your
 comments and other settings intact. On hardware the dialog offers Save & Reboot for the
@@ -132,6 +152,17 @@ Double-click an icon to start an app. Arrow keys move the selection and `Enter` 
 A click is decided on release, with a small movement tolerance, so a slightly shaky press
 does not turn into a drag.
 
+## Scrolling
+
+The mouse wheel scrolls the editor, the shell, the log viewer, the launcher and the file
+dialogs. It goes to the window that has the keyboard, not to the one under the pointer, so
+it behaves like a key rather than like a click.
+
+In the simulator, in [Studio](studio.md) and over the
+[remote desktop](../remote_desktop.md) it needs nothing. On a board a USB mouse has to be
+named in [`/etc/hid_devices.toml`](../file_formats/hid_devices.md#the-wheel) before its
+wheel does anything — plug the mouse in and the log prints the line to add.
+
 ## Keys
 
 ### Always
@@ -139,9 +170,10 @@ does not turn into a drag.
 | Key | Effect |
 |---|---|
 | `Ctrl` + `Q` | Close the app in the foreground, including a fullscreen one |
-| `Ctrl` + `Tab` | Switch between running apps |
+| `Ctrl` + `Tab` | Switch between the desktop and the running apps |
+| `Ctrl` + `Space` | Turn kana input on and off |
 
-Both are handled before the event reaches any app, so they work even when a fullscreen app
+These are handled before the event reaches any app, so they work even when a fullscreen app
 has the whole screen.
 
 ### On the desktop
@@ -157,7 +189,20 @@ With no app focused and no dialog open, a single letter starts an app:
 | `I` | HID Inspector — see [HID Device Config](../file_formats/hid_devices.md) |
 
 That list is the `[[shortcuts]]` section of `/etc/system_conf.toml`. Add your own by naming
-the app's path.
+the app's path. The Shortcuts entry in the system menu shows the list a machine actually
+has, read from its own configuration.
+
+The menu bar answers to the keyboard too:
+
+| Key | Effect |
+|---|---|
+| `F10` | Open the system menu with the first entry picked |
+| `↑` `↓` `Home` `End` | Move the selection. It wraps at both ends |
+| `Enter` | Run the entry |
+| `Esc` or `F10` | Close the menu |
+
+The highlight is the same one the mouse moves, so the two ways of driving the menu cannot
+disagree about what is selected.
 
 ## Switching between apps
 
@@ -165,9 +210,15 @@ the app's path.
 
 ### Windowed apps: cycle
 
-It moves round-robin through the running apps, skipping the desktop. The window comes to the
-front and takes the keyboard, so you can `Ctrl` + `Tab` from the editor to your app, type
-into it, and `Ctrl` + `Tab` back to keep editing.
+It moves round-robin through the desktop and the running apps — the desktop first, then the
+apps in the order they started. Whatever it lands on comes to the front and takes the
+keyboard, so you can `Ctrl` + `Tab` from the editor to your app, type into it, and
+`Ctrl` + `Tab` back to keep editing.
+
+The desktop is a stop on that ring because its menu bar and its letter shortcuts only answer
+while it holds the keyboard. Without it, starting one app meant the menu could only be
+reached with the mouse. While a fullscreen app is up the desktop is suspended and drops out
+of the ring.
 
 ### A fullscreen app: park it
 

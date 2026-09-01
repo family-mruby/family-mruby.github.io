@@ -22,15 +22,15 @@ this is, see [Choose your hardware](choose_hardware.md).
     - For connecting to earphones or speakers
     - If you use a cable that converts to red/white RCA plugs and connect it to the HDMI converter device, you can route audio over HDMI as well.
 - USB keyboard
-    - For confirmed working devices, see [Verified Devices](../../compatibility). Some keyboards may not be recognized due to compatibility issues.
+    - For confirmed working devices, see [Verified Devices](../compatibility.md). Some keyboards may not be recognized due to compatibility issues.
 - USB mouse
-    - For confirmed working devices, see [Verified Devices](../../compatibility). Some mice may not be recognized due to compatibility issues.
+    - For confirmed working devices, see [Verified Devices](../compatibility.md). Some mice may not be recognized due to compatibility issues.
 
 ### Nice to Have
 
 - USB Hub
     - Required if the keyboard and mouse are not an integrated unit.
-    - For confirmed working devices, see [Verified Devices](../../compatibility). Some hubs may not be recognized due to compatibility issues.
+    - For confirmed working devices, see [Verified Devices](../compatibility.md). Some hubs may not be recognized due to compatibility issues.
 - SD card
     - For when you need to handle large data
 - USB gamepad

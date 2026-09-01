@@ -28,7 +28,7 @@ That is all. There is nothing to install on the PC.
 
 Your input goes into the device through its normal input path, so it is indistinguishable
 from touching the hardware — the global shortcuts (`Ctrl` + `Q`, `Ctrl` + `Tab`) work
-exactly as they do on the device.
+exactly as they do on the device, and your mouse wheel scrolls whatever has the keyboard.
 
 !!! warning "One user at a time"
     Whoever is holding the Tab5 and whoever is in the browser are driving the same cursor.
@@ -36,8 +36,9 @@ exactly as they do on the device.
 
 !!! danger "Anyone on the network can do this"
     There is no password and no access control. Any device on the same network can open the
-    address, watch the screen and send input — nothing distinguishes them from you. The
-    stream is plain HTTP, so it is readable on the wire as well.
+    address, watch the screen, send input, read and write files, and start or stop apps —
+    nothing distinguishes them from you. The stream is plain HTTP, so it is readable on the
+    wire as well.
 
     Use this only on a network you trust, never forward a port to the device from the
     internet, and set `enable = false` below (or turn Wi-Fi off) when you do not want to be
@@ -95,13 +96,44 @@ network.
 The viewer has a fullscreen mode that fills your monitor at the source aspect ratio. The
 device sends exactly the same stream; only the viewer changes.
 
-## Driving it from a script
+## Files, and apps, over Wi-Fi
 
-The repository ships two small tools that talk to the same interfaces, so a script — or an
-automated test — can operate the device:
+The same server moves files and starts apps, so a program can go onto the machine without a
+cable and without the editor.
 
 ```
-ruby tools/fmrb_rd_input.rb <ip> click X Y | dclick X Y | key ctrl+tab | sleep MS ...
+ruby tools/fmrb_rd_fs.rb <ip> ls    /home
+ruby tools/fmrb_rd_fs.rb <ip> put   my.app.rb /app/usr/my.app.rb
+ruby tools/fmrb_rd_fs.rb <ip> get   /home/notes.txt
+ruby tools/fmrb_rd_fs.rb <ip> pull  /mnt/sd/shots ./shots     # a whole tree
+ruby tools/fmrb_rd_fs.rb <ip> push  ./slides /home/slides
+```
+
+Give it only the address and you get a prompt instead, like an FTP client, with a current
+directory on the device and another on your PC (`cd`, `lcd`, `ls`, `get`, `put`, `pull`,
+`push`, `cat`, `launch`, `ps`).
+
+Paths are the ones apps use — `/app`, `/home`, `/usr/share`, `/mnt/sd` — and the device
+refuses anything else. `pull` and `push` skip a file whose size already matches on the
+other side; `--force` copies everything.
+
+With `fmrb_rd_launch.rb`, `fmrb_rd_ps.rb` and `fmrb_rd_kill.rb` beside it, the development
+loop is put, launch, look, kill — no re-flashing:
+
+```
+ruby tools/fmrb_rd_fs.rb     <ip> put my.app.rb /app/usr/my.app.rb
+ruby tools/fmrb_rd_launch.rb <ip> /app/usr/my.app.rb
+ruby tools/fmrb_rd_snap.rb   <ip> out.jpg
+ruby tools/fmrb_rd_kill.rb   <ip> <pid>
+```
+
+## Driving it from a script
+
+The same tools drive the screen, so a script — or an automated test — can operate the
+device:
+
+```
+ruby tools/fmrb_rd_input.rb <ip> click X Y | dclick X Y | key ctrl+tab | wheel N | sleep MS ...
 ruby tools/fmrb_rd_snap.rb  <ip> out.jpg
 ```
 
@@ -113,7 +145,9 @@ screenshots in this documentation were taken.
 
 The device runs a small HTTP server. `GET /stream` is the MJPEG stream, `/ws` is a
 WebSocket carrying input events as binary messages, `/ws_video` carries H.264, and `/status`
-returns a JSON summary you can poll:
+returns a JSON summary you can poll. `POST /app/launch?path=`, `POST /app/kill?pid=` and
+`GET /app/list` are the app endpoints, and `/fs/list`, `/fs/get`, `/fs/put`, `/fs/del` and
+`/fs/mkdir` the file ones:
 
 ```
 $ curl -s http://fmruby.local/status

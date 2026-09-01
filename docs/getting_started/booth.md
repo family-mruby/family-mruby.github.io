@@ -4,7 +4,7 @@ For those who purchased a board from [this sales page](https://booth.pm/ja/items
 
 Please check the included items, and if anything is missing, contact us via BOOTH messaging.
 
-If everything is in order, proceed to [Setup](../setup).
+If everything is in order, proceed to [Setup](setup.md).
 
 ## Included Items
 

@@ -4,83 +4,45 @@
   <img src="/images/topimage.png" width="500" alt="Family mruby Logo">
 </div>
 
-## What is Family mruby?
+## What's new in 2.1
 
-Family mruby is a small computer that boots straight into a Ruby programming environment.
+Colours you can change. The window frame, the desktop, the editor and the shell all take
+their colours from the system theme now, and any of them can be overridden by name in
+`/home/colors.toml`. The shell has a `color` command that writes it for you.
+→ [Colours](file_formats/colors.md)
 
-Plug in a keyboard and a mouse, connect a screen, and you get a desktop, a launcher, an
-editor, and a shell — all running on a single microcontroller. Everything you write runs
-on the same machine you write it on. There is no PC toolchain in the loop, no cross
-compiler, no flashing cycle: press F5 in the editor and your program starts.
+Things the machine does by itself. Modern runs a handful of small resident services: the
+clock sets itself from the network, the machine publishes its own address, and anything can
+be read aloud. They are listed in a file you can edit, and you can add your own.
+→ [System Services](file_formats/services.md)
 
-<div align="center">
-  <img src="/images/photo_editor_run.jpg" width="620" alt="The editor with flappy.rb open, and the game it just started running in the window next to it">
-  <br><em>The editor and the app it just started, side by side on the device</em>
-</div>
+Your files, kept apart from ours. `/home` is yours and starts empty. The samples, sprites,
+sounds and decks that ship with the firmware live under `/usr/share`, and nothing the machine
+ships ever lands in `/home`.
+→ [Files & I/O](api/filesystem.md#home-is-yours)
 
-It is built on [PicoRuby](https://github.com/picoruby/picoruby) and ships with its own
-multitasking OS, so several apps can run side by side, each in its own isolated heap.
+One table decides which app opens a file. A `.md` opens as a presentation, a `.nsf` in the
+music player, a `.rb` runs. The table is a file, and any line of it can be overridden.
+→ [File Associations](file_formats/associations.md)
 
-## Two machines, one system
+New apps. PicoRabbit presents a slide deck written in Markdown, Robo Explorer is a maze you
+can only solve by writing the robot's brain, and Modern gains a video player, a microphone
+spectrum and a readout of its motion sensor.
+→ [Default Apps](getting_started/default_apps.md)
 
-Version 2.0 runs on two very different pieces of hardware. The same Ruby app runs on both.
+A desktop you can drive. The taskbar lists the open windows, the menu bar works from the
+keyboard, `Ctrl+Tab` cycles through the desktop as well as the apps, and the mouse wheel
+scrolls the editor, the shell, the log and the file dialogs.
+→ [The Desktop](getting_started/desktop.md)
 
-|  | **Modern** | **Retro** |
-|---|---|---|
-| Hardware | [M5Stack Tab5](https://docs.m5stack.com/en/core/Tab5) | [narya-board](https://github.com/family-mruby/narya-board) (dedicated board) |
-| Main chip | ESP32-P4 (dual-core RISC-V) + ESP32-C6 | ESP32-S3 + ESP32-WROVER |
-| Screen | Built-in 1280x720 IPS panel, MIPI-DSI | NTSC composite out, to a CRT or a capture device |
-| Framebuffer | 426 x 240, scaled 3x onto the panel | 320 x 240 |
-| Sound | Built-in speaker, headphone jack | 3.5 mm line out |
-| Input | USB keyboard & mouse, capacitive touch, Tab5 Keyboard | USB keyboard & mouse |
-| Network | Wi-Fi / BLE via the on-board ESP32-C6 | Wi-Fi / BLE on the ESP32-S3 |
-| Extras | Browser remote desktop over Wi-Fi, GROVE port | RCA video, 2x GROVE, battery-backed RTC |
-
-**Modern** is the machine you build things on: it is self-contained, it has a screen in the
-lid, and you can drive its desktop from a browser on your PC over Wi-Fi.
-
-**Retro** is the machine you play on: real NTSC composite video into a CRT, the 256-colour
-picture and the NES-style 4-channel sound chip that goes with it.
-
-Not sure which to read? See [Choose your hardware](getting_started/choose_hardware.md).
-
-<div align="center">
-  <img src="/images/photo_two_machines.jpg" width="700" alt="Retro on the left, Modern on the right, both showing the same shell">
-  <br><em>Retro (narya-board, into a monitor) and Modern (M5Stack Tab5) — the same shell on both</em>
-</div>
-
-## What's new in 2.0
-
-**A second machine.** Family mruby now runs on the M5Stack Tab5 — one ESP32-P4 doing
-graphics, sound, input and the OS by itself, with capacitive touch, the Tab5 Keyboard,
-Japanese fonts, and the built-in speaker.
-→ [Modern (M5Stack Tab5)](getting_started/modern.md)
-
-**Your screen, in a browser.** Modern serves its own desktop over Wi-Fi. Open the device's
-address on your PC and you can watch it and drive it with your PC's keyboard and mouse.
+Files over Wi-Fi. The remote desktop can list, fetch, upload and delete files on the device,
+so a program can go onto the machine without a cable.
 → [Remote Desktop](remote_desktop.md)
 
-**Ruby on the network.** A CRuby-shaped networking API — `Net::HTTP`, WebSocket and TLS —
-so an app can talk to the internet in a few lines. Works on both machines.
-→ [Network](api/network.md)
-
-**Music out.** A MIDI layer that plays through the built-in sound chip *or* out of the
-GROVE port to an external synth, an SMF (standard MIDI file) player, and MML for Ruby apps.
-→ [MIDI](api/midi.md)
-
-**Two more languages.** `.bas` files run on FMRuby BASIC, a Family BASIC-compatible
-interpreter with its own text screen and sprites. `.py` files run on an embedded
-MicroPython. Both launch as ordinary apps, next to the Ruby ones.
-→ [BASIC and MicroPython](other_languages.md)
-
-**Debugging that reaches the device.** Set breakpoints from VS Code over TCP or BLE, or use
-the debugger built into the on-device editor.
-→ [Debugging](debugging.md)
-
-**A faster, quieter system.** The kernel is now ahead-of-time compiled to native code, which
-cut input latency; the desktop boot dropped from about 20 seconds to about 6; and the
-desktop no longer allocates in its steady state, so it stops stealing time from the app you
-are actually running.
+In a browser. The firmware is also compiled to WebAssembly, so the desktop, the editor and
+the sound chip run in a browser tab with nothing installed. Files you make there stay in the
+browser and can be carried out as an archive.
+→ [Family mruby Studio](getting_started/studio.md)
 
 ## Demo Video
 
@@ -88,10 +50,10 @@ are actually running.
 
 ## Getting the hardware
 
-**Modern** runs on a stock [M5Stack Tab5](https://docs.m5stack.com/en/core/Tab5) — no
+Modern runs on a stock [M5Stack Tab5](https://docs.m5stack.com/en/core/Tab5) — no
 modification, no soldering. Flash it from your browser and it boots.
 
-**Retro** needs the narya-board, available on [BOOTH](https://booth.pm/ja/items/8128031).
+Retro needs the narya-board, available on [BOOTH](https://booth.pm/ja/items/8128031).
 The schematics, Gerber data and BOM are all public, so you can also build a compatible
 board yourself.
 
@@ -103,6 +65,7 @@ board yourself.
 - [Hello World](getting_started/hello_world.md) — your first app
 - [Connecting to Wi-Fi](getting_started/wifi.md) — remote desktop and networking
 - [Simulator](getting_started/simulator.md) — run the whole system on Linux, no hardware needed
+- [Family mruby Studio](getting_started/studio.md) — the same system in a browser tab
 - [API Reference](api/index.md) — what your app can call
 
 ## Repositories

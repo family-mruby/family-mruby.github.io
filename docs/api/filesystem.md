@@ -11,7 +11,36 @@ Paths visible to users follow a Unix-style single namespace. Apps can pass root-
 | `/...` (`/app`, `/home`, `/usr`, etc.) | Internal LittleFS (16MB) | System files, user apps, persistent data |
 | `/mnt/sd/...` | SD card (FAT32) | Large data, music, images |
 
+## `/home` is yours
+
+`/home` starts empty, and nothing the machine ships with is ever written into it.
+Everything that comes with the firmware lives outside it:
+
+| Path | |
+|---|---|
+| `/app` | The installed apps. An app of your own goes in `/app/usr` so the launcher finds it |
+| `/usr/share/samples/ruby` | Small Ruby programs to read |
+| `/usr/share/samples/slides` | Slide decks for the presentation tool |
+| `/usr/share/samples/services` | A service list and two service bodies to copy |
+| `/usr/share/services` | The bodies of the [services](../file_formats/services.md) the machine runs |
+| `/usr/share/sprites`, `sounds`, `music`, `backgrounds`, `icon`, `template` | What the bundled apps draw and play |
+| `/etc` | Configuration that ships with the firmware |
+| `/var/cache` | Caches the system rebuilds on its own |
+
+To play with a sample, copy it into `/home` and edit your copy. The original is then still
+there when you want to start again.
+
+Your own settings follow the same split: the system's are in `/etc`, and yours sit beside
+them in `/home` — `/home/colors.toml`, `/home/services.toml`, `/home/associations.toml` —
+where they win over the shipped ones without replacing them.
+
+!!! warning "Re-flashing is a different matter"
+    This is about what the running machine does. Writing the firmware from the browser
+    installer replaces the whole filesystem, `/home` included. Copy out what you care
+    about first — see [Firmware Update](../getting_started/firmware_update.md).
+
 ## File Class
+
 
 ### Class Methods
 

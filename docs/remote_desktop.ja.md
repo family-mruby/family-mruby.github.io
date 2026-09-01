@@ -27,7 +27,8 @@
 これだけです。パソコン側に入れるものはありません。
 
 送った操作はファームウェアの通常の入力経路に合流するので、実機を触っているのと区別が
-ありません。`Ctrl` + `Q` や `Ctrl` + `Tab` もそのまま効きます。
+ありません。`Ctrl` + `Q` や `Ctrl` + `Tab` もそのまま効き、マウスのホイールは
+キーボードの入力先になっている窓を送ります。
 
 !!! warning "同時に触るのは 1 人まで"
     Tab5 を手に持っている人と、ブラウザを開いている人は、同じカーソルを動かします。誰かが
@@ -35,7 +36,8 @@
 
 !!! danger "同じネットワークにいれば誰でも操作できます"
     合言葉の確認も、接続元の制限もありません。同じネットワークにある機械なら、どれでも
-    アドレスを開いて画面を見て、操作を送れます。あなたと区別する手立てがありません。
+    アドレスを開いて画面を見て、操作を送り、ファイルを読み書きし、アプリを起動したり
+    止めたりできます。あなたと区別する手立てがありません。
     通信は平文の HTTP なので、経路上で中身を見ることもできます。
 
     信頼できる環境でのみ使ってください。インターネット側から届くようにルータで転送しては
@@ -92,13 +94,43 @@ h264_gop = 30
 表示側には、元の縦横比のままモニタいっぱいに広げる全画面表示があります。配信されるものは
 同じで、表示のしかただけが変わります。
 
-## 手元の道具から操作する
+## WiFi でファイルとアプリを扱う
 
-同じ仕組みを使う小さな道具がリポジトリに入っていて、手順書や自動の検証から実機を
-操作できます。
+同じサーバがファイルの受け渡しとアプリの起動もします。ケーブルもエディタも使わずに、
+プログラムを実機へ送り込めます。
 
 ```
-ruby tools/fmrb_rd_input.rb <ip> click X Y | dclick X Y | key ctrl+tab | sleep MS ...
+ruby tools/fmrb_rd_fs.rb <ip> ls    /home
+ruby tools/fmrb_rd_fs.rb <ip> put   my.app.rb /app/usr/my.app.rb
+ruby tools/fmrb_rd_fs.rb <ip> get   /home/notes.txt
+ruby tools/fmrb_rd_fs.rb <ip> pull  /mnt/sd/shots ./shots     # まとめて取得
+ruby tools/fmrb_rd_fs.rb <ip> push  ./slides /home/slides
+```
+
+アドレスだけを渡すと、FTP のような対話モードになります。実機側とパソコン側に別々の
+カレントディレクトリがあります (`cd`、`lcd`、`ls`、`get`、`put`、`pull`、`push`、
+`cat`、`launch`、`ps`)。
+
+扱えるのはアプリが使うパス (`/app`、`/home`、`/usr/share`、`/mnt/sd`) だけで、それ以外は
+実機側が断ります。`pull` と `push` は、反対側に同じ大きさのファイルがあれば飛ばします。
+`--force` を付けると全部写します。
+
+`fmrb_rd_launch.rb`、`fmrb_rd_ps.rb`、`fmrb_rd_kill.rb` と組み合わせると、書き込み直し
+なしで「送る・起動する・見る・止める」の繰り返しができます。
+
+```
+ruby tools/fmrb_rd_fs.rb     <ip> put my.app.rb /app/usr/my.app.rb
+ruby tools/fmrb_rd_launch.rb <ip> /app/usr/my.app.rb
+ruby tools/fmrb_rd_snap.rb   <ip> out.jpg
+ruby tools/fmrb_rd_kill.rb   <ip> <pid>
+```
+
+## 手元の道具から操作する
+
+同じ道具で画面も操作できるので、手順書や自動の検証から実機を動かせます。
+
+```
+ruby tools/fmrb_rd_input.rb <ip> click X Y | dclick X Y | key ctrl+tab | wheel N | sleep MS ...
 ruby tools/fmrb_rd_snap.rb  <ip> out.jpg
 ```
 
@@ -109,7 +141,9 @@ ruby tools/fmrb_rd_snap.rb  <ip> out.jpg
 ## 仕組み
 
 デバイスは小さな HTTP サーバを動かしています。`GET /stream` が MJPEG、`/ws` が入力を
-運ぶ WebSocket、`/ws_video` が H.264、`/status` が状態を返します。
+運ぶ WebSocket、`/ws_video` が H.264、`/status` が状態を返します。アプリは
+`POST /app/launch?path=`、`POST /app/kill?pid=`、`GET /app/list`、ファイルは
+`/fs/list`、`/fs/get`、`/fs/put`、`/fs/del`、`/fs/mkdir` です。
 
 ```
 $ curl -s http://fmruby.local/status
