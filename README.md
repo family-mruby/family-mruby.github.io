@@ -12,6 +12,7 @@ Published at: <https://family-mruby.github.io/>
 - `docker/` — MkDocs builder Docker image used by `build.sh` / `serve.sh`
 - `scripts/sync-console.sh` — pulls the Family mruby Console web client from `fmruby-core` (see below)
 - `scripts/check_links.rb` — checks every internal link in a built site (see below)
+- `scripts/check_api.rb` — checks the API pages against the firmware sources (see below)
 
 ## Local preview
 
@@ -44,6 +45,29 @@ It exits non-zero on a broken link, and runs in two places already: at the end o
 `build.sh`, and in the deploy workflow between the build and `gh-deploy`, so a broken link
 fails the deploy instead of being published. Links under `/console/` and `/studio/` are
 skipped: those are generated into the build and are not present locally.
+
+## API check
+
+```bash
+ruby scripts/check_api.rb ../fmruby-core     # or set FMRUBY_CORE
+```
+
+Reads the firmware sources and compares them with the API pages, in both directions:
+
+- a public method the pages never mention (this is how `set_timer`, the extra canvases and
+  `idle_gc` were found missing)
+- a constant the pages name that does not exist (`MOD_GUI` raised `NameError` for anyone
+  who copied it)
+- an `/app` or `/usr/share` path a page points at that is not in the firmware tree
+
+It reads the sources rather than a generated list, so there is nothing to regenerate. What
+a page is right not to list — parser helpers, widget internals, the class methods only the
+desktop and the monitor use — is named in the script with a reason, so anything it prints
+is either a real gap or a name to add to that list.
+
+It is deliberately not in the deploy workflow. The site can legitimately describe an API
+that is on `fmruby-core`'s `develop` and not yet on `main`, and telling that from a gap
+needs a person. Run it while writing, and before a release.
 
 ## Deployment
 
