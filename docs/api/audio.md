@@ -68,7 +68,8 @@ A mechanism for pre-loading sequences into slots before playback. Suitable for s
 
 | Method | Purpose |
 |---|---|
-| `load_fmsq(slot_id, binary_data)` | Register binary data into a slot |
+| `load_fmsq(slot_id, binary_data)` | Register binary data into a slot. Bounded by the message size, so a real score does not fit |
+| `load_fmsq_file(slot_id, path)` | Load a slot from a file already on the audio side (put it there with `@gfx.sync_file` first). This is the route for anything bigger than a jingle |
 | `play_slot(slot_id)` | Play a registered slot |
 
 ```ruby

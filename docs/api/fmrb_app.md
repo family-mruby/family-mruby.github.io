@@ -173,6 +173,43 @@ widget — see [UI Widgets](ui.md).
 
 For details and receive handlers, see [Pub/Sub](pubsub.md).
 
+## Timers
+
+| Method | |
+|---|---|
+| `set_timer(interval) { ... }` | Run the block once, `interval` ms from now. Returns an id |
+| `clear_time(id)` | Cancel one that has not fired |
+
+A timer is one-shot: to repeat, set the next one from inside the block. They are checked
+once per turn of the app loop, so the resolution is whatever `on_update` returns.
+
+## Starting another app
+
+`request_run(path, prev_pid = nil)` asks the kernel to spawn a file, optionally killing an
+instance a previous request started. The answer arrives as an app-control message with the
+new pid (`nil` when it failed). Paths are limited to `/app` and `/home`.
+
+## Extra canvases
+
+`create_canvas_gfx(width:, height:, z_offset: 1, transparent: false, transparent_color: 0)`
+returns an `FmrbGfx` bound to a canvas of the app's own, and `delete_canvas_gfx(gfx)`
+releases it (they also go when the app does, including on a crash). Position and show it
+with `gfx.present(x, y)`; combine it with
+[`set_viewport`](fmrb_gfx.md#hardware-scrolling-modern-only) for a hardware-scrolled layer.
+
+This is for fullscreen apps: the window manager does not follow extra canvases across a
+change of focus.
+
+## Collecting garbage while idle
+
+`self.idle_gc = true` splits collection into steps taken while the app has nothing to do,
+instead of stopping it for 100-200 ms in the middle of something. It is for an app that
+must not pause — a player, an animation — and cannot get its allocation down to nothing.
+
+The costs: generational mode goes off and does not come back on its own, and a step can
+delay a message by its own length. An app that is always busy gets the old behaviour back
+by itself.
+
 ## Execution Control
 
 | Method | Purpose |
@@ -242,6 +279,11 @@ Pass root-relative paths (e.g. `/home/foo.txt`) or SD card paths like `/mnt/sd/.
 | `FmrbApp.heap_info` | ESP-IDF heap info (`free`, `total`, `min_free`, `largest_block`, etc.) |
 | `FmrbApp.enable_cursor` | Show mouse cursor (delayed until the first mouse movement) |
 | `FmrbApp.set_cursor_visible(visible)` | Immediately show/hide cursor. Useful for hiding in fullscreen games and restoring on exit |
+| `FmrbApp.uptime_us` | Microseconds since boot |
+| `FmrbApp.wifi_info` / `FmrbApp.wifi_connected?` | The network the machine is on, and whether it is on one |
+| `FmrbApp.usb_devices` | What is plugged into the USB host port |
+| `FmrbApp.set_kana_mode(mode)` | Switch kana input: 0 ASCII, 1 hiragana, 2 katakana. The change comes back as a `kana_mode` event |
+| `FmrbApp.reboot` | Restart the machine |
 | `FmrbApp._get_last_error` | Last app error (returns `{name:, error:}` if present) |
 
 ## Constants

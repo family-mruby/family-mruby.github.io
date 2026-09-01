@@ -67,7 +67,8 @@ PCM 16bit・モノラル・8000〜48000Hz・2MB まで。音源が鳴らして�
 
 | メソッド | 用途 |
 |---|---|
-| `load_fmsq(slot_id, binary_data)` | バイナリ列をスロットに登録 |
+| `load_fmsq(slot_id, binary_data)` | バイナリ列をスロットに登録します。1 メッセージの上限があるので、実用的な譜面は入りません |
+| `load_fmsq_file(slot_id, path)` | 音声側にすでにあるファイルからスロットを読みます (先に `@gfx.sync_file` で送っておきます)。短い効果音より大きいものはこちらです |
 | `play_slot(slot_id)` | 登録済みスロットを再生 |
 
 ```ruby

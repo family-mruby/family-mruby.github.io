@@ -82,6 +82,9 @@ TileMap.new(path)
 | メソッド | 用途 |
 |---|---|
 | `render(sheet, origin_x:, origin_y:, max_cols: nil, max_rows: nil)` | 全レイヤを描画。`origin_*` は左上タイルの描画位置。`max_cols/rows` で表示範囲をクリップ（マップが画面より大きいときのビューポート用） |
+| `render_view(sheet, origin_x:, origin_y:, view_x:, view_y:, view_w:, view_h:)` | 表示範囲にかかるタイルだけを、タイル未満のずれも含めて描きます。`origin_*` は表示範囲の左上が canvas のどこに来るか、`view_x` / `view_y` はその左上を地図全体の画素座標で表したものです。スクロールする世界はこれを使います |
+| `tile_at(x, y, layer: 0)` | そのタイル座標のタイル番号。範囲外や空なら `nil` |
+| `walkable?(x, y)` | そこが `walkable_tiles` に入っているか。範囲外は `false` |
 | `event_at(x, y)` | タイル座標 (x, y) のイベント Hash を返す。なければ `nil` |
 
 | 属性 | 内容 |

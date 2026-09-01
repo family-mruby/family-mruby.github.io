@@ -99,6 +99,39 @@ Log.info("size: #{bmp[:width]}x#{bmp[:height]}")
 
 For detailed specifications, see [Image & Icon Files](../file_formats/image_formats.md#bmp-rgb332).
 
+## Fmrb::Fft
+
+A fast Fourier transform, with the engine chosen at run time. The microphone spectrum app
+is what it was built for; anything that has to turn samples into frequencies can use it.
+
+```ruby
+fft = Fmrb::Fft.new(size: 512, backend: :c)
+mag = fft.forward(samples)              # size/2 little-endian int16 magnitudes
+peak = Fmrb::Fft.peak_bin(mag)          # index of the loudest bin
+hz = peak * rate / 512.0
+fft.close
+```
+
+`size` is a power of two between 64 and 1024. `samples` is `size` int16 samples as a byte
+String — the shape `FmrbAudio#mic_read` returns.
+
+| Method | |
+|---|---|
+| `Fmrb::Fft.new(size: 512, backend: :ruby)` | Pick the engine |
+| `forward(samples)` | One transform. Returns the magnitudes |
+| `run(samples, iters)` | `iters` transforms of the same input, timed inside the engine: `[microseconds, magnitudes]` |
+| `close` | Release it |
+| `Fmrb::Fft.bin(mag, index)` | One magnitude out of the result |
+| `Fmrb::Fft.peak_bin(mag)` | Index of the loudest |
+| `Fmrb::Fft.sine(size:, cycles:, amp:)` | A synthetic input, so engines can be compared on the same waveform |
+| `Fmrb::Fft.bench(size:, iters:, backend:, reps:)` | Time one engine |
+| `Fmrb::Fft.available?(backend)` / `.q15?(backend)` | Whether this build has it, and whether it computes in fixed point |
+
+The backends are `:ruby`, `:c`, `:c64`, `:dsp`, `:spinel` and the fixed-point `:ruby_q15`,
+`:c_q15`, `:spinel_q15`. Which exist depends on the build, so ask `available?` rather than
+assuming. The fixed-point ones differ from the floating ones by a few counts by
+construction — comparing results across the two families needs that allowance.
+
 ## Related
 
 - For direct binary operations, see [`File` / `IO`](filesystem.md)

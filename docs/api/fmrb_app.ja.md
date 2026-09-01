@@ -173,6 +173,42 @@ when :gamepad_axis
 
 詳細と受信ハンドラは [Pub/Sub](pubsub.md) を参照。
 
+## タイマ
+
+| メソッド | |
+|---|---|
+| `set_timer(interval) { ... }` | `interval` ミリ秒後にブロックを 1 回実行します。id を返します |
+| `clear_time(id)` | まだ発火していないものを取り消します |
+
+タイマは 1 回限りです。繰り返したいときは、ブロックの中で次を張り直します。確認はアプリの
+ループ 1 周につき 1 回なので、細かさは `on_update` の戻り値で決まります。
+
+## 別のアプリを起動する
+
+`request_run(path, prev_pid = nil)` はカーネルにファイルの起動を頼みます。前の要求で
+起動したものがあれば、その pid を渡して先に止められます。結果は新しい pid を載せた
+アプリ制御メッセージとして届きます (失敗なら `nil`)。渡せるのは `/app` と `/home` の下だけです。
+
+## キャンバスを増やす
+
+`create_canvas_gfx(width:, height:, z_offset: 1, transparent: false, transparent_color: 0)`
+は、アプリ自身が持つキャンバスに結びついた `FmrbGfx` を返します。`delete_canvas_gfx(gfx)`
+で解放します (アプリが終わるとき、落ちたときにも自動で解放されます)。位置を決めて出すのは
+`gfx.present(x, y)` で、[`set_viewport`](fmrb_gfx.md#ハードウェアスクロール-modern-のみ) と
+組み合わせるとハードウェアでスクロールする層になります。
+
+これは全画面のアプリ向けです。窓の管理は、焦点が移ったときに増やしたキャンバスまでは
+面倒を見ません。
+
+## 暇なときに GC を進める
+
+`self.idle_gc = true` にすると、回収を細かく分けて、アプリが何もしていない時間に少しずつ
+進めます。途中で 100〜200 ミリ秒止まるのを避けたいアプリ — 演奏やアニメーション — で、かつ
+確保を無くしきれないときのためのものです。
+
+代償が 2 つあります。世代別モードが切れて自動では戻らないことと、1 回の刻みの分だけ
+メッセージが遅れうることです。ずっと忙しいアプリは、放っておいても元の挙動に戻ります。
+
 ## 実行制御
 
 | メソッド | 用途 |
@@ -241,6 +277,11 @@ when :gamepad_axis
 | `FmrbApp.heap_info` | ESP-IDF ヒープ情報（`free`, `total`, `min_free`, `largest_block` ほか） |
 | `FmrbApp.enable_cursor` | マウスカーソルを表示（最初のマウス移動まで遅延あり） |
 | `FmrbApp.set_cursor_visible(visible)` | カーソルの即時表示／非表示。フルスクリーンゲームで非表示にし、終了時に戻す用途 |
+| `FmrbApp.uptime_us` | 起動からのマイクロ秒 |
+| `FmrbApp.wifi_info` / `FmrbApp.wifi_connected?` | つながっているネットワークの情報と、つながっているかどうか |
+| `FmrbApp.usb_devices` | USB ホスト端子につながっているもの |
+| `FmrbApp.set_kana_mode(mode)` | かな入力の切替。0 ASCII、1 ひらがな、2 カタカナ。結果は `kana_mode` イベントで返ります |
+| `FmrbApp.reboot` | 再起動します |
 | `FmrbApp._get_last_error` | 最後のアプリエラー（あれば `{name:, error:}`） |
 
 ## 定数

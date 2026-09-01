@@ -257,6 +257,37 @@ ClockSyncApp.new.start
     このクラスを直接使うのは、電圧低下フラグや RX8900 の温度センサなど、部品自身の機能が
     要るときだけです。
 
+## 6 軸センサ (BMI270、Modern のみ)
+
+Modern は内部の I2C バスに BMI270 (加速度計とジャイロ) を載せています。このバスは表示の
+ドライバが直列化してくれるので、普通の `I2C` を作るだけで使えます。
+
+```ruby
+i2c = I2C.new(unit: :ESP32_I2C1,
+              sda_pin: FmrbHw::PIN_I2C1_SDA,
+              scl_pin: FmrbHw::PIN_I2C1_SCL)
+imu = BMI270.new(i2c)
+if imu.probe && imu.init
+  a = imu.read_accel     # {x:, y:, z:}、単位は g
+  g = imu.read_gyro      # {x:, y:, z:}、単位は度/秒
+end
+```
+
+| メソッド | 戻り値・用途 |
+|---|---|
+| `BMI270.new(i2c, addr = nil)` | アドレスを渡さなければ `0x68` と `0x69` から探します |
+| `probe` | 応答があったか |
+| `init(config_path = "/usr/share/imu/bmi270_config.bin")` | センサの設定データを書き込みます。電源投入後に 1 回必要で、少し時間がかかります |
+| `ready?` | 設定が通ったか |
+| `read_accel` | 加速度。`{x:, y:, z:}`、単位は g |
+| `read_gyro` | 角速度。`{x:, y:, z:}`、単位は度/秒 |
+| `read_raw` | 両方を 16bit の生の値で。`{ax:, ay:, az:, gx:, gy:, gz:}` |
+| `read_temperature` | 摂氏 |
+| `address` / `error` | 見つけたアドレスと、直前の失敗の理由 |
+
+同梱の 6 軸センサアプリ (`/app/modern/imu.app.rb`) が手本です。部品の無い基板では作り物の
+傾きで描き続け、その旨を状態行に出します。
+
 ## ピン割り当て確認
 
 ピンを使う前に、システムが既に使っていないか確認できます。

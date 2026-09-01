@@ -99,6 +99,39 @@ Log.info("size: #{bmp[:width]}x#{bmp[:height]}")
 
 詳細仕様は [画像・アイコンファイル](../file_formats/image_formats.md#bmp-rgb332) を参照。
 
+## Fmrb::Fft
+
+高速フーリエ変換です。使う実装は実行時に選べます。もともとはマイクの音を見るアプリの
+ために作ったものですが、標本を周波数に変えたいものなら何にでも使えます。
+
+```ruby
+fft = Fmrb::Fft.new(size: 512, backend: :c)
+mag = fft.forward(samples)              # size/2 個の int16 (リトルエンディアン)
+peak = Fmrb::Fft.peak_bin(mag)          # 一番大きい所の番号
+hz = peak * rate / 512.0
+fft.close
+```
+
+`size` は 64 から 1024 までの 2 のべき乗です。`samples` は int16 を `size` 個並べた
+バイト列で、`FmrbAudio#mic_read` が返す形そのままです。
+
+| メソッド | |
+|---|---|
+| `Fmrb::Fft.new(size: 512, backend: :ruby)` | 実装を選びます |
+| `forward(samples)` | 1 回変換して、大きさの列を返します |
+| `run(samples, iters)` | 同じ入力を `iters` 回変換し、実装の中で時間を測ります。`[マイクロ秒, 大きさの列]` |
+| `close` | 解放します |
+| `Fmrb::Fft.bin(mag, index)` | 結果から 1 つ取り出します |
+| `Fmrb::Fft.peak_bin(mag)` | 一番大きい所の番号 |
+| `Fmrb::Fft.sine(size:, cycles:, amp:)` | 合成した入力。同じ波形で実装どうしを比べるため |
+| `Fmrb::Fft.bench(size:, iters:, backend:, reps:)` | 1 つの実装の時間を測ります |
+| `Fmrb::Fft.available?(backend)` / `.q15?(backend)` | このビルドに入っているか、固定小数点で計算するか |
+
+実装は `:ruby`、`:c`、`:c64`、`:dsp`、`:spinel` と、固定小数点の `:ruby_q15`、`:c_q15`、
+`:spinel_q15` です。どれが入っているかはビルド次第なので、決め打ちせず `available?` で
+尋ねてください。固定小数点のものは仕組み上、浮動小数点のものと数カウント違います。
+2 つの系統をまたいで結果を比べるときは、その分を見込む必要があります。
+
 ## 関連
 
 - 直接バイナリ操作は [`File` / `IO`](filesystem.md) を参照

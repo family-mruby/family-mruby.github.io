@@ -258,6 +258,37 @@ ClockSyncApp.new.start
     back to the RTC. Reach for the driver classes only when you want the chip's own
     features — the low-voltage flag, or the RX8900's temperature sensor.
 
+## Six-Axis Sensor (BMI270, Modern only)
+
+Modern carries a BMI270 accelerometer and gyroscope on its internal I2C bus, which the
+display driver serialises — so an ordinary `I2C` instance is all it takes.
+
+```ruby
+i2c = I2C.new(unit: :ESP32_I2C1,
+              sda_pin: FmrbHw::PIN_I2C1_SDA,
+              scl_pin: FmrbHw::PIN_I2C1_SCL)
+imu = BMI270.new(i2c)
+if imu.probe && imu.init
+  a = imu.read_accel     # {x:, y:, z:} in g
+  g = imu.read_gyro      # {x:, y:, z:} in degrees per second
+end
+```
+
+| Method | Return value / purpose |
+|---|---|
+| `BMI270.new(i2c, addr = nil)` | The address is found among `0x68` and `0x69` when not given |
+| `probe` | Whether the part answered |
+| `init(config_path = "/usr/share/imu/bmi270_config.bin")` | Upload the sensor's configuration blob. It has to be done once after power-on, and takes a moment |
+| `ready?` | Whether the configuration took |
+| `read_accel` | Acceleration, `{x:, y:, z:}` in g |
+| `read_gyro` | Angular rate, `{x:, y:, z:}` in degrees per second |
+| `read_raw` | Both, as raw 16-bit counts: `{ax:, ay:, az:, gx:, gy:, gz:}` |
+| `read_temperature` | Degrees Celsius |
+| `address` / `error` | The address it found, and why the last step failed |
+
+The bundled IMU app (`/app/modern/imu.app.rb`) is the worked example: it keeps drawing with
+a synthetic tilt on a board without the part, and says so on its status line.
+
 ## Pin Assignment Check
 
 Before using a pin, you can check whether the system is already using it.

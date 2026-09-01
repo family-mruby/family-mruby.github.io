@@ -105,6 +105,29 @@ For a tune written in text rather than a file:
 Several parts play together by loading more than one string — they merge into one tune, so
 two voices can land on the same instant.
 
+### A tune in a file
+
+`load_file(path)` reads a tune that lives beside the app's other assets instead of inside
+the program that plays it. `load_text(text)` takes the same thing as a string. Both return
+`true`, or `false` with `#error` saying what was wrong.
+
+```
+# a comment, at the start of a line only ('#' is a sharp inside a part)
+bpm 120          the tempo, which the MML dialect has no command for
+loop on          repeat at the end (default off)
+velocity 80      applies to the parts below it (default 100)
+voice triangle   which APU voice plays it: pulse1 / pulse2 / triangle / noise
+duty 1           pulse width 0-3 (12.5, 25, 50, 75 per cent)
+volume 100       channel volume, 0-127
+program 24       instrument for an external MIDI instrument (GM)
+o5 l4 cegegegc   a part. Each one goes on its own channel, in order
+```
+
+The four sound settings say what plays a part, which the dialect itself cannot express.
+They are sent to the device as the tune is loaded — the voice as a channel mapping, the
+rest as control and program changes — and a device with no use for one ignores it. Leave
+them out and the machine's own defaults stand.
+
 The timing does not come from your update loop. The player hands the C layer commands
 stamped with the microsecond they are due, and a timer sends them at that microsecond
 without entering the VM, so the beat holds steady even when the app is busy.

@@ -82,6 +82,9 @@ form to keep in a repository — export the packed one beside it.
 | Method | Purpose |
 |---|---|
 | `render(sheet, origin_x:, origin_y:, max_cols: nil, max_rows: nil)` | Draw all layers. `origin_*` is the drawing position for the top-left tile. `max_cols/rows` clips the display range (for viewporting when the map is larger than the screen) |
+| `render_view(sheet, origin_x:, origin_y:, view_x:, view_y:, view_w:, view_h:)` | Draw only the tiles the viewport touches, with sub-tile offsets. `origin_*` is where the viewport's top-left corner lands on the canvas; `view_x` / `view_y` are that corner in full-map pixels. This is what a scrolling world uses |
+| `tile_at(x, y, layer: 0)` | The tile id at those tile coordinates, or `nil` when it is out of range or empty |
+| `walkable?(x, y)` | Whether the tile there is in `walkable_tiles`. Out of range is `false` |
 | `event_at(x, y)` | Return the event Hash at tile coordinates (x, y). Returns `nil` if none |
 
 | Attribute | Description |

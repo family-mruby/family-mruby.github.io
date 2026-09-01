@@ -40,6 +40,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `JSON` | JSON parsing and generation | [Utilities](utilities.md#json) |
 | `MessagePack` | Binary serialization | [Utilities](utilities.md#messagepack) |
 | `BMP332` | RGB332 BMP image parsing | [Utilities](utilities.md#bmp332) |
+| `Fmrb::Fft` | Fast Fourier transform, engine chosen at run time | [Utilities](utilities.md#fmrbfft) |
 
 ### Hardware and System
 
@@ -48,6 +49,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `GPIO` | Digital I/O | [Hardware Control](peripherals.md#gpio) |
 | `I2C` | I2C communication | [Hardware Control](peripherals.md#i2c) |
 | `RMT` | RMT (infrared, WS2812B, etc.) | [Hardware Control](peripherals.md#rmt) |
+| `BMI270` | Six-axis sensor (Modern) | [Hardware Control](peripherals.md#six-axis-sensor-bmi270-modern-only) |
 | `RX8900` / `RX8130` | Battery-backed real-time clock | [Hardware Control](peripherals.md#real-time-clock-rx8900--rx8130) |
 | `FmrbConst` | System constants (version, theme colors, PROC_ID, etc.) | [Constants & System Info](const.md) |
 | `FmrbHw` | Pin usage queries | [Constants & System Info](const.md#fmrbhw) |
