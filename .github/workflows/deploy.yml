@@ -33,5 +33,15 @@ jobs:
           FMRUBY_CORE_REF: develop
         run: bash scripts/sync-console.sh
 
-      - name: Build and Deploy to gh-pages
+      - name: Build
+        run: mkdocs build
+
+      # Fails the deploy on a link to a page that is not there, or to a heading
+      # that is not there. The second kind is the one mkdocs does not report,
+      # and the one the Japanese pages keep acquiring (their anchors are the
+      # Japanese headings, so an English one copied across matches nothing).
+      - name: Check internal links
+        run: ruby scripts/check_links.rb site
+
+      - name: Deploy to gh-pages
         run: mkdocs gh-deploy --force

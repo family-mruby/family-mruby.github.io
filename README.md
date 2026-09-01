@@ -11,6 +11,7 @@ Published at: <https://family-mruby.github.io/>
 - `.github/workflows/deploy.yml` — auto-deploy to GitHub Pages on push to `main`
 - `docker/` — MkDocs builder Docker image used by `build.sh` / `serve.sh`
 - `scripts/sync-console.sh` — pulls the Family mruby Console web client from `fmruby-core` (see below)
+- `scripts/check_links.rb` — checks every internal link in a built site (see below)
 
 ## Local preview
 
@@ -28,13 +29,30 @@ Published at: <https://family-mruby.github.io/>
 
 `build.sh` runs the console web-client sync (see below) before invoking `mkdocs build`, so the generated site is identical to what GitHub Pages serves.
 
+## Link check
+
+```bash
+ruby scripts/check_links.rb site
+```
+
+Walks the built site and resolves every internal link: the page it names, and the heading
+it points at. The second kind is what rots silently — mkdocs reports a missing page, but
+not a `#...` that matches no id, and the Japanese pages acquire those easily because their
+anchors are the Japanese headings (an English anchor copied across matches nothing).
+
+It exits non-zero on a broken link, and runs in two places already: at the end of
+`build.sh`, and in the deploy workflow between the build and `gh-deploy`, so a broken link
+fails the deploy instead of being published. Links under `/console/` and `/studio/` are
+skipped: those are generated into the build and are not present locally.
+
 ## Deployment
 
 Pushing to `main` triggers `.github/workflows/deploy.yml`, which:
 
 1. Installs MkDocs + Material + i18n plugin
 2. Runs `scripts/sync-console.sh`
-3. Runs `mkdocs gh-deploy --force` (publishes to the `gh-pages` branch → GitHub Pages)
+3. Runs `mkdocs build` and then `scripts/check_links.rb`
+4. Runs `mkdocs gh-deploy --force` (publishes to the `gh-pages` branch → GitHub Pages)
 
 `workflow_dispatch` is enabled, so the latest `fmruby-core` content can be re-published manually from the Actions tab without a code change.
 
@@ -61,4 +79,5 @@ FMRUBY_CORE_REF=0.1.0 bash scripts/sync-console.sh
 1. Create `docs/<path>.md` (English) and optionally `docs/<path>.ja.md` (Japanese)
 2. Register the entry under `nav:` in `mkdocs.yml`
 3. Run `./serve.sh` to verify
-4. Commit and push — GitHub Actions handles the rest
+4. Run `./build.sh` once before pushing if you added cross-page links — it runs the link check
+5. Commit and push — GitHub Actions handles the rest

@@ -8,10 +8,14 @@ bash scripts/sync-console.sh
 docker build -t mkdocs-builder ./docker
 
 # MkDocs
-docker run --rm -v $(pwd):/docs mkdocs-builder mkdocs build
+docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/docs mkdocs-builder mkdocs build
+
+# Internal links: the page a link names, and the heading it points at. mkdocs
+# reports a missing page but not a "#..." that matches no id.
+ruby scripts/check_links.rb site
 
 echo "Build completed! Site generated in ./site directory"
 
 echo "Run preview server:"
-echo "docker run --rm -v $(pwd):/docs -p 8000:8000 mkdocs-builder mkdocs serve --dev-addr=0.0.0.0:8000"
+echo "docker run --rm -u \$(id -u):\$(id -g) -v \$(pwd):/docs -p 8000:8000 mkdocs-builder mkdocs serve --dev-addr=0.0.0.0:8000"
 echo "Access http://localhost:8000/"
