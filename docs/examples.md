@@ -1,84 +1,94 @@
 # Examples
 
-An introduction to the apps bundled under `/app/`. Each one demonstrates specific APIs and features, so try running them first and use the source code as a reference when building your own apps.
+An introduction to the apps bundled under `/app`. Each one exercises a particular part of
+the API, so run it first and then read its source when you write your own.
 
-Source file locations:
+Where the source is:
 
 - On the device: `/app/<category>/<name>.app.rb`
 - In the repository: `fmruby-core/flash/app/<category>/<name>.app.rb`
-- Configuration: `<name>.app.toml`, next to it
+- Its configuration: `<name>.app.toml`, beside it
 
-A full list of what ships, including the MicroPython and BASIC samples, is in
+A full list of what ships, in every language, is in
 [Default Apps](getting_started/default_apps.md).
 
-## Demo (demo)
+## Ruby demos — `/app/demo`
 
-Sample apps that showcase basic features.
-
-| App | Description | APIs Covered |
+| App | What it shows | API |
 |---|---|---|
-| `mruby.app.rb` | Minimal mruby verification sample | `FmrbApp`, `FmrbGfx` basics |
-| `shapes.app.rb` | Comprehensive shape drawing demo (rectangles, circles, ellipses, triangles, arcs, text) | [`FmrbGfx`](api/fmrb_gfx.md) |
-| `ja_text.app.rb` | Japanese text rendering. Switches between Default / misaki_8 / efontJA_12 / Mixed / Hybrid / Scaled | [`FmrbGfx#set_font`](api/fmrb_gfx.md#japanese-text-and-font-switching) |
-| `p5_test.app.rb` | Demo of a Processing/p5.js-style drawing library (basic shapes / affine transforms / Bezier curves / text / blend / get_pixel) | [P5](api/p5.md) |
-| `i2c_kbd.app.rb` | Reading input from an I2C keyboard (address `0x5F`) | [`I2C`](api/peripherals.md#i2c) + [Pub/Sub](api/pubsub.md) |
-| `led_matrix.app.rb` | Controlling a WS2812B 8x8 RGB LED matrix + on-screen preview | [`RMT`](api/peripherals.md#rmt), Pub/Sub |
-| `pub_demo.app.rb` + `sub_demo.app.rb` | Minimal inter-app Pub/Sub pair | [Pub/Sub](api/pubsub.md) |
-| `lua.app.lua` | Lua VM verification | -- |
-| `basic.app.bas` / `bounce.app.bas` | BASIC VM verification | -- |
+| `picoruby.app.rb` | Every drawing, font, sprite, sound and P5 feature the framework has, one page at a time. The first one to read | [`FmrbGfx`](api/fmrb_gfx.md), [Sprites](api/sprite.md), [P5](api/p5.md), [`FmrbAudio`](api/audio.md), [`FmrbUI`](api/ui.md) |
+| `kamon.app.rb` | Japanese family crests from five motifs, with a panel of widgets to compose them | [`FmrbUI`](api/ui.md), `FmrbGfx` |
+| `piano.app.rb` | An octave played from the keyboard, with the channel and the sweep on a panel | [`FmrbAudio#note_on` / `note_off`](api/audio.md#tone-synthesis-note_on--note_off) |
+| `mml.app.rb` | The same tune on the internal chip or an external instrument, written as MML and loaded from a file | [MIDI](api/midi.md), MML |
+| `midi_apu.app.rb` | The internal chip driven through the MIDI layer | [MIDI](api/midi.md) |
+| `weather.app.rb` | A forecast fetched over HTTPS and drawn. The network API end to end | [Network](api/network.md) |
+| `pub_demo.app.rb` + `sub_demo.app.rb` | The smallest publisher and subscriber, to run together | [Pub/Sub](api/pubsub.md) |
+| `stackchan.app.rb` + `stackchan_remote.app.rb` | A parametric face, and the same face driven from another app | `FmrbGfx`, [Pub/Sub](api/pubsub.md) |
+| `led_matrix.app.rb` | A WS2812B 8x8 matrix on the GROVE port, with a preview on screen | [`RMT`](api/peripherals.md#rmt) |
+| `i2c_kbd.app.rb` | An I2C keyboard at address `0x5F` | [`I2C`](api/peripherals.md#i2c), [Pub/Sub](api/pubsub.md) |
 
-## Debug (debug)
+## Python — `/app/python`
 
-Verification apps under `/app/debug/`.
+| App | What it shows |
+|---|---|
+| `python.app.py` | The twin of `picoruby.app.rb`, page for page, in MicroPython |
+| `pybench.app.py` | What fits in one frame of a Python app — the three costs that decide how a game is written |
 
-| App | Description | APIs Covered |
+## Games — `/app/game`
+
+| App | What it shows | API |
 |---|---|---|
-| `ntsc_color_test.app.rb` | NTSC color bar output test | [`FmrbGfx#set_output_level`/`set_chroma_level`](api/fmrb_gfx.md#ntsc-output-adjustment-retro-only) |
-| `sd_test.app.rb` | Writes to `/mnt/sd/sd_test.txt`, reads back, and compares. Press Space to re-run | [File I/O > File Namespace](api/filesystem.md#file-namespace) |
-| `tile_map_test.app.rb` | Map rendering with TileMap + TileSheet + JSON | [TileMap / TileSheet](api/tilemap.md) |
-| `draw_tile_test.app.rb` | Minimal verification of `FmrbGfx#draw_tile` | [FmrbGfx > draw_tile](api/fmrb_gfx.md#when-to-use-draw_tile) |
+| `flappy.rb` | One button, scenery behind the game, and effects on the sound chip | `FmrbGfx`, [`FmrbAudio`](api/audio.md), gamepad |
+| `tetris.app.rb` | A stateful game with BGM and effects. Arrow keys, `Space` to drop | `FmrbGfx`, [`FmrbAudio`](api/audio.md) |
+| `shooter.app.rb` | Sprites, a diving formation, and a boss between the waves | [Sprites](api/sprite.md), collision |
+| `rpg_demo/` | A tile world that scrolls, with collisions, BGM and effects. Assets live in the app's own directory | [Tile Maps](api/tilemap.md), `FmrbApp.set_cursor_visible` |
+| `raycaster.app.rb` | A pseudo-3D first-person view. Needs `large_memory = 1` | Fixed-point arithmetic, fast `FmrbGfx` |
+| `robo_explorer/` | A maze the app will not let you play: the robot only obeys commands published to it. The pilot is a second app, and the part you write is `my_pilot.rb` | [Pub/Sub](api/pubsub.md) |
+| `breakout/breakout.app.py` | The Python sample game: sprites, tiles, Japanese text, a tune on one sound chip instance and effects on the other | The Python framework |
 
-## Games (game)
+## Tools — `/app/tool`
 
-| App | Description | APIs Covered |
+| App | What it shows | API |
 |---|---|---|
-| `flappy.rb` | Flappy Bird-style game. Tap to fly up, avoid obstacles | `FmrbGfx`, [`FmrbAudio` (note_on/off)](api/audio.md), gamepad |
-| `tetris.app.rb` | Tetris-style falling block puzzle. Arrow key controls | `FmrbGfx`, board drawing patterns |
-| `shooter.app.rb` | Full-screen shooter | [`Sprite`](api/sprite.md), collision detection |
-| `raycaster.app.rb` | Wolfenstein 3D-style pseudo-3D. Requires `large_memory = 1` | Fixed-point arithmetic, high-speed `FmrbGfx` rendering |
-| `piano.app.rb` | A piano you can play with the keyboard | [`FmrbAudio#note_on/off`](api/audio.md#tone-synthesis-note_on--note_off) |
-| `rpg_demo/` | JRPG-style sample. Assets bundled in `/app/<cat>/<bundle>/` format | [TileMap / TileSheet](api/tilemap.md), `FmrbApp.set_cursor_visible` |
+| `picorabbit.app.rb` | A Markdown deck presented fullscreen, and exported as one picture per slide | `FmrbGfx#export_frame`, [Sprites](api/sprite.md) |
+| `nsf_player.app.rb` | Playing NSF files, with track selection and a transport built from widgets | [`FmrbAudio#play`](api/audio.md), [`FmrbUI`](api/ui.md) |
+| `smf_player.app.rb` | Standard MIDI files, on the internal chip or an external instrument | [MIDI](api/midi.md), [`FmrbUI`](api/ui.md) |
+| `sprite_editor.app.rb` | A 16x16 RGB332 tile sheet: load a BMP, edit pixels, save it back | [Sprites](api/sprite.md), `BMP332` |
+| `gpio_viewer.app.rb` | Every GPIO pin, coloured by what is using it | [`FmrbHw.pin_status`](api/const.md#fmrbhw) |
 
-## Tools (tool)
+## Modern only — `/app/modern`
 
-| App | Description | APIs Covered |
+| App | What it shows | API |
 |---|---|---|
-| `gpio_viewer.app.rb` | Visualizes the usage status of all GPIO pins | [`FmrbHw.pin_status`](api/const.md#fmrbhw) |
-| `nsf_player.app.rb` | NSF file playback GUI (skip, track selection, pause) | [`FmrbAudio#play`](api/audio.md), file selection |
-| `picorabbit.app.rb` | Markdown slide presentation player | `PicoRabbit` |
-| `sprite_editor.app.rb` | Sprite editor. Draw pixel art and save as BMP | [`Sprite`](api/sprite.md), `BMP332` |
+| `mic_spectrum.app.rb` | The microphone sampled, transformed and drawn, all on the machine | `Fmrb::Fft`, [`FmrbAudio`](api/audio.md#the-microphone-modern-only) |
+| `video_play.app.rb` | A Motion JPEG file playing inside a window | [`FmrbGfx#video_open`](api/fmrb_gfx.md#video-modern-only) |
+| `imu.app.rb` | The six-axis sensor as a bubble level | [`I2C`](api/peripherals.md#i2c) |
 
-## Recommended Learning Order
+## A reading order
 
-1. Read `mruby.app.rb` to understand the basic structure
-2. Check `shapes.app.rb` to learn how to use `FmrbGfx`
-3. Try `pub_demo.app.rb` / `sub_demo.app.rb` for inter-app messaging
-4. Explore `piano.app.rb` for the audio API
-5. Study `flappy.rb` for combining drawing + audio + input
-6. Examine `tetris.app.rb` for a stateful game
-7. Analyze `raycaster.app.rb` for large-scale app structure and optimization
+1. `picoruby.app.rb` — the shape of an app, and most of the drawing API
+2. `pub_demo.app.rb` / `sub_demo.app.rb` — two apps talking to each other
+3. `piano.app.rb` — the sound chip, and a panel of widgets
+4. `flappy.rb` — drawing, sound and input together
+5. `tetris.app.rb` — a game with state
+6. `rpg_demo/` — an app that is more than one file, with its own assets
+7. `raycaster.app.rb` — structure and optimisation when it has to be fast
 
-## Starting Points for Your Own Apps
+## Where to start your own
 
-- For a minimal starting point: `mruby.app.rb`
-- For window + drawing: `shapes.app.rb`
-- For making a game: `tetris.app.rb` or `flappy.rb`
-- For working with hardware: `i2c_kbd.app.rb` or `led_matrix.app.rb`
+| You want | Copy |
+|---|---|
+| The smallest thing that runs | The template `create_app` writes — see [Hello World](getting_started/hello_world.md) |
+| A window with a panel of controls | `kamon.app.rb` |
+| A game | `tetris.app.rb` or `flappy.rb` |
+| Something on the GROVE port | `i2c_kbd.app.rb` or `led_matrix.app.rb` |
+| Two apps that talk | `pub_demo.app.rb` / `sub_demo.app.rb` |
 
-See [Hello World](getting_started/hello_world.md) for how to start a new app.
+`/app/debug` and `/app/test` also ship, but they exist to break things on purpose and are
+hidden from the launcher. They are not examples to copy.
 
 ## Related
 
-- How to create apps: [Hello World](getting_started/hello_world.md)
-- Icon files: [Image and Icon Files](file_formats/image_formats.md#icon-files-icon)
-- App configuration: [App Configuration File (.toml)](file_formats/app_toml.md)
+- [Hello World](getting_started/hello_world.md) — starting a new app
+- [App Config (.app.toml)](file_formats/app_toml.md)
+- [Image & Icon Files](file_formats/image_formats.md#icon-files-icon)
