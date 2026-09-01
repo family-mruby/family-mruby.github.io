@@ -70,6 +70,7 @@ All take a `color` (RGB332) as the last argument.
 |---|---|
 | `set_pixel` | `set_pixel(x, y, color)` |
 | `draw_line` | `draw_line(x1, y1, x2, y2, color)` |
+| `draw_thick_line` | `draw_thick_line(x0, y0, x1, y1, thickness, color)`. Stacked 1-pixel lines — the backend has no thick-line primitive |
 | `draw_rect` | `draw_rect(x, y, w, h, color)` (outline only) |
 | `fill_rect` | `fill_rect(x, y, w, h, color)` (filled) |
 | `blend_rect` | `blend_rect(x, y, w, h, color, mode:)` (`mode: 0`=ADD, `1`=XOR) |
@@ -184,47 +185,81 @@ end
 HelloJaApp.new.start
 ```
 
-A sample that switches between modes (default / 8px / 12px / Mixed / Hybrid / Scaled) is available in `/app/demo/ja_text.app.rb`.
+The Fonts pages of the PicoRuby demo (`/app/demo/picoruby.app.rb`) switch between them all: the default font, Japanese at 8, 12 and 16 pixels, mixed and hybrid drawing, and Japanese scaled up.
 
-## Image API
+## Images
+
+An image is decoded and held on the graphics side, which reads its own filesystem. Getting
+one on screen is therefore three steps: put the file where that side can read it, create the
+image from it, draw it.
 
 ```ruby
-# File transfer (PC -> flash)
-@gfx.transfer_file("local.bmp", "/img.bmp")
-
-# Load and draw an image
-img = @gfx.create_image_from_file("/img.bmp")
-@gfx.draw_image(img[:id], 10, 20)               # Original size
-@gfx.draw_image(img[:id], 10, 20, scale_x: 2.0,
-                scale_y: 2.0)                   # 2x scale
+@gfx.sync_file("/usr/share/backgrounds/BG_sample.png")
+img = @gfx.create_image("/usr/share/backgrounds/BG_sample.png")
+@gfx.draw_image(img[:id], x: 10, y: 20)
 @gfx.delete_image(img[:id])
 ```
 
-| Method | Return Value / Purpose |
+Or all of it at once:
+
+```ruby
+@gfx.load_image("/usr/share/backgrounds/BG_sample.png", coord: :center)
+```
+
+| Method | Returns / does |
 |---|---|
-| `transfer_file(src, dst)` | `true` on success, raises exception on failure |
-| `file_status(path)` | `{exists:, size:}` |
-| `create_image_from_file(path)` | `{id:, width:, height:}` or `nil` |
-| `draw_image(id, x, y, scale_x: 1.0, scale_y: 1.0)` | Draw an image |
-| `draw_tile(image_id, src_x, src_y, w, h, dst_x:, dst_y:)` | Copy a sub-region of an image to `(dst_x, dst_y)`. For tile map use |
-| `delete_image(id)` | Release the image |
+| `sync_file(path, dest: nil)` | Make the graphics side's copy match this one, transferring only when it differs (size + CRC32). This — not `file_status[:exists]` — is what to use for an asset, or an edited file stays stale for ever |
+| `transfer_file(path, dest: nil)` | Transfer unconditionally |
+| `file_status(path)` | `{exists:, size:}` on the graphics side |
+| `create_image(path)` | `{id:, width:, height:}`, or `nil`. PNG, up to about 200 KB |
+| `draw_image(id, x: 0, y: 0, scale_x: 1.0, scale_y: 0.0)` | Draw it. `scale_y: 0.0` means "the same as `scale_x`" |
+| `draw_tile(image_id, src_x, src_y, w, h, dst_x:, dst_y:)` | Stamp a sub-region of a `SpriteImage` onto the canvas |
+| `delete_image(id)` | Release it |
+| `load_image(path, coord: nil)` | Sync, create, draw, present and delete in one call. `coord:` takes `[x, y]` or `:center` |
 
-!!! note "Supported image formats"
-    `create_image_from_file` supports RGB332 BMP. See [Image & Icon Files](../file_formats/image_formats.md) for format details.
+!!! note "Two formats, two doors"
+    `create_image` takes a PNG. A sprite sheet is a different thing: an RGB332 BMP loaded
+    with [`SpriteImage#load_bmp`](sprite.md#spriteimage). Handing a BMP to `create_image`
+    does not raise — you get an empty image the size of the screen and nothing appears. See
+    [Image & Icon Files](../file_formats/image_formats.md).
 
-### When to Use `draw_tile`
+### When to use `draw_tile`
 
 You can directly stamp part of a SpriteImage onto the canvas without creating a `SpriteInstance`. This is suitable for BG rendering where you tile 16x16 cells from a tile sheet image one by one. The transparent color of a SpriteImage created with `use_transparent: true` is respected, enabling layered map drawing.
 
 ```ruby
 sheet = SpriteImage.new(@gfx, width: 64, height: 32,
                           transparent_color: 0, use_transparent: true)
-sheet.load_bmp("/usr/share/sprites/tilesheet.bmp")
+sheet.load_bmp("/usr/share/sprites/test/tilesheet.bmp")
 # Draw 16x16 from tilesheet at (0, 0) to canvas at (32, 16)
 @gfx.draw_tile(sheet.id, 0, 0, 16, 16, dst_x: 32, dst_y: 16)
 ```
 
 For a higher-level wrapper, see [TileMap](tilemap.md).
+
+## Masks
+
+A 1bpp mask cuts a shape out of a `SpriteImage` as it is blitted: pixels are sampled from
+the image and written only where the mask bit is set.
+
+| Method | |
+|---|---|
+| `create_mask(width, height, data)` | Upload a mask and get its id. `data` is `ceil(width / 8) * height` bytes, MSB first; a 1 bit draws |
+| `draw_image_masked(image_id, mask_id, x:, y:)` | Blit through the mask |
+| `delete_mask(mask_id)` | Release it. Ordered behind any drawing that still refers to it |
+
+## Reading the canvas back
+
+`get_pixel(x, y)` returns one RGB332 byte, and `0` outside the canvas. It is a synchronous
+round trip to the graphics side, so it is not something to do per pixel in a loop.
+
+## Hardware scrolling (Modern only)
+
+`set_viewport(src_x, src_y, w, h)` shows a moving window onto a canvas larger than the one
+the app draws in, without redrawing anything. The canvas is addressed as a torus — the
+source rectangle wraps around its edges — so a canvas slightly larger than the viewport can
+scroll an arbitrarily large world if newly exposed tiles are stamped as it moves. The Retro
+backend ignores the command, so gate it on `FmrbConst::CHIP_MODEL == "ESP32-P4"`.
 
 ## Keeping sprites inside a rectangle
 

@@ -11,6 +11,12 @@
 !!! warning "`@gfx.present` を呼ぶ"
     `SpriteInstance#move`・`visible=`・`frame=` の後は `@gfx.present` を呼んで ください。スプライトの合成 (composite) は `present` のタイミングで実行されます。
 
+スプライトは canvas に描いた絵の上に合成されるので、窓のアプリでは最初から窓の中身の
+範囲に閉じ込められています。そうしないと自分のタイトルバーの上にはみ出すためです。
+さらに狭めたいときは
+[スプライトを四角の中に閉じ込める](fmrb_gfx.md#スプライトを四角の中に閉じ込める) を
+参照してください。
+
 ## スプライトのデータ構造イメージ
 
 ![スプライトのデータ構造イメージ](../images/sprite.png)
@@ -60,10 +66,42 @@ img.draw do |g|
   g.fill_rect(0, 0, 32, 32, FmrbGfx::BLACK)  # 透過扱い
   g.fill_circle(16, 16, 12, FmrbGfx::RED)
 end
-# あるいは BMP から読み込み
-img2 = SpriteImage.new(@gfx, width: 16, height: 16)
-img2.load_bmp("/usr/share/sprite/player.bmp")
 ```
+
+### 素材の読み込み
+
+`load_bmp` を解くのは描画側で、描画側は自分のファイルシステムしか読めません。つまり、
+先にそちらへファイルを置く必要があります。`sync_file` がそれをします。中身が同じなら
+写さないので、毎回起動時に呼んでも大した費用にはなりません。
+
+```ruby
+SRC   = "/usr/share/sprites/flappy"
+CACHE = "/cache/app/flappy"
+
+img = SpriteImage.new(@gfx, width: 16, height: 16,
+                      transparent_color: 0, use_transparent: true)
+@gfx.sync_file("#{SRC}/bird_body.bmp", dest: "#{CACHE}/bird_body.bmp")
+img.load_bmp("#{CACHE}/bird_body.bmp")
+```
+
+同梱の素材は `/usr/share/sprites/<アプリ名>/` にあります。`rpg_demo` のように自分の
+ディレクトリを持つアプリは、コードの隣に素材を置いています。どちらの場合も写す先は
+`/cache` で、ここはシステムが作り直します。
+
+ファイルは RGB332 の BMP です。並んでいるバイトはパレットの番号ではなく色そのものです。
+PNG は別の入口になります ([`FmrbGfx#create_image`](fmrb_gfx.md#画像))。
+[画像・アイコンファイル](../file_formats/image_formats.md) も参照してください。
+
+## いくつまで置けるか
+
+画像も配置も、アプリごとではなく機械のものです。どのアプリも同じ枠を分け合います。
+
+| | Modern | Retro |
+|---|---|---|
+| `SpriteImage` | 160 | 64 |
+| `SpriteInstance` | 320 | 128 |
+
+1 つの配置が持てるコマ数は 8 までです。
 
 ## SpriteInstance
 

@@ -70,6 +70,7 @@ FmrbGfx.hsv_to_rgb(120, 255, 255) # → [r, g, b] (各 0..255)
 |---|---|
 | `set_pixel` | `set_pixel(x, y, color)` |
 | `draw_line` | `draw_line(x1, y1, x2, y2, color)` |
+| `draw_thick_line` | `draw_thick_line(x0, y0, x1, y1, thickness, color)`。1 画素の線を重ねて描きます (描画側に太線がないため) |
 | `draw_rect` | `draw_rect(x, y, w, h, color)`（枠のみ） |
 | `fill_rect` | `fill_rect(x, y, w, h, color)`（塗りつぶし） |
 | `blend_rect` | `blend_rect(x, y, w, h, color, mode:)`（`mode: 0`=ADD, `1`=XOR） |
@@ -184,33 +185,42 @@ end
 HelloJaApp.new.start
 ```
 
-`/app/demo/ja_text.app.rb` に各モード（default / 8px / 12px / Mixed / Hybrid / Scaled）を切り替えるサンプルがあります。
+PicoRuby デモ (`/app/demo/picoruby.app.rb`) の Fonts のページで、既定のフォント、日本語の 8・12・16 画素、混在描画、拡大まで一通り切り替えられます。
 
-## 画像 API
+## 画像
+
+画像を解いて持っているのは描画側で、描画側は自分のファイルシステムしか読めません。だから
+画面に出すまでは 3 段になります。読める場所にファイルを置き、そこから画像を作り、描きます。
 
 ```ruby
-# ファイル転送（PC → flash）
-@gfx.transfer_file("local.bmp", "/img.bmp")
-
-# 画像のロードと描画
-img = @gfx.create_image_from_file("/img.bmp")
-@gfx.draw_image(img[:id], 10, 20)               # 等倍
-@gfx.draw_image(img[:id], 10, 20, scale_x: 2.0,
-                scale_y: 2.0)                   # 2倍
+@gfx.sync_file("/usr/share/backgrounds/BG_sample.png")
+img = @gfx.create_image("/usr/share/backgrounds/BG_sample.png")
+@gfx.draw_image(img[:id], x: 10, y: 20)
 @gfx.delete_image(img[:id])
+```
+
+まとめて 1 行で書くこともできます。
+
+```ruby
+@gfx.load_image("/usr/share/backgrounds/BG_sample.png", coord: :center)
 ```
 
 | メソッド | 戻り値 / 用途 |
 |---|---|
-| `transfer_file(src, dst)` | `true` 成功、失敗時は例外 |
-| `file_status(path)` | `{exists:, size:}` |
-| `create_image_from_file(path)` | `{id:, width:, height:}` または `nil` |
-| `draw_image(id, x, y, scale_x: 1.0, scale_y: 1.0)` | 画像描画 |
-| `draw_tile(image_id, src_x, src_y, w, h, dst_x:, dst_y:)` | 画像の部分領域 を `(dst_x, dst_y)` にコピー描画。タイルマップ用 |
+| `sync_file(path, dest: nil)` | 描画側の複製をこちらと一致させます。違うときだけ転送します (大きさと CRC32 で判定)。素材にはこれを使ってください。`file_status[:exists]` で判定すると、書き換えた素材が永久に古いままになります |
+| `transfer_file(path, dest: nil)` | 無条件に転送します |
+| `file_status(path)` | 描画側での `{exists:, size:}` |
+| `create_image(path)` | `{id:, width:, height:}`、または `nil`。PNG、200KB 程度まで |
+| `draw_image(id, x: 0, y: 0, scale_x: 1.0, scale_y: 0.0)` | 描画。`scale_y: 0.0` は「`scale_x` と同じ」の意味です |
+| `draw_tile(image_id, src_x, src_y, w, h, dst_x:, dst_y:)` | SpriteImage の部分領域を canvas にスタンプします |
 | `delete_image(id)` | 解放 |
+| `load_image(path, coord: nil)` | 転送・作成・描画・present・解放を 1 回で。`coord:` は `[x, y]` か `:center` |
 
-!!! note "対応画像形式"
-    `create_image_from_file` は RGB332 の BMP に対応します。フォーマットの詳細は [画像・アイコンファイル](../file_formats/image_formats.md) を参照。
+!!! note "形式が 2 つ、入口も 2 つ"
+    `create_image` が受けるのは PNG です。スプライトの素材は別物で、RGB332 の BMP を
+    [`SpriteImage#load_bmp`](sprite.md#spriteimage) で読みます。BMP を `create_image` に
+    渡しても例外にはならず、画面と同じ大きさの空の画像ができて何も出ません。
+    [画像・アイコンファイル](../file_formats/image_formats.md) を参照してください。
 
 ### `draw_tile` の使いどころ
 
@@ -219,14 +229,39 @@ img = @gfx.create_image_from_file("/img.bmp")
 ```ruby
 sheet = SpriteImage.new(@gfx, width: 64, height: 32,
                           transparent_color: 0, use_transparent: true)
-sheet.load_bmp("/usr/share/sprites/tilesheet.bmp")
+sheet.load_bmp("/usr/share/sprites/test/tilesheet.bmp")
 # tilesheet の (0, 0) から 16x16 を canvas の (32, 16) に描く
 @gfx.draw_tile(sheet.id, 0, 0, 16, 16, dst_x: 32, dst_y: 16)
 ```
 
 より高水準なラッパは [TileMap](tilemap.md) を参照。
 
+## マスク
+
+1bpp のマスクは、SpriteImage を転送するときに形を切り抜きます。画像から取った画素のうち、
+マスクのビットが立っているところだけが書かれます。
+
+| メソッド | |
+|---|---|
+| `create_mask(width, height, data)` | マスクを送って id を得ます。`data` は `ceil(width / 8) * height` バイト、各バイトは上位ビットから。1 のところが描かれます |
+| `draw_image_masked(image_id, mask_id, x:, y:)` | マスク越しに転送します |
+| `delete_mask(mask_id)` | 解放。まだそのマスクを使う描画があれば、その後ろに順序づけられます |
+
+## canvas を読み返す
+
+`get_pixel(x, y)` は RGB332 のバイトを 1 つ返します。canvas の外なら `0` です。描画側への
+同期的な往復なので、ループの中で 1 画素ずつ呼ぶようなものではありません。
+
+## ハードウェアスクロール (Modern のみ)
+
+`set_viewport(src_x, src_y, w, h)` は、アプリが描いている canvas より大きな絵の上を、
+描き直さずに窓だけ動かして見せます。canvas は輪として扱われ (元の四角は canvas の端で
+回り込みます)、表示範囲より少し大きい canvas があれば、動いた分だけ新しく見えるタイルを
+描き足すことで、いくらでも大きな世界を流せます。Retro 側はこの命令を無視するので、
+`FmrbConst::CHIP_MODEL == "ESP32-P4"` で分けてください。
+
 ## スプライトを四角の中に閉じ込める
+
 
 スプライトは canvas に描いた絵の上に重ねて合成されるので、何もしないと、同じ canvas に
 描いた窓のわくやタイトルバーの上にもはみ出します。

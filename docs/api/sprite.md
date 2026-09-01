@@ -11,6 +11,11 @@ This page covers the sprite and tile map APIs.
 !!! warning "Call `@gfx.present`"
     After `SpriteInstance#move`, `visible=`, or `frame=`, you must call `@gfx.present`. Sprite compositing is performed at the `present` timing.
 
+Sprites are composited on top of everything the canvas drew, so a windowed app starts with
+them confined to its user area — otherwise they would paint over its own title bar. To
+narrow that further, see
+[keeping sprites inside a rectangle](fmrb_gfx.md#keeping-sprites-inside-a-rectangle).
+
 ## Sprite Data Structure Overview
 
 ![Sprite data structure](../images/sprite.png)
@@ -60,10 +65,42 @@ img.draw do |g|
   g.fill_rect(0, 0, 32, 32, FmrbGfx::BLACK)  # Treated as transparent
   g.fill_circle(16, 16, 12, FmrbGfx::RED)
 end
-# Or load from a BMP
-img2 = SpriteImage.new(@gfx, width: 16, height: 16)
-img2.load_bmp("/usr/share/sprite/player.bmp")
 ```
+
+### Loading artwork
+
+`load_bmp` is decoded on the graphics side, which reads its own filesystem — so the file has
+to be put there first. `sync_file` does that, and skips the copy when the bytes already
+match, so it is cheap to call on every start:
+
+```ruby
+SRC   = "/usr/share/sprites/flappy"
+CACHE = "/cache/app/flappy"
+
+img = SpriteImage.new(@gfx, width: 16, height: 16,
+                      transparent_color: 0, use_transparent: true)
+@gfx.sync_file("#{SRC}/bird_body.bmp", dest: "#{CACHE}/bird_body.bmp")
+img.load_bmp("#{CACHE}/bird_body.bmp")
+```
+
+The bundled artwork lives under `/usr/share/sprites/<app>/`, and an app with its own bundle
+directory (like `rpg_demo`) keeps it beside its code. Either way the copy goes under
+`/cache`, which the system rebuilds on its own.
+
+The file is an RGB332 BMP — its bytes are colour values, not palette indices. A PNG is a
+different door: [`FmrbGfx#create_image`](fmrb_gfx.md#images). See
+[Image & Icon Files](../file_formats/image_formats.md).
+
+## How many there can be
+
+Images and instances are the machine's, not the app's: every app draws from the same pool.
+
+| | Modern | Retro |
+|---|---|---|
+| `SpriteImage` | 160 | 64 |
+| `SpriteInstance` | 320 | 128 |
+
+An instance takes up to 8 frames.
 
 ## SpriteInstance
 

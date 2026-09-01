@@ -120,8 +120,9 @@ The bundled Weather app (`/app/demo/weather.app.rb`) fetches a forecast over HTT
 Open-Meteo, parses the JSON and draws it. It waits for the network, retries until the first
 success, and is a good starting point to copy.
 
-The Net Test app (`/app/tool/net_test.app.rb`) exercises the API piece by piece and is
-useful when something does not work.
+The Net Test app (`/app/test/net_test.app.rb`) exercises the API piece by piece and is
+useful when something does not work. It is hidden from the launcher with the rest of
+`/app/test`, so start it from the editor or the shell.
 
 ## Related
 

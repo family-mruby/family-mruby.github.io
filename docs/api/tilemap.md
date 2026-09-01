@@ -45,10 +45,10 @@ Internally creates a `SpriteImage` with transparent color `0` and calls `load_bm
 ### Example
 
 ```ruby
-@gfx.transfer_file("/usr/share/sprites/tilesheet.bmp",
-                   "/usr/share/sprites/tilesheet.bmp")
+@gfx.transfer_file("/usr/share/sprites/test/tilesheet.bmp",
+                   "/usr/share/sprites/test/tilesheet.bmp")
 sheet = TileSheet.new(@gfx,
-                       "/usr/share/sprites/tilesheet.bmp",
+                       "/usr/share/sprites/test/tilesheet.bmp",
                        cols: 4, tile_size: 16)
 sheet.stamp(0, dst_x: 0,  dst_y: 0)   # Stamp tile 0 at the top-left
 sheet.stamp(5, dst_x: 16, dst_y: 0)   # Stamp tile 5 to the right
@@ -114,7 +114,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
   "width": 20,
   "height": 15,
   "tile_size": 16,
-  "tilesheet": "/usr/share/sprites/tilesheet.bmp",
+  "tilesheet": "/usr/share/sprites/test/tilesheet.bmp",
   "tilesheet_cols": 4,
   "layers": [
     { "name": "ground", "data": [[0, 0, 1, ...], [...], ...] },
@@ -158,6 +158,6 @@ This directory includes `.app.rb` / `.app.toml` along with `world.bmp`, `world.m
 
 ## Related
 
-- [FmrbGfx > `draw_tile`](fmrb_gfx.md#image-api) -- Low-level tile drawing API
+- [FmrbGfx > `draw_tile`](fmrb_gfx.md#images) -- Low-level tile drawing API
 - [Sprite](sprite.md) -- SpriteImage / SpriteInstance / GfxBlock
 - [App Configuration (.toml)](../file_formats/app_toml.md) -- Per-app settings

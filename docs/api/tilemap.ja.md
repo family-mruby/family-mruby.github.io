@@ -45,10 +45,10 @@ TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16)
 ### サンプル
 
 ```ruby
-@gfx.transfer_file("/usr/share/sprites/tilesheet.bmp",
-                   "/usr/share/sprites/tilesheet.bmp")
+@gfx.transfer_file("/usr/share/sprites/test/tilesheet.bmp",
+                   "/usr/share/sprites/test/tilesheet.bmp")
 sheet = TileSheet.new(@gfx,
-                       "/usr/share/sprites/tilesheet.bmp",
+                       "/usr/share/sprites/test/tilesheet.bmp",
                        cols: 4, tile_size: 16)
 sheet.stamp(0, dst_x: 0,  dst_y: 0)   # 0 番目のタイルを左上に
 sheet.stamp(5, dst_x: 16, dst_y: 0)   # 5 番目のタイルを右に
@@ -114,7 +114,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
   "width": 20,
   "height": 15,
   "tile_size": 16,
-  "tilesheet": "/usr/share/sprites/tilesheet.bmp",
+  "tilesheet": "/usr/share/sprites/test/tilesheet.bmp",
   "tilesheet_cols": 4,
   "layers": [
     { "name": "ground", "data": [[0, 0, 1, ...], [...], ...] },
@@ -158,6 +158,6 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 
 ## 関連
 
-- [FmrbGfx ▸ `draw_tile`](fmrb_gfx.md#画像-api) — 低レベルなタイル描画 API
+- [FmrbGfx ▸ `draw_tile`](fmrb_gfx.md#画像) — 低レベルなタイル描画 API
 - [Sprite](sprite.md) — SpriteImage / SpriteInstance / GfxBlock
 - [アプリ設定 (.toml)](../file_formats/app_toml.md) — アプリ単位の設定
