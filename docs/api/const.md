@@ -28,7 +28,7 @@ A module that provides constants referenced throughout the system.
 | `FmrbConst::CHIP_CORES` | Number of cores |
 | `FmrbConst::FLASH_SIZE_MB` | Flash capacity (MB) |
 | `FmrbConst::PSRAM_SIZE_MB` | PSRAM capacity (MB) |
-| `FmrbConst::RESET_REASON` | Reason for the last reset |
+| `FmrbConst::RESET_REASON` | Why the machine last restarted, as a string: `POWERON`, `EXT`, `SW`, `PANIC`, `INT_WDT`, `TASK_WDT`, `WDT`, `DEEPSLEEP`, `BROWNOUT`, `SDIO`, `USB`, `JTAG`, `EFUSE`, `PWR_GLITCH`, `CPU_LOCKUP` or `UNKNOWN` |
 | `FmrbConst::HAS_WIFI` | `true` on a machine that can join a network. See [Network](network.md) |
 | `FmrbConst::WHEEL_LINES` | How many text rows one notch of the mouse wheel moves, from `system_conf.toml` |
 
@@ -117,7 +117,7 @@ USB HID Usage IDs. Compare with `ev[:scancode]` in `on_event(ev)`.
 | Editing | `KEY_INSERT`, `KEY_HOME`, `KEY_PGUP`, `KEY_DELETE`, `KEY_END`, `KEY_PGDN` |
 | Arrow | `KEY_LEFT`, `KEY_RIGHT`, `KEY_UP`, `KEY_DOWN` |
 | Other | `KEY_PRINTSCREEN`, `KEY_PAUSE` |
-| Modifier keys (individual) | `KEY_LCTRL`, `KEY_LSHIFT`, `KEY_LALT`, `KEY_LGUI`, `KEY_RCTRL`, `KEY_RSHIFT`, `KEY_RALT`, `KEY_RGUI` |
+| Modifier keys (individual) | `KEY_LCTRL`, `KEY_LSHIFT`, `KEY_LALT`, `KEY_LMETA`, `KEY_RCTRL`, `KEY_RSHIFT`, `KEY_RALT`, `KEY_RMETA` |
 
 ### Input Device: Modifier Key Masks (`MOD_*`)
 
@@ -125,18 +125,22 @@ Use bitwise AND with `ev[:modifier]` in `on_event(ev)` to check modifier state.
 
 | Constant | Bit | Meaning |
 |---|---|---|
-| `MOD_LCTRL` | 0x01 | Left Ctrl |
-| `MOD_LSHIFT` | 0x02 | Left Shift |
-| `MOD_LALT` | 0x04 | Left Alt |
-| `MOD_LGUI` | 0x08 | Left GUI (Win / Cmd) |
-| `MOD_RCTRL` | 0x10 | Right Ctrl |
-| `MOD_RSHIFT` | 0x20 | Right Shift |
-| `MOD_RALT` | 0x40 | Right Alt |
-| `MOD_RGUI` | 0x80 | Right GUI |
-| `MOD_CTRL` | 0x11 | Combined left/right Ctrl (`MOD_LCTRL | MOD_RCTRL`) |
-| `MOD_SHIFT` | 0x22 | Combined left/right Shift |
-| `MOD_ALT` | 0x44 | Combined left/right Alt |
-| `MOD_GUI` | 0x88 | Combined left/right GUI |
+| `MOD_LSHIFT` | 0x01 | Left Shift |
+| `MOD_RSHIFT` | 0x02 | Right Shift |
+| `MOD_LCTRL` | 0x04 | Left Ctrl |
+| `MOD_RCTRL` | 0x08 | Right Ctrl |
+| `MOD_LALT` | 0x10 | Left Alt |
+| `MOD_RALT` | 0x20 | Right Alt |
+| `MOD_SHIFT` | 0x03 | Either Shift |
+| `MOD_CTRL` | 0x0C | Either Ctrl |
+| `MOD_ALT` | 0x30 | Either Alt |
+
+These are this firmware's own bits, not the USB HID modifier byte, so do not write the
+numbers out by hand — `0x01` is Left Shift here and Left Ctrl in the HID standard.
+
+There is no mask for the Meta (Windows / Command) key: the modifier byte the firmware
+delivers has six bits and Meta is not one of them. A press still arrives as an ordinary key
+event with scancode `KEY_LMETA` or `KEY_RMETA`.
 
 !!! tip "`ev_ctrl?(ev)` / `ev_shift?(ev)` / `ev_alt?(ev)`"
     You can also check modifiers using `FmrbApp` helpers. Using `MOD_*` directly is only needed for special cases; normally use the helpers instead.

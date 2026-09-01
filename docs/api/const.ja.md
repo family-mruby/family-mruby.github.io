@@ -28,7 +28,7 @@
 | `FmrbConst::CHIP_CORES` | コア数 |
 | `FmrbConst::FLASH_SIZE_MB` | フラッシュ容量 (MB) |
 | `FmrbConst::PSRAM_SIZE_MB` | PSRAM 容量 (MB) |
-| `FmrbConst::RESET_REASON` | 直前のリセット理由 |
+| `FmrbConst::RESET_REASON` | 前回再起動した理由。文字列で `POWERON`、`EXT`、`SW`、`PANIC`、`INT_WDT`、`TASK_WDT`、`WDT`、`DEEPSLEEP`、`BROWNOUT`、`SDIO`、`USB`、`JTAG`、`EFUSE`、`PWR_GLITCH`、`CPU_LOCKUP`、`UNKNOWN` のいずれか |
 | `FmrbConst::HAS_WIFI` | ネットワークにつなげる機種なら `true`。[ネットワーク](network.md) を参照 |
 | `FmrbConst::WHEEL_LINES` | マウスのホイール 1 段で送る行数。`system_conf.toml` から |
 
@@ -117,7 +117,7 @@ USB HID Usage ID。`on_event(ev)` の `ev[:scancode]` と比較します。
 | 編集 | `KEY_INSERT`, `KEY_HOME`, `KEY_PGUP`, `KEY_DELETE`, `KEY_END`, `KEY_PGDN` |
 | 矢印 | `KEY_LEFT`, `KEY_RIGHT`, `KEY_UP`, `KEY_DOWN` |
 | その他 | `KEY_PRINTSCREEN`, `KEY_PAUSE` |
-| 修飾キー（個別） | `KEY_LCTRL`, `KEY_LSHIFT`, `KEY_LALT`, `KEY_LGUI`, `KEY_RCTRL`, `KEY_RSHIFT`, `KEY_RALT`, `KEY_RGUI` |
+| 修飾キー（個別） | `KEY_LCTRL`, `KEY_LSHIFT`, `KEY_LALT`, `KEY_LMETA`, `KEY_RCTRL`, `KEY_RSHIFT`, `KEY_RALT`, `KEY_RMETA` |
 
 ### 入力デバイス: 修飾キーマスク (`MOD_*`)
 
@@ -125,18 +125,22 @@ USB HID Usage ID。`on_event(ev)` の `ev[:scancode]` と比較します。
 
 | 定数 | ビット | 意味 |
 |---|---|---|
-| `MOD_LCTRL` | 0x01 | 左 Ctrl |
-| `MOD_LSHIFT` | 0x02 | 左 Shift |
-| `MOD_LALT` | 0x04 | 左 Alt |
-| `MOD_LGUI` | 0x08 | 左 GUI (Win / Cmd) |
-| `MOD_RCTRL` | 0x10 | 右 Ctrl |
-| `MOD_RSHIFT` | 0x20 | 右 Shift |
-| `MOD_RALT` | 0x40 | 右 Alt |
-| `MOD_RGUI` | 0x80 | 右 GUI |
-| `MOD_CTRL` | 0x11 | 左右 Ctrl 合成 (`MOD_LCTRL | MOD_RCTRL`) |
-| `MOD_SHIFT` | 0x22 | 左右 Shift 合成 |
-| `MOD_ALT` | 0x44 | 左右 Alt 合成 |
-| `MOD_GUI` | 0x88 | 左右 GUI 合成 |
+| `MOD_LSHIFT` | 0x01 | 左 Shift |
+| `MOD_RSHIFT` | 0x02 | 右 Shift |
+| `MOD_LCTRL` | 0x04 | 左 Ctrl |
+| `MOD_RCTRL` | 0x08 | 右 Ctrl |
+| `MOD_LALT` | 0x10 | 左 Alt |
+| `MOD_RALT` | 0x20 | 右 Alt |
+| `MOD_SHIFT` | 0x03 | 左右どちらの Shift でも |
+| `MOD_CTRL` | 0x0C | 左右どちらの Ctrl でも |
+| `MOD_ALT` | 0x30 | 左右どちらの Alt でも |
+
+これはこのファームウェア独自のビットで、USB HID の修飾バイトとは違います。数値を直接
+書かないでください。`0x01` はここでは左 Shift ですが、HID の標準では左 Ctrl です。
+
+Meta (Windows / Command) キーのマスクはありません。ファームウェアが渡す修飾バイトは
+6 ビットで、Meta はその中にないためです。押したことは、scancode が `KEY_LMETA` /
+`KEY_RMETA` の普通のキーイベントとして届きます。
 
 !!! tip "`ev_ctrl?(ev)` / `ev_shift?(ev)` / `ev_alt?(ev)`"
     `FmrbApp` のヘルパでも判定できます。MOD_* を直接使うのは特殊なケースだけで、通常はこちらを使ってください。
