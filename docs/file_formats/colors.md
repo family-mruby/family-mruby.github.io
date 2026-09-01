@@ -71,6 +71,8 @@ that way means several web names land on the same colour, so the list comes in t
 78 names, one per distinct colour, and 23 further spellings that land on a colour already
 in the list. Both are understood; `color names` in the shell lists the 78.
 
+All of them, with their colours, are on [Colour Names](color_names.md).
+
 ## Related
 
 - [System Config (system_conf.toml)](system_conf.md) — the machine-wide theme

@@ -70,6 +70,8 @@ color reset              テーマに戻す
 すでに一覧にある色に重なる 23 個の別名です。どちらも受け付けます。シェルの
 `color names` が並べるのは前者の 78 個です。
 
+全部の名前と色は [色の名前](color_names.md) にあります。
+
 ## 関連
 
 - [システム設定 (system_conf.toml)](system_conf.md) — 機械全体のテーマ

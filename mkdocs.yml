@@ -84,6 +84,7 @@ plugins:
             HID Device Config (hid_devices.toml): HID 機器設定 (hid_devices.toml)
             File Associations (associations.toml): ファイルの関連付け (associations.toml)
             Colours (colors.toml): 配色 (colors.toml)
+            Colour Names: 色の名前
             System Services (services.toml): システムサービス (services.toml)
             Audio File Formats: 音声ファイルフォーマット
             Image & Icon Files: 画像・アイコンファイル
@@ -135,6 +136,7 @@ nav:
       - HID Device Config (hid_devices.toml): file_formats/hid_devices.md
       - File Associations (associations.toml): file_formats/associations.md
       - Colours (colors.toml): file_formats/colors.md
+      - Colour Names: file_formats/color_names.md
       - System Services (services.toml): file_formats/services.md
       - Audio File Formats: file_formats/audio_formats.md
       - Image & Icon Files: file_formats/image_formats.md
