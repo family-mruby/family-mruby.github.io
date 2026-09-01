@@ -1,7 +1,7 @@
 # BASIC と MicroPython
 
 Family mruby は Ruby を中心に作られていますが、動く言語は Ruby だけではありません。
-2.0 の時点で 4 つあります。Ruby、BASIC、MicroPython、Lua です。
+4 つあります。Ruby、BASIC、MicroPython、Lua です。
 
 切り替えて使う「モード」ではありません。`.bas` も `.py` も、Ruby のアプリと並んで
 ランチャーに出て、同じように起動し、互いに同時に動きます。
@@ -15,7 +15,7 @@ Family mruby は Ruby を中心に作られていますが、動く言語は Rub
 |---|---|---|
 | `.rb` | PicoRuby | 中心となる言語。[API リファレンス](api/index.md) の全部が使えます |
 | `.bas` | FMRuby BASIC | Family BASIC 互換。専用のテキスト画面とスプライトを持ちます |
-| `.py` | MicroPython | Ruby と同じアプリの枠組み。Python アプリは同時に 1 本まで |
+| `.py` | MicroPython | Ruby と同じアプリの枠組み。窓・描画・スプライト・音。同時に 1 本だけ |
 | `.lua` | Lua 5.4 | |
 
 ---
@@ -75,9 +75,9 @@ Family BASIC の画面は 28 文字 x 24 行 (224 x 192 ドット) で固定で�
 ## 入っているもの
 
 言語の中核、テキスト画面、自動で動くスプライト、コントローラ入力、`PLAY` と `BEEP`、
-文字テーブルとパレットの選択、エラー処理、`SAVE` まで実装されています。`/app/basic` に
-見本のプログラムが入っています (かな表示、よけゲーム、シューティング、迷路、音楽、
-当たり判定)。
+文字テーブルとパレットの選択、エラー処理、`SAVE` まで実装されています。`/app/basic` には
+見本のプログラムが 3 つ (シューティング、迷路、音楽) と、BASIC のプログラムを普通の
+アプリとして起動する BASIC デモが入っています。
 
 ## 互換性について
 
@@ -123,35 +123,94 @@ app.start()
 ```
 
 窓・イベント・描画は組み込みの `_fmrb` から使えます。継承する `FmrbApp` がそれを
-包んでいます。
+包んでいます。`FmrbApp` / `FmrbGfx` / `FmrbAudio` / `SpriteImage` / `SpriteInstance` /
+`Log` はアプリの名前空間に用意済みで、import は要りません。
 
-見本は `/app/demo/python.app.py` です。
+見本は `/app/python/python.app.py` (PicoRuby デモの双子。ページを順に見せます) と
+`/app/game/breakout/breakout.app.py` です。後者はゲーム 1 本まるごとで、動くものは
+スプライト、動かないものはタイル、日本語の文字、主音源の曲と副音源の効果音が入って
+います。ロボットエクスプローラーには Python 版の操縦もあります。
+
+## Ruby との違い
+
+| | Ruby | Python |
+|---|---|---|
+| 時刻 | `Machine.board_millis` | `ticks_ms()` |
+| 文字列の長さ | `String#length` は文字数 | `len()` は**バイト数** |
+| 別ファイル | `require "/app/..."` | `import mymodule` (アプリの隣か `/usr/lib/python`) |
+| 別ファイルからの枠組み | 見えます | **見えません**。引数で渡します |
+| タイマの callback | ブロック | 関数 (`self.set_timer(500, self.blink)`) |
+
+アプリを複数のファイルに分けられますが、枠組みのクラスはアプリの名前空間にあり、
+module の名前空間には入りません。
+
+```python
+# アプリ側
+import mypanel
+mypanel.draw(self, state)
+
+# mypanel.py 側
+def draw(app, state):
+    app.gfx.draw_text(...)   # FmrbGfx を直接名指しせず、app 経由で使う
+```
+
+1 ファイルの大きさは 64KB までです。
+
+## 音
+
+内蔵音源は `FmrbAudio` から使います。形は Ruby と同じです。曲は主系、短い効果音は副系に
+置くと、効果音で曲が止まりません。
+
+```python
+audio = FmrbAudio(self)
+audio.load_fmsq_file(1, "/cache/app/mygame/bgm.fmsq")   # 先に sync_file で送る
+audio.play_slot(1, FmrbAudio.MAIN)
+audio.note_on(FmrbAudio.CH_PULSE2, 988, 12, 2, 0)       # 効果音は副系
+```
+
+効果音を止める時刻はフレーム数ではなく `ticks_ms()` の実時間で管理してください。重い
+フレームがあると音が伸びます。
 
 ## 制限
 
 MicroPython 自体の作りによる制限がいくつかあります。始める前に知っておいてください。
 
-**Python アプリは同時に 1 本だけ**。MicroPython は VM の状態を全部グローバル変数に持って
+Python アプリは同時に 1 本だけです。MicroPython は VM の状態を全部グローバル変数に持って
 いるので、mruby や Lua と違って 2 つ作れません。2 本目は起動の時点で断られ、「Another
 Python app is already running.」と出ます。Ruby / Lua / BASIC のアプリとの同時実行には
 制限はありません。
 
-**import は組み込みのものだけ**。ファイルからの import は用意していないので、
-`import mymodule` は失敗します。アプリは 1 ファイルで完結させてください。
+import できるのは組み込みのモジュールと、アプリの隣か `/usr/lib/python` にある `.py` です。
+使えるものは `array` / `builtins` / `collections` / `gc` / `io` / `math` / `micropython` /
+`struct` / `sys` / `random`。使えないものは `time` / `json` / `os` / `re` / `binascii` /
+`hashlib` / `heapq` / `deflate` です。これらは MicroPython の `extmod/` にあり、この構成には
+含まれていません。待つときは、眠るのではなく `on_update` の戻り値で間隔を指定してください。
+(`random` は時計から種を取っているので毎回違う目が出ます。同じ展開を繰り返すなら
+`random.seed(n)` を呼んでください。)
 
-使えるもの: `array` / `builtins` / `collections` / `gc` / `io` / `math` / `micropython` /
-`struct` / `sys`。
+ファイルは読めますが書けません。`open()` はありますが、呼ぶと `OSError` になります。
+黙って存在しないより、呼んで失敗するほうが分かるためです。読むには
+`_fmrb.read_file(path)` (丸ごと `bytes` で返します。64KB まで)、大きさだけなら
+`_fmrb.file_size(path)` を使います。`io.StringIO` などメモリ上のものは使えます。
 
-**使えないもの**: `time` / `json` / `os` / `re` / `random` / `binascii` / `hashlib` /
-`heapq` / `deflate`。これらは MicroPython の `extmod/` にあり、この構成には含まれて
-いません。待つときは、眠るのではなく `on_update` の戻り値で間隔を指定してください。
+文字列はバイト列です。この構成には Unicode 文字列が入っていないので、`len("日本語")` は
+9 で、添字もバイト単位です。表示幅が要るときは UTF-8 を走査する `FmrbGfx.text_width` を
+使ってください。
 
-**REPL もスレッドもありません。**
+REPL もスレッドもありません。タスクを作るのは OS の仕事で、ゲスト VM には渡していません。
+アプリの中の並行処理はジェネレータで書けます。
 
-**`open()` は必ず失敗します**。ファイルの読み書きは Python 自身のファイル層ではなく、
-枠組みを通します。
+GC のヒープは 1 アプリ 256KB 固定です。使い切ると `MemoryError` になり、捕まえなければ
+traceback をログに出してアプリが終わります。Ruby のメモリ不足と同じ扱いです。
 
-GC のヒープは 1 アプリ 256KB 固定です。
+強制停止では `on_destroy` が走りません。Python の長いループの途中で止めると、バイトコードの
+実行を巻き戻す形になるので、`destroy` も `on_destroy` も通りません。資源は C 側が回収するので
+漏れませんが、後始末を `on_destroy` に頼らず、`on_update` の区切りで行ってください。Lua も
+同じ性質です。
+
+用意していないもの: タイルマップのクラス (`draw_tile` はあるので自分で並べます)、画像の
+マスク、`GfxBlock` などの描画最適化、円弧、`get_pixel`、追加のキャンバス、p5 互換層、
+マイク入力と外部への MIDI 送出。
 
 ---
 
@@ -161,7 +220,7 @@ GC のヒープは 1 アプリ 256KB 固定です。
   システムはこの言語を中心に設計されています
 - **BASIC**: Family BASIC の感触が欲しいとき。当時の雑誌の投稿作品を打ち込むとき
 - **MicroPython**: Python が手に馴染んでいるとき。ただし標準ライブラリは普段より
-  かなり狭いと思ってください
+  かなり狭く、同時に動かせるのは 1 本だけです
 - **Lua**: 小さくて速いスクリプトを書きたいとき
 
 ## 関連

@@ -38,6 +38,11 @@ color reset              back to the theme
 
 The change applies at once, with no restart.
 
+<div align="center">
+  <img src="/images/colors_shell.png" width="620" alt="The shell drawn in light green on midnight blue, with the two color commands that did it">
+  <br><em>Two lines in the shell, and it keeps them across boots</em>
+</div>
+
 ## From the editor
 
 The editor has a Colors entry in its menu that walks its 31 colours, one at a time. It

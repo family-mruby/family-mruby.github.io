@@ -9,9 +9,11 @@ welcome to use it.
 | | |
 |---|---|
 | **Remote desktop** | No authentication. Anyone on the same network can open the address, watch the screen and send keyboard and mouse input — that is, operate the machine |
+| **The file and app endpoints beside it** | Also unauthenticated, and in the released build. Anyone who can reach the remote desktop can also list, read, write and delete files, and start or stop apps |
 | **BLE console and debug service** | No pairing, no bonding, no encryption (deliberately, because pairing breaks Web Bluetooth on Windows). Anyone in radio range can read and write files, read the log, and start or stop apps |
 | **Remote debugger over TCP** | No authentication. It listens on all interfaces |
 | **Wi-Fi credentials** | Stored in plain text in `/etc/wifi.toml` on the device |
+| **Service keys** | An API key given to the speech service sits in plain text in `services.toml`, and the development build serves `/home` over HTTP |
 | **Apps** | An app you download runs with the same rights as any other. There is no sandbox between apps and the filesystem |
 
 Use these features only on a network you trust, and at your own risk. Do not forward a port
@@ -36,7 +38,7 @@ Each Family mruby app runs as an independent Ruby VM, with its own heap and stac
 |---|---|
 | Standard app heap | 500 KB |
 | Heap with `large_memory = 1` | 1000 KB |
-| Number of concurrent apps | 3 |
+| User app slots | 5. How many fill depends on the memory the machine has |
 
 You can check heap usage in the Monitor app.
 
@@ -46,7 +48,7 @@ You can check heap usage in the Monitor app.
 |---|---|
 | Ruby (PicoRuby) | The main language. Everything documented here |
 | BASIC | Feature-complete as of 2.0. Every known difference from Family BASIC V3 is catalogued. See [BASIC and MicroPython](other_languages.md) |
-| MicroPython | Usable, with real limits: one Python app at a time, built-in modules only, no `open()`, 256 KB heap. See [BASIC and MicroPython](other_languages.md) |
+| MicroPython | Usable, with real limits: one Python app at a time, no writing files, strings that are bytes, and a smaller standard library. Drawing, sprites and sound are there. See [BASIC and MicroPython](other_languages.md) |
 | Lua | A concept implementation. Not suitable for building a substantial application |
 
 ## Waiting inside an app
@@ -92,7 +94,9 @@ Most limits apply to both machines. These do not.
 | microSD | The slot is not wired up in the firmware yet. Internal flash only |
 | Video out | The built-in panel is the only output. No composite video |
 | GROVE | One port, not two |
-| Battery-backed clock | Present (RX8130), but set the time once from **Set Clock** |
+| Battery-backed clock | Present (RX8130). The `timesync` [service](file_formats/services.md) sets it from the network once the machine is online; **Set Clock** is the manual way |
+
+| Mouse wheel | A USB mouse's wheel works only for a device named in [`/etc/hid_devices.toml`](file_formats/hid_devices.md#the-wheel). Plug the mouse in and the log prints the line to add |
 
 ### Retro (narya-board)
 
@@ -102,3 +106,17 @@ Most limits apply to both machines. These do not.
 | Touch | No touch panel. A USB mouse is the pointer |
 | Remote desktop | Not available |
 | Firmware | Two chips to flash, and both must be on the same version or the system will not boot |
+| Resident services | Not carried in the Retro firmware. The clock, network and speech services are Modern only |
+| WAV playback | `play_wav` returns `false`. The audio is at the far end of a serial link, and shipping a clip across it before a note could sound is too slow to be worth it |
+| Mouse wheel | The same per-device rule as Modern |
+
+### Studio (the browser build)
+
+| | |
+|---|---|
+| Network | The machine cannot reach the network from inside the page |
+| Files | `/home` is kept in the browser and nowhere else. Everything outside it is built fresh on every reload. Download the archive to keep anything |
+| Browsers | Desktop Chrome and Firefox. Safari is untested; phones and tablets are not a target, because the machine wants a keyboard |
+| One tab | Open the page twice and only the first tab saves |
+
+See [Family mruby Studio](getting_started/studio.md).

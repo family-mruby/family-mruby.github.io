@@ -91,6 +91,11 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
   <img src="/images/tab5_rpg_demo.png" width="600" alt="The RPG demo running on a Tab5">
 </div>
 
+<div align="center">
+  <img src="/images/robo_explorer.png" width="620" alt="Two windows: the maze with the robot on the left, the robot's own first-person view on the right">
+  <br><em>Robo Explorer and the pilot that drives it, talking over pub/sub</em>
+</div>
+
 ## Tools — `/app/tool`
 
 | App | What it does |
@@ -100,6 +105,11 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 | Sprite Editor | Edits a 16x16 RGB332 tile sheet: load a BMP, pick a tile, edit pixels, save back |
 | PicoRabbit+ | Presents a slide deck written in Markdown, fullscreen. It opens on a list of every deck it can find — yours under `/home/slides`, the samples under `/usr/share/samples/slides`, and the SD card — and can write a deck out as one picture per slide |
 | GPIO Viewer | Live pin status for every GPIO, colour-coded by what is using it |
+
+<div align="center">
+  <img src="/images/picorabbit.png" width="620" alt="A slide presented fullscreen, with a rabbit and a turtle on a track along the bottom and the slide number at the right">
+  <br><em>PicoRabbit presenting one of the bundled decks</em>
+</div>
 
 ## Modern only — `/app/modern`
 

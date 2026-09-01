@@ -52,6 +52,11 @@ raise, so it is not listed. `ps` and the Monitor still show it.
 - **A white border** marks the app that currently has keyboard focus
 - **Click a square** to bring that app to the front and give it the keyboard
 
+<div align="center">
+  <img src="/images/taskbar.png" width="620" alt="The left of the menu bar, enlarged: the title, then three small squares, the last with a white border">
+  <br><em>Three apps running. The white border is the one with the keyboard</em>
+</div>
+
 An app parked by `Ctrl` + `Tab` (see [below](#switching-between-apps)) stays in the taskbar
 while it is frozen, so you can always click your way back to it.
 
@@ -63,6 +68,11 @@ memory. App heaps come from PSRAM, which is plentiful, but each running app also
 "can I open one more app?".
 
 The Linux simulator has no such limit and shows `---KB`.
+
+<div align="center">
+  <img src="/images/menubar_right.png" width="620" alt="The right of the menu bar, enlarged: free RAM, the kana indicator, the BLE cell, the Wi-Fi bars and the clock">
+  <br><em>The right-hand end, enlarged. Free RAM, kana, BLE, Wi-Fi, clock</em>
+</div>
 
 ### Kana input
 

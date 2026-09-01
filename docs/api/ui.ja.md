@@ -23,6 +23,11 @@ def on_event(ev)
 end
 ```
 
+<div align="center">
+  <img src="/images/widgets_kamon.png" width="620" alt="家紋アプリ。左に絵、右に切替と数値入力のパネル">
+  <br><em>家紋デモのパネル。ラベル、2 つのグループの切替、単位つきの数値入力</em>
+</div>
+
 ## 土台にある 2 つの決まり
 
 平常時は何も確保しません。部品は `on_create` で作り、イベントと再描画の経路では確保を

@@ -15,6 +15,11 @@ VM、デスクトップ、エディタ、音 — ファームウェアをまる�
 初回だけ、ページが 1 回自分を読み込み直します (WebAssembly のスレッドに必要な分離を
 用意する小さな service worker を入れるためです)。異常ではありません。
 
+<div align="center">
+  <img src="/images/picoruby_demo.png" width="620" alt="ブラウザのタブの中で、デスクトップの上に PicoRuby デモが動いている">
+  <br><em>同じデスクトップ、同じアプリが、ブラウザのタブの中で動きます</em>
+</div>
+
 ## 必要なもの
 
 - パソコンの、新しめの Chrome か Firefox。キーボードが要ります

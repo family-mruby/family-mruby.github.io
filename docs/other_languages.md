@@ -1,7 +1,7 @@
 # BASIC and MicroPython
 
 Ruby is the language Family mruby is built around, but it is not the only one that runs on
-it. As of 2.0 there are four: Ruby, BASIC, MicroPython and Lua.
+it. There are four: Ruby, BASIC, MicroPython and Lua.
 
 They are not modes you switch into. A `.bas` file and a `.py` file sit in the launcher next
 to the Ruby apps, start the same way, and run at the same time as each other.
@@ -15,7 +15,7 @@ to the Ruby apps, start the same way, and run at the same time as each other.
 |---|---|---|
 | `.rb` | PicoRuby | The main language. Everything in the [API Reference](api/index.md) |
 | `.bas` | FMRuby BASIC | Family BASIC compatible. Its own text screen and sprites |
-| `.py` | MicroPython | Same app framework as Ruby. One Python app at a time |
+| `.py` | MicroPython | The same app framework as Ruby: windows, drawing, sprites, sound. One Python app at a time |
 | `.lua` | Lua 5.4 | |
 
 ---
@@ -77,8 +77,8 @@ original had.
 
 The language core, the text screen, sprites with automatic movement, controller input,
 `PLAY` and `BEEP`, character tables and palette selection, error handling and `SAVE` are all
-implemented. Several sample programs ship in `/app/basic`: a scrolling kana screen, dodge,
-shoot, maze, music and hit demos.
+implemented. Three sample programs ship in `/app/basic` — shoot, maze and music — beside the BASIC app
+demo, which is a BASIC program launched as an ordinary app.
 
 ## Compatibility
 
@@ -125,36 +125,94 @@ app.start()
 ```
 
 Windows, events and drawing are reachable through the built-in `_fmrb` module, wrapped in
-the `FmrbApp` class you subclass.
+the framework classes an app subclasses. `FmrbApp`, `FmrbGfx`, `FmrbAudio`, `SpriteImage`,
+`SpriteInstance` and `Log` are already in the app's namespace — there is nothing to import
+for them.
 
-The demo is `/app/demo/python.app.py`.
+The demos are `/app/python/python.app.py` (the twin of the PicoRuby demo, page by page) and
+`/app/game/breakout/breakout.app.py`, a whole game: sprites for the things that move, tiles
+for the things that do not, Japanese text, a tune on the main sound chip with effects on
+the other. Robo Explorer has a Python pilot as well.
+
+## Where it differs from Ruby
+
+| | Ruby | Python |
+|---|---|---|
+| Time | `Machine.board_millis` | `ticks_ms()` |
+| String length | `String#length` counts characters | `len()` counts **bytes** |
+| Another file | `require "/app/..."` | `import mymodule` — beside the app, or `/usr/lib/python` |
+| The framework, from that file | Visible | **Not visible**. Pass what it needs as arguments |
+| A timer's callback | A block | A function: `self.set_timer(500, self.blink)` |
+
+Splitting an app across files works, but the framework classes live in the app's namespace
+and not in the module's:
+
+```python
+# in the app
+import mypanel
+mypanel.draw(self, state)
+
+# in mypanel.py
+def draw(app, state):
+    app.gfx.draw_text(...)   # reached through the app, not named directly
+```
+
+One file is limited to 64 KB.
+
+## Sound
+
+The sound chip is reached through `FmrbAudio`, the same shape as in Ruby. A tune goes on
+the main instance and short effects on the other, so an effect does not stop the music:
+
+```python
+audio = FmrbAudio(self)
+audio.load_fmsq_file(1, "/cache/app/mygame/bgm.fmsq")   # sync_file it across first
+audio.play_slot(1, FmrbAudio.MAIN)
+audio.note_on(FmrbAudio.CH_PULSE2, 988, 12, 2, 0)       # an effect, on the other
+```
+
+Time an effect's end by `ticks_ms()`, not by counting frames: a heavy frame stretches the
+sound.
 
 ## Limitations
 
 MicroPython's design pushes back in a few places, and these are worth knowing before you
 start:
 
-**One Python app at a time.** MicroPython keeps its entire VM state in globals, so unlike
-mruby and Lua it cannot be instantiated twice. Starting a second one is refused at spawn
-with "Another Python app is already running." Ruby, Lua and BASIC apps are unaffected and can
-run alongside it.
+One Python app at a time. MicroPython keeps its entire VM state in globals, so unlike mruby
+and Lua it cannot be instantiated twice. Starting a second one is refused at spawn with
+"Another Python app is already running." Ruby, Lua and BASIC apps are unaffected and can run
+alongside it.
 
-**Imports are built-in modules only.** There is no import from the filesystem — `import
-mymodule` fails. Keep an app to one file.
+Built-in modules only. `array`, `builtins`, `collections`, `gc`, `io`, `math`,
+`micropython`, `struct`, `sys` and `random` are in. `time`, `json`, `os`, `re`, `binascii`,
+`hashlib`, `heapq` and `deflate` are not — they live in MicroPython's `extmod/`, which this
+build does not carry. For waiting, return a delay from `on_update` rather than sleeping.
+(`random` is seeded from the clock, so a run differs from the last; call `random.seed(n)`
+to repeat one.)
 
-Available: `array`, `builtins`, `collections`, `gc`, `io`, `math`, `micropython`, `struct`,
-`sys`.
+Files can be read, not written. `open()` exists but raises `OSError` — failing out loud
+beats being silently absent. `_fmrb.read_file(path)` returns the whole file as `bytes` (up
+to 64 KB) and `_fmrb.file_size(path)` its size. `io.StringIO` and the rest of the in-memory
+objects work.
 
-Not available: `time`, `json`, `os`, `re`, `random`, `binascii`, `hashlib`, `heapq`,
-`deflate` — those live in MicroPython's `extmod/`, which this build does not include. For
-waiting, return a delay from `on_update` rather than sleeping.
+Strings are bytes. This build has no Unicode strings, so `len("日本語")` is 9 and indexing
+is by byte. For a width in pixels use `FmrbGfx.text_width`, which walks the UTF-8.
 
-**No REPL and no threads.**
+No REPL and no threads. Creating tasks is the system's job, not a guest VM's; use a
+generator for concurrency inside an app.
 
-**`open()` always fails.** File access goes through the framework, not through Python's own
-file layer.
+256 KB of heap per app, fixed. Running out raises `MemoryError`, and an uncaught one ends
+the app with a traceback in the log, exactly as running out of memory does in Ruby.
 
-**256 KB of heap per app**, fixed.
+A force-stop skips `on_destroy`. Stopping an app that is inside a long Python loop unwinds
+the bytecode, so neither `destroy` nor `on_destroy` runs. Resources are reclaimed by the C
+side either way, but an app cannot rely on `on_destroy` to save anything — do that at a
+boundary in `on_update`. Lua behaves the same way.
+
+Not provided: tile map classes (`draw_tile` is there — lay them out yourself), image masks,
+`GfxBlock` and the other drawing optimisations, arcs, `get_pixel`, extra canvases, the p5
+layer, the microphone and MIDI out.
 
 ---
 
@@ -165,7 +223,7 @@ file layer.
 - **BASIC** if you want the Family BASIC experience, or you are following a listing from a
   magazine of the era
 - **MicroPython** if Python is what you know. Expect a smaller standard library than you are
-  used to
+  used to, and one Python app at a time
 - **Lua** for a small, fast script
 
 ## Related

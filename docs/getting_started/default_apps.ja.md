@@ -91,6 +91,11 @@ Modern では、常駐する[サービス](../file_formats/services.md)を抱え
   <img src="/images/tab5_rpg_demo.png" width="600" alt="Tab5 で動く RPG デモ">
 </div>
 
+<div align="center">
+  <img src="/images/robo_explorer.png" width="620" alt="窓が 2 つ。左が迷路とロボット、右がロボットから見た一人称の視界">
+  <br><em>ロボットエクスプローラーと、それを動かす操縦。やりとりは Pub/Sub です</em>
+</div>
+
 ## 道具 — `/app/tool`
 
 | アプリ | 内容 |
@@ -100,6 +105,11 @@ Modern では、常駐する[サービス](../file_formats/services.md)を抱え
 | スプライトエディタ | 16x16 の RGB332 タイル表を編集します。BMP を読み、タイルを選び、点を打ち、書き戻します |
 | ピコラビット＋ | Markdown で書いた資料を全画面で発表します。見つけた資料の一覧から始まり (`/home/slides`、`/usr/share/samples/slides`、SD カード)、1 枚ずつ画像として書き出すこともできます |
 | GPIO表示 | 全 GPIO の状態を、何が使っているかで色分けして表示します |
+
+<div align="center">
+  <img src="/images/picorabbit.png" width="620" alt="全画面で発表中のスライド。下の帯を兎と亀が進み、右端にページ番号が出ている">
+  <br><em>同梱の資料を発表しているところ</em>
+</div>
 
 ## Modern 専用 — `/app/modern`
 

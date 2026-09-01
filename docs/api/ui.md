@@ -23,6 +23,11 @@ def on_event(ev)
 end
 ```
 
+<div align="center">
+  <img src="/images/widgets_kamon.png" width="620" alt="The Kamon app: a drawing on the left, and a panel of toggles and steppers on the right">
+  <br><em>The Kamon demo's panel: labels, two groups of toggles, and steppers with a unit</em>
+</div>
+
 ## Two rules it is built around
 
 Nothing is allocated in the steady state. Widgets are made in `on_create`; the event and

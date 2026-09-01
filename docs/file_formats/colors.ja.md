@@ -37,6 +37,11 @@ color reset              テーマに戻す
 
 再起動なしですぐ反映されます。
 
+<div align="center">
+  <img src="/images/colors_shell.png" width="620" alt="midnightblue の地に lightgreen の文字で描かれたシェルと、そうした 2 行の color コマンド">
+  <br><em>シェルで 2 行打つだけです。次に起動しても残ります</em>
+</div>
+
 ## エディタから
 
 エディタのメニューには Colors があり、31 色を 1 つずつ選べます。書き込む先は同じ

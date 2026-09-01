@@ -17,6 +17,11 @@ On your very first visit the page reloads itself once (it installs a small
 service worker that provides the isolation WebAssembly threads need). That is
 normal.
 
+<div align="center">
+  <img src="/images/picoruby_demo.png" width="620" alt="The PicoRuby demo running on the desktop, inside a browser tab">
+  <br><em>The same desktop, the same apps, in a browser tab</em>
+</div>
+
 ## Requirements
 
 - A recent Chrome or Firefox on a PC with a keyboard
