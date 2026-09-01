@@ -138,10 +138,10 @@ nav:
       - System Services (services.toml): file_formats/services.md
       - Audio File Formats: file_formats/audio_formats.md
       - Image & Icon Files: file_formats/image_formats.md
+  - MicroPython and BASIC: other_languages.md
   - Tools:
       - Remote Desktop: remote_desktop.md
       - Debugging: debugging.md
-      - MicroPython and BASIC: other_languages.md
   - Examples: examples.md
   - Architecture: architecture.md
   - Hardware: hardware.md

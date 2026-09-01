@@ -15,6 +15,8 @@ A module that provides constants referenced throughout the system.
 | `FmrbConst::GA_VERSION` | fmruby-graphics-audio version |
 | `FmrbConst::LINK_VERSION` | UART link protocol version |
 | `FmrbConst::IDF_VERSION` | ESP-IDF version |
+| `FmrbConst::BUILD_DATE` | When this firmware was compiled, as `"Mmm dd yyyy hh:mm:ss"` |
+| `FmrbConst::LANGUAGE` | The UI language from `system_conf.toml`, `"en"` or `"ja"`. `FmrbApp.language` reads it through a call that works on both engines |
 
 ### Hardware Information
 
@@ -41,13 +43,15 @@ A module that provides constants referenced throughout the system.
 
 #### Process States
 
-| Constant |
-|---|
-| `PROC_STATE_FREE` |
-| `PROC_STATE_INIT` |
-| `PROC_STATE_RUNNING` |
-| `PROC_STATE_SUSPENDED` |
-| `PROC_STATE_STOPPING` |
+The `state` of each entry `FmrbApp.ps` returns:
+
+| Constant | Value | Meaning |
+|---|---|---|
+| `PROC_STATE_FREE` | 0 | The slot is empty |
+| `PROC_STATE_INIT` | 1 | Allocated and its VM built, not started yet. The kernel announces a spawn at this point, so an app already has a window here |
+| `PROC_STATE_RUNNING` | 2 | Running |
+| `PROC_STATE_SUSPENDED` | 3 | Temporarily suspended — a fullscreen app parked by `Ctrl` + `Tab` is in this state, and still answers from the taskbar |
+| `PROC_STATE_STOPPING` | 4 | Asked to stop, still winding down |
 
 ### Messaging
 
@@ -60,12 +64,27 @@ A module that provides constants referenced throughout the system.
 
 #### App Control Commands
 
-| Constant |
-|---|
-| `APP_CTRL_SPAWN` |
-| `APP_CTRL_KILL` |
-| `APP_CTRL_SUSPEND` |
-| `APP_CTRL_RESUME` |
+The subtype of an `MSG_TYPE_APP_CONTROL` message sent to the kernel:
+
+| Constant | Value | Meaning |
+|---|---|---|
+| `APP_CTRL_SPAWN` | 1 | Start an app |
+| `APP_CTRL_KILL` | 2 | Stop one |
+| `APP_CTRL_SUSPEND` | 3 | Suspend one |
+| `APP_CTRL_RESUME` | 4 | Let it run again |
+
+An ordinary app rarely sends these itself: `request_run`, `request_fullscreen` and the rest
+of [`FmrbApp`](fmrb_app.md) build the message for it.
+
+### Status LED
+
+What the board's LED is showing. The kernel sets it; these name the patterns.
+
+| Constant | Value | Meaning |
+|---|---|---|
+| `LED_ERR_NONE` | 0 | Nothing wrong |
+| `LED_ERR_FATAL` | 1 | Solid red. The system stopped |
+| `LED_ERR_VERSION_MISMATCH` | 2 | Three quick red pulses, then a gap. The two chips are on different versions (Retro) |
 
 ### Theme Colors (System-wide Color Scheme)
 
@@ -79,6 +98,7 @@ A module that provides constants referenced throughout the system.
 | `THEME_HIGHLIGHT` | Highlight |
 | `THEME_BORDER` | Border |
 | `THEME_BUTTON` | Button |
+| `THEME_DIR_COLOR` | Directory names, where a file list distinguishes them from files |
 
 These are all RGB332 values. Use them when you want your app's UI to match the OS color scheme.
 
@@ -217,7 +237,26 @@ A module for querying the usage status of hardware resources (especially GPIO pi
 | `FmrbHw.pin_status_all` | `Array<Integer>` (index = pin number, value = status) |
 | `FmrbHw.pin_count` | Total number of pins |
 
-The value from `pin_status` is an internal identifier: 0 = unused, anything else = in use by another function such as "GPIO", "I2C", "UART", etc.
+What `pin_status` returns is one of these, and they are constants on `FmrbHw`:
+
+| Constant | Value | Meaning |
+|---|---|---|
+| `FmrbHw::PIN_UNUSED` | 0 | Free |
+| `FmrbHw::PIN_SYSTEM_EXCLUSIVE` | 1 | Reserved by the system and never available — USB, PSRAM, the display link |
+| `FmrbHw::PIN_USER_GPIO` | 2 | Taken by an app as a GPIO |
+| `FmrbHw::PIN_USER_I2C` | 3 | Taken by an `I2C` |
+| `FmrbHw::PIN_USER_RMT` | 4 | Taken by an `RMT` |
+| `FmrbHw::PIN_USER_SPI` | 5 | Taken by SPI |
+| `FmrbHw::PIN_USER_PWM` | 6 | Taken by PWM |
+| `FmrbHw::PIN_USER_UART` | 7 | Taken by a UART |
+
+The I2C buses the system itself uses are named too, so an app can talk on one without
+hardcoding a board's numbers (ESP32 only):
+
+| Constant | |
+|---|---|
+| `FmrbHw::PIN_I2C1_SDA` / `PIN_I2C1_SCL` | The first bus |
+| `FmrbHw::PIN_I2C2_SDA` / `PIN_I2C2_SCL` | The second |
 
 ### Sample: Display All Pins
 

@@ -15,6 +15,8 @@
 | `FmrbConst::GA_VERSION` | fmruby-graphics-audio 側のバージョン |
 | `FmrbConst::LINK_VERSION` | UART リンクプロトコルバージョン |
 | `FmrbConst::IDF_VERSION` | ESP-IDF のバージョン |
+| `FmrbConst::BUILD_DATE` | このファームウェアをコンパイルした日時 (`"Mmm dd yyyy hh:mm:ss"`) |
+| `FmrbConst::LANGUAGE` | `system_conf.toml` の表示言語。`"en"` か `"ja"`。`FmrbApp.language` は両エンジンで動く形でこれを読みます |
 
 ### ハードウェア情報
 
@@ -41,13 +43,15 @@
 
 #### プロセス状態
 
-| 定数 |
-|---|
-| `PROC_STATE_FREE` |
-| `PROC_STATE_INIT` |
-| `PROC_STATE_RUNNING` |
-| `PROC_STATE_SUSPENDED` |
-| `PROC_STATE_STOPPING` |
+`FmrbApp.ps` が返す各項目の `state` です。
+
+| 定数 | 値 | 意味 |
+|---|---|---|
+| `PROC_STATE_FREE` | 0 | 枠が空いている |
+| `PROC_STATE_INIT` | 1 | 確保して VM を作った直後。まだ動き出していません。カーネルはこの時点で起動を知らせるので、窓はもう出ています |
+| `PROC_STATE_RUNNING` | 2 | 動いている |
+| `PROC_STATE_SUSPENDED` | 3 | 一時停止中。`Ctrl` + `Tab` で退避した全画面アプリがこれで、タスクバーからは戻せます |
+| `PROC_STATE_STOPPING` | 4 | 停止を頼まれ、後始末の途中 |
 
 ### メッセージング
 
@@ -60,12 +64,27 @@
 
 #### アプリ制御コマンド
 
-| 定数 |
-|---|
-| `APP_CTRL_SPAWN` |
-| `APP_CTRL_KILL` |
-| `APP_CTRL_SUSPEND` |
-| `APP_CTRL_RESUME` |
+カーネルへ送る `MSG_TYPE_APP_CONTROL` メッセージの副種別です。
+
+| 定数 | 値 | 意味 |
+|---|---|---|
+| `APP_CTRL_SPAWN` | 1 | アプリを起動する |
+| `APP_CTRL_KILL` | 2 | 止める |
+| `APP_CTRL_SUSPEND` | 3 | 一時停止する |
+| `APP_CTRL_RESUME` | 4 | 再開する |
+
+普通のアプリがこれを自分で送ることはあまりありません。`request_run` や
+`request_fullscreen` など [`FmrbApp`](fmrb_app.md) 側のメソッドが組み立ててくれます。
+
+### 状態表示 LED
+
+基板の LED が何を出しているかです。設定するのはカーネルで、これはその模様の名前です。
+
+| 定数 | 値 | 意味 |
+|---|---|---|
+| `LED_ERR_NONE` | 0 | 異常なし |
+| `LED_ERR_FATAL` | 1 | 赤の点灯。システムが停止しました |
+| `LED_ERR_VERSION_MISMATCH` | 2 | 赤が 3 回速く光って間が空く。2 つのチップの版が食い違っています (Retro) |
 
 ### テーマ色（システム共通の配色）
 
@@ -79,6 +98,7 @@
 | `THEME_HIGHLIGHT` | 強調 |
 | `THEME_BORDER` | 枠線 |
 | `THEME_BUTTON` | ボタン |
+| `THEME_DIR_COLOR` | ディレクトリ名。ファイル一覧でファイルと区別するための色 |
 
 これらはすべて RGB332 値です。アプリの UI を OS の配色に合わせたい場合に使います。
 
@@ -217,7 +237,26 @@ SysInfo.new.start
 | `FmrbHw.pin_status_all` | `Array<Integer>`（インデックス=ピン番号、値=状態） |
 | `FmrbHw.pin_count` | ピン総数 |
 
-`pin_status` の値は内部識別子で、0 = 未使用、それ以外 = 「GPIO」「I2C」「UART」など別機能で使用中、を意味します。
+`pin_status` が返すのは次のどれかで、`FmrbHw` の定数になっています。
+
+| 定数 | 値 | 意味 |
+|---|---|---|
+| `FmrbHw::PIN_UNUSED` | 0 | 空き |
+| `FmrbHw::PIN_SYSTEM_EXCLUSIVE` | 1 | システムが確保していて、使えることはありません (USB、PSRAM、表示の線など) |
+| `FmrbHw::PIN_USER_GPIO` | 2 | アプリが GPIO として確保 |
+| `FmrbHw::PIN_USER_I2C` | 3 | `I2C` が確保 |
+| `FmrbHw::PIN_USER_RMT` | 4 | `RMT` が確保 |
+| `FmrbHw::PIN_USER_SPI` | 5 | SPI が確保 |
+| `FmrbHw::PIN_USER_PWM` | 6 | PWM が確保 |
+| `FmrbHw::PIN_USER_UART` | 7 | UART が確保 |
+
+システム自身が使う I2C のピンにも名前が付いているので、基板ごとの番号を書かずに同じ
+バスへ乗れます (ESP32 のみ)。
+
+| 定数 | |
+|---|---|
+| `FmrbHw::PIN_I2C1_SDA` / `PIN_I2C1_SCL` | 1 本目のバス |
+| `FmrbHw::PIN_I2C2_SDA` / `PIN_I2C2_SCL` | 2 本目 |
 
 ### サンプル: 全ピンを表示
 
