@@ -8,7 +8,7 @@
 - リポジトリ: `fmruby-core/flash/app/<カテゴリ>/<名前>.app.rb`
 - 設定: 同じ場所の `<名前>.app.toml`
 
-BASIC や MicroPython の見本も含めた同梱アプリの全体像は
+MicroPython や BASIC の見本も含めた同梱アプリの全体像は
 [標準アプリ](getting_started/default_apps.md) にあります。
 
 ## デモ (demo)

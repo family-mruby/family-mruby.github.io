@@ -65,7 +65,7 @@ battery-backed clock.
 - The Ruby API. An app written on one runs on the other.
 - The desktop, launcher, editor, shell and file manager.
 - The bundled apps, including the games and demos.
-- BASIC (`.bas`), MicroPython (`.py`) and Lua apps.
+- MicroPython (`.py`), BASIC (`.bas`) and Lua apps.
 - The Ruby networking API, and MIDI output.
 - The [simulator](simulator.md), which runs the whole system on Linux with no hardware
   at all.

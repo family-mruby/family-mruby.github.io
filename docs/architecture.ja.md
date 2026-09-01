@@ -17,7 +17,7 @@ Family mruby は、FreeRTOS の上に載った小さな多 VM オペレーティ
 |---|---|
 | ユーザアプリの枠 | 5 つ。いくつ埋まるかは機械のメモリ次第で、`max_apps` で下げられます |
 | アプリ 1 つあたりのヒープ | 500KB。`large_memory = 1` で 1MB |
-| 言語 | Ruby (PicoRuby)、BASIC、MicroPython、Lua |
+| 言語 | Ruby (PicoRuby)、MicroPython、BASIC、Lua |
 
 領域を分けているのは整理のためだけではありません。メモリの断片化は原因となったアプリの
 中に留まり、アプリが終わればその領域はまるごと回収されます。

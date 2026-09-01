@@ -44,9 +44,9 @@ raise, so it is not listed. `ps` and the Monitor still show it.
     | Colour | Language |
     |---|---|
     | Red | Ruby (mruby) |
-    | Blue | Lua |
-    | Green | BASIC |
     | Yellow | MicroPython |
+    | Green | BASIC |
+    | Blue | Lua |
     | Gray | Native C |
 
 - **A white border** marks the app that currently has keyboard focus

@@ -8,7 +8,7 @@ Source file locations:
 - In the repository: `fmruby-core/flash/app/<category>/<name>.app.rb`
 - Configuration: `<name>.app.toml`, next to it
 
-A full list of what ships, including the BASIC and MicroPython samples, is in
+A full list of what ships, including the MicroPython and BASIC samples, is in
 [Default Apps](getting_started/default_apps.md).
 
 ## Demo (demo)

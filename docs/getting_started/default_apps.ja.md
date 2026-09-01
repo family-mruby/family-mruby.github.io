@@ -57,12 +57,6 @@ Modern では、常駐する[サービス](../file_formats/services.md)を抱え
 | Pythonデモ | PicoRuby デモの双子。MicroPython で書かれ、ページも枠組みも同じ |
 | Python計測 | Python のアプリが 1 フレームで何をこなせるか。ゲームの書き方を決める 3 つのコスト |
 
-## Lua — `/app/lua`
-
-| アプリ | |
-|---|---|
-| Luaデモ | Lua から使うアプリ枠組み |
-
 ## BASIC — `/app/basic`
 
 [FMRuby BASIC](../other_languages.md) のプログラム。動かせて、読めます。
@@ -73,6 +67,12 @@ Modern では、常駐する[サービス](../file_formats/services.md)を抱え
 | シュート | シューティング |
 | メイロ | |
 | オンガク | `PLAY` と `BEEP` |
+
+## Lua — `/app/lua`
+
+| アプリ | |
+|---|---|
+| Luaデモ | Lua から使うアプリ枠組み |
 
 ## ゲーム — `/app/game`
 

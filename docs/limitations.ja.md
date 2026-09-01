@@ -47,8 +47,8 @@ Family mruby の各アプリは独立した Ruby VM として動作し、それ�
 | 言語 | 状況 |
 |---|---|
 | Ruby (PicoRuby) | 中心となる言語。この文書に書かれているものが全部使えます |
-| BASIC | 2.0 で機能実装完了。Family BASIC (V3) との既知の差は全件が整理されています。[BASIC と MicroPython](other_languages.md) を参照 |
-| MicroPython | 使えますが制限があります。Python アプリは同時に 1 本、ファイルは書けない、文字列はバイト列、標準ライブラリは狭い。描画・スプライト・音は使えます。[BASIC と MicroPython](other_languages.md) を参照 |
+| MicroPython | 使えますが制限があります。Python アプリは同時に 1 本、ファイルは書けない、文字列はバイト列、標準ライブラリは狭い。描画・スプライト・音は使えます。[MicroPython と BASIC](other_languages.md) を参照 |
+| BASIC | 2.0 で機能実装完了。Family BASIC (V3) との既知の差は全件が整理されています。[MicroPython と BASIC](other_languages.md) を参照 |
 | Lua | コンセプト実装。本格的なアプリを書くのには適していません |
 
 ## アプリの中で待つとき

@@ -16,7 +16,7 @@ program run next to the desktop.
 |---|---|
 | User app slots | 5. How many fill depends on the memory the machine has, and `max_apps` can lower it |
 | Heap per app | 500 KB, or 1 MB with `large_memory = 1` |
-| Languages | Ruby (PicoRuby), BASIC, MicroPython, Lua |
+| Languages | Ruby (PicoRuby), MicroPython, BASIC, Lua |
 
 A separate pool is not just tidiness: memory fragmentation stays inside the app that caused
 it, and when an app dies its whole pool is reclaimed at once.

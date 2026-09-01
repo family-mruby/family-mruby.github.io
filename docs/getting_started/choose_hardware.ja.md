@@ -63,7 +63,7 @@ ESP32-P4 が 1 個で OS・描画・音・入力の全部を動かし、その�
 - Ruby の API。片方で書いたアプリはもう片方でも動きます
 - デスクトップ、ランチャー、エディタ、シェル、ファイル管理
 - 同梱アプリ一式 (ゲームやデモも含む)
-- BASIC (`.bas`)、MicroPython (`.py`)、Lua のアプリ
+- MicroPython (`.py`)、BASIC (`.bas`)、Lua のアプリ
 - Ruby のネットワーク API、MIDI 出力
 - [シミュレータ](simulator.md)。実機が無くても Linux 上で全部動きます
 

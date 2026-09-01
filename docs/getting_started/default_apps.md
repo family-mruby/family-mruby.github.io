@@ -57,12 +57,6 @@ On Modern a service host also runs in the background, holding the resident
 | Python demo | The twin of the PicoRuby demo, written in MicroPython: the same pages, the same framework |
 | PyBench | What fits in one frame of a Python app — the three costs that decide how a game is written |
 
-## Lua — `/app/lua`
-
-| App | |
-|---|---|
-| Lua app demo | The app framework from Lua |
-
 ## BASIC — `/app/basic`
 
 Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
@@ -73,6 +67,12 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 | Shoot | A shooting game |
 | Maze | |
 | Music | `PLAY` and `BEEP` |
+
+## Lua — `/app/lua`
+
+| App | |
+|---|---|
+| Lua app demo | The app framework from Lua |
 
 ## Games — `/app/game`
 

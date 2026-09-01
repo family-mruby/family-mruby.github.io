@@ -90,7 +90,7 @@ plugins:
             Tools: 開発ツール
             Remote Desktop: 遠隔画面
             Debugging: デバッグ
-            BASIC and MicroPython: BASIC と MicroPython
+            MicroPython and BASIC: MicroPython と BASIC
             Limitations: 制約事項
             Examples: サンプル集
             Hardware: ハードウェア
@@ -141,7 +141,7 @@ nav:
   - Tools:
       - Remote Desktop: remote_desktop.md
       - Debugging: debugging.md
-      - BASIC and MicroPython: other_languages.md
+      - MicroPython and BASIC: other_languages.md
   - Examples: examples.md
   - Architecture: architecture.md
   - Hardware: hardware.md

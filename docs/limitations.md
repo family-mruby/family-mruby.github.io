@@ -47,8 +47,8 @@ You can check heap usage in the Monitor app.
 | Language | Status |
 |---|---|
 | Ruby (PicoRuby) | The main language. Everything documented here |
-| BASIC | Feature-complete as of 2.0. Every known difference from Family BASIC V3 is catalogued. See [BASIC and MicroPython](other_languages.md) |
-| MicroPython | Usable, with real limits: one Python app at a time, no writing files, strings that are bytes, and a smaller standard library. Drawing, sprites and sound are there. See [BASIC and MicroPython](other_languages.md) |
+| MicroPython | Usable, with real limits: one Python app at a time, no writing files, strings that are bytes, and a smaller standard library. Drawing, sprites and sound are there. See [MicroPython and BASIC](other_languages.md) |
+| BASIC | Feature-complete as of 2.0. Every known difference from Family BASIC V3 is catalogued. See [MicroPython and BASIC](other_languages.md) |
 | Lua | A concept implementation. Not suitable for building a substantial application |
 
 ## Waiting inside an app
