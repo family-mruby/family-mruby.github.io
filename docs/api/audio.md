@@ -28,6 +28,40 @@ Internally, it sends `MSG_TYPE_APP_AUDIO` messages to the kernel, which are proc
 
 `path` is a file path (e.g. `/usr/share/sounds/nsf/song.nsf`). `track:` specifies the track number (used for files like NSF that contain multiple tracks).
 
+### Playing a recording (`play_wav`)
+
+```ruby
+@audio.play_wav("/usr/share/sounds/sine440_16k.wav")
+```
+
+| Method | Purpose |
+|---|---|
+| `play_wav(path)` | Play a WAV mixed on top of the sound chip. `true` if it started |
+| `stop_wav` | Stop it |
+
+PCM 16-bit, mono, 8-48 kHz, up to 2 MB. It rides over whatever the sound chip is playing,
+so a spoken line or a recorded chime does not interrupt the music. One clip at a time for
+the whole machine: starting another replaces it.
+
+!!! note "Modern only"
+    `play_wav` returns `false` on Retro without sending anything, so an app can call it
+    unconditionally and fall back on the answer — which is what the hourly chime does: a
+    recording if it can, its note if it cannot. Retro's audio lives on the WROVER at the
+    far end of a serial link, and shipping a clip across it before a note could sound is
+    too slow to be worth it.
+
+### The microphone (Modern only)
+
+| Method | Purpose |
+|---|---|
+| `mic_available?` | Whether this machine has one |
+| `mic_rate` | Samples per second. Fixed by the hardware, so a spectrum's bin width follows from it |
+| `mic_enable(on = true)` | Start or stop sampling |
+| `mic_read(count, timeout_ms = 200)` | `count` 16-bit samples as a byte String, or `nil` if they did not arrive |
+
+Nothing is recorded and nothing leaves the device; the samples are handed to the app and
+that is all. The bundled Mic Spectrum app is the worked example.
+
 ### FMSQ Sequences
 
 A mechanism for pre-loading sequences into slots before playback. Suitable for short sound effects and looping BGM.

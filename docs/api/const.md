@@ -10,6 +10,7 @@ A module that provides constants referenced throughout the system.
 |---|---|
 | `FmrbConst::PLATFORM` | `"linux"` or `"esp32"` |
 | `FmrbConst::BOARD` | `"tab5"`, `"naryav4"`, `"atom_display"`, `"narya_v3"` or `"linux"`. Finer-grained than `PLATFORM` and `CHIP_MODEL`: use it to pick board-specific wiring |
+| `FmrbConst::HW_FAMILY` | `"modern"` or `"retro"`. The coarsest of the three, and the one to ask when a feature exists on one family and not the other |
 | `FmrbConst::OS_VERSION` | OS version string |
 | `FmrbConst::GA_VERSION` | fmruby-graphics-audio version |
 | `FmrbConst::LINK_VERSION` | UART link protocol version |
@@ -27,6 +28,7 @@ A module that provides constants referenced throughout the system.
 | `FmrbConst::PSRAM_SIZE_MB` | PSRAM capacity (MB) |
 | `FmrbConst::RESET_REASON` | Reason for the last reset |
 | `FmrbConst::HAS_WIFI` | `true` on a machine that can join a network. See [Network](network.md) |
+| `FmrbConst::WHEEL_LINES` | How many text rows one notch of the mouse wheel moves, from `system_conf.toml` |
 
 ### Process Management
 
@@ -35,7 +37,7 @@ A module that provides constants referenced throughout the system.
 | `FmrbConst::PROC_ID_KERNEL` | Kernel process ID |
 | `FmrbConst::PROC_ID_HOST` | Host process ID |
 | `FmrbConst::PROC_ID_SYSTEM_APP` | System app ID |
-| `FmrbConst::PROC_ID_USER_APP0` / `USER_APP1` / `USER_APP2` | User app slots |
+| `FmrbConst::PROC_ID_USER_APP0` … `USER_APP4` | User app slots. There are five; how many fill depends on the memory the machine has |
 
 #### Process States
 

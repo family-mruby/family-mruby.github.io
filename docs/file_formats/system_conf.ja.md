@@ -47,6 +47,7 @@ Config ダイアログから。システムメニューの Config には、実�
 |---|---|---|
 | `keyboard_layout` | `"jp"` / `"us"` | 使っているキーボードの配列。合っていないと記号の位置がずれます |
 | `mouse_scale_x` / `mouse_scale_y` | float | カーソルの速さ。0.5 で半分、2.0 で倍 |
+| `wheel_lines` | int | マウスのホイール 1 段で送る行数。アプリごとではなく機械の設定です |
 
 ### システム
 
@@ -55,6 +56,7 @@ Config ダイアログから。システムメニューの Config には、実�
 | `language` | `"en"` / `"ja"` | `"en"` | 画面の言語。`app_screen_name_<言語>` を持つアプリはこれに従います |
 | `timezone` | string | | POSIX の時間帯。`JST-9`、`UTC`、`EST5` など |
 | `debug_mode` | bool | `true` | ログを多めに出す |
+| `max_apps` | int | (ビルドの上限) | この機械が配るアプリ枠の数。ファームウェアが持つ数を超える値は、拒否ではなく上限に丸められます |
 | `ble_auto_start` | bool | `true` | 起動時に BLE を立ち上げる。Retro のみ有効で、Modern は設定によらず起動する |
 | `wifi_auto_start` | bool | `false` | 起動時に WiFi を立ち上げる |
 

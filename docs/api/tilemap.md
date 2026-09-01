@@ -56,15 +56,26 @@ sheet.stamp(5, dst_x: 16, dst_y: 0)   # Stamp tile 5 to the right
 
 ## TileMap
 
-Loads an `fmrb_map` v1 format JSON file and lays out tiles for each layer.
+Loads a map file and lays out tiles for each layer.
 
 ### Constructor
 
 ```ruby
-TileMap.new(json_path)
+TileMap.new(path)
 ```
 
-`json_path` is a JSON path on the core side (internal flash). Note that this is not on the graphics side.
+`path` is a path on the core side (internal flash). Note that this is not on the graphics
+side. Two formats are accepted, and which one it is decided by the first four bytes:
+
+| Format | |
+|---|---|
+| `.map.bin` | The packed form. One byte per tile, read straight out of the file |
+| `.json` | The `fmrb_map` v1 JSON below |
+
+Prefer the packed form on the device. Loading a map used to mean parsing JSON, which for a
+large one took the best part of a minute; the packed form is read rather than parsed, and
+the same map arrives in milliseconds. The JSON stays readable and diffable, so it is the
+form to keep in a repository — export the packed one beside it.
 
 ### Methods
 
@@ -131,7 +142,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 Tile sheets and maps can be created with web tools (bundled in `fmruby-core/tool/web/`):
 
 - Sprite Editor: Create a BMP with 16x16 RGB332 tiles arranged in a grid
-- Map Editor: Place tiles + edit events -> export as `fmrb_map` JSON
+- Map Editor: Place tiles + edit events -> export as a packed `.map.bin` or as `fmrb_map` JSON. It reads both
 
 Start with `ruby web_server.rb` and access `http://localhost:8080` (same server as the [Console](../getting_started/console.md)).
 

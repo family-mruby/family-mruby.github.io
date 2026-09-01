@@ -33,6 +33,8 @@ MyApp.new.start
 | `on_event(ev)` | キーボード／マウス／ゲームパッド／HID 受信時 | 任意 |
 | `on_suspend` | フルスクリーンアプリに切り替えられたとき | 任意 |
 | `on_resume` | 中断状態から復帰したとき | 任意 |
+| `on_resize(w, h)` | 窓の大きさが変わったとき。角のドラッグや全画面の切り替え。`@fullscreen` と描画可能領域は更新済み | 任意 |
+| `on_quit_request` | `Ctrl` + `Q` のとき。すぐ閉じる代わりに呼ばれる | 任意 |
 | `on_destroy` | アプリ終了時に1回 | 任意 |
 
 ```
@@ -107,6 +109,27 @@ when :mouse_move
 
 タイトルバー上のクリック（左クリックでクローズ／右クリックでリロード）は基底クラスが既に処理しているので、サブクラスは `super` を呼ばなくても閉じる動作は機能します。
 
+### ホイール
+
+ホイールのイベントは、カーソルの下の窓ではなく、キーボードの入力先になっている窓に届きます。
+読み取りは 2 つのどちらかで、ホイール以外のイベントなら `nil` が返るので、そのまま次へ
+進めます。
+
+```ruby
+rows = wheel_rows(ev)
+if rows
+  @scroll -= rows
+  redraw
+end
+```
+
+| メソッド | |
+|---|---|
+| `wheel_rows(ev)` | 段数に機械の `wheel_lines` 設定を掛けたもの。行が文字の行であるものはこちら |
+| `wheel_notches(ev)` | 段数そのもの。行が文字の行でない一覧向け。ランチャーの升目は数行分の高さがあり、`wheel_lines` では飛びすぎます |
+
+1 段でどれだけ動くかは機械の設定であって、アプリごとの都合ではありません。
+
 ### ゲームパッド
 
 ```ruby
@@ -128,11 +151,14 @@ when :gamepad_axis
 |---|---|
 | `set_window_position(x, y)` | ウィンドウ位置を変更 |
 | `draw_window_frame` | ウィンドウ枠（タイトルバー + 縁）を描画。基底クラスが管理する `GfxBlock` を再利用 |
-| `clear_user_area(color = FmrbGfx::BLACK)` | アプリ描画可能領域（タイトルバー・枠を除く）を指定色で塗りつぶす |
-| `draw_scrollbar(scroll, total, visible, x=…, y=…, w=…, h=…)` | スクロールバー描画 |
-| `scrollbar_hit(click_x, click_y, x=…, y=…, w=…, h=…)` | スクロールバーのヒット判定 (`:up` / `:down` / `nil`) |
+| `clear_user_area(color = FmrbConst::THEME_WINDOW_BG)` | アプリ描画可能領域（タイトルバー・枠を除く）を塗りつぶす。既定色はシステムのテーマに従い、この呼び出しで窓枠の描き直しと、付いている部品の再描画指定も行われる |
+| `request_fullscreen(on)` / `toggle_fullscreen` | 窓と全画面を切り替える。VM は動いたままなのでアプリの状態は残る。結果は `on_resize` で届き、そのとき `@fullscreen` と描画可能領域は更新済み |
 | `request_file_select(mode = "open")` | システムのファイル選択ダイアログを呼び出し |
+| `sync_file(path, dest: nil)` | 描画・音声側にあるファイルの複製を、こちらのものと一致させる。違うときだけ転送する。画面を持たないアプリでも使える |
 | `request_reload` | スクリプトをリロード（タイトルバー右クリックで自動呼び出しされる） |
+
+スクロールバーは移動しました。`draw_scrollbar` と `scrollbar_hit` は無くなり、部品になって
+います。[UI 部品](ui.md) を参照してください。
 
 !!! tip "`@gfx.clear` の代わりに `clear_user_area`"
     `@gfx.clear(color)` は キャンバス全体 を塗りつぶすため、タイトルバーや閉じるボタンも消えます。ウィンドウ枠を保ちたい場合は `clear_user_area(color)` を使ってください。
@@ -155,7 +181,28 @@ when :gamepad_axis
 | `stop` | `@running = false`（次の `_spin` 後に `destroy` へ） |
 | `destroy` | カーネルへ exit を通知し、`@gfx.destroy`、`on_destroy`、`_cleanup` |
 
+| `on_quit_request` | `Ctrl` + `Q` のときに、すぐ終了する代わりに呼ばれる。既定は終了。保存していないものがあるなら、上書きして先に尋ねる |
+| `request_early_update` | 今の待ちをすぐ終える。アプリが指定した待ち時間を待たずに `on_update` へ進む |
+
 通常は `MyApp.new.start` だけ書けば足ります。
+
+`request_early_update` があるおかげで、暇なアプリは長く眠れます。抜ける手立てが無いと
+「次の期限まで眠る」は、後から急ぎで頼まれるかもしれない用事に合わせて短く刻むしかなく、
+それは名前を変えた定期確認です。意味があるのはコールバックの中 (`on_control`、`on_event`)
+だけで、`on_update` からでは次の待ち時間がどのみち計算し直されます。
+
+## テーマの色を使う
+
+数値を 1 つも書かずにシステムの色を取れる読み取りが 5 つあります。これを使えば、機械の
+テーマと利用者の[配色の上書き](../file_formats/colors.md)に自動的に従います。
+
+| メソッド | 役割 |
+|---|---|
+| `theme_bg` | 地の色 |
+| `theme_fg` | `theme_bg` の上に乗る文字の色 |
+| `theme_accent` | 選択、強調 |
+| `theme_border` | 罫線、囲み、控えめな文字 |
+| `theme_fg_light` | 強調色やボタンの上に乗る文字の色 |
 
 ## 主要インスタンス変数
 
@@ -184,6 +231,7 @@ when :gamepad_axis
 
 | メソッド | 用途 |
 |---|---|
+| `FmrbApp.language` | 利用者が選んだ表示言語。`"en"` か `"ja"` |
 | `FmrbApp.ps` | 全プロセスの状態（id, name, state, vm_type, mem_*, stack_water など）の Array of Hash |
 | `FmrbApp.config(section)` | アプリの `.toml` から指定セクションを読み出し |
 | `FmrbApp.wallclock` | 現在時刻 (`{year, month, day, hour, minute, second}`) |

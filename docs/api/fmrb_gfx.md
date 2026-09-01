@@ -129,6 +129,22 @@ By switching to a Japanese font with `set_font(family, size)`, you can draw UTF-
 | `:default` | (not specifiable) | Font0 6x8 ASCII. Default at startup |
 | `:ja` | `8` | misaki_8 8x8, same size as system UI |
 | `:ja` | `12` | efontJA_12 12x12, more readable |
+| `:ja` | `16` | efontJA_16 16x16, for headings and slides |
+| `:ja_bold` | `12` | The bold cut of efontJA_12 |
+
+### `set_font` tells you what it chose
+
+A machine does not have to carry every font. `set_font` picks the nearest thing it has —
+a size it does not carry falls back to 12, and a bold it does not carry to the regular cut
+— and returns what it actually selected, as `[family, size]` (or `[:default]`).
+
+```ruby
+got = @gfx.set_font(:ja_bold, 12)
+bold_by_hand = (got[0] != :ja_bold)   # draw twice, one pixel apart, if it matters
+```
+
+That return value is also what `text_width` and `font_height` then measure, so a layout
+built from them stays right on a machine with fewer fonts.
 
 ### Hybrid Drawing (`mixed: true`)
 
@@ -140,6 +156,10 @@ Strings containing mixed ASCII and Japanese characters can be drawn in a single 
 ```
 
 Convenient for code examples and bilingual UI strings.
+
+`draw_text_mixed(x, y, str, color, bg_color = nil)` is the same thing with positional
+arguments. Keyword arguments build a Hash on every call, which a redraw path that must not
+allocate cannot afford; this form does not.
 
 !!! tip "`draw_window_frame` saves and restores the font"
     `FmrbApp#draw_window_frame` always draws the title bar with the default 6x8 font and then restores the font setting from before the call. There is no need to call `set_font` again each frame in your app.
@@ -206,7 +226,71 @@ sheet.load_bmp("/usr/share/sprites/tilesheet.bmp")
 
 For a higher-level wrapper, see [TileMap](tilemap.md).
 
+## Keeping sprites inside a rectangle
+
+Sprites are composited on top of everything the canvas drew, so without a clip they paint
+over the window frame and title bar the app drew into the same canvas.
+
+| Method | Purpose |
+|---|---|
+| `set_sprite_clip(x, y, w, h)` | Confine this canvas's sprites to that rectangle |
+| `clear_sprite_clip` | Let them use the whole canvas again |
+
+The rectangle is in sprite coordinates — the ones passed to `SpriteInstance#move` — and is
+clamped to the canvas. A windowed app starts with its user area already set, so this is
+only needed to narrow it further:
+
+```ruby
+# reserve the top 10px for the score; sprites stay below it
+@gfx.set_sprite_clip(@user_area_x0, @user_area_y0 + 10,
+                     @user_area_width, @user_area_height - 10)
+```
+
+## Saving the screen to a file
+
+`export_frame(path)` writes the picture the last `present` put on screen to a file, on the
+display side's filesystem. It does not present: send `present` first, then this, and the
+two keep their order.
+
+```ruby
+@gfx.present
+@gfx.export_frame("/mnt/sd/shot.jpg")
+```
+
+| Machine | |
+|---|---|
+| Modern | A JPEG, written by the SoC's encoder into the filesystem the two sides share, so `File.exist?` can tell when it is done |
+| Simulator | A BMP, in the graphics side's own storage, which the app cannot see |
+| Retro | Not supported; it says so in the log |
+
+## Video (Modern only)
+
+`video_open` plays a file of concatenated JPEG frames into the canvas and hands back a
+player. It returns `nil` anywhere else, so an app can fall back.
+
+```ruby
+@video = @gfx.video_open("/mnt/sd/clip.mjpg", x: 8, y: 8, fps: 15, loop: true)
+if @video
+  @video.play
+  ...
+  @video.pause
+  @video.rewind
+  @video.stop
+end
+```
+
+| Method | |
+|---|---|
+| `width` / `height` | The picture size the file turned out to have |
+| `play` / `pause` / `stop` / `rewind` | Transport |
+| `status` | `0` idle, `1` playing, `2` paused, `3` finished |
+| `playing?` / `finished?` | The two states worth asking about |
+
+Whatever the app drew elsewhere on the canvas stays; do not draw inside the picture
+rectangle while it plays. One player exists at a time.
+
 ## Composite Region Specification (`set_composite_regions`)
+
 
 ```ruby
 @gfx.set_composite_regions([

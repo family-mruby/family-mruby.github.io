@@ -23,9 +23,10 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `FmrbApp` | Application base class. Lifecycle, window, messaging | [Application](fmrb_app.md) |
 | `FmrbGfx` | Shape and text drawing (`@gfx`) | [Drawing](fmrb_gfx.md) |
 | `SpriteImage` / `SpriteInstance` / `GfxBlock` | Sprites | [Sprites](sprite.md) |
-| `TileSheet` / `TileMap` | Tile map rendering + fmrb_map JSON loading | [Tile Maps](tilemap.md) |
+| `FmrbUI` | Buttons, toggles, steppers and the rest, for an app that draws its own window | [UI Widgets](ui.md) |
+| `TileSheet` / `TileMap` | Tile map rendering, from a packed `.map.bin` or fmrb_map JSON | [Tile Maps](tilemap.md) |
 | `P5` | Processing/p5.js-style drawing DSL | [Processing-style Drawing](p5.md) |
-| `FmrbAudio` | BGM, sound effects, tone synthesis (`@audio`) | [Sound](audio.md) |
+| `FmrbAudio` | BGM, sound effects, tone synthesis, WAV playback and the microphone (`@audio`) | [Sound](audio.md) |
 | `MIDI::Device` / `FmrbMidi` | MIDI out, to the built-in APU or an external instrument | [MIDI](midi.md) |
 | Pub/Sub (`subscribe` / `publish`) | Inter-app messaging | [Inter-App Messaging](pubsub.md) |
 
@@ -69,7 +70,12 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `subscribe(topic)` / `unsubscribe(topic)` / `publish(topic, data)` | Pub/Sub |
 | `send_message(dest_pid, msg_type, data)` | Direct message sending |
 | `set_window_position(x, y)` | Window position |
-| `draw_window_frame` / `draw_scrollbar` / `scrollbar_hit` | Window decorations |
+| `draw_window_frame` / `clear_user_area` | Window decorations |
+| `request_fullscreen(on)` / `toggle_fullscreen` | Switch between windowed and fullscreen |
+| `wheel_rows(ev)` / `wheel_notches(ev)` | Read a wheel event |
+| `theme_bg` / `theme_fg` / `theme_accent` / `theme_border` / `theme_fg_light` | The system colours |
+| `on_quit_request` | Asked before Ctrl+Q closes the app |
+| `request_early_update` | End the current wait now |
 | `request_file_select(mode)` | File selection dialog |
 | `request_reload` | Reload the app |
 | `ev_ctrl?(ev)` / `ev_shift?(ev)` / `ev_alt?(ev)` | Modifier key checks |

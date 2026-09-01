@@ -22,9 +22,10 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `FmrbApp` | アプリ基底クラス。ライフサイクル、ウィンドウ、メッセージング | [アプリ](fmrb_app.md) |
 | `FmrbGfx` | 図形・テキスト描画（`@gfx`） | [描画](fmrb_gfx.md) |
 | `SpriteImage` / `SpriteInstance` / `GfxBlock` | スプライト | [スプライト](sprite.md) |
-| `TileSheet` / `TileMap` | タイルマップ描画 + fmrb_map JSON 読込 | [タイルマップ](tilemap.md) |
+| `FmrbUI` | ボタン・切替・数値入力など。自分で窓を描くアプリ向け | [UI 部品](ui.md) |
+| `TileSheet` / `TileMap` | タイルマップ描画。`.map.bin` か fmrb_map JSON から読む | [タイルマップ](tilemap.md) |
 | `P5` | Processing/p5.js 風の描画 DSL | [Processing 風の描画](p5.md) |
-| `FmrbAudio` | BGM・効果音・音声合成（`@audio`） | [音声](audio.md) |
+| `FmrbAudio` | BGM・効果音・音声合成・WAV 再生・マイク（`@audio`） | [音声](audio.md) |
 | `MIDI::Device` / `FmrbMidi` | MIDI 出力。内蔵 APU にも外部音源にも | [MIDI](midi.md) |
 | Pub/Sub (`subscribe` / `publish`) | アプリ間メッセージング | [アプリ間通信](pubsub.md) |
 
@@ -68,7 +69,12 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `subscribe(topic)` / `unsubscribe(topic)` / `publish(topic, data)` | Pub/Sub |
 | `send_message(dest_pid, msg_type, data)` | 直接メッセージ送信 |
 | `set_window_position(x, y)` | ウィンドウ位置 |
-| `draw_window_frame` / `draw_scrollbar` / `scrollbar_hit` | ウィンドウ装飾 |
+| `draw_window_frame` / `clear_user_area` | ウィンドウ装飾 |
+| `request_fullscreen(on)` / `toggle_fullscreen` | 窓と全画面の切り替え |
+| `wheel_rows(ev)` / `wheel_notches(ev)` | ホイールのイベントを読む |
+| `theme_bg` / `theme_fg` / `theme_accent` / `theme_border` / `theme_fg_light` | システムの色 |
+| `on_quit_request` | Ctrl+Q で閉じる前に呼ばれる |
+| `request_early_update` | 今の待ちをすぐ終える |
 | `request_file_select(mode)` | ファイル選択ダイアログ |
 | `request_reload` | アプリ再読み込み |
 | `ev_ctrl?(ev)` / `ev_shift?(ev)` / `ev_alt?(ev)` | 修飾キー判定 |

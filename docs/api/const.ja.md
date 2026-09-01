@@ -10,6 +10,7 @@
 |---|---|
 | `FmrbConst::PLATFORM` | `"linux"` または `"esp32"` |
 | `FmrbConst::BOARD` | `"tab5"` / `"naryav4"` / `"atom_display"` / `"narya_v3"` / `"linux"`。`PLATFORM` や `CHIP_MODEL` より細かく、基板ごとの配線を選ぶのに使います |
+| `FmrbConst::HW_FAMILY` | `"modern"` か `"retro"`。3 つの中で一番粗い区別で、機能が片方の系統にしか無いときはこれを見ます |
 | `FmrbConst::OS_VERSION` | OS バージョン文字列 |
 | `FmrbConst::GA_VERSION` | fmruby-graphics-audio 側のバージョン |
 | `FmrbConst::LINK_VERSION` | UART リンクプロトコルバージョン |
@@ -27,6 +28,7 @@
 | `FmrbConst::PSRAM_SIZE_MB` | PSRAM 容量 (MB) |
 | `FmrbConst::RESET_REASON` | 直前のリセット理由 |
 | `FmrbConst::HAS_WIFI` | ネットワークにつなげる機種なら `true`。[ネットワーク](network.md) を参照 |
+| `FmrbConst::WHEEL_LINES` | マウスのホイール 1 段で送る行数。`system_conf.toml` から |
 
 ### プロセス管理
 
@@ -35,7 +37,7 @@
 | `FmrbConst::PROC_ID_KERNEL` | カーネルプロセス ID |
 | `FmrbConst::PROC_ID_HOST` | ホストプロセス ID |
 | `FmrbConst::PROC_ID_SYSTEM_APP` | システムアプリ ID |
-| `FmrbConst::PROC_ID_USER_APP0` / `USER_APP1` / `USER_APP2` | ユーザーアプリスロット |
+| `FmrbConst::PROC_ID_USER_APP0` 〜 `USER_APP4` | ユーザーアプリの枠。5 つあり、いくつ埋まるかは機械のメモリ次第 |
 
 #### プロセス状態
 

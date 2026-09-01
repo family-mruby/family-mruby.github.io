@@ -129,6 +129,22 @@ FmrbGfx.hsv_to_rgb(120, 255, 255) # → [r, g, b] (各 0..255)
 | `:default` | （指定不可） | Font0 6x8 ASCII。起動時の既定 |
 | `:ja` | `8` | misaki_8 8x8、システム UI と同サイズ |
 | `:ja` | `12` | efontJA_12 12x12、読みやすい |
+| `:ja` | `16` | efontJA_16 16x16、見出しや資料向け |
+| `:ja_bold` | `12` | efontJA_12 の太字 |
+
+### `set_font` は選んだものを返します
+
+すべての字を機種が持っているとは限りません。`set_font` は持っているものの中から近いものを
+選び (無い大きさは 12 に、無い太字は通常の字に落ちます)、実際に選んだ組を
+`[family, size]` (または `[:default]`) で返します。
+
+```ruby
+got = @gfx.set_font(:ja_bold, 12)
+bold_by_hand = (got[0] != :ja_bold)   # 必要なら 1 画素ずらして 2 回描く
+```
+
+この戻り値は `text_width` と `font_height` が測る対象でもあるので、そこから組んだ配置は
+字の少ない機種でも崩れません。
 
 ### ハイブリッド描画 (`mixed: true`)
 
@@ -140,6 +156,10 @@ ASCII と日本語が混ざった文字列を 1 回の `draw_text` で描けま�
 ```
 
 コード例や英日混在の UI 文字列に便利です。
+
+`draw_text_mixed(x, y, str, color, bg_color = nil)` は同じものの位置引数版です。
+キーワード引数は呼ぶたびに Hash を作るので、確保をしてはいけない再描画の経路では使えません。
+こちらは作りません。
 
 !!! tip "`draw_window_frame` はフォントを保存・復元"
     `FmrbApp#draw_window_frame` はタイトルバーを必ず既定の 6x8 で描いてから 呼び出し前のフォント設定を復元 します。アプリ側で毎フレーム `set_font` を再指定する必要はありません。
@@ -206,7 +226,70 @@ sheet.load_bmp("/usr/share/sprites/tilesheet.bmp")
 
 より高水準なラッパは [TileMap](tilemap.md) を参照。
 
+## スプライトを四角の中に閉じ込める
+
+スプライトは canvas に描いた絵の上に重ねて合成されるので、何もしないと、同じ canvas に
+描いた窓のわくやタイトルバーの上にもはみ出します。
+
+| メソッド | 用途 |
+|---|---|
+| `set_sprite_clip(x, y, w, h)` | この canvas のスプライトをその四角の中だけに出す |
+| `clear_sprite_clip` | canvas 全体に戻す |
+
+四角の座標は `SpriteInstance#move` と同じもので、canvas の内側に丸められます。窓のアプリは
+起動時に窓の中身の範囲が入っているので、さらに狭めたいときだけ呼びます。
+
+```ruby
+# 上 10px を点数の帯にして、スプライトはその下だけに出す
+@gfx.set_sprite_clip(@user_area_x0, @user_area_y0 + 10,
+                     @user_area_width, @user_area_height - 10)
+```
+
+## 画面をファイルに書き出す
+
+`export_frame(path)` は、直前の `present` が画面に出した絵をファイルに書きます。書き込み先は
+表示側のファイルシステムです。この呼び出し自体は present しません。`present` を送ってから
+呼べば、順番は保たれます。
+
+```ruby
+@gfx.present
+@gfx.export_frame("/mnt/sd/shot.jpg")
+```
+
+| 機種 | |
+|---|---|
+| Modern | JPEG。SoC の符号化回路が書きます。書き込み先は両側が共有するファイルシステムなので、`File.exist?` で完了が分かります |
+| シミュレータ | BMP。表示側だけが見えるところに書くので、アプリからは見えません |
+| Retro | 非対応。ログにその旨を出します |
+
+## 動画 (Modern のみ)
+
+`video_open` は JPEG のフレームを並べたファイルを canvas に流し込み、再生を操作する
+オブジェクトを返します。他の機種では `nil` を返すので、アプリ側で代替に切り替えられます。
+
+```ruby
+@video = @gfx.video_open("/mnt/sd/clip.mjpg", x: 8, y: 8, fps: 15, loop: true)
+if @video
+  @video.play
+  ...
+  @video.pause
+  @video.rewind
+  @video.stop
+end
+```
+
+| メソッド | |
+|---|---|
+| `width` / `height` | ファイルから分かった絵の大きさ |
+| `play` / `pause` / `stop` / `rewind` | 再生の操作 |
+| `status` | `0` 停止、`1` 再生中、`2` 一時停止、`3` 終了 |
+| `playing?` / `finished?` | よく聞く 2 つの状態 |
+
+canvas の他の場所に描いた絵はそのまま残ります。再生中は絵の四角の中には描かないでください。
+同時に動かせる再生は 1 本です。
+
 ## 合成領域の指定 (`set_composite_regions`)
+
 
 ```ruby
 @gfx.set_composite_regions([

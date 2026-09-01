@@ -65,6 +65,7 @@ plugins:
             Application: アプリ
             Drawing: 描画
             Sprites: スプライト
+            UI Widgets: UI 部品
             Tile Maps: タイルマップ
             Processing-style Drawing: Processing 風の描画
             Sound: 音声
@@ -115,6 +116,7 @@ nav:
       - Application: api/fmrb_app.md
       - Drawing: api/fmrb_gfx.md
       - Sprites: api/sprite.md
+      - UI Widgets: api/ui.md
       - Tile Maps: api/tilemap.md
       - Processing-style Drawing: api/p5.md
       - Sound: api/audio.md

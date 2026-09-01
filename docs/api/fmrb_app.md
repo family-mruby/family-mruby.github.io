@@ -33,6 +33,8 @@ Window size and other settings are specified in a `.toml` file (see [App Configu
 | `on_event(ev)` | On keyboard / mouse / gamepad / HID input | Any |
 | `on_suspend` | When switching to a fullscreen app | Any |
 | `on_resume` | When returning from a suspended state | Any |
+| `on_resize(w, h)` | When the window changes size — a drag on the corner, or a switch to or from fullscreen. `@fullscreen` and the user area are already updated | Any |
+| `on_quit_request` | On `Ctrl` + `Q`, instead of closing outright | Any |
 | `on_destroy` | Once when the app exits | Any |
 
 ```
@@ -107,6 +109,27 @@ when :mouse_move
 
 Clicks on the title bar (left-click to close / right-click to reload) are already handled by the base class, so these actions work even if the subclass does not call `super`.
 
+### Wheel
+
+A wheel event reaches the window that has the keyboard, not the one under the pointer. Two
+helpers read it, and both return `nil` when the event is not a wheel, so an app reads one
+of them and moves on:
+
+```ruby
+rows = wheel_rows(ev)
+if rows
+  @scroll -= rows
+  redraw
+end
+```
+
+| Method | |
+|---|---|
+| `wheel_rows(ev)` | Notches multiplied by the machine's `wheel_lines` setting. For anything whose rows are text rows |
+| `wheel_notches(ev)` | The raw notch count. For a list whose rows are not text rows — the launcher's tiles are several lines tall, and `wheel_lines` sends them flying |
+
+How far a notch reaches is the machine's setting, not each app's opinion.
+
 ### Gamepad
 
 ```ruby
@@ -128,11 +151,14 @@ when :gamepad_axis
 |---|---|
 | `set_window_position(x, y)` | Change the window position |
 | `draw_window_frame` | Draw the window frame (title bar + border). Reuses a `GfxBlock` managed by the base class |
-| `clear_user_area(color = FmrbGfx::BLACK)` | Fill the drawable area (excluding title bar and border) with the specified color |
-| `draw_scrollbar(scroll, total, visible, x=..., y=..., w=..., h=...)` | Draw a scrollbar |
-| `scrollbar_hit(click_x, click_y, x=..., y=..., w=..., h=...)` | Scrollbar hit detection (returns `:up` / `:down` / `nil`) |
+| `clear_user_area(color = FmrbConst::THEME_WINDOW_BG)` | Fill the drawable area (excluding title bar and border). The default follows the system theme, and the call redraws the window frame and marks any attached widgets |
+| `request_fullscreen(on)` / `toggle_fullscreen` | Switch between windowed and fullscreen. The VM keeps running, so app state survives; the answer arrives as `on_resize`, with `@fullscreen` and the user area already updated |
 | `request_file_select(mode = "open")` | Invoke the system file selection dialog |
+| `sync_file(path, dest: nil)` | Make the graphics/audio side's copy of a file match this one, transferring it only when it differs. A headless app can do this too |
 | `request_reload` | Reload the script (automatically called on title bar right-click) |
+
+Scrollbars moved: `draw_scrollbar` and `scrollbar_hit` are gone, and a scrollbar is now a
+widget — see [UI Widgets](ui.md).
 
 !!! tip "Use `clear_user_area` instead of `@gfx.clear`"
     `@gfx.clear(color)` fills the entire canvas, which also erases the title bar and close button. To preserve the window frame, use `clear_user_area(color)` instead.
@@ -155,7 +181,29 @@ For details and receive handlers, see [Pub/Sub](pubsub.md).
 | `stop` | Sets `@running = false` (proceeds to `destroy` after the next `_spin`) |
 | `destroy` | Notifies the kernel of exit, calls `@gfx.destroy`, `on_destroy`, `_cleanup` |
 
+| `on_quit_request` | Called on `Ctrl` + `Q` instead of stopping the app outright. The default is to close; override it to ask first when there is unsaved work |
+| `request_early_update` | End the current wait now, so the loop reaches `on_update` without waiting out the timeout the app asked for |
+
 Normally, writing just `MyApp.new.start` is sufficient.
+
+`request_early_update` is what lets an idle app sleep for a long time at all: without a way
+out, "sleep until the next deadline" has to be capped at whatever the app might later be
+asked to do in a hurry, which is a poll by another name. It only means anything from inside
+a callback — `on_control`, `on_event` — because from `on_update` the next sleep is about to
+be recomputed anyway.
+
+## Colours from the theme
+
+Five readers give an app the system colours without naming a single number, so it follows
+the machine's theme and the user's [colour overrides](../file_formats/colors.md):
+
+| Method | Role |
+|---|---|
+| `theme_bg` | The page background |
+| `theme_fg` | Ink on `theme_bg` |
+| `theme_accent` | Selection, emphasis |
+| `theme_border` | Rules, boxes, muted text |
+| `theme_fg_light` | Ink on the accent or on a button |
 
 ## Key Instance Variables
 
@@ -184,6 +232,7 @@ Pass root-relative paths (e.g. `/home/foo.txt`) or SD card paths like `/mnt/sd/.
 
 | Method | Purpose |
 |---|---|
+| `FmrbApp.language` | The UI language the user chose, `"en"` or `"ja"` |
 | `FmrbApp.ps` | Array of Hash showing all process states (id, name, state, vm_type, mem_*, stack_water, etc.) |
 | `FmrbApp.config(section)` | Read a specified section from the app's `.toml` |
 | `FmrbApp.wallclock` | Current time (`{year, month, day, hour, minute, second}`) |

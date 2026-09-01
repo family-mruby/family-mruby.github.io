@@ -48,6 +48,7 @@ take effect at startup.
 |---|---|---|
 | `keyboard_layout` | `"jp"` / `"us"` | Which keyboard you have. Get this wrong and the symbols land in the wrong places |
 | `mouse_scale_x` / `mouse_scale_y` | float | Pointer speed. 0.5 halves it, 2.0 doubles it |
+| `wheel_lines` | int | How many text rows one notch of the mouse wheel moves. It is the machine's setting, not each app's opinion |
 
 ### System
 
@@ -56,6 +57,7 @@ take effect at startup.
 | `language` | `"en"` / `"ja"` | `"en"` | UI language. Apps that provide `app_screen_name_<lang>` follow it |
 | `timezone` | string | | POSIX timezone, e.g. `JST-9`, `UTC`, `EST5` |
 | `debug_mode` | bool | `true` | Extra logging |
+| `max_apps` | int | (the build's ceiling) | How many app slots this machine hands out. A value above what the firmware was built for is clamped, not refused |
 | `ble_auto_start` | bool | `true` | Start BLE at boot. Retro only -- on Modern BLE starts regardless |
 | `wifi_auto_start` | bool | `false` | Start Wi-Fi at boot |
 
