@@ -64,26 +64,6 @@ A full list of what ships, in every language, is in
 | `video_play.app.rb` | A Motion JPEG file playing inside a window | [`FmrbGfx#video_open`](api/fmrb_gfx.md#video-modern-only) |
 | `imu.app.rb` | The six-axis sensor as a bubble level | [`I2C`](api/peripherals.md#i2c) |
 
-## A reading order
-
-1. `picoruby.app.rb` — the shape of an app, and most of the drawing API
-2. `pub_demo.app.rb` / `sub_demo.app.rb` — two apps talking to each other
-3. `piano.app.rb` — the sound chip, and a panel of widgets
-4. `flappy.rb` — drawing, sound and input together
-5. `tetris.app.rb` — a game with state
-6. `rpg_demo/` — an app that is more than one file, with its own assets
-7. `raycaster.app.rb` — structure and optimisation when it has to be fast
-
-## Where to start your own
-
-| You want | Copy |
-|---|---|
-| The smallest thing that runs | The template `create_app` writes — see [Hello World](getting_started/hello_world.md) |
-| A window with a panel of controls | `kamon.app.rb` |
-| A game | `tetris.app.rb` or `flappy.rb` |
-| Something on the GROVE port | `i2c_kbd.app.rb` or `led_matrix.app.rb` |
-| Two apps that talk | `pub_demo.app.rb` / `sub_demo.app.rb` |
-
 `/app/debug` and `/app/test` also ship, but they exist to break things on purpose and are
 hidden from the launcher. They are not examples to copy.
 

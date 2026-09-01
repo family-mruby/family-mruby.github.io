@@ -63,26 +63,6 @@
 | `video_play.app.rb` | Motion JPEG を窓の中で再生します | [`FmrbGfx#video_open`](api/fmrb_gfx.md#動画-modern-のみ) |
 | `imu.app.rb` | 6 軸センサを水準器として表示します | [`I2C`](api/peripherals.md#i2c) |
 
-## 読む順番
-
-1. `picoruby.app.rb` — アプリの形と、描画 API のほとんど
-2. `pub_demo.app.rb` / `sub_demo.app.rb` — アプリどうしのやりとり
-3. `piano.app.rb` — 音源と、部品で作るパネル
-4. `flappy.rb` — 描画・音・入力を組み合わせる
-5. `tetris.app.rb` — 状態を持つゲーム
-6. `rpg_demo/` — ファイルが複数あり、素材を持つアプリ
-7. `raycaster.app.rb` — 速さが要るときの構造と最適化
-
-## 自分のアプリを始めるなら
-
-| やりたいこと | 写すもの |
-|---|---|
-| とにかく動く最小のもの | `create_app` が書く雛形 ([Hello World](getting_started/hello_world.md)) |
-| 操作パネルのある窓 | `kamon.app.rb` |
-| ゲーム | `tetris.app.rb` か `flappy.rb` |
-| GROVE 端子につないだもの | `i2c_kbd.app.rb` か `led_matrix.app.rb` |
-| 2 つのアプリで話す | `pub_demo.app.rb` / `sub_demo.app.rb` |
-
 `/app/debug` と `/app/test` も入っていますが、わざと壊すためのもので、ランチャーにも
 出ません。写して使うサンプルではありません。
 
