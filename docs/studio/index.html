@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Family mruby OS (wasm)</title>
+<title>Family mruby Web Studio</title>
 <style>
   :root { color-scheme: dark; }
   html, body {
@@ -13,7 +13,7 @@
   }
   body { display: flex; flex-direction: column; align-items: center; }
   h1 { font-size: 16px; margin: 12px 0 8px; }
-  #screen-box { position: relative; line-height: 0; }
+  #screen-box { position: relative; line-height: 0; max-width: 100%; }
   /* Full screen: the box fills the display and the canvas is centred on
      black, so the zoom calculation has the whole screen to work with. */
   #screen-box:fullscreen {
@@ -34,18 +34,59 @@
     font-size: 20px; line-height: normal;
   }
   #status { margin-top: 8px; font-size: 12px; color: #888; }
-  #settings {
-    margin-top: 6px; font-size: 12px; color: #aaa;
-    display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: center;
+  /* Two panels rather than four rows of identical grey buttons. What each
+     control belongs to is the thing the old layout did not say. */
+  #panels {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+    align-items: flex-start;
+    width: 100%; max-width: 780px; box-sizing: border-box;
+    padding: 0 12px; margin-top: 10px;
   }
-  #settings select, #settings button {
+  .panel {
+    flex: 1 1 300px; min-width: 0; box-sizing: border-box;
+    border: 1px solid #34343e; border-radius: 4px;
+    padding: 8px 10px 10px;
+    font-size: 12px; color: #aaa;
+  }
+  .panel h2 {
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #7f7f8c; font-weight: normal;
+    margin: 0 0 8px; padding-bottom: 5px;
+    border-bottom: 1px solid #2a2a33;
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  /* The measurement rides in the heading: it describes the panel rather than
+     being one more thing in it. */
+  .panel h2 .meta { text-transform: none; letter-spacing: 0; color: #6f6f7c; }
+  .field { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+  .field > label { flex: 0 0 82px; color: #8a8a97; }
+  .field > select { flex: 1 1 auto; min-width: 0; }
+  .group { margin-bottom: 9px; }
+  .group:last-of-type { margin-bottom: 0; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+  .row + .row { margin-top: 4px; }
+  .lead { flex: 0 0 82px; color: #8a8a97; }
+  .row .lead + * { min-width: 0; }
+  .note { margin: 3px 0 0 82px; color: #6f6f7c; }
+  .panel select, .panel button {
     background: #111; color: #ddd; border: 1px solid #555;
     font-family: monospace; font-size: 12px;
   }
-  #settings button { cursor: pointer; padding: 1px 8px; }
+  .panel button { cursor: pointer; padding: 1px 8px; }
+  .panel button:disabled { color: #666; border-color: #3a3a44; cursor: default; }
+  /* Erasing is the one thing here that cannot be undone. */
+  .panel button.danger { border-color: #6b3a3a; color: #c99; }
+  /* The whole page is the drop target, so the whole page says so. */
+  body.dropping { outline: 2px dashed #6a6; outline-offset: -6px; }
+  #status { max-width: 100%; box-sizing: border-box; }
   #about {
-    max-width: 780px; margin: 14px 12px 24px; font-size: 12px;
+    margin: 14px 0 24px; font-size: 12px;
     line-height: 1.6; color: #9a9aa8;
+    width: 100%; max-width: 780px; box-sizing: border-box; padding: 0 12px;
+  }
+  #about > summary {
+    cursor: pointer; color: #8a8a97; font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
   }
   #about h2 { font-size: 13px; color: #ccc; margin: 14px 0 4px; }
   #about ul { margin: 4px 0; padding-left: 20px; }
@@ -53,78 +94,136 @@
     background: #26262e; border: 1px solid #454550; border-radius: 3px;
     padding: 0 4px;
   }
+  /* Narrow screens: stack the rows instead of trying to fit them side by
+     side. One item per line can never be wider than the line, so the page
+     stops scrolling sideways and the machine keeps the width to itself. */
+  /* Narrow screens: the panels sit one above the other (flex-wrap already
+     does that), and inside them the label goes above its control. A select
+     is as wide as its longest option unless told otherwise, and one long
+     option was what used to push the whole page sideways. */
+  @media (max-width: 700px) {
+    .field { flex-direction: column; align-items: stretch; gap: 2px; }
+    .field > label, .lead { flex: 0 0 auto; }
+    .panel select { width: 100%; max-width: 100%; box-sizing: border-box; }
+    .note { margin-left: 0; }
+    #about { font-size: 11px; overflow-wrap: anywhere; }
+  }
 </style>
 </head>
 <body>
-<h1>Family mruby on WebAssembly</h1>
+<h1>Family mruby Web Studio</h1>
 <div id="screen-box">
   <canvas id="screen" width="426" height="240" tabindex="0"></canvas>
   <div id="start">Click to start</div>
 </div>
 <div id="status">loading...</div>
-<div id="settings">
-  <span>Theme:
-    <select id="theme-select">
-      <option value="cyberpunk">Cyberpunk (web default)</option>
-      <option value="classic">Classic (device palette)</option>
-    </select>
-  </span>
-  <span>Resolution:
-    <select id="res-select">
-      <option value="426x240">426 x 240 (as shipped)</option>
-      <option value="640x360">640 x 360</option>
-      <option value="852x480">852 x 480</option>
-    </select>
-  </span>
-  <span>Zoom:
-    <select id="zoom-select">
-      <option value="fit">Fit</option>
-      <option value="1">1x</option>
-      <option value="2">2x</option>
-      <option value="3">3x</option>
-    </select>
-  </span>
-  <button id="fullscreen-btn" type="button">Full screen</button>
+<div id="panels">
+  <section class="panel">
+    <h2>Display</h2>
+    <div class="field">
+      <label for="res-select">Resolution</label>
+      <select id="res-select">
+        <option value="426x240">426 x 240 (as shipped)</option>
+        <option value="640x360">640 x 360</option>
+        <option value="852x480">852 x 480</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="zoom-select">Zoom</label>
+      <select id="zoom-select">
+        <option value="fit">Fit</option>
+        <option value="1">1x</option>
+        <option value="2">2x</option>
+        <option value="3">3x</option>
+      </select>
+    </div>
+    <div class="row"><button id="fullscreen-btn" type="button">Full screen</button></div>
+  </section>
+
+  <section class="panel">
+    <h2>Your files <span class="meta" id="storage-state">checking...</span></h2>
+    <div class="group">
+      <div class="row">
+        <span class="lead">Add</span>
+        <button id="add-files-btn" type="button" disabled>Files...</button>
+        <button id="add-folder-btn" type="button" disabled>Folder...</button>
+      </div>
+      <div class="row">
+        <span class="lead">into</span>
+        <select id="add-dest" disabled></select>
+      </div>
+      <p class="note">or drop them anywhere on this page</p>
+    </div>
+    <div class="group" id="work" hidden>
+      <div class="row">
+        <span class="lead">Work folder</span>
+        <span id="work-state">not linked</span>
+      </div>
+      <div class="row">
+        <span class="lead"></span>
+        <button id="work-link" type="button" disabled>Link a folder...</button>
+        <button id="work-stop" type="button" hidden>Stop</button>
+        <button id="work-push" type="button" hidden>Send my work back</button>
+      </div>
+    </div>
+    <div class="group">
+      <div class="row">
+        <span class="lead">Backup</span>
+        <button id="home-export" type="button" disabled>Download</button>
+        <button id="home-import-btn" type="button" disabled>Restore</button>
+        <button id="home-reset" class="danger" type="button" disabled>Erase</button>
+      </div>
+    </div>
+    <input id="home-import" type="file" accept=".tar" hidden>
+    <input id="add-files" type="file" multiple hidden>
+    <input id="add-folder" type="file" webkitdirectory hidden>
+  </section>
 </div>
-<div id="about">
-  <h2>How to use it</h2>
+<details id="about">
+  <summary>How to use it</summary>
   <ul>
-    <li>Click the screen to switch the machine on. The mouse and the keyboard
-      work while the screen has focus; the top-left menu opens the launcher,
-      the editor and the rest of the desktop.</li>
-    <li>Japanese kana input toggles with <kbd>Ctrl</kbd>+<kbd>Space</kbd>, or by
-      clicking the <kbd>[A]</kbd> indicator in the menu bar (A → kana →
-      katakana). Romaji is typed as usual: <kbd>k</kbd><kbd>y</kbd><kbd>a</kbd>
-      gives the kana for "kya".</li>
-    <li>Sound only starts after that first click -- browsers do not let a page
-      make noise before one.</li>
-    <li>Theme and resolution are stored in this browser and applied at boot, so
-      changing them reloads the page.</li>
-    <li>Full screen puts the machine on the whole display. Where the browser
-      allows it the machine keeps <kbd>Esc</kbd> for itself; where it does not,
-      <kbd>Esc</kbd> leaves full screen instead of reaching the app.</li>
+    <li><b>Click the screen</b> to switch the machine on. Mouse and keyboard
+      work while it has focus; the top-left menu has the launcher and the
+      editor.</li>
+    <li><b>Sound</b> starts only after that first click.</li>
+    <li><b>Kana:</b> <kbd>Ctrl</kbd>+<kbd>Space</kbd>, or click <kbd>[A]</kbd>
+      in the menu bar. Romaji as usual.</li>
+    <li><b>Kept between visits:</b> <code>/home</code>, <code>/app/usr</code>
+      (where the launcher looks for your apps), and your settings. None of it
+      leaves this browser.</li>
+    <li><b>Not kept:</b> everything else, <code>/tmp</code> above all. A
+      private window keeps nothing, and a browser may reclaim the space after
+      a long absence.</li>
+    <li><b>Backup:</b> <b>Download</b> saves your work and settings as one
+      file; <b>Restore</b> puts them back, here or in another browser.
+      <b>Erase</b> clears both, and puts every setting back to its default.</li>
+    <li><b>Two tabs:</b> only the first one saves.</li>
+    <li><b>Resolution</b> reloads the page when changed. <b>Colours</b> are
+      the machine's own: pick a theme in Config, inside it.</li>
+    <li><b>Full screen:</b> where the browser allows it the machine keeps
+      <kbd>Esc</kbd>; where it does not, <kbd>Esc</kbd> leaves full screen.</li>
+    <li><b>Phone or tablet:</b> it runs, the screen is fitted, and a finger
+      works as a mouse -- but you cannot type, so the editor and the shell
+      need a real keyboard.</li>
   </ul>
   <h2>What it is not</h2>
   <ul>
-    <li>Everything runs in the page. Files you create live in memory only:
-      <strong>a reload throws them away</strong>.</li>
-    <li>No network: WiFi, BLE, the remote desktop and anything that talks to a
-      server are absent here. Nothing you type is sent anywhere.</li>
-    <li>Desktop Chrome and Firefox are what this targets. Safari is untested,
-      and phones and tablets are not a target -- there is no on-screen
-      keyboard.</li>
+    <li>Not a service: everything runs in this page, on your machine.</li>
+    <li>Not a machine that remembers everything: outside the places named
+      above, it is rebuilt from the bundle on each visit.</li>
+    <li>Desktop Chrome and Firefox are the target. Safari is untested.</li>
   </ul>
-</div>
-<script src="coi-serviceworker.js?v=034f4067627a"></script>
-<script src="keymap.js?v=034f4067627a"></script>
+</details>
+<script src="coi-serviceworker.js?v=f247fcd56f59"></script>
+<script src="keymap.js?v=f247fcd56f59"></script>
 <script>
   // Where core_web.js/.wasm/.data are served from, and the cache-busting
   // suffix for them. `rake wasm:dist` rewrites both when it lays out a
   // self-contained directory (base "", version "?v=<build stamp>").
   window.FMRB_WASM_BASE = '';
-  window.FMRB_WASM_VER = '?v=034f4067627a';
+  window.FMRB_WASM_VER = '?v=f247fcd56f59';
 </script>
-<script src="core_web.js?v=034f4067627a"></script>
-<script src="main.js?v=034f4067627a"></script>
+<script src="core_web.js?v=f247fcd56f59"></script>
+<script src="main.js?v=f247fcd56f59"></script>
 </body>
 </html>
