@@ -60,6 +60,11 @@ on the board:
     `fmruby-graphics-audio` will not boot correctly — the link protocol between them has to
     match.
 
+!!! warning "2.1.0 changes the link protocol"
+    Coming from 2.0.x, `fmruby-graphics-audio` has to be flashed as well. Writing only
+    `fmruby-core` leaves the two chips on different protocol versions, and the machine
+    does not come up.
+
 ## Troubleshooting
 
 ### The browser does not show a serial port

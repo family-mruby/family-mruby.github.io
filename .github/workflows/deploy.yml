@@ -26,11 +26,9 @@ jobs:
           pip install mkdocs mkdocs-material mkdocs-static-i18n
 
       - name: Sync console web client from fmruby-core
-        # Track develop for now: the console's type support (picoruby-ti) lives
-        # on develop and is not yet promoted to main. Flip this back to main
-        # (or drop the env) once develop is merged there.
+        # Released code only: main carries what the 2.1.0 firmware was built from.
         env:
-          FMRUBY_CORE_REF: develop
+          FMRUBY_CORE_REF: main
         run: bash scripts/sync-console.sh
 
       - name: Build
