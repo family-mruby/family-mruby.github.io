@@ -4,6 +4,9 @@
 
 書き込みツール: [https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
 
+その版で何が変わったか、2 つのチップとも書き込む必要があるかは
+[リリースノート](../releases.md) にあります。
+
 ## 必要なもの
 
 | 項目 | 条件 |

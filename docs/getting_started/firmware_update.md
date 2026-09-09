@@ -4,6 +4,9 @@ Firmware is written from your browser. Nothing to install.
 
 Installer: [https://family-mruby.github.io/family-mruby-installer/](https://family-mruby.github.io/family-mruby-installer/)
 
+What a version changed, and whether it needs both chips, is in
+[Release Notes](../releases.md).
+
 ## Requirements
 
 | Item | What works |

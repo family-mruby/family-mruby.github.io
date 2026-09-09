@@ -67,6 +67,9 @@ If you are not sure which to read about, start with
 
 ## What's new in 2.1
 
+The highlights are below. Everything each release changed, this one included, is on
+[Release Notes](releases.md).
+
 Colours you can change. The window frame, the desktop, the editor and the shell all take
 their colours from the system theme now, and any of them can be overridden by name in
 `/home/colors.toml`. The shell has a `color` command that writes it for you.

@@ -44,6 +44,7 @@ plugins:
           build: true
           nav_translations:
             Home: ホーム
+            Release Notes: リリースノート
             Architecture: アーキテクチャ
             Getting Started: 基本的な使い方
             Choose your hardware: 機種の選択
@@ -149,6 +150,7 @@ nav:
   - Hardware: hardware.md
   - Verified Peripherals: compatibility.md
   - Limitations: limitations.md
+  - Release Notes: releases.md
 
 markdown_extensions:
   - admonition
