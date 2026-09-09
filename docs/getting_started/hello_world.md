@@ -120,7 +120,7 @@ HelloApp.new.start
 | Drawing logic extracted into `redraw` | Organized for easier redraws later |
 
 !!! tip "What are @user_area_* variables?"
-    Coordinates of the area where the app is free to draw, excluding the title bar and borders. See [FmrbApp > Key instance variables](../api/fmrb_app.md#key-instance-variables) for details.
+    Coordinates of the area where the app is free to draw, excluding the title bar and borders. See [FmrbApp > What the app can read](../api/fmrb_app.md#what-the-app-can-read) for details.
 
 Restart and run the app — the title bar and window frame will be drawn, and you should be able to close the app by clicking the button at the top right.
 

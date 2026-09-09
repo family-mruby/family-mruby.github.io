@@ -38,7 +38,7 @@ A full list of what ships, in every language, is in
 
 | App | What it shows | API |
 |---|---|---|
-| `flappy.rb` | One button, scenery behind the game, and effects on the sound chip | `FmrbGfx`, [`FmrbAudio`](api/audio.md), gamepad |
+| `flappy.app.rb` | One button, scenery behind the game, and effects on the sound chip | `FmrbGfx`, [`FmrbAudio`](api/audio.md), gamepad |
 | `blockgame.app.rb` | A stateful game with BGM and effects. Arrow keys, `Space` to drop | `FmrbGfx`, [`FmrbAudio`](api/audio.md) |
 | `shooter.app.rb` | Sprites, a diving formation, and a boss between the waves | [Sprites](api/sprite.md), collision |
 | `rpg_demo/` | A tile world that scrolls, with collisions, BGM and effects. Assets live in the app's own directory | [Tile Maps](api/tilemap.md), `FmrbApp.set_cursor_visible` |

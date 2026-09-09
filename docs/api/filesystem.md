@@ -34,6 +34,10 @@ Your own settings follow the same split: the system's are in `/etc`, and yours s
 them in `/home` — `/home/colors.toml`, `/home/services.toml`, `/home/associations.toml` —
 where they win over the shipped ones without replacing them.
 
+One directory in `/home` is read by the system: any `.png` in `/home/backgrounds` is offered
+as a wallpaper in Config, alongside the ones in `/usr/share/backgrounds`. Nothing else in
+`/home` is scanned.
+
 !!! warning "Re-flashing is a different matter"
     This is about what the running machine does. Writing the firmware from the browser
     installer replaces the whole filesystem, `/home` included. Copy out what you care

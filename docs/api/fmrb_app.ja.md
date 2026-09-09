@@ -33,7 +33,7 @@ MyApp.new.start
 | `on_event(ev)` | キーボード／マウス／ゲームパッド／HID 受信時 | 任意 |
 | `on_suspend` | フルスクリーンアプリに切り替えられたとき | 任意 |
 | `on_resume` | 中断状態から復帰したとき | 任意 |
-| `on_resize(w, h)` | 窓の大きさが変わったとき。角のドラッグや全画面の切り替え。`@fullscreen` と描画可能領域は更新済み | 任意 |
+| `on_resize(w, h)` | 窓の大きさが変わったとき。角のドラッグや全画面の切り替え。`fullscreen?` と描画可能領域は更新済み | 任意 |
 | `on_quit_request` | `Ctrl` + `Q` のとき。すぐ閉じる代わりに呼ばれる | 任意 |
 | `on_destroy` | アプリ終了時に1回 | 任意 |
 
@@ -43,7 +43,7 @@ start
        └─ main_loop:
             ├─ on_update  → 戻り値 ms 分 _spin で待機
             ├─ _spin 中に on_event(ev), _handle_system_control(msg) をディスパッチ
-            └─ @running が false になるまで繰り返し
+            └─ アプリが止まるまで繰り返し (`running?` が false になるまで)
   └─ destroy → on_destroy
 ```
 
@@ -107,7 +107,7 @@ when :mouse_move
   ev[:x], ev[:y]
 ```
 
-タイトルバー上のクリック（左クリックでクローズ／右クリックでリロード）は基底クラスが既に処理しているので、サブクラスは `super` を呼ばなくても閉じる動作は機能します。
+タイトルバー上のクリック（左クリックでクローズ／右クリックでリロード）は、アプリの `on_event` が呼ばれる前に基底クラスが処理します。呼ぶものは何もありません。`super` を書かなくても閉じる動作もリロードも効きます。2.0 向けに書いたアプリは `on_event` の先頭で `super(ev)` を呼んでいることが多いですが、2.1 以降それは空のメソッドに届くだけなので、残しても消してもかまいません。
 
 ### ホイール
 
@@ -152,7 +152,7 @@ when :gamepad_axis
 | `set_window_position(x, y)` | ウィンドウ位置を変更 |
 | `draw_window_frame` | ウィンドウ枠（タイトルバー + 縁）を描画。基底クラスが管理する `GfxBlock` を再利用 |
 | `clear_user_area(color = FmrbConst::THEME_WINDOW_BG)` | アプリ描画可能領域（タイトルバー・枠を除く）を塗りつぶす。既定色はシステムのテーマに従い、この呼び出しで窓枠の描き直しと、付いている部品の再描画指定も行われる |
-| `request_fullscreen(on)` / `toggle_fullscreen` | 窓と全画面を切り替える。VM は動いたままなのでアプリの状態は残る。結果は `on_resize` で届き、そのとき `@fullscreen` と描画可能領域は更新済み |
+| `request_fullscreen(on)` / `toggle_fullscreen` | 窓と全画面を切り替える。VM は動いたままなのでアプリの状態は残る。結果は `on_resize` で届き、そのとき `fullscreen?` と描画可能領域は更新済み |
 | `request_file_select(mode = "open")` | システムのファイル選択ダイアログを呼び出し |
 | `sync_file(path, dest: nil)` | 描画・音声側にあるファイルの複製を、こちらのものと一致させる。違うときだけ転送する。画面を持たないアプリでも使える |
 | `request_reload` | スクリプトをリロード（タイトルバー右クリックで自動呼び出しされる） |
@@ -213,8 +213,8 @@ when :gamepad_axis
 
 | メソッド | 用途 |
 |---|---|
-| `start` | `@running = true` にしてイベントループ開始（`on_create` が呼ばれる） |
-| `stop` | `@running = false`（次の `_spin` 後に `destroy` へ） |
+| `start` | イベントループ開始（`on_create` が呼ばれる）。ここから `running?` は true |
+| `stop` | 終わらせる。`running?` が false になり、次の `_spin` の後 `destroy` へ |
 | `destroy` | カーネルへ exit を通知し、`@gfx.destroy`、`on_destroy`、`_cleanup` |
 
 | `on_quit_request` | `Ctrl` + `Q` のときに、すぐ終了する代わりに呼ばれる。既定は終了。保存していないものがあるなら、上書きして先に尋ねる |
@@ -240,21 +240,29 @@ when :gamepad_axis
 | `theme_border` | 罫線、囲み、控えめな文字 |
 | `theme_fg_light` | 強調色やボタンの上に乗る文字の色 |
 
-## 主要インスタンス変数
+## アプリから読めるもの
 
-| 変数 | 内容 |
+| | 内容 |
 |---|---|
-| `@gfx` | `FmrbGfx` インスタンス（描画 API。headless モードでは `nil`） |
-| `@audio` | `FmrbAudio` インスタンス |
-| `@name` | アプリの表示名（`.toml` の `app_screen_name`） |
-| `@platform` | `:esp32` または `:linux` |
-| `@fullscreen` | フルスクリーンならば `true` |
+| `@gfx` (`gfx` でも可) | `FmrbGfx` インスタンス（描画 API。headless モードでは `nil`） |
+| `name` | アプリの表示名（`.toml` の `app_screen_name`） |
+| `platform` | `:esp32` または `:linux` |
+| `running?` | アプリが動作中なら `true` |
+| `fullscreen?` | フルスクリーンならば `true` |
+| `closable?` | クローズボタンでアプリを止めてよいか。画面を占有するアプリは `closable = false` で切れます |
+| `rounded_corners?` | この窓の角が丸いかどうか。枠を自分で描くアプリ向け |
 | `@window_width` / `@window_height` | ウィンドウ全体のサイズ |
 | `@pos_x` / `@pos_y` | ウィンドウ左上の絶対座標 |
 | `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | タイトルバーや枠を除いた描画可能領域 の境界 |
 | `@user_area_width` / `@user_area_height` | 描画可能領域のサイズ |
-| `@running` | アプリが動作中なら `true` |
-| `@suspended` | サスペンド中なら `true` |
+
+!!! note "`@_` で始まる名前は基底クラスのものです"
+    2.1 から、基底クラスは自分の状態を `@_` 付きの変数に持ちます。`@_` で始まらない変数は
+    アプリのものだと考えてかまいません。とくに困っていたのが `@running` と `@name` で、
+    アプリが自分の `@running` を置くと黙って終了していました。今は `running?` と `name` で
+    読みます。
+
+    音源はここには入りません。アプリが `FmrbAudio.new(self)` で自分の分を作ります。
 
 !!! tip "ウィンドウ枠を侵さない描画"
     タイトルバーがあるウィンドウモードでは、絶対に `@user_area_*` の範囲内で描画してください。`@user_area_x0`, `@user_area_y0` から始めて、幅 `@user_area_width`、高さ `@user_area_height` 内で完結させます。
@@ -274,6 +282,7 @@ when :gamepad_axis
 | `FmrbApp.set_wallclock(year, month, day, hour, minute, second)` | RTC・システム時刻を設定 |
 | `FmrbApp.gfx_stats` | 描画統計 `{cmds:, presents:}` |
 | `FmrbApp.sys_pool_info` | システムメモリプール情報 |
+| `FmrbApp.pool_used` | 自分のプールを何バイト使ったか。読めないときは `-1`。処理の前後で引き算すると、その処理が出したごみの量が分かります |
 | `FmrbApp.heap_info` | ESP-IDF ヒープ情報（`free`, `total`, `min_free`, `largest_block` ほか） |
 | `FmrbApp.enable_cursor` | マウスカーソルを表示（最初のマウス移動まで遅延あり） |
 | `FmrbApp.set_cursor_visible(visible)` | カーソルの即時表示／非表示。フルスクリーンゲームで非表示にし、終了時に戻す用途 |

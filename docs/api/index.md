@@ -162,17 +162,18 @@ Key constants: `PLATFORM`, `PROC_ID_KERNEL`, etc., `MSG_TYPE_*`, `OS_VERSION`, `
 | Variable | Description |
 |---|---|
 | `@gfx` | `FmrbGfx` instance |
-| `@canvas` | Canvas ID |
-| `@audio` | `FmrbAudio` instance |
-| `@name` | App display name (from `.toml` `app_screen_name`) |
-| `@platform` | `:esp32` / `:linux` |
-| `@fullscreen` | Whether the app is in fullscreen mode |
+| `name` | App display name (from `.toml` `app_screen_name`) |
+| `platform` | `:esp32` / `:linux` |
+| `running?` | `true` while the app is running |
+| `fullscreen?` | Whether the app is in fullscreen mode |
 | `@window_width` / `@window_height` | Overall window size |
 | `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | Boundaries of the drawable area for the app (window coordinate system) |
 | `@user_area_width` / `@user_area_height` | Size of the drawable area |
 | `@pos_x` / `@pos_y` | Top-left coordinates of the window (screen coordinate system). Changes when the window is moved |
 
-In `@fullscreen` mode, `(@pos_x, @pos_y)` is `(0, 0)`, pointing at the top-left of the screen.
+In fullscreen, `(@pos_x, @pos_y)` is `(0, 0)`, pointing at the top-left of the screen.
+The base class keeps its own state in `@_`-prefixed variables, so what an app assigns is
+its own — see [FmrbApp](fmrb_app.md#what-the-app-can-read).
 
 ## Coordinate System and Color Format
 

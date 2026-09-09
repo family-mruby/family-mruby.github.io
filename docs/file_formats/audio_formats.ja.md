@@ -254,5 +254,5 @@ sleep_ms(200)
 - [FmrbAudio](../api/audio.md)
 - [MIDI](../api/midi.md) — `.mid` の再生と、外部音源への MIDI 送信
 - ピアノアプリ: `/app/demo/piano.app.rb`
-- 効果音 + BGM 例: `/app/game/flappy.rb`
+- 効果音 + BGM 例: `/app/game/flappy.app.rb`
 - NSF プレイヤー: `/app/tool/nsf_player.app.rb`

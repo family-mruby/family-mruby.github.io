@@ -17,14 +17,16 @@ you write belongs in [`/home`](../api/filesystem.md#home-is-yours).
 
 ## Always there
 
-These are not in the launcher grid — they are the system's own apps, reachable from the
-system menu or by pressing a letter on the desktop.
+The grid opens with three the firmware carries itself — Shell, Editor and the App
+Store — and the rest are the system's own apps, reachable from the system menu or by
+pressing a letter on the desktop.
 
 | App | Key | What it does |
 |---|---|---|
 | Launcher | `L` | The app grid |
 | Shell | `S` | A command line |
 | Editor | `E` | Write, run (`F5`) and debug your code |
+| App Store | | Fetches published apps over Wi-Fi and installs them under `/app/usr` |
 | File Manager | | Browse the flash filesystem |
 | Log Viewer | | The system log |
 | Monitor | | Running tasks, memory and services |

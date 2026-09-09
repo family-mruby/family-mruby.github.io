@@ -5,7 +5,7 @@
 - **[遠隔画面](../remote_desktop.md)** — パソコンのブラウザに実機の画面が出て、パソコンの
   キーボードとマウスで操作できます (Modern のみ)
 - **[アプリからの通信](../api/network.md)** — `Net::HTTP`、WebSocket、TLS
-- **mDNS** — 実機が `fmruby.local` で引けるようになり、アドレスを探さずに済みます
+- **mDNS** — 実機が名前で引けるようになり、アドレスを探さずに済みます
 
 対応しているのは 2.4GHz 帯だけです。
 
@@ -37,8 +37,7 @@
     enable = true
     ssid = "your-ssid"
     password = "your-password"
-    # http://<hostname>.local/ でつながるようになります
-    hostname = "fmruby"
+    # hostname は書かなくてかまいません (下記)
     ```
 
 4. 保存して、システムメニューの Reset で再起動します
@@ -47,7 +46,19 @@
 |---|---|
 | `enable` | `false` にすると、設定は残したまま接続しません |
 | `ssid` / `password` | 接続先。2.4GHz 帯のみ |
-| `hostname` | mDNS の名前。`fmruby` なら `fmruby.local` で引けます |
+| `hostname` | mDNS の名前。書かなくてかまいません (下記) |
+
+### 実機が答える名前
+
+`hostname` を書かなければ、実機は自分で名前を作ります。`fmruby-XXXXXX.local` の 6 文字は
+WiFi の MAC の下 3 バイトです。起動ログに出ます。1 つのネットワークに 2 台あるとき、
+どちらかを指すのはこの名前です。
+
+どの機械も `fmruby.local` にも答えます。1 台しかないときはこちらが便利ですが、2 台ある
+ときはどちらが答えるか決まりません。そのときは機械ごとの名前を使います。
+
+`hostname` を書くと、自分で作る名前の代わりにそれが使われます。2 台に書くなら別々の値に
+してください。
 
 !!! tip "実機で打ちたくない場合"
     パソコンから [web コンソール](console.md) 経由でファイルを送ることもできます。

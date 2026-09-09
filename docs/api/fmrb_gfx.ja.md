@@ -257,7 +257,8 @@ sheet.load_bmp("/usr/share/sprites/test/tilesheet.bmp")
 `set_viewport(src_x, src_y, w, h)` は、アプリが描いている canvas より大きな絵の上を、
 描き直さずに窓だけ動かして見せます。canvas は輪として扱われ (元の四角は canvas の端で
 回り込みます)、表示範囲より少し大きい canvas があれば、動いた分だけ新しく見えるタイルを
-描き足すことで、いくらでも大きな世界を流せます。Retro 側はこの命令を無視するので、
+描き足すことで、いくらでも大きな世界を流せます。`clear_viewport` で元に戻し、canvas 全体を
+合成する状態に戻します。Retro 側はどちらの命令も無視するので、
 `FmrbConst::CHIP_MODEL == "ESP32-P4"` で分けてください。
 
 ## スプライトを四角の中に閉じ込める

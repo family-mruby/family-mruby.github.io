@@ -33,7 +33,7 @@ Window size and other settings are specified in a `.toml` file (see [App Configu
 | `on_event(ev)` | On keyboard / mouse / gamepad / HID input | Any |
 | `on_suspend` | When switching to a fullscreen app | Any |
 | `on_resume` | When returning from a suspended state | Any |
-| `on_resize(w, h)` | When the window changes size — a drag on the corner, or a switch to or from fullscreen. `@fullscreen` and the user area are already updated | Any |
+| `on_resize(w, h)` | When the window changes size — a drag on the corner, or a switch to or from fullscreen. `fullscreen?` and the user area are already updated | Any |
 | `on_quit_request` | On `Ctrl` + `Q`, instead of closing outright | Any |
 | `on_destroy` | Once when the app exits | Any |
 
@@ -43,7 +43,7 @@ start
        +-- main_loop:
             +-- on_update  -> wait for return value ms via _spin
             +-- _spin dispatches on_event(ev), _handle_system_control(msg)
-            +-- repeats until @running becomes false
+            +-- repeats until the app stops (`running?` turns false)
   +-- destroy -> on_destroy
 ```
 
@@ -107,7 +107,7 @@ when :mouse_move
   ev[:x], ev[:y]
 ```
 
-Clicks on the title bar (left-click to close / right-click to reload) are already handled by the base class, so these actions work even if the subclass does not call `super`.
+Clicks on the title bar (left-click to close / right-click to reload) are handled by the base class before your `on_event` runs, so there is nothing to call: an `on_event` that never calls `super` still closes and reloads. Apps written against 2.0 often open with `super(ev)`; since 2.1 that reaches an empty method and does nothing, so it can stay or go.
 
 ### Wheel
 
@@ -152,7 +152,7 @@ when :gamepad_axis
 | `set_window_position(x, y)` | Change the window position |
 | `draw_window_frame` | Draw the window frame (title bar + border). Reuses a `GfxBlock` managed by the base class |
 | `clear_user_area(color = FmrbConst::THEME_WINDOW_BG)` | Fill the drawable area (excluding title bar and border). The default follows the system theme, and the call redraws the window frame and marks any attached widgets |
-| `request_fullscreen(on)` / `toggle_fullscreen` | Switch between windowed and fullscreen. The VM keeps running, so app state survives; the answer arrives as `on_resize`, with `@fullscreen` and the user area already updated |
+| `request_fullscreen(on)` / `toggle_fullscreen` | Switch between windowed and fullscreen. The VM keeps running, so app state survives; the answer arrives as `on_resize`, with `fullscreen?` and the user area already updated |
 | `request_file_select(mode = "open")` | Invoke the system file selection dialog |
 | `sync_file(path, dest: nil)` | Make the graphics/audio side's copy of a file match this one, transferring it only when it differs. A headless app can do this too |
 | `request_reload` | Reload the script (automatically called on title bar right-click) |
@@ -214,8 +214,8 @@ by itself.
 
 | Method | Purpose |
 |---|---|
-| `start` | Sets `@running = true` and starts the event loop (`on_create` is called) |
-| `stop` | Sets `@running = false` (proceeds to `destroy` after the next `_spin`) |
+| `start` | Starts the event loop (`on_create` is called). `running?` is true from here |
+| `stop` | Ends it: `running?` turns false, and `destroy` follows after the next `_spin` |
 | `destroy` | Notifies the kernel of exit, calls `@gfx.destroy`, `on_destroy`, `_cleanup` |
 
 | `on_quit_request` | Called on `Ctrl` + `Q` instead of stopping the app outright. The default is to close; override it to ask first when there is unsaved work |
@@ -242,21 +242,29 @@ the machine's theme and the user's [colour overrides](../file_formats/colors.md)
 | `theme_border` | Rules, boxes, muted text |
 | `theme_fg_light` | Ink on the accent or on a button |
 
-## Key Instance Variables
+## What the app can read
 
-| Variable | Description |
+| | Description |
 |---|---|
-| `@gfx` | `FmrbGfx` instance (drawing API; `nil` in headless mode) |
-| `@audio` | `FmrbAudio` instance |
-| `@name` | App display name (from `.toml` `app_screen_name`) |
-| `@platform` | `:esp32` or `:linux` |
-| `@fullscreen` | `true` if in fullscreen mode |
+| `@gfx` (or `gfx`) | `FmrbGfx` instance (drawing API; `nil` in headless mode) |
+| `name` | App display name (from `.toml` `app_screen_name`) |
+| `platform` | `:esp32` or `:linux` |
+| `running?` | `true` while the app is running |
+| `fullscreen?` | `true` in fullscreen mode |
+| `closable?` | Whether a click on the close button may stop the app. `closable = false` turns it off, for an app that owns the screen |
+| `rounded_corners?` | Whether this window's corners are rounded, for an app drawing its own frame |
 | `@window_width` / `@window_height` | Overall window size |
 | `@pos_x` / `@pos_y` | Absolute coordinates of the window's top-left corner |
 | `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | Boundaries of the drawable area, excluding title bar and borders |
 | `@user_area_width` / `@user_area_height` | Size of the drawable area |
-| `@running` | `true` while the app is running |
-| `@suspended` | `true` while suspended |
+
+!!! note "Names beginning with `@_` belong to the base class"
+    Since 2.1 the base keeps its own state in `@_`-prefixed variables, so anything you
+    assign that does not start with `@_` is yours alone. `@running` and `@name` were the two
+    that hurt most — an app that set its own `@running` used to exit silently — and they are
+    now read through `running?` and `name`.
+
+    The sound chip is not one of these: an app makes its own with `FmrbAudio.new(self)`.
 
 !!! tip "Drawing within the window frame"
     In windowed mode with a title bar, always draw within the `@user_area_*` bounds. Start from `@user_area_x0`, `@user_area_y0` and stay within `@user_area_width` and `@user_area_height`.
@@ -276,6 +284,7 @@ Pass root-relative paths (e.g. `/home/foo.txt`) or SD card paths like `/mnt/sd/.
 | `FmrbApp.set_wallclock(year, month, day, hour, minute, second)` | Set RTC / system time |
 | `FmrbApp.gfx_stats` | Drawing statistics `{cmds:, presents:}` |
 | `FmrbApp.sys_pool_info` | System memory pool information |
+| `FmrbApp.pool_used` | How many bytes of its own pool this app has used, or `-1`. Subtract it across a piece of work to see the garbage that work made |
 | `FmrbApp.heap_info` | ESP-IDF heap info (`free`, `total`, `min_free`, `largest_block`, etc.) |
 | `FmrbApp.enable_cursor` | Show mouse cursor (delayed until the first mouse movement) |
 | `FmrbApp.set_cursor_visible(visible)` | Immediately show/hide cursor. Useful for hiding in fullscreen games and restoring on exit |

@@ -5,7 +5,7 @@ Both machines can join a network. What it gets you:
 - **[Remote desktop](../remote_desktop.md)** — the device's screen in a browser on your PC,
   driven by your PC's keyboard and mouse. Modern only
 - **[Networking from your apps](../api/network.md)** — `Net::HTTP`, WebSocket and TLS
-- **mDNS** — the device answers to `fmruby.local`, so you do not have to hunt for its address
+- **mDNS** — the device answers to a name, so you do not have to hunt for its address
 
 Only 2.4 GHz networks are supported.
 
@@ -37,8 +37,7 @@ you create it once, on the device, using the editor.
     enable = true
     ssid = "your-ssid"
     password = "your-password"
-    # The device becomes reachable at http://<hostname>.local/
-    hostname = "fmruby"
+    # Leave hostname out and the board names itself; see below
     ```
 
 4. Save, then reboot: system menu → Reset
@@ -47,7 +46,19 @@ you create it once, on the device, using the editor.
 |---|---|
 | `enable` | Set to `false` to keep the credentials but not connect |
 | `ssid` / `password` | Your network. 2.4 GHz only |
-| `hostname` | The mDNS name. `fmruby` makes the device `fmruby.local` |
+| `hostname` | The mDNS name, and optional — see below |
+
+### The name the board answers to
+
+Leave `hostname` out and the board makes one of its own: `fmruby-XXXXXX.local`, where the
+six characters are the last three bytes of its Wi-Fi MAC. It is printed in the boot log,
+and it is what tells two boards apart on one network.
+
+Every board also answers to `fmruby.local`, which is the convenient name when there is only
+one of them. With two, which one replies is a race — use the board's own name then.
+
+Writing a `hostname` replaces the generated one, so give two boards two different values if
+you do.
 
 !!! tip "Another way in"
     If you would rather not type on the device, you can push the file from your PC over the

@@ -57,13 +57,23 @@ Config ダイアログから。システムメニューの Config には、実�
 | `timezone` | string | | POSIX の時間帯。`JST-9`、`UTC`、`EST5` など |
 | `debug_mode` | bool | `true` | ログを多めに出す |
 | `max_apps` | int | (ビルドの上限) | この機械が配るアプリ枠の数。ファームウェアが持つ数を超える値は、拒否ではなく上限に丸められます |
-| `ble_auto_start` | bool | `true` | 起動時に BLE を立ち上げる。Retro のみ有効で、Modern は設定によらず起動する |
+| `ble_auto_start` | bool | `true` | 起動時に BLE を立ち上げる。2 つの機械で意味が違います (下記) |
 | `wifi_auto_start` | bool | `false` | 起動時に WiFi を立ち上げる |
+| `app_spawn_margin_kb` | int | `30` | アプリを起動するときに機械の側へ残す内蔵 RAM (KB)。ここを食う起動は断られます。実機のみ |
+| `boot_splash` | bool | `true` | 電源投入時のロゴと音。`false` で両方とばし、約 2.7 秒短くなります |
+| `startup_app` | string | `""` | デスクトップが出たらすぐ開くアプリをパスで指定 (`/app/game/blockgame.app.rb`)。空なら通常のデスクトップ |
+| `wallpaper` | string | `""` | デスクトップの絵。空ならテーマ任せ、`"none"` なら単色、パスを書くとそれが優先されます。`/home/backgrounds` に置いた `.png` は Config の一覧に出ます |
 
 !!! note "Retro ではこの 2 つがぶつかります"
     ESP32-S3 の無線は 1 系統です。`ble_auto_start` が true なら、`wifi_auto_start` が何で
     あろうと WiFi は起動しません。Modern の ESP32-C6 は両方を同時に動かせます。
     [WiFi につなぐ](../getting_started/wifi.md) を参照してください。
+
+!!! note "`ble_auto_start = false` の意味は機械によって違います"
+    Retro では BLE がまったく起動しなくなり、あとからデスクトップのメニューで起動できます。
+    Modern では無線が C6 側にあるため、false は「何も告知せず、誰も接続できない」だけで、
+    C6 との接続自体は上がります (WiFi がそれを必要とするため)。C6 ごと落とすなら
+    `wifi_auto_start` も false にします。どちらも次の起動から効きます。
 
 ### `[theme]`
 
@@ -82,7 +92,7 @@ button     = 0x60
 dir_color  = 0x03
 ```
 
-Config ダイアログには `light` / `dark` / `classic` の 3 つの見本があり、選んで保存すると
+Config ダイアログには `light` / `dark` / `cyberpunk` の 3 つの見本があり、選んで保存すると
 この 9 項目に展開されます。それ以外の配色にしたいときは手で書きます。
 
 アプリからは同じ値が `FmrbConst::THEME_*` で読めるので、行儀のよいアプリはシステムの配色に
@@ -153,7 +163,7 @@ hostname = "fmruby"
 |---|---|
 | `enable` | `false` にすると、設定は残したまま接続しません |
 | `ssid` / `password` | 接続先。2.4GHz 帯のみ |
-| `hostname` | mDNS の名前。`fmruby` なら `fmruby.local` |
+| `hostname` | mDNS の名前。書かなければ WiFi の MAC の下 3 バイトから `fmruby-XXXXXX.local` を自分で名乗るので、2 台あっても区別できます。どの機械も `fmruby.local` にも答えます |
 
 公開しているファームウェアにこのファイルは入っていません。誰でも入手できるビルドに
 合言葉を焼き込むわけにいかないためです。実機で一度だけ作ってください。手順は

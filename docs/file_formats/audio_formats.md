@@ -255,5 +255,5 @@ See [FmrbAudio - note_on / note_off](../api/audio.md#tone-synthesis-note_on--not
 - [FmrbAudio](../api/audio.md)
 - [MIDI](../api/midi.md) — playing `.mid`, and sending MIDI to an external instrument
 - Piano app: `/app/demo/piano.app.rb`
-- Sound effects + BGM example: `/app/game/flappy.rb`
+- Sound effects + BGM example: `/app/game/flappy.app.rb`
 - NSF player: `/app/tool/nsf_player.app.rb`

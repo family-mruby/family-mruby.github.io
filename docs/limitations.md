@@ -34,11 +34,11 @@ PicoRuby is based on mruby, so some methods that are standard in CRuby may not b
 
 Each Family mruby app runs as an independent Ruby VM, with its own heap and stack allocated on PSRAM.
 
-| Item | Guideline / Limit |
-|---|---|
-| Standard app heap | 500 KB |
-| Heap with `large_memory = 1` | 1000 KB |
-| User app slots | 5. How many fill depends on the memory the machine has |
+| Item | Retro | Modern | Studio |
+|---|---|---|---|
+| Standard app heap | 500 KB | 1024 KB | 1536 KB |
+| Heap with `large_memory = 1` | 1024 KB | 2048 KB | 3072 KB |
+| User app slots | 5, and how many fill depends on the memory the machine has. `max_apps` in [system_conf.toml](file_formats/system_conf.md) lowers it | | |
 
 You can check heap usage in the Monitor app.
 
@@ -114,8 +114,8 @@ Most limits apply to both machines. These do not.
 
 | | |
 |---|---|
-| Network | The machine cannot reach the network from inside the page |
-| Files | `/home` is kept in the browser and nowhere else. Everything outside it is built fresh on every reload. Download the archive to keep anything |
+| Network | `FmrbNet.request` fetches through the browser, so a server that refuses cross-origin requests cannot be read. Sockets — `Net::HTTP`, WebSocket — are not there |
+| Files | `/home` and `/app/usr` are kept in the browser and nowhere else, and so are the settings. Everything outside them is built fresh on every reload. Download the archive to keep anything |
 | Browsers | Desktop Chrome and Firefox. Safari is untested; phones and tablets are not a target, because the machine wants a keyboard |
 | One tab | Open the page twice and only the first tab saves |
 

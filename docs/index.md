@@ -25,6 +25,11 @@ One table decides which app opens a file. A `.md` opens as a presentation, a `.n
 music player, a `.rb` runs. The table is a file, and any line of it can be overridden.
 → [File Associations](file_formats/associations.md)
 
+A shop for apps. The App Store sits at the head of the launcher: it fetches a published
+list over Wi-Fi, shows what fits on this machine, and installs into `/app/usr`, where the
+launcher finds it. It runs on both boards and in the browser.
+→ [Default Apps](getting_started/default_apps.md#always-there)
+
 New apps. PicoRabbit presents a slide deck written in Markdown, Robo Explorer is a maze you
 can only solve by writing the robot's brain, and Modern gains a video player, a microphone
 spectrum and a readout of its motion sensor.
@@ -41,7 +46,8 @@ so a program can go onto the machine without a cable.
 
 In a browser. The firmware is also compiled to WebAssembly, so the desktop, the editor and
 the sound chip run in a browser tab with nothing installed. Files you make there stay in the
-browser and can be carried out as an archive.
+browser and can be carried out as an archive; files and folders can be dropped in, and a
+folder on your disk can be linked so that what you edit outside reaches the machine.
 → [Family mruby Studio](getting_started/studio.md)
 
 ## Demo Video

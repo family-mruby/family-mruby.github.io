@@ -161,11 +161,10 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | 変数 | 内容 |
 |---|---|
 | `@gfx` | `FmrbGfx` インスタンス |
-| `@canvas` | キャンバス ID |
-| `@audio` | `FmrbAudio` インスタンス |
-| `@name` | アプリ表示名（`.toml` の `app_screen_name`） |
-| `@platform` | `:esp32` / `:linux` |
-| `@fullscreen` | フルスクリーンモードか否か |
+| `name` | アプリ表示名（`.toml` の `app_screen_name`） |
+| `platform` | `:esp32` / `:linux` |
+| `running?` | アプリが動作中なら `true` |
+| `fullscreen?` | フルスクリーンモードか否か |
 | `@window_width` / `@window_height` | ウィンドウ全体のサイズ |
 | `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | アプリ描画可能領域の境界（ウィンドウ座標系） |
 | `@user_area_width` / `@user_area_height` | 描画可能領域のサイズ |

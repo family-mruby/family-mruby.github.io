@@ -258,8 +258,9 @@ round trip to the graphics side, so it is not something to do per pixel in a loo
 `set_viewport(src_x, src_y, w, h)` shows a moving window onto a canvas larger than the one
 the app draws in, without redrawing anything. The canvas is addressed as a torus — the
 source rectangle wraps around its edges — so a canvas slightly larger than the viewport can
-scroll an arbitrarily large world if newly exposed tiles are stamped as it moves. The Retro
-backend ignores the command, so gate it on `FmrbConst::CHIP_MODEL == "ESP32-P4"`.
+scroll an arbitrarily large world if newly exposed tiles are stamped as it moves.
+`clear_viewport` undoes it and composites the whole canvas again. The Retro backend ignores
+both, so gate them on `FmrbConst::CHIP_MODEL == "ESP32-P4"`.
 
 ## Keeping sprites inside a rectangle
 

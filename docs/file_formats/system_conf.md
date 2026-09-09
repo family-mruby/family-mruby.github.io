@@ -58,13 +58,24 @@ take effect at startup.
 | `timezone` | string | | POSIX timezone, e.g. `JST-9`, `UTC`, `EST5` |
 | `debug_mode` | bool | `true` | Extra logging |
 | `max_apps` | int | (the build's ceiling) | How many app slots this machine hands out. A value above what the firmware was built for is clamped, not refused |
-| `ble_auto_start` | bool | `true` | Start BLE at boot. Retro only -- on Modern BLE starts regardless |
+| `ble_auto_start` | bool | `true` | Start BLE at boot. It means different things on the two machines -- see below |
 | `wifi_auto_start` | bool | `false` | Start Wi-Fi at boot |
+| `app_spawn_margin_kb` | int | `30` | Internal RAM, in KB, a starting app has to leave for the rest of the machine. A start that would eat into it is refused. Boards only |
+| `boot_splash` | bool | `true` | The logo and the jingle at power-on. `false` skips both and saves about 2.7 seconds |
+| `startup_app` | string | `""` | One app to open as soon as the desktop is up, by path (`/app/game/blockgame.app.rb`). Empty means the ordinary desktop |
+| `wallpaper` | string | `""` | Desktop picture. Empty means whatever the theme says, `"none"` leaves a plain colour, and a path wins over both. Any `.png` in `/home/backgrounds` shows up in Config's list |
 
 !!! note "On Retro these two conflict"
     The ESP32-S3 has one radio. If `ble_auto_start` is true, Wi-Fi will not start no matter
     what `wifi_auto_start` says. Modern's ESP32-C6 runs both. See
     [Connecting to Wi-Fi](../getting_started/wifi.md).
+
+!!! note "`ble_auto_start = false` does something different on each machine"
+    On Retro it means BLE never starts, and the desktop menu can start it later. On Modern
+    the radio is on the C6 rather than on this chip, so `false` only means that nothing is
+    advertised and nothing can connect: the link to the C6 is still raised, because Wi-Fi
+    needs it. Set `wifi_auto_start` to false as well to leave the C6 down entirely. Either
+    way the change takes effect at the next boot.
 
 ### `[theme]`
 
@@ -83,8 +94,8 @@ button     = 0x60
 dir_color  = 0x03
 ```
 
-The Config dialog offers three presets — `light`, `dark`, `classic` — and expands the one you
-pick into these nine entries on save. Edit them by hand for anything else.
+The Config dialog offers three presets — `light`, `dark`, `cyberpunk` — and expands the one
+you pick into these nine entries on save. Edit them by hand for anything else.
 
 Apps can read the same values as `FmrbConst::THEME_*`, so a well-behaved app follows the
 system theme. See [Constants & System Info](../api/const.md).
@@ -154,7 +165,7 @@ hostname = "fmruby"
 |---|---|
 | `enable` | `false` keeps the credentials but does not connect |
 | `ssid` / `password` | Your network. 2.4 GHz only |
-| `hostname` | mDNS name. `fmruby` makes the device `fmruby.local` |
+| `hostname` | mDNS name. Leave it out and the board names itself `fmruby-XXXXXX.local`, after the last three bytes of its Wi-Fi MAC, so two boards can be told apart. Every board also answers to `fmruby.local` |
 
 **Released firmware ships without this file** — a public build cannot carry your password —
 so you create it once on the device. Full instructions are in

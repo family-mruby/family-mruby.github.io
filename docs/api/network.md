@@ -83,6 +83,48 @@ plain `https://` URL needs no extra setup.
     Inside a class body, a bare constant like `JSON` is looked up as
     `YourClass::JSON` and fails. Prefix it with `::`.
 
+## Fetching without stopping (`FmrbNet.request`)
+
+New in 2.1. `Net::HTTP` waits for the server, which is fine for a tool that only ever runs
+on a board. An app that should also work in the browser asks this way instead: the request
+is made once, and its state is read from `on_update`.
+
+```ruby
+def on_create
+  @req = FmrbNet.request("https://example.org/thing.json")
+end
+
+def on_update
+  if @req && @req.done?
+    @req.ok? ? use(@req.body) : Log.warn(@req.error)
+    @req = nil
+  end
+  50
+end
+```
+
+| | |
+|---|---|
+| `FmrbNet.request(url)` | Starts one fetch and returns a request object |
+| `done?` | Whether the answer has arrived. Ask it from `on_update`, do not loop on it |
+| `ok?` | True when it arrived and the status says so |
+| `status` / `body` / `error` | The HTTP status, the body, and why it failed |
+
+It is deliberately not a callback: a block stored now and called later is the shape that
+breaks on the Spinel engine when it captures a local variable.
+
+What differs between the machines is where the waiting happens, not what the app writes.
+On a board the fetch happens inside `request`, so that app's own task waits there and
+`done?` is true immediately — the rest of the machine keeps running, because those tasks
+are preemptive. In the browser nothing waits: the page fetches while the machine carries on
+drawing, which is why an app that blocks cannot be written there at all.
+
+!!! note "In the browser the page's rules apply"
+    The fetch is the browser's, so a server that does not allow cross-origin requests
+    cannot be read from Studio, and `Net::HTTP` and WebSocket — sockets — are not there at
+    all. The App Store is written this way, which is why it works on both boards and in a
+    browser tab.
+
 ## WebSocket
 
 ```ruby

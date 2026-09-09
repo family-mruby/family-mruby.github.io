@@ -1,6 +1,6 @@
 # Remote Desktop
 
-**Modern only.** With Wi-Fi up, the Tab5 serves its own screen. Open its address in a
+**The screen is Modern only.** With Wi-Fi up, the Tab5 serves its own screen. Open its address in a
 browser on the same network and you get the live picture, and your PC's keyboard and mouse
 drive the real hardware.
 
@@ -157,6 +157,18 @@ $ curl -s http://fmruby.local/status
 Frames are encoded on the P4's own hardware — the PPA block converts colour space and the
 H.264 encoder is a peripheral, not a software loop — which is why streaming does not slow
 the machine to a crawl.
+
+## On Retro
+
+Retro has no remote screen: the S3 has no video encoder, and the picture leaves the board
+as composite video. What it does have, since 2.1, is the other half — the app and file
+endpoints above answer on Retro too, once its Wi-Fi is up. `/app/launch`, `/app/kill`,
+`/app/list` and the whole of `/fs` behave exactly as they do on Modern, so a program can go
+onto the board and start there without a cable; `/stream`, `/ws` and `/ws_video` are not
+there.
+
+The same warning applies, and more so on a board with one radio: these endpoints ask for no
+password.
 
 ## Related
 

@@ -90,8 +90,9 @@ half-width/full-width key — or with no keyboard at all — that click is the w
 | White box, inverted `B` | A client is connected — the [web console](console.md), typically |
 
 On Retro the system menu starts BLE and `ble_auto_start` in Config decides whether it comes
-up at boot; there is no way to stop it again short of a reboot. On Modern BLE always starts
-at boot.
+up at boot; there is no way to stop it again short of a reboot. Modern has the same setting,
+and `false` there means nothing is advertised and nothing can connect — the link to the C6
+still comes up, because Wi-Fi needs it.
 
 ### Wi-Fi
 
@@ -120,12 +121,12 @@ Date and time. Set it from Set Clock; the timezone is a separate setting under
   | Item | What it does |
   |---|---|
   | Launcher | The grid of installed apps |
-  | Editor | The editor. It is built in, so it is not in the launcher |
+  | Editor | The editor. It is built into the firmware, and heads the launcher grid with the Shell and the App Store |
   | File Manager | Browse the flash filesystem |
   | Log Viewer | The system log |
   | Monitor | Running tasks, memory and [services](../file_formats/services.md) |
   | Set Clock | Date and time |
-  | Config | Language, keyboard layout, pointer speed, theme, timezone, Wi-Fi and BLE autostart, display margins |
+  | Config | Language, keyboard layout, pointer speed, theme, wallpaper, timezone, Wi-Fi and BLE autostart, display margins |
   | Storage | Clear cached files |
   | Network | Wi-Fi state, address, hostname |
   | BLE Start | Retro only, and only when BLE did not start at boot |
@@ -136,6 +137,19 @@ Date and time. Set it from Set Clock; the timezone is a separate setting under
 Whatever Config changes is written back into `/etc/system_conf.toml`, keeping your
 comments and other settings intact. On hardware the dialog offers Save & Reboot for the
 settings that only take effect at startup.
+
+### What happens before the desktop
+
+Power-on shows the logo and plays a short jingle, and then the desktop comes up. That
+ceremony is `boot_splash` in [`/etc/system_conf.toml`](../file_formats/system_conf.md);
+setting it to `false` skips both and saves about 2.7 seconds, which is worth having on a
+machine built to run one thing. Nothing else changes — the cursor, the status LED and the
+startup app all happen either way.
+
+`startup_app` beside it names one app to open as soon as the desktop is ready, by the same
+path the launcher uses. Empty means the ordinary desktop. A fullscreen app named there
+takes the screen without the desktop showing first. Neither setting is in the Config
+dialog: edit the file in the Editor.
 
 ## The launcher
 
@@ -181,6 +195,7 @@ wheel does anything — plug the mouse in and the log prints the line to add.
 |---|---|
 | `Ctrl` + `Q` | Close the app in the foreground, including a fullscreen one |
 | `Ctrl` + `Tab` | Switch between the desktop and the running apps |
+| `Ctrl` + `,` | The same thing. A browser keeps `Ctrl` + `Tab` for its own tabs, so Studio needs this one; it works on the boards too |
 | `Ctrl` + `Space` | Turn kana input on and off |
 
 These are handled before the event reaches any app, so they work even when a fullscreen app
