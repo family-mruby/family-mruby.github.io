@@ -121,7 +121,7 @@ Setting `large_memory = 1` selects a larger memory pool slot at startup. Current
 ## Specifying an Icon
 
 ```toml
-icon = "usr/share/icon/tetris.icon"
+icon = "usr/share/icon/blockgame.icon"
 ```
 
 - Place the file under `/usr/share/icon/`

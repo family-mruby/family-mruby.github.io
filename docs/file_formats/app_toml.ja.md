@@ -121,7 +121,7 @@ default_window_mode = "fullscreen"
 ## アイコン指定
 
 ```toml
-icon = "usr/share/icon/tetris.icon"
+icon = "usr/share/icon/blockgame.icon"
 ```
 
 - ファイルは `/usr/share/icon/` 以下に置きます

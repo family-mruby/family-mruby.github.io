@@ -80,7 +80,7 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 |---|---|
 | RPG Demo | A tile world with smooth scrolling, collisions, BGM and sound effects |
 | Raycaster | A Wolfenstein-style first-person demo. Keyboard or gamepad |
-| Tetris | With BGM and sound effects |
+| BlockGame | With BGM and sound effects |
 | Shooter | Sprites, a diving formation, and a boss between the waves |
 | Flappy Demo | The one-button game, with scenery behind it |
 | Breakout.py | The Python sample game: sprites, tiles, Japanese text, a tune on the main sound chip and effects on the other |

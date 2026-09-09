@@ -38,7 +38,7 @@
 | アプリ | 見どころ | API |
 |---|---|---|
 | `flappy.rb` | ボタン 1 つ。背景つきで、効果音は音源から | `FmrbGfx`、[`FmrbAudio`](api/audio.md)、ゲームパッド |
-| `tetris.app.rb` | 状態を持つゲーム。BGM と効果音つき。矢印キーと `Space` | `FmrbGfx`、[`FmrbAudio`](api/audio.md) |
+| `blockgame.app.rb` | 状態を持つゲーム。BGM と効果音つき。矢印キーと `Space` | `FmrbGfx`、[`FmrbAudio`](api/audio.md) |
 | `shooter.app.rb` | スプライト、急降下する編隊、面の間のボス | [スプライト](api/sprite.md)、当たり判定 |
 | `rpg_demo/` | 滑らかにスクロールするタイルの世界。当たり判定、BGM、効果音。素材はアプリ自身のディレクトリに置いてあります | [タイルマップ](api/tilemap.md)、`FmrbApp.set_cursor_visible` |
 | `raycaster.app.rb` | 疑似 3D の一人称視点。`large_memory = 1` が要ります | 固定小数点、速い `FmrbGfx` |
