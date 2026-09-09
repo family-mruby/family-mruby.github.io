@@ -64,7 +64,7 @@ cp /usr/share/samples/services/heartbeat.rb /home/services/heartbeat.rb
 
 ```ruby
 class HeartbeatService
-  def on_start(ctx)          # ctx が機械の他の部分への唯一の出口
+  def on_start(ctx)          # ctx がシステムの他の部分への唯一の出口
   def on_tick(now_ms)        # interval_ms ごと
   def on_wake(now_ms)        # ctx.wake_in の後
   def on_event(topic, data)
@@ -129,7 +129,7 @@ cloud_voice = "alloy"
 cloud_timeout_ms = 10000
 ```
 
-鍵はそのまま書かれます。これは個人の機械であり、開発版はそもそも `/home` を HTTP で
+鍵はそのまま書かれます。これは個人で使う機器であり、開発版はそもそも `/home` を HTTP で
 公開しています。パスワードを貼ったノートパソコンと同じ扱いをしてください。
 
 ネットワークなしで動かすときは、`server` の行はそのままにして、単に届かない状態にして

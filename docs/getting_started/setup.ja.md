@@ -1,7 +1,7 @@
 # 起動まで (Retro)
 
 **narya-board** で最初の画面が出るまでの手順です。M5Stack Tab5 をお持ちの場合は
-[Modern (M5Stack Tab5)](modern.md) へ。どちらの機械か分からない場合は
+[Modern (M5Stack Tab5)](modern.md) へ。どちらの機種か分からない場合は
 [機種の選択](choose_hardware.md) を参照してください。
 
 ## 別途用意するもの

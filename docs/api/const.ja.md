@@ -39,7 +39,7 @@
 | `FmrbConst::PROC_ID_KERNEL` | カーネルプロセス ID |
 | `FmrbConst::PROC_ID_HOST` | ホストプロセス ID |
 | `FmrbConst::PROC_ID_SYSTEM_APP` | システムアプリ ID |
-| `FmrbConst::PROC_ID_USER_APP0` 〜 `USER_APP4` | ユーザーアプリの枠。5 つあり、いくつ埋まるかは機械のメモリ次第 |
+| `FmrbConst::PROC_ID_USER_APP0` 〜 `USER_APP4` | ユーザーアプリの枠。5 つあり、いくつ埋まるかは本体のメモリ次第 |
 
 #### プロセス状態
 

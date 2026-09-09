@@ -47,7 +47,7 @@ Config ダイアログから。システムメニューの Config には、実�
 |---|---|---|
 | `keyboard_layout` | `"jp"` / `"us"` | 使っているキーボードの配列。合っていないと記号の位置がずれます |
 | `mouse_scale_x` / `mouse_scale_y` | float | カーソルの速さ。0.5 で半分、2.0 で倍 |
-| `wheel_lines` | int | マウスのホイール 1 段で送る行数。アプリごとではなく機械の設定です |
+| `wheel_lines` | int | マウスのホイール 1 段で送る行数。アプリごとではなく本体の設定です |
 
 ### システム
 
@@ -56,10 +56,10 @@ Config ダイアログから。システムメニューの Config には、実�
 | `language` | `"en"` / `"ja"` | `"en"` | 画面の言語。`app_screen_name_<言語>` を持つアプリはこれに従います |
 | `timezone` | string | | POSIX の時間帯。`JST-9`、`UTC`、`EST5` など |
 | `debug_mode` | bool | `true` | ログを多めに出す |
-| `max_apps` | int | (ビルドの上限) | この機械が配るアプリ枠の数。ファームウェアが持つ数を超える値は、拒否ではなく上限に丸められます |
-| `ble_auto_start` | bool | `true` | 起動時に BLE を立ち上げる。2 つの機械で意味が違います (下記) |
+| `max_apps` | int | (ビルドの上限) | 本体が配るアプリ枠の数。ファームウェアが持つ数を超える値は、拒否ではなく上限に丸められます |
+| `ble_auto_start` | bool | `true` | 起動時に BLE を立ち上げる。機種によって意味が違います (下記) |
 | `wifi_auto_start` | bool | `false` | 起動時に WiFi を立ち上げる |
-| `app_spawn_margin_kb` | int | `30` | アプリを起動するときに機械の側へ残す内蔵 RAM (KB)。ここを食う起動は断られます。実機のみ |
+| `app_spawn_margin_kb` | int | `30` | アプリを起動するときにシステム側へ残す内蔵 RAM (KB)。ここを食う起動は断られます。実機のみ |
 | `boot_splash` | bool | `true` | 電源投入時のロゴと音。`false` で両方とばし、約 2.7 秒短くなります |
 | `startup_app` | string | `""` | デスクトップが出たらすぐ開くアプリをパスで指定 (`/app/game/blockgame.app.rb`)。空なら通常のデスクトップ |
 | `wallpaper` | string | `""` | デスクトップの絵。空ならテーマ任せ、`"none"` なら単色、パスを書くとそれが優先されます。`/home/backgrounds` に置いた `.png` は Config の一覧に出ます |
@@ -69,7 +69,7 @@ Config ダイアログから。システムメニューの Config には、実�
     あろうと WiFi は起動しません。Modern の ESP32-C6 は両方を同時に動かせます。
     [WiFi につなぐ](../getting_started/wifi.md) を参照してください。
 
-!!! note "`ble_auto_start = false` の意味は機械によって違います"
+!!! note "`ble_auto_start = false` の意味は機種によって違います"
     Retro では BLE がまったく起動しなくなり、あとからデスクトップのメニューで起動できます。
     Modern では無線が C6 側にあるため、false は「何も告知せず、誰も接続できない」だけで、
     C6 との接続自体は上がります (WiFi がそれを必要とするため)。C6 ごと落とすなら
@@ -163,7 +163,7 @@ hostname = "fmruby"
 |---|---|
 | `enable` | `false` にすると、設定は残したまま接続しません |
 | `ssid` / `password` | 接続先。2.4GHz 帯のみ |
-| `hostname` | mDNS の名前。書かなければ WiFi の MAC の下 3 バイトから `fmruby-XXXXXX.local` を自分で名乗るので、2 台あっても区別できます。どの機械も `fmruby.local` にも答えます |
+| `hostname` | mDNS の名前。書かなければ WiFi の MAC の下 3 バイトから `fmruby-XXXXXX.local` を自分で名乗るので、2 台あっても区別できます。どの実機も `fmruby.local` にも答えます |
 
 公開しているファームウェアにこのファイルは入っていません。誰でも入手できるビルドに
 合言葉を焼き込むわけにいかないためです。実機で一度だけ作ってください。手順は

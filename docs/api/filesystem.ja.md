@@ -13,7 +13,7 @@
 
 ## `/home` はあなたのもの
 
-`/home` は空の状態から始まり、機械が持ってくるものがここに書かれることはありません。
+`/home` は空の状態から始まり、ファームウェアが持ってくるものがここに書かれることはありません。
 ファームウェアに付いてくるものは、すべてこの外にあります。
 
 | パス | |
@@ -22,7 +22,7 @@
 | `/usr/share/samples/ruby` | 読むための小さな Ruby プログラム |
 | `/usr/share/samples/slides` | 発表用アプリの資料 |
 | `/usr/share/samples/services` | 写して使うサービスの一覧と本体 2 つ |
-| `/usr/share/services` | 機械が動かしている[サービス](../file_formats/services.md)の本体 |
+| `/usr/share/services` | システムが動かしている[サービス](../file_formats/services.md)の本体 |
 | `/usr/share/sprites`, `sounds`, `music`, `backgrounds`, `icon`, `template` | 同梱アプリが描くもの・鳴らすもの |
 | `/etc` | ファームウェアに付いてくる設定 |
 | `/var/cache` | システムが自分で作り直すキャッシュ |
@@ -39,7 +39,7 @@
 システムが走査することはありません。
 
 !!! warning "書き込み直しは話が別です"
-    ここに書いたのは、動いている機械の話です。ブラウザからファームウェアを書き込むと、
+    ここに書いたのは、動作中の本体の話です。ブラウザからファームウェアを書き込むと、
     `/home` を含めてファイルシステム全体が置き換わります。大事なものは先に取り出して
     ください。[ファームウェア更新](../getting_started/firmware_update.md) を参照。
 

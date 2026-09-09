@@ -59,7 +59,7 @@
 
 | アプリ | 見どころ | API |
 |---|---|---|
-| `mic_spectrum.app.rb` | マイクの標本化も変換も描画も、全部この機械の上で | `Fmrb::Fft`、[`FmrbAudio`](api/audio.md#マイク-modern-のみ) |
+| `mic_spectrum.app.rb` | マイクの標本化も変換も描画も、すべて本体の上で | `Fmrb::Fft`、[`FmrbAudio`](api/audio.md#マイク-modern-のみ) |
 | `video_play.app.rb` | Motion JPEG を窓の中で再生します | [`FmrbGfx#video_open`](api/fmrb_gfx.md#動画-modern-のみ) |
 | `imu.app.rb` | 6 軸センサを水準器として表示します | [`I2C`](api/peripherals.md#i2c) |
 
