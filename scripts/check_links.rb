@@ -17,7 +17,7 @@ require "set"
 require "uri"
 
 ROOT = ARGV[0] || "site"
-IGNORED = ["/console/", "/studio/"]
+IGNORED = ["/console/", "/console-dev/", "/studio/"]
 
 abort("#{ROOT}: no such directory -- build the site first (./build.sh)") unless Dir.exist?(ROOT)
 

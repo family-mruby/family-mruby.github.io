@@ -3,6 +3,9 @@ set -e
 
 # Sync external HTML asset (console web client) from fmruby-core (single source of truth)
 bash scripts/sync-console.sh
+# The development console (develop: the connection settings and the setup mode
+# of boards newer than the released firmware), at /console-dev/
+FMRUBY_CORE_REF=develop CONSOLE_DEST=docs/console-dev bash scripts/sync-console.sh
 
 # Docker
 docker build -t mkdocs-builder ./docker

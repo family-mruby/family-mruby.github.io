@@ -31,6 +31,14 @@ jobs:
           FMRUBY_CORE_REF: main
         run: bash scripts/sync-console.sh
 
+      - name: Sync the development console from fmruby-core develop
+        # /console-dev/: develop's console, for boards newer than the released
+        # firmware (the connection settings, the setup mode). /console/ stays main.
+        env:
+          FMRUBY_CORE_REF: develop
+          CONSOLE_DEST: docs/console-dev
+        run: bash scripts/sync-console.sh
+
       - name: Build
         run: mkdocs build
 

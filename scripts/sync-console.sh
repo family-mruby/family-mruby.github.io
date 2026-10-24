@@ -4,7 +4,8 @@ set -euo pipefail
 # Source ref of fmruby-core (override with FMRUBY_CORE_REF env var if needed)
 SRC_REF="${FMRUBY_CORE_REF:-main}"
 SRC_BASE="https://raw.githubusercontent.com/family-mruby/fmruby-core/${SRC_REF}/tool/web"
-DEST_DIR="docs/console"
+# Where it goes (override with CONSOLE_DEST: docs/console-dev holds develop's console)
+DEST_DIR="${CONSOLE_DEST:-docs/console}"
 
 mkdir -p "$DEST_DIR"
 

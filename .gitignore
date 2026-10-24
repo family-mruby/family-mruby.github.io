@@ -20,3 +20,4 @@ venv/
 # Generated at build time by scripts/sync-console.sh (index.html and every
 # asset it references - the set changes upstream, so ignore the whole tree)
 /docs/console/
+/docs/console-dev/
