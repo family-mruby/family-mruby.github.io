@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- No Referer path or query: the page may be opened with ?zenoh_pass= (main.js). A room's key
+     (#room=) is in the fragment, which is never sent anywhere. -->
+<meta name="referrer" content="strict-origin">
 <title>Family mruby Web Studio</title>
 <style>
   :root { color-scheme: dark; }
@@ -33,6 +36,11 @@
     background: rgba(0,0,0,0.7); cursor: pointer;
     font-size: 20px; line-height: normal;
   }
+  /* A link the page refuses (main.js, PASS_WITHOUT_NODE): a message, not a switch. */
+  #start.refused {
+    cursor: default; padding: 16px; box-sizing: border-box;
+    text-align: center; font-size: 16px; line-height: 1.4; background: rgba(0,0,0,0.85);
+  }
   #status { margin-top: 8px; font-size: 12px; color: #888; }
   /* Two panels rather than four rows of identical grey buttons. What each
      control belongs to is the thing the old layout did not say. */
@@ -60,7 +68,7 @@
   .panel h2 .meta { text-transform: none; letter-spacing: 0; color: #6f6f7c; }
   .field { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
   .field > label { flex: 0 0 82px; color: #8a8a97; }
-  .field > select { flex: 1 1 auto; min-width: 0; }
+  .field > select, .field > input { flex: 1 1 auto; min-width: 0; }
   .group { margin-bottom: 9px; }
   .group:last-of-type { margin-bottom: 0; }
   .row { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
@@ -68,7 +76,8 @@
   .lead { flex: 0 0 82px; color: #8a8a97; }
   .row .lead + * { min-width: 0; }
   .note { margin: 3px 0 0 82px; color: #6f6f7c; }
-  .panel select, .panel button {
+  .room-line { margin: 0 0 8px; color: #e0c060; }
+  .panel select, .panel button, .panel input {
     background: #111; color: #ddd; border: 1px solid #555;
     font-family: monospace; font-size: 12px;
   }
@@ -104,7 +113,7 @@
   @media (max-width: 700px) {
     .field { flex-direction: column; align-items: stretch; gap: 2px; }
     .field > label, .lead { flex: 0 0 auto; }
-    .panel select { width: 100%; max-width: 100%; box-sizing: border-box; }
+    .panel select, .panel input { width: 100%; max-width: 100%; box-sizing: border-box; }
     .note { margin-left: 0; }
     #about { font-size: 11px; overflow-wrap: anywhere; }
   }
@@ -126,6 +135,7 @@
         <option value="426x240">426 x 240 (as shipped)</option>
         <option value="640x360">640 x 360</option>
         <option value="852x480">852 x 480</option>
+        <option value="1280x720">1280 x 720</option>
       </select>
     </div>
     <div class="field">
@@ -178,6 +188,18 @@
     <input id="add-files" type="file" multiple hidden>
     <input id="add-folder" type="file" webkitdirectory hidden>
   </section>
+
+  <section class="panel">
+    <h2>Network <span class="meta" id="node-state">node: checking...</span></h2>
+    <!-- A room's link (main.js, G2): which room this visit is in. -->
+    <p class="room-line" id="room-state" hidden></p>
+    <div class="field">
+      <label for="router-input">Router</label>
+      <input id="router-input" type="text" spellcheck="false"
+             autocomplete="off" placeholder="ws/localhost:7449 (as shipped)">
+    </div>
+    <p class="note" id="router-note">used from the next start; ?zenoh= in the URL overrides it once</p>
+  </section>
 </div>
 <details id="about">
   <summary>How to use it</summary>
@@ -198,6 +220,11 @@
       file; <b>Restore</b> puts them back, here or in another browser.
       <b>Erase</b> clears both, and puts every setting back to its default.</li>
     <li><b>Two tabs:</b> only the first one saves.</li>
+    <li><b>Network:</b> Asterism apps reach a Zenoh router over WebSocket
+      (<code>ws/&lt;host&gt;:&lt;port&gt;</code>). From an https page that is
+      <code>wss://</code>, except to this computer. This browser joins as
+      the node shown in the panel; a second tab joins under a name of its
+      own that is not kept.</li>
     <li><b>Resolution</b> reloads the page when changed. <b>Colours</b> are
       the machine's own: pick a theme in Config, inside it.</li>
     <li><b>Full screen:</b> where the browser allows it the machine keeps
@@ -214,16 +241,74 @@
     <li>Desktop Chrome and Firefox are the target. Safari is untested.</li>
   </ul>
 </details>
-<script src="coi-serviceworker.js?v=9b77a6616333"></script>
-<script src="keymap.js?v=9b77a6616333"></script>
+<script>
+  // What a link from the console hands this visit (doc/ruby_asterism, G1,
+  // G1.5), in the fragment (never sent to the server that serves this page):
+  //   zenoh_pass=<pass>   the router door's pass (also the older ?zenoh_pass=)
+  //   zenoh_node=<id>     the node ID to join as, this visit only (a link with a
+  //                       pass must have one: main.js refuses it otherwise)
+  //   app=<path>          the app to open (like ?app=)
+  //   room=<key>          a room's key (G2): the page joins that room's key
+  //                       space through the door; no pass, no node ID
+  // Read before anything else runs, taken out of the address bar at once (the
+  // history entry is replaced) and kept only in memory for main.js. The pass
+  // goes to the WebSocket link (wss:// only). On a first visit
+  // coi-serviceworker reloads the page to become cross-origin isolated; that
+  // reload alone gets them back in the fragment, so they are not lost.
+  (function () {
+    var got = {};
+    var NAMES = ['zenoh_pass', 'zenoh_node', 'app', 'room'];
+    function keep(part, fromQuery) {
+      return part.split('&').filter(function (kv) {
+        for (var i = 0; i < NAMES.length; i++) {
+          var name = NAMES[i];
+          // Only the pass is taken from the query (the older links); ?app=
+          // stays the page's own query parameter.
+          if (fromQuery && name !== 'zenoh_pass') continue;
+          if (kv.indexOf(name + '=') === 0) {
+            if (got[name] === undefined) {
+              try { got[name] = decodeURIComponent(kv.slice(name.length + 1).replace(/[+]/g, ' ')); } catch (e) { got[name] = ''; }
+            }
+            return false;
+          }
+        }
+        return kv !== '';
+      }).join('&');
+    }
+    try {
+      var q = keep(location.search.replace(/^[?]/, ''), true);
+      var h = keep(location.hash.replace(/^#/, ''), false);
+      if (got.zenoh_pass === undefined && got.zenoh_node === undefined && got.app === undefined &&
+          got.room === undefined) return;
+      var bare = location.pathname + (q ? '?' + q : '') + (h ? '#' + h : '');
+      history.replaceState(history.state, '', bare);
+      if (got.zenoh_pass) window.FMRB_ZENOH_PASS = got.zenoh_pass;
+      if (got.zenoh_node) window.FMRB_ZENOH_NODE = got.zenoh_node;
+      if (got.app) window.FMRB_LINK_APP = got.app;
+      if (got.room) window.FMRB_ROOM_KEY = got.room;
+      var back = NAMES.filter(function (n) { return got[n]; }).map(function (n) {
+        return n + '=' + encodeURIComponent(got[n]);
+      }).join('&');
+      window.coi = window.coi || {};
+      window.coi.doReload = function () {
+        if (back) history.replaceState(history.state, '', bare + (h ? '&' : '#') + back);
+        location.reload();
+      };
+    } catch (e) {
+      // Without the History API the page keeps the URL as it came.
+    }
+  })();
+</script>
+<script src="coi-serviceworker.js?v=c1dc6dd903f1"></script>
+<script src="keymap.js?v=c1dc6dd903f1"></script>
 <script>
   // Where core_web.js/.wasm/.data are served from, and the cache-busting
   // suffix for them. `rake wasm:dist` rewrites both when it lays out a
   // self-contained directory (base "", version "?v=<build stamp>").
   window.FMRB_WASM_BASE = '';
-  window.FMRB_WASM_VER = '?v=9b77a6616333';
+  window.FMRB_WASM_VER = '?v=c1dc6dd903f1';
 </script>
-<script src="core_web.js?v=9b77a6616333"></script>
-<script src="main.js?v=9b77a6616333"></script>
+<script src="core_web.js?v=c1dc6dd903f1"></script>
+<script src="main.js?v=c1dc6dd903f1"></script>
 </body>
 </html>

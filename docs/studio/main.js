@@ -7,6 +7,94 @@
 // memory, so the page needs cross-origin isolation (rake wasm:serve).
 'use strict';
 
+// The router door's pass (doc/ruby_asterism, G1), read from the URL
+// (#zenoh_pass=, or the older ?zenoh_pass=) and taken out of the address bar
+// by the first script of index.html, before anything else runs. Kept only
+// here and in the module object for the WebSocket link
+// (wasm/zenoh/zp_ws_emscripten.c adds it to wss:// URLs, never to ws://): it
+// is not stored, not written into system_conf.toml and not logged.
+const ZENOH_PASS = String(window.FMRB_ZENOH_PASS || '');
+try { delete window.FMRB_ZENOH_PASS; } catch (e) { window.FMRB_ZENOH_PASS = undefined; }
+
+// This page's own key (doc/ruby_asterism, G1.5b): made when the page loads,
+// kept only here and in the module object, and sent next to the pass on
+// every WebSocket (wasm/zenoh/zp_ws_emscripten.c). The first page that uses
+// a pass takes it; with the same key the door lets this page connect again
+// (after the router restarts) while the pass is open, and no other page. A
+// reload is a new page with a new key, so it needs a new pass.
+function makePageKey() {
+  const b = new Uint8Array(18);
+  crypto.getRandomValues(b);
+  return btoa(String.fromCharCode(...b)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+const ZENOH_PAGE = ZENOH_PASS ? makePageKey() : '';
+
+// The node ID and the app a link from the console names for this visit
+// (#zenoh_node=, #app=; doc/ruby_asterism, G1.5), read by the same first
+// script. The node ID replaces this browser's own one for this visit only
+// (it is not stored); one that is not a node ID is ignored.
+const LINK_NODE_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,62}$/;
+const LINK_NODE = LINK_NODE_RE.test(String(window.FMRB_ZENOH_NODE || '')) ? String(window.FMRB_ZENOH_NODE) : '';
+const LINK_APP = String(window.FMRB_LINK_APP || '');
+try { delete window.FMRB_ZENOH_NODE; delete window.FMRB_LINK_APP; } catch (e) { /* kept in the constants */ }
+
+// A pass comes from a console, and on a network a console runs the console
+// decides who the page is: every link it gives carries the node ID next to
+// the pass (doc/ruby_asterism, 2026-10-14). A link with a pass and no node
+// (a hand-made one, an older console's) would join under this browser's own
+// ID, so the same person would show up under another name depending on the
+// link. The page does not start and says to open it again from the console;
+// the pass is not used. Without a pass (a network with no console: a home
+// router, a development router) the page keeps its own ID as before.
+// A room's key (#room=, doc/ruby_asterism, G2): the page joins that room
+// through the door (wss://<router>/room?t=<key>, wasm/zenoh/zp_ws_emscripten.c)
+// and every Zenoh key it uses gets the room's prefix room/<slot>
+// (picoruby-asterism-zenoh's namespace, set from Module.zenohNamespace), so
+// the apps run unchanged inside the room. The page reads the slot and the
+// end from the key without checking it (the door checks it). In a room the
+// page is a node under the ID of the seat the door gives it (G2b, see
+// takeSeat below: wasm-0103 is seat 03 of slot 01): the router binds what a
+// seat may write and whom it may call as to that ID. A node ID in the link
+// is not used. A room link carries no pass; if one came with a pass anyway,
+// the room wins and the pass is not used.
+const ROOM_KEY = String(window.FMRB_ROOM_KEY || '');
+try { delete window.FMRB_ROOM_KEY; } catch (e) { window.FMRB_ROOM_KEY = undefined; }
+function readRoomKey(key) {
+  if (!key) return null;
+  try {
+    const body = key.split('.')[0].replace(/-/g, '+').replace(/_/g, '/');
+    const c = JSON.parse(atob(body + '='.repeat((4 - body.length % 4) % 4)));
+    if (!/^[0-9]{2}$/.test(String(c.slot)) || !/^[0-9a-f]{16}$/.test(String(c.room)) ||
+        typeof c.exp !== 'number') return null;
+    return { key: key, slot: String(c.slot), room: String(c.room), exp: c.exp, max: c.max };
+  } catch (e) {
+    return null;
+  }
+}
+const ROOM = readRoomKey(ROOM_KEY);
+const ROOM_NAMESPACE = ROOM ? 'room/' + ROOM.slot : '';
+function roomUntil() {
+  if (!ROOM) return '';
+  const d = new Date(ROOM.exp * 1000);
+  return d.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+const ROOM_REFUSED_TEXT = !ROOM_KEY ? '' :
+  (!ROOM ? 'This room link is broken (its key cannot be read). Ask for the link again.' :
+    (ROOM.exp * 1000 <= Date.now() ? 'This room has ended (' + roomUntil() + '). Ask for a new link.' : ''));
+
+const PASS_WITHOUT_NODE = !ROOM_KEY && !!ZENOH_PASS && !LINK_NODE;
+const PASS_WITHOUT_NODE_TEXT =
+  'This link has a pass but no node ID, so the page does not connect. ' +
+  'Open the browser build again from the console (Browser passes).';
+// The page does not start for these links (the overlay says why).
+const LINK_REFUSED = PASS_WITHOUT_NODE || !!ROOM_REFUSED_TEXT;
+const LINK_REFUSED_TEXT = ROOM_REFUSED_TEXT || PASS_WITHOUT_NODE_TEXT;
+
+// The app to open this visit: ?app= or the link's #app=.
+function urlApp() {
+  return new URLSearchParams(location.search).get('app') || LINK_APP;
+}
+
 const canvas = document.getElementById('screen');
 const screenBox = document.getElementById('screen-box');
 const ctx = canvas.getContext('2d');
@@ -38,6 +126,7 @@ function pushInput(type, a, b, c, d) {
 function paint() {
   requestAnimationFrame(paint);
   if (!M) return;
+  if (M._fmrb_wasm_clip_out_seq_ptr) clipPollOut();
   const seq = M._fmrb_wasm_frame_seq();
   if (seq === lastSeq) return;
   lastSeq = seq;
@@ -49,7 +138,7 @@ function paint() {
     canvas.width = w;
     canvas.height = h;
     imageData = ctx.createImageData(w, h);
-    applyZoom();   // the CSS size follows the framebuffer the firmware chose
+    applyZoom();   // the box stays the base size's (see baseSize)
   }
   // Copy out of the SharedArrayBuffer (ImageData refuses a SAB view).
   imageData.data.set(new Uint8Array(M.HEAPU8.buffer, ptr, w * h * 4));
@@ -161,6 +250,12 @@ function hookInput() {
   canvas.addEventListener('keydown', (ev) => {
     const sc = RD_HID_KEYMAP[ev.code];
     if (!sc) return;
+    // The paste key: let the browser fire its paste event (the browser's
+    // text, with no permission asked) and hold the key until the text is in.
+    if ((ev.ctrlKey || ev.metaKey) && ev.code === 'KeyV' && M && M._fmrb_wasm_clip_in_seq_ptr) {
+      holdPasteKey(sc, rdModMask(ev));
+      return;
+    }
     ev.preventDefault();
     pushInput(1, sc, rdModMask(ev), 0, 0);
   });
@@ -168,8 +263,76 @@ function hookInput() {
     const sc = RD_HID_KEYMAP[ev.code];
     if (!sc) return;
     ev.preventDefault();
+    if (heldPaste && heldPaste.sc === sc) releasePasteKey();
     pushInput(2, sc, rdModMask(ev), 0, 0);
   });
+  document.addEventListener('paste', (ev) => {
+    if (!M || !heldPaste) return;   // only the machine's paste key
+    ev.preventDefault();
+    const text = ev.clipboardData ? ev.clipboardData.getData('text/plain') : '';
+    if (text) clipWriteIn(text);
+    releasePasteKey();
+  });
+}
+
+// ---- clipboard (doc/linux_native L12a, wasm/backend/clip_wasm.c) ----------
+//
+// The machine's clipboard joined to the browser's. Out: the module's slot is
+// polled each animation frame and a new text goes to
+// navigator.clipboard.writeText. In: the paste event of the paste key. Each
+// slot has a sequence that is odd while it is being written. When the
+// browser refuses (writeText rejected, no paste event), the machine keeps its
+// own clipboard and the console says so.
+
+const CLIP_PASTE_WAIT_MS = 300;   // how long the paste key waits for the text
+let clipOutSeq = 0;
+let heldPaste = null;             // { sc, mod, timer } while waiting
+
+function clipPollOut() {
+  const heap = M.HEAPU32;
+  const seqIdx = M._fmrb_wasm_clip_out_seq_ptr() >> 2;
+  const s0 = Atomics.load(heap, seqIdx);
+  if (s0 === clipOutSeq || (s0 & 1)) return;
+  const len = Atomics.load(heap, M._fmrb_wasm_clip_out_len_ptr() >> 2);
+  const ptr = M._fmrb_wasm_clip_out_buf();
+  const bytes = M.HEAPU8.slice(ptr, ptr + len);   // a copy, out of the SAB
+  if (Atomics.load(heap, seqIdx) !== s0) return;  // rewritten: next frame
+  clipOutSeq = s0;
+  const text = new TextDecoder().decode(bytes);
+  if (!navigator.clipboard || !navigator.clipboard.writeText) {
+    console.warn('clipboard: this browser has no clipboard to write to; the machine keeps its own');
+    return;
+  }
+  navigator.clipboard.writeText(text).catch((e) => {
+    console.warn('clipboard: the browser refused the copy (' + e + '); the machine keeps its own');
+  });
+}
+
+function clipWriteIn(text) {
+  const bytes = new TextEncoder().encode(text);
+  const heap = M.HEAPU32;
+  const seqIdx = M._fmrb_wasm_clip_in_seq_ptr() >> 2;
+  Atomics.add(heap, seqIdx, 1);                    // odd: writing
+  // Over the maximum only the length goes: the machine refuses it.
+  if (bytes.length <= M._fmrb_wasm_clip_in_cap()) M.HEAPU8.set(bytes, M._fmrb_wasm_clip_in_buf());
+  Atomics.store(heap, M._fmrb_wasm_clip_in_len_ptr() >> 2, bytes.length);
+  Atomics.add(heap, seqIdx, 1);                    // even: done
+}
+
+function holdPasteKey(sc, mod) {
+  releasePasteKey();
+  heldPaste = { sc, mod, timer: setTimeout(() => {
+    if (heldPaste) console.warn('clipboard: no paste from the browser; the machine pastes its own');
+    releasePasteKey();
+  }, CLIP_PASTE_WAIT_MS) };
+}
+
+function releasePasteKey() {
+  if (!heldPaste) return;
+  clearTimeout(heldPaste.timer);
+  const { sc, mod } = heldPaste;
+  heldPaste = null;
+  pushInput(1, sc, mod, 0, 0);
 }
 
 // ---- audio ----------------------------------------------------------------
@@ -194,8 +357,7 @@ async function startAudio(ac) {
   // The write counter has no address export; forward it at 60 Hz. The ring
   // is a second of audio, so this granularity is far below the slack.
   setInterval(() => {
-    node.port.postMessage({ wr: M._fmrb_wasm_audio_wr(),
-                            volume: M._fmrb_wasm_audio_volume() });
+    node.port.postMessage({ wr: M._fmrb_wasm_audio_wr() });
   }, 16);
   node.connect(ac.destination);
   // From a real click this settles at once. Started by ?autostart=1 (which
@@ -233,7 +395,7 @@ function unlockAudioOnGesture(ac) {
 // The framebuffer sizes offered. 426x240 is what the hardware runs; the other
 // two are the same desktop with more room, which only the web build can afford
 // (doc/wasm/report/p5.md records what each one looks like).
-const RESOLUTIONS = ['426x240', '640x360', '852x480'];
+const RESOLUTIONS = ['426x240', '640x360', '852x480', '1280x720'];
 const DEFAULT_RES = '426x240';
 // The shipped window default (386x180 of 426x240) kept in proportion, so an
 // app window covers the same share of a larger screen instead of shrinking
@@ -260,7 +422,18 @@ function resolutionFromQuery() {
   return RESOLUTIONS.includes(key) ? key : null;
 }
 
+// ?res=WxH is the same for this visit only: it is not stored, so a room link
+// that opens the 1280x720 mahjong table (docs of asterism-console, the room
+// page) leaves this browser's own choice as it was. The zoom of such a visit
+// is not stored either (sessionResolution below).
+function sessionResolution() {
+  const r = new URLSearchParams(location.search).get('res');
+  return r && RESOLUTIONS.includes(r) ? r : null;
+}
+
 function currentResolution() {
+  const session = sessionResolution();
+  if (session) return session;
   const fromQuery = resolutionFromQuery();
   if (fromQuery) {
     writeSetting('fmrb_web_res', fromQuery);
@@ -293,9 +466,16 @@ const CONF_KEYS = [
   // A wallpaper chosen inside the machine. It is a quoted path, which is why
   // the capture below stops at whitespace rather than at the end of the line.
   'wallpaper',
+  // Mute and volume (doc/audio_mute/), which the machine writes itself when
+  // the speaker cell, the menu or Config changes them.
+  'audio_mute', 'audio_volume',
   // the [theme] block, so a theme chosen inside the machine also survives
   'desktop_bg', 'menu_bg', 'window_bg', 'text', 'text_light',
   'highlight', 'border', 'button', 'dir_color',
+  // Where Asterism apps find the Zenoh router (doc/ruby_asterism, B2). Set in
+  // the Network panel below, or by editing the file inside the machine; like
+  // startup_app, a value that came from the URL (?zenoh=) is not captured.
+  'zenoh_router',
 ];
 const CONF_STORE = 'fmrb_web_conf';
 
@@ -310,6 +490,22 @@ function readConfSettings() {
 function writeConfSettings(keys) {
   writeSetting(CONF_STORE, JSON.stringify({ v: window.FMRB_WASM_VER || '', k: keys }));
 }
+
+// A Zenoh router as the machine's apps take it: the WebSocket locator,
+// ws/<host>:<port>. ws/ also means wss:// -- the link picks the scheme from
+// the page (wasm/zenoh/zp_ws_emscripten.c) -- so there is nothing else to say.
+const ZENOH_RE = /^ws\/[A-Za-z0-9_.:\[\]-]+$/;
+
+// The router ?zenoh= names for this visit, or '' (none, or not a locator).
+function urlZenoh() {
+  const z = new URLSearchParams(location.search).get('zenoh');
+  return z && ZENOH_RE.test(z) ? z : '';
+}
+
+// Set once the Network panel has changed the stored router during this
+// visit: the file the machine booted with still has the old one, and must not
+// be captured over the new choice (see captureConfSettings).
+let routerSetHere = false;
 
 // Set while Erase is going through: the reload it ends with fires pagehide,
 // and that would capture the machine's settings straight back into the store
@@ -327,12 +523,21 @@ function captureConfSettings() {
   // choice made inside the machine (Config has no field for it), so it is
   // left out: the link opens its app this once, and the page comes back
   // plain next time. Written into the file by hand, it is kept like the rest.
-  const urlApp = new URLSearchParams(location.search).get('app');
+  const linkApp = urlApp();
+  // The router in the file is the URL's (?zenoh=) or one the Network panel
+  // has since replaced in the store: either way the store already says what
+  // the next start should use, so it is kept as it is.
+  const keepRouter = !!urlZenoh() || routerSetHere;
   const keys = {};
   for (const k of CONF_KEYS) {
-    if (k === 'startup_app' && urlApp) continue;
+    if (k === 'startup_app' && linkApp) continue;
+    if (k === 'zenoh_router' && keepRouter) continue;
     const m = text.match(new RegExp('^' + k + ' = ([^\\s#]+)', 'm'));
     if (m) keys[k] = m[1];
+  }
+  if (keepRouter) {
+    const stored = readConfSettings().zenoh_router;
+    if (stored) keys.zenoh_router = stored;
   }
   if (Object.keys(keys).length) writeConfSettings(keys);
 }
@@ -349,27 +554,52 @@ const resSelect = document.getElementById('res-select');
 resSelect.value = currentResolution();
 resSelect.addEventListener('change', () => {
   writeSetting('fmrb_web_res', resSelect.value);
-  // Drop a stale ?w=&h= on the way out, or it would win over the new choice.
+  // Drop a stale ?w=&h= (or ?res=) on the way out, or it would win over the
+  // new choice.
   location.replace(location.pathname + location.hash);
 });
 
 // The resolution is the framebuffer; the zoom is only how large that
 // framebuffer is drawn, so it takes effect without a reload.
 const zoomSelect = document.getElementById('zoom-select');
-// 2x by default on a screen with room for it. A phone has not: at 2x the
-// machine is 852 CSS px wide and the visitor sees about half of it, with the
-// settings and the explanation off the side of the page. So the first visit
-// on a narrow screen starts fitted instead. Only the first: once the selector
-// has been used, that choice is what comes back.
-zoomSelect.value = readSetting('fmrb_web_zoom', null) ||
-  (document.documentElement.clientWidth < canvas.width * 2 + 24 ? 'fit' : '2');
+// By default the largest whole multiple that fits the window (1x, 2x or 3x):
+// pixels stay square and even, which a fractional Fit does not keep (at
+// 1280x720 Fit would draw most screens at an odd scale). Only when not even
+// 1x fits (a phone) does it start fitted. Only the first visit: once the
+// selector has been used, that choice is what comes back -- except on a
+// visit with ?res=, whose zoom belongs to that resolution and is neither
+// read nor stored.
+const sessionRes = sessionResolution() !== null;
+
+function defaultZoom() {
+  const [baseW, baseH] = baseSize();
+  const top = screenBox.getBoundingClientRect().top;
+  const availW = document.documentElement.clientWidth - 24;
+  const availH = document.documentElement.clientHeight - top - 24;
+  const z = Math.floor(Math.min(availW / baseW, availH / baseH));
+  return z >= 1 ? String(Math.min(z, 3)) : 'fit';
+}
+
+zoomSelect.value = (sessionRes ? null : readSetting('fmrb_web_zoom', null)) || defaultZoom();
 zoomSelect.addEventListener('change', () => {
-  writeSetting('fmrb_web_zoom', zoomSelect.value);
+  if (!sessionRes) writeSetting('fmrb_web_zoom', zoomSelect.value);
   applyZoom();
 });
 
+// The size the page lays the machine out for: the resolution chosen above,
+// not the framebuffer of the moment. A fullscreen app in the high-resolution
+// mode (doc/fullscreen_hires/) switches the framebuffer from 426x240 to
+// 640x360 and back; the machine must not jump to 1.5 times its size on the
+// page when that happens, only get finer. Both sizes are 16:9, so drawing
+// the frame into the base size's box keeps it undistorted.
+function baseSize() {
+  const m = /^(\d+)x(\d+)$/.exec(resSelect.value || DEFAULT_RES);
+  return m ? [parseInt(m[1], 10), parseInt(m[2], 10)] : [426, 240];
+}
+
 function applyZoom() {
   const full = document.fullscreenElement === screenBox;
+  const [baseW, baseH] = baseSize();
   const zoom = full ? 'fit' : zoomSelect.value;   // full screen means fill it
   let scale;
   if (zoom === 'fit') {
@@ -384,12 +614,12 @@ function applyZoom() {
       availW = Math.max(document.documentElement.clientWidth - 24, 160);
       availH = Math.max(document.documentElement.clientHeight - box.top - 24, 120);
     }
-    scale = Math.max(Math.min(availW / canvas.width, availH / canvas.height), 0.5);
+    scale = Math.max(Math.min(availW / baseW, availH / baseH), 0.5);
   } else {
     scale = parseFloat(zoom) || 1;
   }
-  canvas.style.width = Math.round(canvas.width * scale) + 'px';
-  canvas.style.height = Math.round(canvas.height * scale) + 'px';
+  canvas.style.width = Math.round(baseW * scale) + 'px';
+  canvas.style.height = Math.round(baseH * scale) + 'px';
 }
 
 window.addEventListener('resize', () => applyZoom());
@@ -450,6 +680,13 @@ if (typeof crossOriginIsolated !== 'undefined' && !crossOriginIsolated) {
 } else {
   statusLine.textContent = 'ready';
 }
+if (LINK_REFUSED) {
+  statusLine.textContent = 'not started: ' + LINK_REFUSED_TEXT;
+  startOverlay.textContent = LINK_REFUSED_TEXT;
+  startOverlay.classList.add('refused');
+} else if (ROOM) {
+  statusLine.textContent = 'room ' + ROOM.slot + ' (until ' + roomUntil() + '): click to start';
+}
 
 const moduleConfig = {
   // The .data (and .wasm) live next to core_web.js, not next to this page;
@@ -479,10 +716,39 @@ moduleConfig.arguments = [];
   //
   // The app has to be on the machine already: the page cannot install one,
   // and it does not try -- the store is an app now, not part of this page.
-  const want = new URLSearchParams(location.search).get('app');
+  const want = urlApp();
   if (want && /^[A-Za-z0-9_./-]+$/.test(want)) {
     const path = want.includes('/') ? want : `/app/usr/${want}/${want}.app.rb`;
     moduleConfig.arguments.push(`--fmrb-conf=startup_app="${path}"`);
+  }
+  // ?zenoh=ws/<host>:<port> names the Zenoh router for this visit
+  // (zenoh_router in system_conf.toml; doc/ruby_asterism, B1). Like ?app=,
+  // it is not carried into the stored settings: a link that names a router
+  // does not change where the page goes next time. It comes after the stored
+  // settings, so it wins over the Network panel's router.
+  const zenoh = urlZenoh();
+  if (zenoh) moduleConfig.arguments.push(`--fmrb-conf=zenoh_router="${zenoh}"`);
+  // The pass goes to the link through the module object, never as an
+  // argument (arguments end up in the machine's settings).
+  if (ROOM && !LINK_REFUSED) {
+    // The room: its key goes to the link through the module object (never
+    // an argument), with the key space every session of the page gets.
+    moduleConfig.zenohRoom = ROOM.key;
+    moduleConfig.zenohNamespace = ROOM_NAMESPACE;
+    moduleConfig.zenohGaveUp = (fails) => {
+      statusLine.textContent = `room ${ROOM.slot}: ${fails} tries to connect again failed; the room may have ` +
+        'closed or ended (ask for a new link)';
+      showRoomState(' -- not connected (the room may have closed)');
+    };
+  } else if (ZENOH_PASS && !PASS_WITHOUT_NODE) {
+    moduleConfig.zenohPass = ZENOH_PASS;
+    moduleConfig.zenohPage = ZENOH_PAGE;
+    // The link stopped trying (zp_ws_emscripten.c): with a pass, most likely
+    // because the pass has closed.
+    moduleConfig.zenohGaveUp = (fails) => {
+      statusLine.textContent = `the network: ${fails} tries to connect again failed; the pass may have closed ` +
+        '(open the page again from the console for a new one)';
+    };
   }
 }
 // Everything the page wants to do before main() goes in here, in order.
@@ -517,8 +783,9 @@ const STORES = [
 let homeStore = 'volatile';
 
 // One tab writes. Two machines sharing one IndexedDB would overwrite each
-// other wholesale (last one to sync wins), so the second tab runs with a
-// throw-away /home rather than eating the first one's work. The lock is held
+// other wholesale (last one to sync wins), so the second tab runs on a
+// copy of /home that is read once and thrown away, rather than eating the
+// first one's work. The lock is held
 // for the life of the page, which is exactly how long the machine runs.
 let homeWriter = null;
 let lockDecided = Promise.resolve();
@@ -541,11 +808,30 @@ function mountHome(mod) {
   mod.addRunDependency(HOME_DEP);
   lockDecided.then(() => {
     if (homeWriter === false) {
+      // A copy of what the writing tab saved, read once and never written
+      // back: the apps find their settings (the mahjong name, the switches)
+      // as the first tab left them, and nothing this tab changes reaches
+      // IndexedDB. No autoPersist, and every syncfs(false) below is only for
+      // homeStore === 'persistent'. It used to start empty, which made a
+      // room opened next to another tab forget the player's name.
       homeStore = 'second tab';
       console.warn('fmrb: another tab owns /home; this one runs on a copy ' +
                    'that is thrown away');
-      mod.removeRunDependency(HOME_DEP);
-      showStorageState();
+      try {
+        for (const st of STORES) {
+          mod.FS.mkdirTree(st.path);
+          mod.FS.mount(mod.FS.filesystems.IDBFS, { autoPersist: false }, st.path);
+        }
+        mod.FS.syncfs(true, (err) => {
+          if (err) console.warn('fmrb: the copy of the saved files could not be read:', err);
+          mod.removeRunDependency(HOME_DEP);
+          showStorageState();
+        });
+      } catch (e) {
+        console.warn('fmrb: the copy of the saved files could not be read:', e);
+        mod.removeRunDependency(HOME_DEP);
+        showStorageState();
+      }
       return;
     }
     try {
@@ -575,6 +861,344 @@ function mountHome(mod) {
   });
 }
 moduleConfig.preRun.push(mountHome);
+
+// ---- this browser's Asterism node ID (doc/ruby_asterism, B2) -------------
+//
+// A board is told apart on the network by its mDNS name, fmruby-<6 hex>. A
+// browser has none, so the page makes one on its first visit, wasm-<6 hex>,
+// and keeps it in localStorage; the machine gets it as asterism_node, which
+// the apps use when /home/asterism/config.toml does not name the node.
+//
+// It is this browser's identity rather than a setting: Erase leaves it, and a
+// backup does not carry it (restored in another browser, it would put two
+// machines on the network under one name).
+//
+// One ID, one tab. The tab that holds the /home lock (above) uses the kept
+// ID. A second tab is already a throw-away machine -- its files are not
+// saved -- and it gets a fresh ID that is not kept either, so both tabs can
+// be on the network at once without one taking the other's name.
+//
+// A link from the console names the ID (#zenoh_node=, G1.5: tied to the
+// user who opened it, and a second page of the same user gets another
+// name). That ID is used for this visit in any tab and is not kept: the kept
+// one stays for visits without such a link.
+const NODE_STORE = 'fmrb_web_node';
+const NODE_RE = /^wasm-[0-9a-f]{6}$/;
+let nodeId = '';
+let nodeKept = false;
+
+function newNodeId() {
+  const b = new Uint8Array(3);
+  crypto.getRandomValues(b);
+  return 'wasm-' + Array.from(b, (x) => x.toString(16).padStart(2, '0')).join('');
+}
+
+// ---- a browser's seat in a room (G2b) -----------------------------------
+//
+// In a room everyone holds the same key, so the key alone cannot tell pages
+// apart. The router can: each slot has seats, each seat a certificate whose
+// ACL lets it write only under its own node ID and call only as itself
+// (asterism-console docs/rooms.md "Seats"). The page makes a secret of its
+// own for the room, once (16 random bytes), and before the machine starts it
+// asks the door for a seat with it (takeSeat: POST /room/seat). The door
+// answers with the seat's node ID (wasm-0103), the same one for the same
+// secret until the room is over, so a reload is the same node. The machine
+// runs as that node, and the WebSocket hands the secret over again as its
+// first message (zp_ws_emscripten.c), which is how the door knows which
+// seat's certificate to use. The secret goes nowhere else: not in a URL, an
+// argument, a file of the machine or the log.
+//
+// Coming back (GS10): the secret is also the page's way back into the room.
+// It is kept in localStorage for every tab of this browser, under the
+// room's ID (never under or next to the key), with the room's end:
+// fmrb_room_secret_<room> = {"s": <secret>, "exp": <the key's end>}. A tab
+// closed and opened again, or the link opened in a second tab, brings the
+// same secret, so the door gives the same seat -- the same node, and so the
+// same member at the game host: its seat, its name, its hand. The door
+// (asterism-console 0.3.9) cuts the older page's connections on that seat
+// when the newer page asks for it (closed 4403); a door before it gives the
+// seat too and leaves the older connection to end by itself. The tab that
+// asked last has the seat: it writes its own random ID to
+// fmrb_room_holder_<room> before it asks, and an older tab of this browser
+// that is cut (4403 makes it ask for its seat again, reseat) and finds
+// another ID there stops its tries and says the room is open in another
+// tab, instead of taking the seat back. The entries of rooms that have
+// ended are removed when a page starts (forgetEndedRooms), and so are those
+// of before GS10 (the secret alone, no end) of other rooms.
+const ROOM_SECRET_STORE = 'fmrb_room_secret_';
+const ROOM_HOLDER_STORE = 'fmrb_room_holder_';
+const SECRET_RE = /^[0-9a-f]{32}$/;
+let roomSecret = '';
+let roomSeat = '';
+
+function newSecret() {
+  const b = new Uint8Array(16);
+  crypto.getRandomValues(b);
+  return Array.from(b, (x) => x.toString(16).padStart(2, '0')).join('');
+}
+
+// This tab, for fmrb_room_holder_<room> (not a secret: it only tells tabs
+// apart).
+const TAB_ID = newSecret().slice(0, 16);
+
+// The secret of a kept entry ('' when there is none): {"s", "exp"}, or a
+// page's of before GS10, the secret alone.
+function keptSecret(v) {
+  if (SECRET_RE.test(v)) return v;
+  try {
+    const o = JSON.parse(v);
+    return o && typeof o === 'object' && SECRET_RE.test(String(o.s)) ? String(o.s) : '';
+  } catch (e) {
+    return '';
+  }
+}
+
+// The room's end in a kept entry (Unix seconds), 0 when it has none.
+function keptEnd(v) {
+  try {
+    const o = JSON.parse(v);
+    return o && typeof o === 'object' ? Number(o.exp) || 0 : 0;
+  } catch (e) {
+    return 0;
+  }
+}
+
+// Removes the kept secrets (and holders) of rooms that have ended: every
+// room but this page's own whose entry has no end in the future.
+function forgetEndedRooms() {
+  const now = Date.now() / 1000;
+  const keys = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i));
+  } catch (e) {
+    return;
+  }
+  for (const k of keys) {
+    let room = null;
+    if (k && k.startsWith(ROOM_SECRET_STORE)) room = k.slice(ROOM_SECRET_STORE.length);
+    else if (k && k.startsWith(ROOM_HOLDER_STORE)) room = k.slice(ROOM_HOLDER_STORE.length);
+    if (room === null || (ROOM && room === ROOM.room)) continue;
+    if (keptEnd(readSetting(ROOM_SECRET_STORE + room, '')) > now) continue;
+    try { localStorage.removeItem(k); } catch (e) {}
+  }
+}
+forgetEndedRooms();
+
+// The room's secret (roomSecret, nodeKept): the kept one, or a new one that
+// is kept from now on. Every tab of the browser uses the same one.
+let roomSecretKept = false;
+function decideRoomSecret() {
+  if (roomSecret) {
+    nodeKept = roomSecretKept;
+    return;
+  }
+  const key = ROOM_SECRET_STORE + ROOM.room;
+  let secret = keptSecret(readSetting(key, ''));
+  if (!secret) secret = newSecret();
+  writeSetting(key, JSON.stringify({ s: secret, exp: ROOM.exp }));
+  // Storage refused (a private window in some browsers): the secret lasts
+  // as long as the tab, and the panel says so.
+  nodeKept = keptSecret(readSetting(key, '')) === secret;
+  roomSecret = secret;
+  roomSecretKept = nodeKept;
+}
+
+// This tab asks for the seat (before the request, so an older tab cut by
+// it already reads this tab's ID).
+function holdRoomSeat() {
+  writeSetting(ROOM_HOLDER_STORE + ROOM.room, TAB_ID);
+}
+
+// Another tab of this browser asked for the seat after this one.
+function roomSeatElsewhere() {
+  const h = readSetting(ROOM_HOLDER_STORE + ROOM.room, '');
+  return h !== '' && h !== TAB_ID;
+}
+
+// This tab gives the seat up to the newer tab: no more tries.
+function giveRoomSeatUp(mod) {
+  mod.zenohRoomStop = true;
+  statusLine.textContent = 'room ' + ROOM.slot + ': not connected: the room was opened in another tab of this ' +
+    'browser, which has this seat now. Reload this page to take it back.';
+  showRoomState(' -- open in another tab (reload to take the seat back)');
+}
+
+// Where the room's door takes seat requests: the router of the link (?zenoh=,
+// else the Network panel's) as the WebSocket link reaches it,
+// https://<host>:<port>/room/seat. The link goes through the door only on
+// wss:// (zp_ws_emscripten.c): a page served over https and a router that is
+// not this computer. Anything else: '' (a room cannot be used).
+function seatUrl() {
+  if (location.protocol !== 'https:') return '';
+  const loc = urlZenoh() || storedRouter();
+  if (!loc) return '';
+  let u;
+  try { u = new URL('https://' + loc.slice(3) + '/'); } catch (e) { return ''; }
+  const host = u.hostname.toLowerCase();
+  if (host === 'localhost' || host.endsWith('.localhost') || /^127[.][0-9]+[.][0-9]+[.][0-9]+$/.test(host) ||
+      host === '[::1]') return '';
+  const port = loc.slice(3).match(/:([0-9]+)$/);
+  return 'https://' + u.hostname + (port ? ':' + port[1] : '') + '/room/seat';
+}
+
+// A seat's node ID: the console's prefix, the slot, the seat
+// (^<prefix>[0-9]{4}$; the prefix is wasm- unless the console says otherwise).
+const SEAT_NODE_RE = /^([A-Za-z0-9][A-Za-z0-9_.-]{0,20})([0-9]{2})([0-9]{2})$/;
+
+// Ask the door for this page's seat: { node } or { error, retry }.
+async function takeSeat() {
+  const url = seatUrl();
+  if (!url) {
+    return { error: 'A room needs the page on https:// and a router that is not this computer.' };
+  }
+  let res;
+  let data = null;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ t: ROOM.key, s: roomSecret }),
+      cache: 'no-store',
+      referrerPolicy: 'no-referrer',
+      credentials: 'omit',
+    });
+    data = await res.json().catch(() => null);
+  } catch (e) {
+    return { error: 'The room\'s router could not be reached.', retry: true };
+  }
+  if (res.status === 200 && data) {
+    const m = SEAT_NODE_RE.exec(String(data.node || ''));
+    if (m && m[2] === ROOM.slot && (!data.seat || String(data.seat) === m[3])) return { node: data.node, seat: m[3] };
+    return { error: 'The room\'s door gave a seat this page cannot use.' };
+  }
+  switch (res.status) {
+    case 409: return { error: 'Every seat in this room is taken.', retry: true };
+    case 410: return { error: 'This room has ended or was closed. Ask for a new link.' };
+    case 403: return { error: 'The room\'s door refused this link. Ask for the link again.' };
+    case 429: return { error: 'Too many tries at the room\'s door; wait a minute.', retry: true };
+    case 404: case 405:
+      return { error: 'The room\'s server is too old for this page (it has no seats). Ask whoever runs it to update.' };
+    default: return { error: 'The room\'s door answered ' + res.status + '.', retry: true };
+  }
+}
+
+// The link lost its seat (closed 4403, zp_ws_emscripten.c): the door no
+// longer holds one for the secret (it went to another page while this one
+// was away, or the table was lost). Take one again: the same node means
+// the link can go on; another node cannot be used by the running machine,
+// so the link stops and the page says to reload.
+let reseating = null;
+function reseat(mod) {
+  if (reseating) return;
+  // Cut because a newer tab of this browser came with the secret: that
+  // tab has the seat, this one does not take it back.
+  if (roomSeatElsewhere()) {
+    giveRoomSeatUp(mod);
+    return;
+  }
+  mod.zenohSeatWait = true;
+  reseating = takeSeat().then((got) => {
+    if (got.node && got.node === nodeId) return;
+    mod.zenohRoomStop = true;
+    const why = got.node ? 'the room\'s door no longer holds this page\'s seat.' : got.error;
+    statusLine.textContent = 'room ' + ROOM.slot + ': not connected: ' + why + ' Reload the page to take a seat again.';
+    showRoomState(' -- not connected (reload the page)');
+  }).finally(() => {
+    mod.zenohSeatWait = false;
+    reseating = null;
+  });
+}
+
+function decideNodeId() {
+  nodeKept = false;
+  if (ROOM) {
+    // The node is the seat's, known once the door has answered (startMachine).
+    decideRoomSecret();
+    nodeId = roomSeat ? nodeId : '';
+  } else if (LINK_NODE && !ROOM) {
+    nodeId = LINK_NODE;
+  } else if (homeWriter !== false) {
+    const kept = readSetting(NODE_STORE, '');
+    if (NODE_RE.test(kept)) {
+      nodeId = kept;
+      nodeKept = true;
+    } else {
+      nodeId = newNodeId();
+      writeSetting(NODE_STORE, nodeId);
+      // Storage refused (a private window in some browsers): the ID lasts as
+      // long as the tab, and the panel says so.
+      nodeKept = readSetting(NODE_STORE, '') === nodeId;
+    }
+  } else {
+    nodeId = newNodeId();
+  }
+  showNetworkState();
+}
+lockDecided.then(() => { if (!nodeId) decideNodeId(); });
+
+// ---- the Network panel: the router, and the ID above -------------------
+//
+// The router is the zenoh_router setting (CONF_KEYS), written into the store
+// the machine's settings live in, so it is handed in at the next start like
+// everything Config saves. Empty means the bundle's own (ws/localhost:7449).
+const routerInput = document.getElementById('router-input');
+const routerNote = document.getElementById('router-note');
+const nodeStateEl = document.getElementById('node-state');
+const ROUTER_NOTE = 'used from the next start; ?zenoh= in the URL overrides it once';
+
+function storedRouter() {
+  const v = readConfSettings().zenoh_router || '';
+  return v.replace(/^"(.*)"$/, '$1');
+}
+
+function showNetworkState() {
+  if (nodeStateEl) {
+    let text = nodeId ? 'node ' + nodeId : 'node: checking...';
+    if (ROOM) text = nodeId ? 'node ' + nodeId + ' (seat ' + roomSeat + ' in the room)' : 'node: the room gives a seat at start';
+    if (PASS_WITHOUT_NODE) text = 'node: none (the link has a pass but no node ID; not connecting)';
+    if (PASS_WITHOUT_NODE) { /* said above */ }
+    else if (nodeId && LINK_NODE && !ROOM) text += ' (from the link, this visit)';
+    else if (nodeId && !ROOM && homeWriter === false) text += ' (this tab only)';
+    else if ((nodeId || ROOM) && !nodeKept) text += ' (not kept: storage refused)';
+    nodeStateEl.textContent = text;
+  }
+  showRoomState('');
+}
+
+// The room this visit is in (G2): a line under the Network panel's heading.
+function showRoomState(extra) {
+  if (!ROOM || ROOM_REFUSED_TEXT) return;
+  const el = document.getElementById('room-state');
+  if (!el) return;
+  el.hidden = false;
+  el.textContent = 'Room ' + ROOM.slot + ' until ' + roomUntil() + ': keys under ' + ROOM_NAMESPACE +
+    '/, through the door with the room\'s key' + (extra || '');
+}
+
+if (routerInput) {
+  routerInput.value = storedRouter();
+  if (urlZenoh() && routerNote) {
+    routerNote.textContent = 'this visit: ' + urlZenoh() + ' (from the URL)';
+  }
+  if (ROOM && !LINK_REFUSED && routerNote) {
+    routerNote.textContent += '; room: set for this visit (not kept, sent on wss:// only)';
+  } else if (ZENOH_PASS && !PASS_WITHOUT_NODE && routerNote) {
+    routerNote.textContent += '; pass: set for this visit (not kept, sent on wss:// only)';
+  }
+  routerInput.addEventListener('change', () => {
+    const v = routerInput.value.trim();
+    if (v && !ZENOH_RE.test(v)) {
+      routerNote.textContent = 'not saved: write ws/<host>:<port>';
+      return;
+    }
+    const keys = readConfSettings();
+    if (v) keys.zenoh_router = '"' + v + '"';
+    else delete keys.zenoh_router;
+    writeConfSettings(keys);
+    routerSetHere = true;
+    routerNote.textContent = 'saved; ' + ROUTER_NOTE;
+  });
+}
 
 // What the page says about all this. "persistent" only means the files come
 // back on a reload; whether the browser may throw them away later is the
@@ -1497,6 +2121,8 @@ if (importBtn && importInput) {
 // settings the machine saved through Config, and the page's own selectors.
 // Erase clears all of it, because "erase" that leaves the theme and the
 // language behind is a promise the word does not make.
+// The node ID (NODE_STORE) is not among them: it is who this browser is on
+// the network, not a setting, and a board keeps its name through a reset too.
 const PAGE_SETTING_KEYS = ['fmrb_web_res', 'fmrb_web_zoom'];
 
 // Separate from the button so the driver can call it as well: headless
@@ -1752,7 +2378,13 @@ function fsprobeReport(mod) {
   }
 }
 
+let starting = false;
 startOverlay.addEventListener('click', async () => {
+  // A link with a pass and no node, or a room that has ended or cannot be
+  // read: the machine is not switched on at all (see LINK_REFUSED), so
+  // nothing connects with it.
+  if (LINK_REFUSED || starting) return;
+  starting = true;
   startOverlay.style.display = 'none';
   canvas.focus();
   statusLine.textContent = 'booting the firmware...';
@@ -1769,9 +2401,36 @@ startOverlay.addEventListener('click', async () => {
     console.warn('audio unavailable:', e);
   }
 
+  // The node ID depends on whether this tab is the one that keeps /home.
+  await lockDecided;
+  if (!nodeId) decideNodeId();
+  if (ROOM) {
+    // A seat first (G2b): its node ID is the one the router lets this page
+    // write and call as. Without one the machine is not switched on.
+    statusLine.textContent = 'room ' + ROOM.slot + ': taking a seat...';
+    holdRoomSeat();
+    const got = await takeSeat();
+    if (!got.node) {
+      if (ac) ac.close().catch(() => {});
+      statusLine.textContent = 'room ' + ROOM.slot + ': not started: ' + got.error;
+      startOverlay.textContent = got.error + (got.retry ? ' Click to try again.' : '');
+      startOverlay.classList.add('refused');
+      startOverlay.style.display = '';
+      starting = !got.retry;
+      return;
+    }
+    nodeId = got.node;
+    roomSeat = got.seat;
+    showNetworkState();
+    moduleConfig.zenohRoomSecret = roomSecret;
+    moduleConfig.zenohReseat = () => reseat(moduleConfig);
+
+  }
+  moduleConfig.arguments.push(`--fmrb-conf=asterism_node="${nodeId}"`);
+
   const mod = await createFmrbCore(moduleConfig);
   M = mod;
-  statusLine.textContent = 'running';
+  statusLine.textContent = ROOM ? 'running in room ' + ROOM.slot + ' (until ' + roomUntil() + ')' : 'running';
   // The machine rewrites the settings file early in its own boot; give it a
   // moment before reading it back (the probe is a measurement, not a race).
   if (FSPROBE) setTimeout(() => fsprobeReport(mod), 3000);
@@ -1787,7 +2446,7 @@ startOverlay.addEventListener('click', async () => {
       console.warn('audio unavailable:', e);
     }
   }
-}, { once: true });
+});
 
 // ---- ?drive=1: let a tool outside the browser work the machine -----------
 //
@@ -1807,6 +2466,33 @@ function driveSleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+// One turn of the event loop for the latency probe below. setTimeout, not a
+// MessageChannel ping-pong: the machine's file calls are proxied to this
+// thread, and a tight MessageChannel loop starved them (measured: the whole
+// machine stood still for seconds while the probe waited). The price is
+// resolution -- nested timers are clamped to ~4 ms.
+function driveYield() {
+  return new Promise((r) => setTimeout(r, 0));
+}
+
+// A signature of a rectangle of the frame the firmware last presented, read
+// from the wasm memory directly (the canvas is only refreshed once per
+// animation frame, which would round every measurement up to ~16 ms).
+function frameRectSig(r) {
+  const w = M._fmrb_wasm_frame_width();
+  const h = M._fmrb_wasm_frame_height();
+  const ptr = M._fmrb_wasm_frame_rgba();
+  const heap = M.HEAPU8;
+  let s = 0;
+  for (let y = Math.max(0, r.y); y < Math.min(h, r.y + r.h); y++) {
+    let i = ptr + (y * w + Math.max(0, r.x)) * 4;
+    for (let x = Math.max(0, r.x); x < Math.min(w, r.x + r.w); x++, i += 4) {
+      s = (Math.imul(s, 31) + heap[i] + heap[i + 1] * 7 + heap[i + 2] * 13) >>> 0;
+    }
+  }
+  return s;
+}
+
 async function runDriveCommand(cmd) {
   switch (cmd.op) {
     case 'input': {
@@ -1816,6 +2502,39 @@ async function runDriveCommand(cmd) {
         pushInput(type, a || 0, b || 0, c || 0, d || 0);
       }
       return { events: (cmd.events || []).length };
+    }
+    case 'latency': {
+      // Input-to-screen latency: for each group of ring events, push it and
+      // wait until the watched rectangle of the presented frame changes.
+      // The rectangle is the caller's choice: somewhere only this input
+      // changes (the mouse cursor's destination, an editor's status line),
+      // so other windows redrawing do not end a sample early. -1 = no change
+      // within limit_ms. Resolution ~4 ms (see driveYield).
+      if (!M) throw new Error('the machine is not running yet');
+      const limit = cmd.limit_ms || 2000;
+      const samples = [];
+      for (const s of cmd.samples || []) {
+        await driveSleep(cmd.gap_ms || 100);
+        const sig0 = frameRectSig(s.rect);
+        const t0 = performance.now();
+        for (const ev of s.events) pushInput(ev[0], ev[1] || 0, ev[2] || 0, ev[3] || 0, ev[4] || 0);
+        let dt = -1;
+        while (performance.now() - t0 < limit) {
+          await driveYield();
+          if (frameRectSig(s.rect) !== sig0) { dt = performance.now() - t0; break; }
+        }
+        samples.push(Math.round(dt * 100) / 100);
+        for (const ev of s.after || []) pushInput(ev[0], ev[1] || 0, ev[2] || 0, ev[3] || 0, ev[4] || 0);
+      }
+      return { samples };
+    }
+    case 'frames': {
+      // How many frames the firmware presented in ms milliseconds.
+      if (!M) throw new Error('the machine is not running yet');
+      const seq0 = M._fmrb_wasm_frame_seq();
+      const t0 = performance.now();
+      await driveSleep(cmd.ms || 5000);
+      return { frames: M._fmrb_wasm_frame_seq() - seq0, ms: Math.round(performance.now() - t0) };
     }
     case 'screenshot': {
       // The canvas holds exactly the frame the firmware produced, at its own
@@ -1832,6 +2551,8 @@ async function runDriveCommand(cmd) {
         frame: M ? M._fmrb_wasm_frame_seq() : 0,
         home: homeStore,
         durable: storageDurable,
+        node: nodeId,
+        node_kept: nodeKept,
       };
     case 'fs': {
       if (!M) throw new Error('the machine is not running yet');
