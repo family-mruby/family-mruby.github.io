@@ -5377,6 +5377,13 @@ class PubDemoApp < FmrbApp
   def on_update
     100
   end
+
+  # Started from a checkpoint image (doc/checkpoint; this app is not declared
+  # movable yet): the window is new and empty, and this app draws only when
+  # something happens.
+  def on_restore
+    draw_screen
+  end
 end
 
 app = PubDemoApp.new
@@ -6082,6 +6089,13 @@ class SubDemoApp < FmrbApp
 
   def on_update
     100
+  end
+
+  # Started from a checkpoint image (doc/checkpoint; this app is not declared
+  # movable yet): the window is new and empty, and this app draws only when
+  # something happens.
+  def on_restore
+    draw_screen
   end
 
   def on_destroy
@@ -25811,6 +25825,48 @@ default_window_height = 60
 default_window_pos_x = 20
 default_window_pos_y = 30
 launcher_visible = false
+# A windowless app that can be moved and calls a method only some builds have
+# (doc/checkpoint F4, doc/checkpoint/movable_apps.md). FmrbApp.linux_settings
+# is the native program's (the Linux settings window); the simulation has no
+# such method. The app guards the call with respond_to? and never makes it
+# (its flag is never set): the call is in its code all the same, so an image
+# names it (SND0) and a build without it says so when the image arrives, and
+# lets it go on. ckpt_requires.app.rb is the same with the name declared as
+# required in its .app.toml: there the build refuses it.
+
+class CkptCallsApp < FmrbApp
+  def on_create
+    @main = 0
+    @open_settings = false
+    Log.info("ckpt_calls: start")
+  end
+
+  def on_update
+    @main += 1
+    have = FmrbApp.respond_to?(:linux_settings)
+    FmrbApp.linux_settings if @open_settings && have
+    Log.info("ckpt_calls: main=#{@main} pack=#{[65].pack('C')} linux_settings=#{have}")
+    250
+  end
+
+  def on_restore
+    Log.info("ckpt_calls: on_restore main=#{@main}")
+  end
+end
+
+begin
+  app = CkptCallsApp.new
+  app.start
+rescue => e
+  Log.error("ckpt_calls: #{e.class}: #{e.message}")
+end
+app_handle_name = "ckpt_calls"
+app_screen_name = "Ckpt Calls"
+app_screen_name_ja = "チェックポイント試験 (呼ぶ名前)"
+default_window_mode = "background"
+launcher_visible = false
+# May be written to a checkpoint image and go on elsewhere (doc/checkpoint)
+movable = true
 # A windowless app that can be moved (doc/checkpoint, F1): two Tasks and the
 # main loop count, each at its own pace, and log every step. The checkpoint
 # check (tools/regress/checkpoint.rb) writes it to an image while it counts,
@@ -25872,6 +25928,197 @@ default_window_mode = "background"
 launcher_visible = false
 # May be written to a checkpoint image and go on elsewhere (doc/checkpoint)
 movable = true
+# A movable app that keeps a file open (doc/checkpoint F3): an open File is C
+# data the image cannot carry yet (its handle is this program's), so the
+# request is refused at the safe point and the app goes on counting. The
+# checkpoint check (tools/regress/checkpoint.rb) reads the refusal and the
+# next count.
+
+class CkptFileApp < FmrbApp
+  def on_create
+    @n = 0
+    @f = File.open("/tmp/ckpt_file.txt", "w")
+  end
+
+  def on_update
+    @n += 1
+    @f.write("n=#{@n}\n")
+    Log.info("ckpt_file: n=#{@n}")
+    250
+  end
+
+  def on_destroy
+    @f.close if @f
+  end
+end
+
+begin
+  app = CkptFileApp.new
+  app.start
+rescue => e
+  Log.error("ckpt_file: #{e.class}: #{e.message}")
+end
+app_handle_name = "ckpt_file"
+app_screen_name = "Ckpt File"
+app_screen_name_ja = "チェックポイント試験 (ファイル)"
+default_window_mode = "background"
+launcher_visible = false
+# Declared movable, but the file it keeps open cannot be carried (doc/checkpoint F3)
+movable = true
+# A movable fullscreen app (doc/checkpoint F4): its screen is 320 px wide on
+# Retro and 426 px on Modern, so a move between the two is a resize. The base
+# lays the user area out again and calls on_resize before on_restore. It
+# draws a frame round its user area and a square in each corner of it, so the
+# checkpoint check (tools/regress/checkpoint.rb) finds the corners where the
+# new size puts them. A Task counts in the log.
+
+class CkptFullApp < FmrbApp
+  def on_create
+    @resizes = 0
+    t0 = Machine.board_millis
+    Task.new(name: "count_full") do
+      k = 0
+      while true
+        k += 1
+        Log.info("ckpt_full: task=#{k} t=#{Machine.board_millis - t0}")
+        sleep_ms(300)
+      end
+    end
+    draw_all
+    Log.info("ckpt_full: drawn #{size_text}")
+  end
+
+  def size_text
+    "window=#{@window_width}x#{@window_height} user=#{@user_area_x0},#{@user_area_y0}," \
+      "#{@user_area_width}x#{@user_area_height}"
+  end
+
+  def draw_all
+    clear_user_area
+    x0 = @user_area_x0
+    y0 = @user_area_y0
+    w = @user_area_width
+    h = @user_area_height
+    @gfx.draw_rect(x0, y0, w, h, FmrbGfx::BLUE)
+    @gfx.fill_rect(x0 + 1, y0 + 1, 4, 4, FmrbGfx::RED)
+    @gfx.fill_rect(x0 + w - 5, y0 + 1, 4, 4, FmrbGfx::RED)
+    @gfx.fill_rect(x0 + 1, y0 + h - 5, 4, 4, FmrbGfx::RED)
+    @gfx.fill_rect(x0 + w - 5, y0 + h - 5, 4, 4, FmrbGfx::RED)
+    @gfx.draw_text(x0 + 8, y0 + 8, "#{w}x#{h} r#{@resizes}", theme_fg)
+    @gfx.present
+  end
+
+  def on_resize(w, h)
+    @resizes += 1
+    Log.info("ckpt_full: on_resize #{w}x#{h}")
+  end
+
+  def on_update
+    250
+  end
+
+  def on_checkpoint
+    Log.info("ckpt_full: on_checkpoint #{size_text}")
+  end
+
+  def on_restore
+    draw_all
+    Log.info("ckpt_full: on_restore #{size_text} at #{@pos_x},#{@pos_y} resizes=#{@resizes}")
+  end
+end
+
+begin
+  app = CkptFullApp.new
+  app.start
+rescue => e
+  Log.error("ckpt_full: #{e.class}: #{e.message}")
+end
+app_handle_name = "ckpt_full"
+app_screen_name = "Ckpt Full"
+app_screen_name_ja = "チェックポイント試験 (全画面)"
+default_window_mode = "fullscreen"
+launcher_visible = false
+# Fullscreen, moved between Retro and Modern (doc/checkpoint F4)
+movable = true
+# The same as ckpt_calls.app.rb, with the method its .app.toml declares as
+# required (requires = ["linux_settings"]): a build that has no method of
+# that name refuses the image, and the app goes on where it was
+# (doc/checkpoint F4, doc/checkpoint/movable_apps.md).
+
+class CkptRequiresApp < FmrbApp
+  def on_create
+    @main = 0
+    @open_settings = false
+    Log.info("ckpt_requires: start")
+  end
+
+  def on_update
+    @main += 1
+    have = FmrbApp.respond_to?(:linux_settings)
+    FmrbApp.linux_settings if @open_settings && have
+    Log.info("ckpt_requires: main=#{@main} pack=#{[65].pack('C')} linux_settings=#{have}")
+    250
+  end
+
+  def on_restore
+    Log.info("ckpt_requires: on_restore main=#{@main}")
+  end
+end
+
+begin
+  app = CkptRequiresApp.new
+  app.start
+rescue => e
+  Log.error("ckpt_requires: #{e.class}: #{e.message}")
+end
+app_handle_name = "ckpt_requires"
+app_screen_name = "Ckpt Requires"
+app_screen_name_ja = "チェックポイント試験 (要る名前)"
+default_window_mode = "background"
+launcher_visible = false
+# May be written to a checkpoint image and go on elsewhere (doc/checkpoint)
+movable = true
+# The methods it cannot go on without: a build that has none of these names
+# refuses the image (doc/checkpoint/movable_apps.md)
+requires = ["linux_settings"]
+# A movable counter that declares in its .app.toml a method no build has
+# (requires = ["fmrb_no_such_method"]): every destination refuses it before
+# it is stopped, and it goes on where it is (doc/checkpoint F5, the
+# destination is asked first; doc/checkpoint/movable_apps.md 5.3).
+
+class CkptRequiresAbsentApp < FmrbApp
+  def on_create
+    @main = 0
+    Log.info("ckpt_requires_absent: start")
+  end
+
+  def on_update
+    @main += 1
+    Log.info("ckpt_requires_absent: main=#{@main}")
+    250
+  end
+
+  def on_restore
+    Log.info("ckpt_requires_absent: on_restore main=#{@main}")
+  end
+end
+
+begin
+  app = CkptRequiresAbsentApp.new
+  app.start
+rescue => e
+  Log.error("ckpt_requires_absent: #{e.class}: #{e.message}")
+end
+app_handle_name = "ckpt_requires_absent"
+app_screen_name = "Ckpt Requires Absent"
+app_screen_name_ja = "チェックポイント試験 (無い名前を要る)"
+default_window_mode = "background"
+launcher_visible = false
+# May be written to a checkpoint image and go on elsewhere (doc/checkpoint)
+movable = true
+# A method no build has: every destination refuses it before it is stopped
+# (doc/checkpoint F5)
+requires = ["fmrb_no_such_method"]
 # A windowless app that asks for its own checkpoint image (doc/checkpoint,
 # F1b: FmrbApp#checkpoint). Like ckpt_counter, two Tasks and the main
 # loop count and log every step; at the fourth step of the main loop the app
@@ -25980,23 +26227,180 @@ app_screen_name = "Ckpt Self Refused"
 app_screen_name_ja = "チェックポイント試験 (断られる)"
 default_window_mode = "background"
 launcher_visible = false
-# A movable app with a window (doc/checkpoint): F1 carries only windowless
-# apps, so its image is refused at the safe point (the window's FmrbGfx is C
-# data no gem carries yet, F3) and the app goes on counting. The checkpoint
-# check (tools/regress/checkpoint.rb) reads the refusal and the next count.
+# A movable app whose window is wider than Retro's screen (doc/checkpoint F4):
+# 380 px on Modern's 426. Moved to a Retro machine, the window is made to fit
+# that screen; the base lays the user area out again and calls on_resize
+# before on_restore. It draws a frame round its user area and a square in
+# each corner of it, so the checkpoint check (tools/regress/checkpoint.rb)
+# finds the corners where the new size puts them. A Task counts in the log.
 
-class CkptWindowApp < FmrbApp
+class CkptWideApp < FmrbApp
   def on_create
-    @n = 0
+    @resizes = 0
+    t0 = Machine.board_millis
+    Task.new(name: "count_wide") do
+      k = 0
+      while true
+        k += 1
+        Log.info("ckpt_wide: task=#{k} t=#{Machine.board_millis - t0}")
+        sleep_ms(300)
+      end
+    end
+    draw_all
+    Log.info("ckpt_wide: drawn #{size_text}")
+  end
+
+  def size_text
+    "window=#{@window_width}x#{@window_height} user=#{@user_area_x0},#{@user_area_y0}," \
+      "#{@user_area_width}x#{@user_area_height}"
+  end
+
+  def draw_all
+    clear_user_area
+    x0 = @user_area_x0
+    y0 = @user_area_y0
+    w = @user_area_width
+    h = @user_area_height
+    @gfx.draw_rect(x0, y0, w, h, FmrbGfx::BLUE)
+    @gfx.fill_rect(x0 + 1, y0 + 1, 4, 4, FmrbGfx::RED)
+    @gfx.fill_rect(x0 + w - 5, y0 + 1, 4, 4, FmrbGfx::RED)
+    @gfx.fill_rect(x0 + 1, y0 + h - 5, 4, 4, FmrbGfx::RED)
+    @gfx.fill_rect(x0 + w - 5, y0 + h - 5, 4, 4, FmrbGfx::RED)
+    @gfx.draw_text(x0 + 8, y0 + 8, "#{w}x#{h} r#{@resizes}", theme_fg)
+    @gfx.present
+  end
+
+  def on_resize(w, h)
+    @resizes += 1
+    Log.info("ckpt_wide: on_resize #{w}x#{h}")
   end
 
   def on_update
-    @n += 1
-    clear_user_area
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4, "n=#{@n}", theme_fg)
-    @gfx.present
-    Log.info("ckpt_window: n=#{@n}")
     250
+  end
+
+  def on_checkpoint
+    Log.info("ckpt_wide: on_checkpoint #{size_text}")
+  end
+
+  def on_restore
+    draw_all
+    Log.info("ckpt_wide: on_restore #{size_text} at #{@pos_x},#{@pos_y} resizes=#{@resizes}")
+  end
+end
+
+begin
+  app = CkptWideApp.new
+  app.start
+rescue => e
+  Log.error("ckpt_wide: #{e.class}: #{e.message}")
+end
+app_handle_name = "ckpt_wide"
+app_screen_name = "Ckpt Wide"
+app_screen_name_ja = "チェックポイント試験 (幅広の窓)"
+default_window_mode = "window"
+default_window_width = 380
+default_window_height = 100
+default_window_pos_x = 30
+default_window_pos_y = 60
+launcher_visible = false
+# A window wider than Retro's screen, moved between Retro and Modern
+# (doc/checkpoint F4)
+movable = true
+# A movable app with a window (doc/checkpoint F3): it draws only when
+# something happens (a click leaves a dot, a key adds a letter), in a
+# Japanese font, with a GfxBlock and a sprite of its own, and a Task counts in
+# the log. Moved, it draws the same window again from its state in on_restore
+# (nothing drawn is in the image) and makes its sprite again, is subscribed
+# to its topic again by the base and goes on taking keys and clicks. The
+# checkpoint check (tools/regress/checkpoint.rb) compares the window before
+# and after the move and reads the counts and the events from the log.
+
+class CkptWindowApp < FmrbApp
+  def on_create
+    @dots = []
+    @text = ""
+    # a topic the base subscribes to again in the program it moves to
+    subscribe("ckpt_window")
+    @gfx.set_font(:ja, 12)
+    t0 = Machine.board_millis
+    Task.new(name: "count_w") do
+      k = 0
+      while true
+        k += 1
+        Log.info("ckpt_window: task=#{k} t=#{Machine.board_millis - t0}")
+        sleep_ms(300)
+      end
+    end
+    # the marker under the last dot: a program of its own on the display side
+    @mark = GfxBlock.new(@gfx, x: @user_area_x0 + 2, y: @user_area_y0 + 2) do |r, x:, y:|
+      r.draw_rect x, y, 7, 7, FmrbGfx::RED
+    end
+    make_sprite
+    draw_all
+    Log.info("ckpt_window: drawn")
+  end
+
+  # A sprite (an image and an instance of it on the display side): the base
+  # forgets them in a restored app, which makes them again in on_restore.
+  def make_sprite
+    @sprite_img = SpriteImage.new(@gfx, width: 6, height: 6)
+    @sprite_img.draw { |g| g.fill_rect(0, 0, 6, 6, FmrbGfx::MAGENTA) }
+    @sprite = SpriteInstance.new(@gfx, @sprite_img, x: @user_area_x0 + @user_area_width - 10,
+                                 y: @user_area_y0 + @user_area_height - 10)
+  end
+
+  def draw_all
+    clear_user_area
+    x0 = @user_area_x0
+    y0 = @user_area_y0
+    @gfx.fill_rect(x0 + 2, y0 + 2, @user_area_width - 4, 6, FmrbGfx::BLUE)
+    @gfx.draw_text(x0 + 4, y0 + 12, "窓 #{@text}", theme_fg)
+    i = 0
+    while i < @dots.size
+      d = @dots[i]
+      @gfx.fill_circle(d[0], d[1], 2, FmrbGfx::GREEN)
+      i += 1
+    end
+    last = @dots[-1]
+    if last
+      @mark.draw(x: last[0] - 3, y: last[1] - 3)
+    else
+      @mark.draw(x: x0 + 2, y: y0 + 2)
+    end
+    @gfx.present
+  end
+
+  def on_event(ev)
+    case ev[:type]
+    when :key_down
+      c = ev[:character].to_i
+      if c >= 0x20 && c < 0x7F
+        @text << c.chr
+        Log.info("ckpt_window: key #{c.chr} text=#{@text}")
+        draw_all
+      end
+    when :mouse_up
+      if ev[:button] == 1 && ev[:y] >= @user_area_y0 + 24
+        @dots << [ev[:x], ev[:y]]
+        Log.info("ckpt_window: click #{ev[:x]},#{ev[:y]} dots=#{@dots.size}")
+        draw_all
+      end
+    end
+  end
+
+  def on_update
+    250
+  end
+
+  def on_checkpoint
+    Log.info("ckpt_window: on_checkpoint dots=#{@dots.size} text=#{@text}")
+  end
+
+  def on_restore
+    make_sprite
+    draw_all
+    Log.info("ckpt_window: on_restore dots=#{@dots.size} text=#{@text}")
   end
 end
 
@@ -26010,12 +26414,13 @@ app_handle_name = "ckpt_window"
 app_screen_name = "Ckpt Window"
 app_screen_name_ja = "チェックポイント試験 (窓)"
 default_window_mode = "window"
-default_window_width = 120
-default_window_height = 40
+default_window_width = 160
+default_window_height = 90
 default_window_pos_x = 60
-default_window_pos_y = 60
+default_window_pos_y = 50
 launcher_visible = false
-# Declared movable, but its window cannot be carried yet (doc/checkpoint F3)
+# May be written to a checkpoint image and go on elsewhere, window and all
+# (doc/checkpoint F3)
 movable = true
 # Dies on purpose two seconds after it starts, for testing what happens to an
 # app that fails: the single-app boot (system_conf boot_mode = "app") starts
@@ -40584,6 +40989,38 @@ The body that is called over and over
 
 What `start` runs. There is rarely a reason to call it directly.
 
+# FmrbApp.move
+
+move(Integer pid, String to) -> String?
+
+Move another app to another machine
+
+Asks for app pid to be moved to the Asterism machine `to` (its node ID;
+the shell's `move`). nil when asked, else a String saying why not. The
+answer arrives later at `on_control` as `{"cmd" =>
+"checkpoint_result", "pid", "ok", "to", "there" and "missing" or
+"reason"}`.
+```ruby
+FmrbApp.move(5, "fmruby-abcdef")
+```
+
+# FmrbApp#move_to
+
+move_to(String to) -> String?
+
+Move this app to another machine
+
+Asks for this app to be moved to the Asterism machine `to` (its node
+ID). The kernel asks that machine first whether it has the methods the
+app calls, writes the image, carries it and closes the app here once it
+is up there (`on_checkpoint` last here, `on_restore` there). When it
+stays (refused, no answer), `on_checkpoint_refused` says why and the app
+goes on. nil when asked, else a String saying why not.
+```ruby
+why = move_to("fmruby-abcdef")
+Log.warn(why) if why
+```
+
 # FmrbApp#name
 
 name() -> String
@@ -40617,7 +41054,7 @@ Called once the app is written to an image
 Called once the image is written, just before the app closes. The app
 moved rather than ended, so `on_destroy` does not come. What is done here
 is not in the image. Only an app on mruby whose `.app.toml` says
-`movable = true` can be written.
+`movable = true` can be written (doc/checkpoint/movable_apps.md).
 
 # FmrbApp#on_checkpoint_refused
 
@@ -40743,8 +41180,26 @@ on_restore() -> void
 Called when started from an image
 
 Called in an app started from an image, just before it goes on from where
-it was written. Its instance variables and Tasks are back as they were;
-open again here what lived outside the VM (files that were open).
+it was written. Its instance variables, Tasks and timers are back as they
+were. The base has made its window again (the same place, size and frame,
+its fonts and `GfxBlock`s) and subscribed to its topics again, and the
+keyboard comes to it. **What was drawn does not come back**: the window
+is an empty frame, so an app that draws only when something happens
+draws here (one that draws everything in `on_update` need not). Make
+again here what the app itself made outside the VM (sprites, images). An
+app holding a file open cannot be written to an image.
+Moved to a machine with another screen (Retro and Modern), the window may
+be made smaller to fit it, or a fullscreen app gets that screen's size:
+`on_resize` then comes before `on_restore`, as after a resize.
+The build it moved to may lack a method not common to every machine:
+check with `respond_to?` or rescue NoMethodError (gather the differences
+in a small object of the app's own and absorb them there with
+`respond_to?` or `method_missing`; adding `method_missing` to a built-in
+class such as `Array` is not recommended). The arriving side tells the
+names it lacks in its log and its answer, and does not refuse. A method
+the app cannot go on without goes in its `.app.toml` as
+`requires = ["name"]`: it is not moved to a build without it.
+See doc/checkpoint/movable_apps.md.
 
 # FmrbApp#on_resume
 
@@ -41673,6 +42128,36 @@ main_loop() -> void
 
 `start` の中身。自分で呼ぶことはまず無い。
 
+# FmrbApp.move
+
+move(Integer pid, String to) -> String?
+
+別のアプリを別の端末へ移す
+
+pid のアプリを Asterism の端末 `to` (ノード ID) へ移すよう頼みます
+(Shell の `move`)。頼めたら nil、頼めないときは理由の文字列。答えは後から
+`on_control` に `{"cmd" => "checkpoint_result", "pid", "ok", "to",
+"there" と "missing" か "reason"}` で届きます。
+```ruby
+FmrbApp.move(5, "fmruby-abcdef")
+```
+
+# FmrbApp#move_to
+
+move_to(String to) -> String?
+
+自分を別の端末へ移す
+
+自分を Asterism の端末 `to` (その端末のノード ID) へ移すよう頼みます。
+カーネルは先に相手に呼ぶメソッドがあるかを聞き、止めてイメージを書き、
+運んで、相手で起動できたらこちらを閉じます (`on_checkpoint` が最後、
+相手では `on_restore`)。断られた・返事が無いときは `on_checkpoint_refused`
+が来て、止めた所から続けます。頼めたら nil、頼めないときは理由の文字列。
+```ruby
+why = move_to("fmruby-abcdef")
+Log.warn(why) if why
+```
+
 # FmrbApp#name
 
 name() -> String
@@ -41705,7 +42190,7 @@ on_checkpoint() -> void
 アプリがイメージに書かれ、閉じる直前に呼ばれます。アプリは**終わったの
 ではなく移った**ので `on_destroy` は来ません。ここでしたことは
 イメージに入りません。運べるのは `.app.toml` に `movable = true` と
-書いた、mruby で動くアプリだけです。
+書いた、mruby で動くアプリだけです (doc/checkpoint/movable_apps.md)。
 
 # FmrbApp#on_checkpoint_refused
 
@@ -41829,8 +42314,24 @@ on_restore() -> void
 イメージから起動したとき
 
 イメージから起動したアプリで、**書かれた所から続ける直前**に呼ばれます。
-インスタンス変数も Task もそのまま戻っています。VM の外にあったもの
-(開いていたファイルなど) はここで開き直します。
+インスタンス変数も Task もタイマもそのまま戻っています。窓 (同じ場所・
+大きさ・枠、フォント、`GfxBlock`) と `subscribe` した知らせは基底クラスが
+戻してあり、キーボードはこのアプリに来ます。**描いた絵は戻りません**:
+窓は枠だけの空の状態なので、何かあったときだけ描くアプリはここで描き
+直します (`on_update` で毎回全部描くアプリは何もしなくてよい)。
+スプライトや画像など、アプリが自分で外に作ったものもここで作り直します。
+ファイルを開いたままのアプリはイメージに書けません。
+画面の大きさが違う端末 (Retro と Modern) へ移ると、窓が画面に収まるよう
+縮められたり、全画面の大きさが変わったりします。そのときは
+`on_restore` の前に `on_resize` が来ます (大きさを変えたときと同じ)。
+移った先のビルドには、すべての端末に共通でないメソッドが無いことが
+あります。`respond_to?` で確認するか `rescue NoMethodError` で受けて
+ください (端末の違いはアプリの小さな窓口のオブジェクトに集め、そこで
+`respond_to?` か `method_missing` で吸収するのがおすすめ。`Array` など
+組み込みのクラスに `method_missing` を足すのはおすすめしません)。
+着いた側は足りない名前をログと答えで教えますが、断りません。無いと
+続けられないメソッドは `.app.toml` に `requires = ["名前"]` と書くと、
+それが無いビルドへは移りません。詳しくは doc/checkpoint/movable_apps.md。
 
 # FmrbApp#on_resume
 
@@ -52573,6 +53074,7 @@ send_message	FmrbApp
 request_file_select	FmrbApp
 request_run	FmrbApp
 checkpoint	FmrbApp
+move_to	FmrbApp
 idle_gc	FmrbApp
 language	FmrbApp
 clipboard	FmrbApp
@@ -52582,6 +53084,7 @@ notify	FmrbApp
 ps	FmrbApp
 ps_gen	FmrbApp
 checkpoint	FmrbApp
+move	FmrbApp
 heap_info	FmrbApp
 pool_usage	FmrbApp
 pool_used	FmrbApp
@@ -64672,3 +65175,639 @@ default_window_width = 200
 default_window_height = 100
 default_window_pos_x = 30
 default_window_pos_y = 40
+# Transfer app: files between machines over Asterism (doc/checkpoint F5).
+#
+# The kernel cannot hold an Asterism session (on the standard configuration
+# it is a Spinel program), so this headless app holds the machine's for
+# moving apps. The kernel holds the steps of a move (D14,
+# fmrb_kernel.rb start_move) and asks this app for the parts that talk to
+# the other machine; this app answers the other machines' transfer apps.
+#
+# Receiving: the object <node>/transfer/inbox (D13), its calls named by the
+# calling node (caller: :from) and taken only from the nodes this machine
+# allows (/home/asterism/receive.toml, below). A file comes in pieces:
+#
+#   check(kind, meta)        before anything is sent or stopped. For
+#                            "checkpoint": meta {"names" => [...], "requires"
+#                            => [...]}, the methods the program calls and
+#                            the ones its .app.toml requires. Answers {"ok"
+#                            => true, "missing" => [names this build lacks]},
+#                            or {"ok" => false, "reason"} when a required one
+#                            is missing. A long list comes in several calls.
+#   begin(kind, meta)        meta {"name", "size", "toml" (the attributes
+#                            beside an image)} -> {"id", "piece"}
+#   chunk(id, pos, bytes)    the bytes at pos, in order -> the next pos
+#   commit(id)               all bytes are there: handed to the kind. A
+#                            "checkpoint" image goes to /tmp/<name>.ckpt with
+#                            its /tmp/<name>.toml and the kernel starts it
+#                            -> {"status" => "pending"}
+#   status(id)               -> {"status" => "pending"} | {"status" =>
+#                            "restored", "pid", "missing"} | {"status" =>
+#                            "refused", "reason"}
+#   cancel(id)               drop it; an image that came up is stopped
+#
+# One file at a time: a begin from another node while one is coming in is
+# refused (busy), a begin from the same node drops the one before. A file
+# with no piece for STALE_MS is dropped. Files are written beside their name
+# (.part) and appear only at the commit. Up to MAX_SIZE bytes. The kinds are
+# a table (KINDS) so that more can be added (the wasm apps' install,
+# doc/wasm_apps/plan.md 4).
+#
+# Who may send (/home/asterism/receive.toml; without it nobody may):
+#
+#   # The Asterism node IDs that may send apps to this machine
+#   from = ["fmruby-abcdef", "wasm-123456"]
+#
+# "*" allows every node the router lets in. The caller's node ID is the one
+# Asterism takes from the call; with a tls/ router and the console's
+# certificates, the router's access control binds it to the certificate.
+#
+# Sending (asked by the kernel, APP_CONTROL):
+#
+#   move_check {to, calls}   the list /tmp/<name>.calls (requires on the
+#                            first line, then a method name per line) to
+#                            <to>/transfer/inbox check -> "move_checked"
+#                            {ok, reason | missing}
+#   move_send {to, path}     the image and its .toml, begin / chunk / commit,
+#                            then status until it is up there -> "move_sent"
+#                            {ok, pid (there), missing | reason}
+#   move_cancel {to, pid}    the copy there is stopped (it came up too late)
+#
+# The connection is FmrbAsterism::Link's (the machine's settings); the
+# kernel hears "transfer_ready" {node} once connected and "transfer_down"
+# {reason} when it is not.
+#
+# .app.toml says movable = true: not to be moved (an Asterism session cannot
+# be carried, so a request is refused), but so that its VM keeps the table
+# of this build's method names (the baseline) that check answers from.
+
+class TransferInbox
+  KINDS = ["checkpoint"]
+  RECEIVE_CONF = "/home/asterism/receive.toml"
+  MAX_SIZE = 1048576
+  PIECE = 3072
+  STALE_MS = 10000
+  RESTORE_MS = 8000
+  TMP = "/tmp/"
+
+  def initialize
+    @t = nil          # the file coming in (a Hash), nil when none
+    @next_id = 1
+    @done = nil       # the last committed checkpoint {id, from, path, at, result}
+    @last_call = -BUSY_FOR_MS
+  end
+
+  # A call came in a moment ago: the app polls often for the next one.
+  BUSY_FOR_MS = 2000
+
+  def busy?
+    now_ms - @last_call < BUSY_FOR_MS
+  end
+
+  # ---- exposed (caller: :from) ----
+
+  def check(kind, meta, from: nil)
+    @last_call = now_ms
+    deny = refused(kind, from)
+    return { "ok" => false, "reason" => deny } if deny
+    m = meta.is_a?(Hash) ? meta : {}
+    req = list_of(m["requires"])
+    i = 0
+    while i < req.size
+      if lacks?(req[i])
+        return { "ok" => false,
+                 "reason" => "#{node_name} has no method '#{req[i]}', which the app requires (requires in its .app.toml)" }
+      end
+      i += 1
+    end
+    names = list_of(m["names"])
+    missing = []
+    i = 0
+    while i < names.size
+      missing << names[i] if lacks?(names[i])
+      i += 1
+    end
+    { "ok" => true, "missing" => missing }
+  end
+
+  def begin(kind, meta, from: nil)
+    @last_call = now_ms
+    deny = refused(kind, from)
+    raise ArgumentError, deny if deny
+    m = meta.is_a?(Hash) ? meta : {}
+    name = m["name"].to_s
+    size = m["size"].to_i
+    raise ArgumentError, "not a name for a file: #{name}" unless plain_name?(name)
+    raise ArgumentError, "size #{size} is not between 1 and #{MAX_SIZE}" if size <= 0 || size > MAX_SIZE
+    if @t
+      if @t["from"] != from && !stale?(@t)
+        raise ArgumentError, "busy: a file from #{@t['from']} is coming in"
+      end
+      drop("another begin from #{from}")
+    end
+    part = "#{TMP}#{name}.#{kind}.part"
+    f = File.open(part, "w")
+    id = @next_id
+    @next_id += 1
+    @t = { "id" => id, "from" => from, "kind" => kind, "name" => name, "size" => size, "got" => 0,
+           "part" => part, "file" => f, "toml" => m["toml"].to_s, "at" => now_ms }
+    Log.info("transfer: #{from} sends #{kind} #{name} (#{size} bytes)")
+    { "id" => id, "piece" => PIECE }
+  end
+
+  def chunk(id, pos, data, from: nil)
+    t = current(id, from)
+    bytes = data.to_s
+    raise ArgumentError, "the piece is at #{pos}, expected #{t['got']}" if pos != t["got"]
+    raise ArgumentError, "the piece goes past #{t['size']} bytes" if t["got"] + bytes.bytesize > t["size"]
+    t["file"].write(bytes)
+    t["got"] += bytes.bytesize
+    t["at"] = now_ms
+    t["got"]
+  end
+
+  def commit(id, from: nil)
+    t = current(id, from)
+    if t["got"] != t["size"]
+      got = t["got"]
+      drop("only #{got} of #{t['size']} bytes came")
+      raise ArgumentError, "only #{got} of #{t['size']} bytes came"
+    end
+    t["file"].close
+    @t = nil
+    commit_checkpoint(t)
+  end
+
+  def status(id, from: nil)
+    @last_call = now_ms
+    d = @done
+    raise ArgumentError, "no file #{id} from #{from}" unless d && d["id"] == id && d["from"] == from
+    restore_result(d)
+  end
+
+  def cancel(id, from: nil)
+    if @t && @t["id"] == id && @t["from"] == from
+      drop("cancelled by #{from}")
+      return true
+    end
+    d = @done
+    return false unless d && d["id"] == id && d["from"] == from
+    r = restore_result(d)
+    pid = r["pid"]
+    if r["status"] == "restored" && pid
+      Log.warn("transfer: #{from} cancels #{d['path']}; stopping PID #{pid}")
+      @app.send_message(FmrbConst::PROC_ID_KERNEL, FmrbConst::MSG_TYPE_APP_CONTROL,
+                        { "cmd" => "kill", "pid" => pid })
+    end
+    @done = nil
+    true
+  end
+
+  # ---- the app's side ----
+
+  attr_writer :app
+
+  # Called once per on_update: a file that stopped coming is dropped.
+  def tick
+    drop("no piece for #{STALE_MS} ms") if @t && stale?(@t)
+    nil
+  end
+
+  def close
+    drop("the transfer app ends") if @t
+  end
+
+  # ---- inside ----
+
+  def now_ms
+    Machine.board_millis
+  end
+
+  def node_name
+    @app ? @app.node_name : "this machine"
+  end
+
+  def stale?(t)
+    now_ms - t["at"] > STALE_MS
+  end
+
+  def drop(why)
+    t = @t
+    return nil unless t
+    @t = nil
+    Log.warn("transfer: #{t['kind']} #{t['name']} from #{t['from']} dropped: #{why}")
+    begin
+      t["file"].close
+    rescue => e
+      Log.warn("transfer: close: #{e.message}")
+    end
+    begin
+      File.delete(t["part"]) if File.exist?(t["part"])
+    rescue => e
+      Log.warn("transfer: delete: #{e.message}")
+    end
+    nil
+  end
+
+  def current(id, from)
+    @last_call = now_ms
+    t = @t
+    raise ArgumentError, "no file #{id} is coming in from #{from}" unless t && t["id"] == id && t["from"] == from
+    t
+  end
+
+  # Why this call is not taken (nil: taken).
+  def refused(kind, from)
+    k = kind.to_s
+    return "#{node_name} takes no #{k}" unless KINDS.include?(k)
+    if k == "checkpoint" && !FmrbApp.respond_to?(:_checkpoint_restore)
+      return "#{node_name} cannot start checkpoint images (this build has no mruby-checkpoint)"
+    end
+    allowed = list_of(allowed_senders)
+    return nil if allowed.include?("*") || allowed.include?(from.to_s)
+    "#{node_name} takes nothing from #{from} (from in #{RECEIVE_CONF})"
+  end
+
+  def allowed_senders
+    return [] unless File.exist?(RECEIVE_CONF)
+    conf = FmrbToml.load(RECEIVE_CONF)
+    conf ? conf["from"] : []
+  rescue => e
+    Log.warn("transfer: #{RECEIVE_CONF}: #{e.message}")
+    []
+  end
+
+  def list_of(v)
+    out = []
+    return out unless v.is_a?(Array)
+    i = 0
+    while i < v.size
+      out << v[i].to_s
+      i += 1
+    end
+    out
+  end
+
+  # A name with no way out of /tmp: letters, digits, _ and -.
+  def plain_name?(name)
+    return false if name.empty? || name.bytesize > 40
+    i = 0
+    while i < name.bytesize
+      c = name.getbyte(i)
+      ok = (c >= 97 && c <= 122) || (c >= 65 && c <= 90) || (c >= 48 && c <= 57) || c == 95 || c == 45
+      return false unless ok
+      i += 1
+    end
+    true
+  end
+
+  def lacks?(name)
+    FmrbApp._checkpoint_has_method(name) == false
+  end
+
+  # The image is whole: it goes beside its attributes under its name, and
+  # the kernel starts it (the answer is read by status).
+  def commit_checkpoint(t)
+    path = "#{TMP}#{t['name']}.ckpt"
+    toml = "#{TMP}#{t['name']}.toml"
+    File.open(toml, "w") { |f| f.write(t["toml"]) }
+    File.delete(path) if File.exist?(path)
+    File.rename(t["part"], path)
+    why = FmrbApp._checkpoint_restore(path)
+    @done = { "id" => t["id"], "from" => t["from"], "path" => path, "at" => now_ms, "result" => nil }
+    if why
+      @done["result"] = { "status" => "refused", "reason" => why }
+      return @done["result"]
+    end
+    Log.info("transfer: #{path} from #{t['from']} (#{t['size']} bytes); starting it")
+    { "status" => "pending" }
+  end
+
+  def restore_result(d)
+    return d["result"] if d["result"]
+    st = FmrbApp._checkpoint_restore_poll
+    if st[0] == "restored"
+      missing = st[2].to_s.split(" ")
+      d["result"] = { "status" => "restored", "pid" => st[1], "missing" => missing }
+    elsif st[0] == "refused"
+      d["result"] = { "status" => "refused", "reason" => st[2].to_s }
+    elsif now_ms - d["at"] > RESTORE_MS
+      d["result"] = { "status" => "refused", "reason" => "not started in #{RESTORE_MS} ms" }
+    else
+      return { "status" => "pending" }
+    end
+    Log.info("transfer: #{d['path']}: #{d['result']['status']}")
+    d["result"]
+  end
+end
+
+# The app. Sending is done a call at a time from on_update, each call left
+# on its way (Asterism.call_async) while the app returns to its message
+# wait: the native program schedules its tasks in turn, and a send that
+# waited for its answers in one go would keep every other task (the
+# kernel's clock for the hold among them) waiting until it was over.
+class TransferApp < FmrbApp
+  APP = "transfer"
+  OBJECT = "inbox"
+  PIECE = TransferInbox::PIECE
+  # The names sent in one check call (a call carries 4 KB in all).
+  CHECK_BYTES = 2048
+  # A call waits this long for its answer: a slow machine on the other side
+  # (the browser build polls its inbox between other tasks) may take seconds.
+  CALL_TIMEOUT_MS = 10000
+  STATUS_POLL_MS = 20
+  STATUS_MS = 9000
+  # what the kernel is told is cut to this (a message carries 176 bytes in
+  # all, and only one of reason and missing is there)
+  SAY_MAX = 112
+  # on_update's wait while a job is under way, and otherwise
+  BUSY_MS = 2
+  IDLE_MS = 50
+
+  def on_create
+    @inbox = TransferInbox.new
+    @inbox.app = self
+    @jobs = []
+    @job = nil        # the kernel's request under way (a Hash)
+    @fut = nil        # its call on its way
+    @last_sent = {}   # node => the id of the last file sent there
+    @link = FmrbAsterism::Link.new(self, APP, tag: "transfer")
+    Log.info("transfer: start")
+  end
+
+  def node_name
+    @link.node
+  end
+
+  def link_up(link)
+    ::Asterism.expose(OBJECT, @inbox,
+                      methods: { "check" => 2, "begin" => 2, "chunk" => 3, "commit" => 1, "status" => 1,
+                                 "cancel" => 1 },
+                      caller: :from, doc: "files from other machines (doc/checkpoint F5)")
+    tell_kernel({ "cmd" => "transfer_ready", "node" => link.node })
+  end
+
+  def link_down(link)
+    tell_kernel({ "cmd" => "transfer_down", "reason" => cut(link.reason) })
+  end
+
+  def on_control(data)
+    cmd = data["cmd"].to_s
+    @jobs << data if cmd == "move_check" || cmd == "move_send" || cmd == "move_cancel"
+    request_early_update
+  end
+
+  def on_update
+    up = @link.update
+    @inbox.tick
+    if up
+      start_job if @job.nil? && !@jobs.empty?
+      step if @job
+    end
+    @job || @inbox.busy? ? BUSY_MS : IDLE_MS
+  end
+
+  def on_destroy
+    @inbox.close
+    @link.close
+  end
+
+  # ---- the kernel's requests ----
+
+  def start_job
+    job = @jobs.shift
+    job["t0"] = Machine.board_millis
+    job["n_calls"] = 0
+    @job = job
+    cmd = job["cmd"].to_s
+    if cmd == "move_check"
+      start_check(job)
+    elsif cmd == "move_send"
+      start_send(job)
+    else
+      id = @last_sent[job["to"].to_s]
+      return finish(nil) unless id
+      call("cancel", [id])
+      job["step"] = "cancel"
+    end
+  end
+
+  # One step of the request: its call has an answer.
+  def step
+    job = @job
+    if job["wait_until"]
+      return if Machine.board_millis < job["wait_until"]
+      job.delete("wait_until")
+      call("status", [job["id"]])
+      return
+    end
+    return if @fut.nil? || !@fut.done?
+    v = nil
+    begin
+      v = @fut.value
+    rescue ::Asterism::RemoteError => e
+      return failed("#{job['to']}: #{e.remote_message}")
+    rescue ::Asterism::Error => e
+      return failed(unreached(job["to"].to_s, e))
+    end
+    @fut = nil
+    s = job["step"]
+    if s == "check" then checked(job, v)
+    elsif s == "begin" then begun(job, v)
+    elsif s == "chunk" then chunked(job, v)
+    elsif s == "commit" || s == "status" then started(job, v)
+    elsif s == "cancel"
+      Log.info("transfer: asked #{job['to']} to stop what it started")
+      finish(nil)
+    end
+  end
+
+  def call(method, args)
+    @job["n_calls"] += 1
+    p = ::Asterism["#{@job['to']}/#{APP}/#{OBJECT}", timeout_ms: CALL_TIMEOUT_MS].async
+    @fut = p.asterism_call(method, *args)
+  rescue ::Asterism::Error => e
+    @fut = nil
+    failed(unreached(@job["to"].to_s, e))
+  end
+
+  # ---- move_check: the list there, a batch at a time ----
+
+  def start_check(job)
+    text = read_file(job["calls"].to_s)
+    return failed("cannot read #{job['calls']}") if text.nil?
+    lines = text.split("\n")
+    head = lines[0].to_s.split(" ")
+    job["requires"] = head[1, head.size].to_a
+    job["names"] = lines[1, lines.size].to_a
+    job["next"] = 0
+    job["missing"] = []
+    job["step"] = "check"
+    check_batch(job, job["requires"])
+  end
+
+  def check_batch(job, requires)
+    names = job["names"]
+    batch = []
+    bytes = 0
+    i = job["next"]
+    while i < names.size && bytes < CHECK_BYTES
+      batch << names[i]
+      bytes += names[i].bytesize + 2
+      i += 1
+    end
+    job["next"] = i
+    call("check", ["checkpoint", { "names" => batch, "requires" => requires }])
+  end
+
+  def checked(job, v)
+    r = v.is_a?(Hash) ? v : {}
+    return failed(r["reason"].to_s) unless r["ok"]
+    job["missing"].concat(r["missing"].to_a)
+    return check_batch(job, []) if job["next"] < job["names"].size
+    Log.info("transfer: #{job['to']} looked up #{job['names'].size} names in " \
+             "#{Machine.board_millis - job['t0']} ms (#{job["n_calls"]} call(s)); it lacks #{job['missing'].size}")
+    finish({ "cmd" => "move_checked", "ok" => true, "missing" => cut(job["missing"].join(" ")) })
+  end
+
+  # ---- move_send: begin, the pieces, commit, then status until it is up ----
+
+  def start_send(job)
+    path = job["path"].to_s
+    stem = path.end_with?(".ckpt") ? path[0, path.size - 5] : path
+    toml = read_file("#{stem}.toml")
+    return failed("cannot read the image's .toml") if toml.nil?
+    return failed("cannot read #{path}") unless File.exist?(path)
+    job["size"] = File.size(path)
+    job["pos"] = 0
+    job["file"] = File.open(path, "r")
+    job["step"] = "begin"
+    call("begin", ["checkpoint", { "name" => stem[TransferInbox::TMP.size, stem.size].to_s, "size" => job["size"],
+                                   "toml" => toml }])
+  end
+
+  def begun(job, v)
+    r = v.is_a?(Hash) ? v : {}
+    job["id"] = r["id"]
+    @last_sent[job["to"].to_s] = r["id"]
+    piece = r["piece"].to_i
+    job["piece"] = piece <= 0 || piece > PIECE ? PIECE : piece
+    job["step"] = "chunk"
+    send_piece(job)
+  end
+
+  def send_piece(job)
+    data = job["file"].read(job["piece"])
+    return failed("cannot read the image at #{job['pos']}") if data.nil? || data.empty?
+    data = data.b if data.respond_to?(:b)
+    call("chunk", [job["id"], job["pos"], data])
+  end
+
+  def chunked(job, v)
+    job["pos"] = v.to_i
+    return send_piece(job) if job["pos"] < job["size"]
+    close_file(job)
+    job["carried"] = Machine.board_millis - job["t0"]
+    job["committed"] = Machine.board_millis
+    job["step"] = "commit"
+    call("commit", [job["id"]])
+  end
+
+  def started(job, v)
+    r = v.is_a?(Hash) ? v : {}
+    st = r["status"].to_s
+    if st == "pending"
+      if Machine.board_millis - job["committed"] > STATUS_MS
+        return failed("#{job['to']} did not start it in #{STATUS_MS} ms")
+      end
+      job["step"] = "status"
+      job["wait_until"] = Machine.board_millis + STATUS_POLL_MS
+      return
+    end
+    took = Machine.board_millis - job["t0"]
+    Log.info("transfer: #{job['path']} (#{job['size']} bytes) to #{job['to']}: carried in #{job['carried']} ms, " \
+             "#{st} there after #{took} ms (#{job["n_calls"]} calls)")
+    if st == "restored"
+      finish({ "cmd" => "move_sent", "ok" => true, "pid" => r["pid"].to_i, "missing" => cut(r["missing"].to_a.join(" ")) })
+    else
+      failed(r["reason"].to_s)
+    end
+  end
+
+  # ---- the end of a request ----
+
+  def failed(why)
+    job = @job
+    Log.warn("transfer: #{job['cmd']} to #{job['to']}: #{why}")
+    cmd = job["cmd"].to_s
+    if cmd == "move_check"
+      finish({ "cmd" => "move_checked", "ok" => false, "reason" => cut(why) })
+    elsif cmd == "move_send"
+      # Once committed it may still come up there: it is stopped there, so
+      # that it does not go on in two places (the app goes on here).
+      @jobs.unshift({ "cmd" => "move_cancel", "to" => job["to"] }) if job["committed"]
+      finish({ "cmd" => "move_sent", "ok" => false, "pid" => -1, "reason" => cut(why) })
+    else
+      finish(nil)
+    end
+  end
+
+  def finish(answer)
+    close_file(@job) if @job
+    @job = nil
+    @fut = nil
+    tell_kernel(answer) if answer
+    nil
+  end
+
+  def close_file(job)
+    f = job["file"]
+    return unless f
+    job.delete("file")
+    f.close
+  rescue => e
+    Log.warn("transfer: close: #{e.message}")
+  end
+
+  # ---- helpers ----
+
+  # Why the other machine was not reached (no transfer app there, no answer
+  # in time, the connection lost), naming it.
+  def unreached(to, e)
+    msg = e.message.to_s
+    msg.include?(to) ? msg : "#{to}: #{msg}"
+  end
+
+  def tell_kernel(h)
+    send_message(FmrbConst::PROC_ID_KERNEL, FmrbConst::MSG_TYPE_APP_CONTROL, h)
+  end
+
+  def cut(s)
+    s = s.to_s
+    s.bytesize > SAY_MAX ? s.byteslice(0, SAY_MAX).to_s : s
+  end
+
+  def read_file(path)
+    return nil unless File.exist?(path)
+    File.open(path, "r") { |f| f.read }
+  rescue
+    nil
+  end
+end
+
+begin
+  app = TransferApp.new
+  app.start
+rescue => e
+  Log.error("transfer: #{e.class}: #{e.message}")
+end
+app_handle_name = "transfer"
+app_screen_name = "Transfer"
+app_screen_name_ja = "転送"
+default_window_mode = "background"
+launcher_visible = false
+single_instance = true
+# Not to be moved (its Asterism session cannot be carried): movable keeps the
+# table of this build's method names in its VM, which the destination's side
+# of a move answers from (doc/checkpoint F5).
+movable = true
