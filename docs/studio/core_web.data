@@ -25833,24 +25833,43 @@ launcher_visible = false
 # names it (SND0) and a build without it says so when the image arrives, and
 # lets it go on. ckpt_requires.app.rb is the same with the name declared as
 # required in its .app.toml: there the build refuses it.
+#
+# It also logs what the base answers from the machine it runs on, which must be
+# the machine where it arrived, not the one that wrote it (report/
+# platform_restore.md): platform beside FmrbConst::PLATFORM, whether the app
+# keeps @platform (it must not: the image would carry it), and whether
+# FmrbAssoc's table is still cached (read here in on_create, forgotten when
+# the image is restored). And the display language (report/lang_bg_restore.md):
+# FmrbI18n's language, asked here before the move, a word looked up in it,
+# and FmrbApp.language; after a move all three are the arriving machine's.
 
 class CkptCallsApp < FmrbApp
   def on_create
     @main = 0
     @open_settings = false
-    Log.info("ckpt_calls: start")
+    FmrbAssoc.load_table
+    FmrbI18n.add("en" => { ckpt_word: "word-en" }, "ja" => { ckpt_word: "word-ja" })
+    FmrbI18n.lang
+    Log.info("ckpt_calls: start #{machine}")
   end
 
   def on_update
     @main += 1
     have = FmrbApp.respond_to?(:linux_settings)
     FmrbApp.linux_settings if @open_settings && have
-    Log.info("ckpt_calls: main=#{@main} pack=#{[65].pack('C')} linux_settings=#{have}")
+    Log.info("ckpt_calls: main=#{@main} pack=#{[65].pack('C')} linux_settings=#{have} #{machine}")
     250
   end
 
   def on_restore
-    Log.info("ckpt_calls: on_restore main=#{@main}")
+    Log.info("ckpt_calls: on_restore main=#{@main} #{machine}")
+  end
+
+  def machine
+    ivar = instance_variables.include?(:@platform)
+    assoc = FmrbAssoc.instance_variable_get(:@table) ? true : false
+    "platform=#{platform} const=#{FmrbConst::PLATFORM} platform_ivar=#{ivar} assoc_cached=#{assoc} " \
+      "lang=#{FmrbI18n.lang} word=#{FmrbI18n.t(:ckpt_word)} language=#{FmrbApp.language}"
   end
 end
 
@@ -26297,7 +26316,7 @@ rescue => e
 end
 app_handle_name = "ckpt_wide"
 app_screen_name = "Ckpt Wide"
-app_screen_name_ja = "チェックポイント試験 (幅広の窓)"
+app_screen_name_ja = "チェックポイント試験 (幅広の Window)"
 default_window_mode = "window"
 default_window_width = 380
 default_window_height = 100
@@ -26317,6 +26336,8 @@ movable = true
 # and after the move and reads the counts and the events from the log.
 
 class CkptWindowApp < FmrbApp
+  CHOSEN_BG = 0x92
+
   def on_create
     @dots = []
     @text = ""
@@ -26336,9 +26357,13 @@ class CkptWindowApp < FmrbApp
     @mark = GfxBlock.new(@gfx, x: @user_area_x0 + 2, y: @user_area_y0 + 2) do |r, x:, y:|
       r.draw_rect x, y, 7, 7, FmrbGfx::RED
     end
+    @ui = FmrbUI.new(self)
+    @ui.label(:theme_bg, 4, 24, 30, 10, "ui")
+    @ui_chosen = FmrbUI.new(self, bg: CHOSEN_BG)
+    @ui_chosen.label(:chosen_bg, 40, 24, 30, 10, "bg")
     make_sprite
     draw_all
-    Log.info("ckpt_window: drawn")
+    Log.info("ckpt_window: drawn #{ui_colours} #{font_note}")
   end
 
   # A sprite (an image and an instance of it on the display side): the base
@@ -26355,7 +26380,7 @@ class CkptWindowApp < FmrbApp
     x0 = @user_area_x0
     y0 = @user_area_y0
     @gfx.fill_rect(x0 + 2, y0 + 2, @user_area_width - 4, 6, FmrbGfx::BLUE)
-    @gfx.draw_text(x0 + 4, y0 + 12, "窓 #{@text}", theme_fg)
+    @gfx.draw_text(x0 + 4, y0 + 12, "Window #{@text}", theme_fg)
     i = 0
     while i < @dots.size
       d = @dots[i]
@@ -26368,7 +26393,23 @@ class CkptWindowApp < FmrbApp
     else
       @mark.draw(x: x0 + 2, y: y0 + 2)
     end
+    @ui.flush
+    @ui_chosen.flush
     @gfx.present
+  end
+
+  # The labels' ground: the default one, the chosen one, and the theme's
+  # window background of this machine (decimal RGB332).
+  def ui_colours
+    "ui_bg=#{@ui.widgets[0].bg} chosen_bg=#{@ui_chosen.widgets[0].bg} window_bg=#{FmrbConst::THEME_WINDOW_BG}"
+  end
+
+  # The font this machine picked for the [:ja, 12] asked for in on_create:
+  # misaki 8 on a build without the efontJA fonts, 12 again on one with them
+  # (the base picks it again from what was asked, report/font_pct.md).
+  def font_note
+    f = @gfx.current_font
+    "font=#{f[0]},#{f[1]}"
   end
 
   def on_event(ev)
@@ -26400,7 +26441,7 @@ class CkptWindowApp < FmrbApp
   def on_restore
     make_sprite
     draw_all
-    Log.info("ckpt_window: on_restore dots=#{@dots.size} text=#{@text}")
+    Log.info("ckpt_window: on_restore dots=#{@dots.size} text=#{@text} #{ui_colours} #{font_note}")
   end
 end
 
@@ -26412,7 +26453,7 @@ rescue => e
 end
 app_handle_name = "ckpt_window"
 app_screen_name = "Ckpt Window"
-app_screen_name_ja = "チェックポイント試験 (窓)"
+app_screen_name_ja = "チェックポイント試験 (Window)"
 default_window_mode = "window"
 default_window_width = 160
 default_window_height = 90
@@ -41262,14 +41303,15 @@ FmrbApp.path_read_only?("/mnt/root/etc/hostname")
 
 # FmrbApp#platform
 
-platform() -> String
+platform() -> Symbol
 
 Which machine this is
 
-Either `"esp32"` or `"linux"`. The browser build says `"linux"` too;
-tell it apart with `FmrbConst::BOARD == "wasm"`.
+Either `:esp32` or `:linux` (a Symbol). The browser build says `:linux`
+too; tell it apart with `FmrbConst::BOARD == "wasm"`. In an app moved to
+another machine it is the machine where it now runs.
 ```ruby
-if platform == "esp32"
+if platform == :esp32
 ```
 
 # FmrbApp.pool_usage
@@ -41874,8 +41916,8 @@ clear_user_area() -> void
 
 中身の場所をぬりつぶす。色を省くとテーマの紙の色
 
-窓の中だけを塗りつぶします。**わくも描き直し**、その場所にあった
-FmrbUI の部品にも描き直しの印を付けます。窓のアプリで画面を消すときは
+Window の中だけを塗りつぶします。**わくも描き直し**、その場所にあった
+FmrbUI の部品にも描き直しの印を付けます。Window のアプリで画面を消すときは
 `gfx.clear` ではなくこちらを使います。
 
 `gfx.clear` は canvas 全体を塗るので、自分で描いたタイトルバーもわくも
@@ -41945,8 +41987,8 @@ g = create_canvas_gfx(
 g.present(20, 40)
 ```
 
-**全画面のアプリ向け**です。窓のアプリで使うと、フォーカスが移ったとき
-に窓の管理側が追いかけてくれません。
+**全画面のアプリ向け**です。Window のアプリで使うと、フォーカスが移ったとき
+に Window の管理側が追いかけてくれません。
 
 # FmrbApp#delete_canvas_gfx
 
@@ -41972,7 +42014,7 @@ draw_scrollbar(Integer scroll, Integer total, Integer visible) -> void
 
 右はしに巻物のつまみを描く
 
-窓の右端にスクロールバーを描く。**位置は自分で持つ** — この呼び出しは
+Window の右端にスクロールバーを描く。**位置は自分で持つ** — この呼び出しは
 絵を描くだけで、値は覚えない。
 ```ruby
 draw_scrollbar(@scroll,
@@ -41984,12 +42026,12 @@ draw_scrollbar(@scroll,
 
 draw_window_frame() -> void
 
-窓のふちと題名を描き直す
+Window のふちと題名を描き直す
 
 タイトルバーとわく、閉じるボタンを描きます。全画面のときは何もしません。
 
 **大きさの変わるアプリは、描き直すたびに呼ぶこと。** 一度描いたきりに
-すると、窓を広げたときにわくが壊れます。
+すると、Window を広げたときにわくが壊れます。
 
 タイトルバーは既定のフォントで描かれますが、**呼ぶ前のフォント設定は
 戻されます**。`set_font(:ja)` を毎フレーム掛け直す必要はありません。
@@ -42207,7 +42249,7 @@ on_create() -> void
 
 始まるときに一度だけ呼ばれる
 
-画面も窓もここで使える状態になっています。最初の絵と、あとで使う変数を
+画面も Window もここで使える状態になっています。最初の絵と、あとで使う変数を
 ここで用意します。
 
 ファイルに書いたアプリは、**末尾に起動の 4 行が要ります**。これが無いと
@@ -42291,9 +42333,9 @@ end
 
 on_resize(Integer new_width, Integer new_height) -> void
 
-窓の大きさが変わったとき
+Window の大きさが変わったとき
 
-窓の大きさが変わったときに呼ばれます。全画面への切り替えでも呼ばれます。
+Window の大きさが変わったときに呼ばれます。全画面への切り替えでも呼ばれます。
 
 **FmrbUI の部品は作った場所に貼り付いたまま**なので、大きさが変わったら
 作り直しが要ります。枠も描き直します。
@@ -42314,14 +42356,14 @@ on_restore() -> void
 イメージから起動したとき
 
 イメージから起動したアプリで、**書かれた所から続ける直前**に呼ばれます。
-インスタンス変数も Task もタイマもそのまま戻っています。窓 (同じ場所・
+インスタンス変数も Task もタイマもそのまま戻っています。Window (同じ場所・
 大きさ・枠、フォント、`GfxBlock`) と `subscribe` した知らせは基底クラスが
 戻してあり、キーボードはこのアプリに来ます。**描いた絵は戻りません**:
-窓は枠だけの空の状態なので、何かあったときだけ描くアプリはここで描き
+Window は枠だけの空の状態なので、何かあったときだけ描くアプリはここで描き
 直します (`on_update` で毎回全部描くアプリは何もしなくてよい)。
 スプライトや画像など、アプリが自分で外に作ったものもここで作り直します。
 ファイルを開いたままのアプリはイメージに書けません。
-画面の大きさが違う端末 (Retro と Modern) へ移ると、窓が画面に収まるよう
+画面の大きさが違う端末 (Retro と Modern) へ移ると、Window が画面に収まるよう
 縮められたり、全画面の大きさが変わったりします。そのときは
 `on_restore` の前に `on_resize` が来ます (大きさを変えたときと同じ)。
 移った先のビルドには、すべての端末に共通でないメソッドが無いことが
@@ -42394,14 +42436,15 @@ FmrbApp.path_read_only?("/mnt/root/etc/hostname")
 
 # FmrbApp#platform
 
-platform() -> String
+platform() -> Symbol
 
 動いている機械の種類
 
-`"esp32"` か `"linux"` を返す。ブラウザ版も `"linux"` なので、
-ブラウザを見分けるなら `FmrbConst::BOARD == "wasm"`。
+`:esp32` か `:linux` (Symbol) を返す。ブラウザ版も `:linux` なので、
+ブラウザを見分けるなら `FmrbConst::BOARD == "wasm"`。別の端末へ移った
+アプリでは、移った先の値になる。
 ```ruby
-if platform == "esp32"
+if platform == :esp32
 ```
 
 # FmrbApp.pool_usage
@@ -42433,7 +42476,7 @@ kb = (FmrbApp.pool_used - before) / 1024
 
 pos_x() -> Integer
 
-窓の左上の位置
+Window の左上の位置
 
 ```ruby
 x = pos_x
@@ -42443,7 +42486,7 @@ x = pos_x
 
 pos_y() -> Integer
 
-窓の左上の位置
+Window の左上の位置
 
 ```ruby
 y = pos_y
@@ -42511,9 +42554,9 @@ reboot() -> void
 
 request_file_select(String mode) -> void
 
-ファイルを選ぶ窓を出してもらう
+ファイルを選ぶ Window を出してもらう
 
-ファイル選択の窓を開くよう頼む。選ばれた道は `on_control` に届く。
+ファイル選択の Window を開くよう頼む。選ばれた道は `on_control` に届く。
 "open" か "save" を渡す。
 ```ruby
 request_file_select("open")
@@ -42525,9 +42568,9 @@ request_fullscreen(bool on) -> void
 
 全画面にするか元に戻すか頼む
 
-全画面と窓を切り替えるよう頼みます。**すぐには変わりません** — VM は
+全画面と Window を切り替えるよう頼みます。**すぐには変わりません** — VM は
 動いたまま、答えは `on_resize` として返ってきます。そのときには
-`fullscreen` も窓の中の大きさも新しい値になっています。
+`fullscreen` も Window の中の大きさも新しい値になっています。
 
 描き直しは `on_resize` に書きます。ここでは書きません。
 
@@ -42554,7 +42597,7 @@ request_run("/app/usr/mine.app.rb")
 
 rounded_corners() -> bool
 
-窓の角が丸いかどうか
+Window の角が丸いかどうか
 
 ```ruby
 r = rounded_corners ? 6 : 0
@@ -42702,7 +42745,7 @@ FmrbApp.set_wallclock(2026, 9, 1,
 
 set_window_position(Integer x, Integer y) -> FmrbApp
 
-窓を動かす
+Window を動かす
 
 ```ruby
 set_window_position(20, 40)
@@ -42810,9 +42853,9 @@ gfx.fill_rect(0, 0, 40, 20,
 
 toggle_fullscreen() -> void
 
-全画面と窓を切りかえる
+全画面と Window を切りかえる
 
-全画面と窓を切り替える。**答えは `on_resize` で返る** (`request_fullscreen`
+全画面と Window を切り替える。**答えは `on_resize` で返る** (`request_fullscreen`
 と同じ)。
 
 # FmrbApp#unsubscribe
@@ -42887,7 +42930,7 @@ Log.info(i[:ip]) if i
 
 window_height() -> Integer
 
-窓の高さ (ドット)
+Window の高さ (ドット)
 
 ```ruby
 h = window_height
@@ -42897,9 +42940,9 @@ h = window_height
 
 window_width() -> Integer
 
-窓の横幅 (ドット)
+Window の横幅 (ドット)
 
-窓の外枠まで含めた幅。中に描ける範囲は `@user_area_width` の方。
+Window の外枠まで含めた幅。中に描ける範囲は `@user_area_width` の方。
 ```ruby
 w = window_width
 ```
@@ -43908,7 +43951,7 @@ canvas_width() -> Integer
 
 画面の横幅 (ドット)
 
-canvas 全体の幅。窓のアプリが描いてよいのは、その内側の
+canvas 全体の幅。Window のアプリが描いてよいのは、その内側の
 @user_area_x0 / @user_area_width の範囲で、canvas_width とは違う。
 全画面のアプリでは一致する。
 
@@ -43918,8 +43961,8 @@ clear(Integer color) -> FmrbGfx
 
 画面ぜんぶを一色でぬる
 
-canvas 全体を塗る。窓のアプリで呼ぶと、自分で描いたタイトルバーもわくも
-消える。窓の中だけを消すなら FmrbApp#clear_user_area を使う。あちらは
+canvas 全体を塗る。Window のアプリで呼ぶと、自分で描いたタイトルバーもわくも
+消える。Window の中だけを消すなら FmrbApp#clear_user_area を使う。あちらは
 わくを描き直し、付いている FmrbUI の部品にも描き直しの印を付ける。
 
 全画面のアプリなら clear でよく、fill_rect で同じ範囲を塗るより速い。
@@ -44393,7 +44436,7 @@ rgb_to_332(Integer r, Integer g, Integer b) -> Integer
 近い色は同じ値になる。細かい階調は出ない。
 
 結果が 0x01 になる組み合わせは避ける。デスクトップは 0x01 を透明の目印に
-使っているので、窓が透けて見える。
+使っているので、Window が透けて見える。
 
 # FmrbGfx#set_chroma_level
 
@@ -44410,11 +44453,11 @@ set_composite_regions(Array regions) -> void
 
 重ねて見せる場所を決める
 
-canvas のどの矩形をどう合成するかを指定する。角の丸い窓のように、隅だけ
+canvas のどの矩形をどう合成するかを指定する。角の丸い Window のように、隅だけ
 透過が要るときの最適化で、中央は速い経路で送れる。最大 8 個。nil か [] で
 既定 (canvas 全体) に戻る。
 
-窓のアプリでは .app.toml の rounded_corners から系が設定するので、ふつうは
+Window のアプリでは .app.toml の rounded_corners から系が設定するので、ふつうは
 自分で呼ぶ必要はない。
 
 # FmrbGfx#set_font
@@ -44459,10 +44502,10 @@ set_sprite_clip(Integer x, Integer y, Integer w, Integer h) -> FmrbGfx
 スプライトが出られる範囲を決める
 
 スプライトは canvas に描いた絵の上に重ねて合成されるので、何も
-しないと窓のわくやタイトルバーの上にもはみ出す。この四角の中だけに
+しないと Window のわくやタイトルバーの上にもはみ出す。この四角の中だけに
 出るようにする。x, y, w, h は SpriteInstance#move と同じ座標。
 
-窓のアプリは起動時に窓の中身の範囲が入っているので、ふつうは呼ぶ
+Window のアプリは起動時に Window の中身の範囲が入っているので、ふつうは呼ぶ
 必要はない。点数を出す帯など、さらに狭い範囲に閉じ込めたいときに使う。
 ```ruby
 # 上 10px を点数の帯にして、スプライトはその下だけに出す
@@ -44485,7 +44528,7 @@ set_viewport(Integer src_x, Integer src_y, Integer w, Integer h) -> void
 
 画面の見せる場所をずらす
 
-canvas より小さい表示窓を、canvas の上で動かす。canvas は輪として扱われ、
+canvas より小さい表示範囲を、canvas の上で動かす。canvas は輪として扱われ、
 元の四角は端で回り込む。表示範囲より少し大きい canvas を用意し、動いた分だけ
 新しく見えるところにタイルを描き足せば、大きな地図を描き直さずに流せる。
 
@@ -44553,6 +44596,7 @@ lang() -> String
 
 The language now, "ja" or "en"
 
+An app moved to another machine speaks the language of that machine.
 ```ruby
 if FmrbI18n.lang == "ja"
   draw_ja
@@ -44613,6 +44657,7 @@ lang() -> String
 
 今の言葉 ("ja" か "en")
 
+アプリを別の端末へ移すと、着いた側の言葉になります。
 ```ruby
 if FmrbI18n.lang == "ja"
   draw_ja
@@ -45680,7 +45725,8 @@ read from it.
 bg: is the colour a widget paints inside itself - a Label's box, a
 Stepper's value field, a Scrollbar's track. It defaults to the window
 background; an app that clears its user area to something darker passes
-that colour instead.
+that colour instead. Left out, it becomes the window background of the
+machine an app is moved to (a colour passed is kept).
 
 bg_painter: is who repaints the ground where a widget used to be. Left
 out, the hole is filled with bg:, which is right while the ground is one
@@ -45946,8 +45992,9 @@ app には自分自身 (FmrbApp) を渡します。描画先と user area の位
 そこから読みます。
 
 `bg:` は**部品が自分の中を塗る色**です (Label の箱、Stepper の値の欄、
-Scrollbar の溝)。既定は窓の背景色で、暗い色で塗ったアプリはその色を
-渡します。
+Scrollbar の溝)。既定は Window の背景色で、暗い色で塗ったアプリはその色を
+渡します。省いたときは、アプリをテーマの違う端末へ移すと、着いた側の
+Window の背景色に変わります (渡した色はそのまま)。
 
 `bg_painter:` は**部品を消したあとの地を描く相手**です。渡さなければ
 跡は `bg:` の色で塗られます (地が一色ならこれで正しい)。地が絵の場合
@@ -45957,7 +46004,7 @@ Scrollbar の溝)。既定は窓の背景色で、暗い色で塗ったアプリ
 フォントを変えたら戻す。名前は固定です。
 
 ```ruby
-@ui = FmrbUI.new(self)                    # 窓の背景色
+@ui = FmrbUI.new(self)                    # Window の背景色
 @ui = FmrbUI.new(self, bg: COLOR_BG)      # 自前の背景色
 @ui = FmrbUI.new(self, bg_painter: self)  # 地は自分で描く
 
@@ -46767,7 +46814,7 @@ place(Integer x, Integer y, Integer w, Integer h) -> void
 
 置き直す (画面の座標)
 
-**作ったあとに動かす**ときに使う。大きさを変えた窓に部品を
+**作ったあとに動かす**ときに使う。大きさを変えた Window に部品を
 並べ直すのはこれ。
 ```ruby
 w.place(10, 40, 80, 20)
@@ -49273,7 +49320,7 @@ exit(?Integer status) -> nil
 
 アプリを終える
 
-**アプリを終える**。窓の後始末は入れ物がやる。
+**アプリを終える**。Window の後始末は入れ物がやる。
 ```ruby
 exit
 ```
