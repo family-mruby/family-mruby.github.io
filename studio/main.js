@@ -1,0 +1,3007 @@
+// Family mruby OS wasm page (doc/wasm/ P4b-P4c).
+//
+// The firmware runs entirely inside the wasm module (PROXY_TO_PTHREAD); this
+// page only moves bytes: the RGBA frame to the canvas each animation frame,
+// key/mouse events into the input ring, and the audio ring into an
+// AudioWorklet. All shared state lives in the module's SharedArrayBuffer
+// memory, so the page needs cross-origin isolation (rake wasm:serve).
+'use strict';
+
+// The router door's pass (doc/ruby_asterism, G1), read from the URL
+// (#zenoh_pass=, or the older ?zenoh_pass=) and taken out of the address bar
+// by the first script of index.html, before anything else runs. Kept only
+// here and in the module object for the WebSocket link
+// (wasm/zenoh/zp_ws_emscripten.c adds it to wss:// URLs, never to ws://): it
+// is not stored, not written into system_conf.toml and not logged.
+const ZENOH_PASS = String(window.FMRB_ZENOH_PASS || '');
+try { delete window.FMRB_ZENOH_PASS; } catch (e) { window.FMRB_ZENOH_PASS = undefined; }
+
+// This page's own key (doc/ruby_asterism, G1.5b): made when the page loads,
+// kept only here and in the module object, and sent next to the pass on
+// every WebSocket (wasm/zenoh/zp_ws_emscripten.c). The first page that uses
+// a pass takes it; with the same key the door lets this page connect again
+// (after the router restarts) while the pass is open, and no other page. A
+// reload is a new page with a new key, so it needs a new pass.
+function makePageKey() {
+  const b = new Uint8Array(18);
+  crypto.getRandomValues(b);
+  return btoa(String.fromCharCode(...b)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+const ZENOH_PAGE = ZENOH_PASS ? makePageKey() : '';
+
+// The node ID and the app a link from the console names for this visit
+// (#zenoh_node=, #app=; doc/ruby_asterism, G1.5), read by the same first
+// script. The node ID replaces this browser's own one for this visit only
+// (it is not stored); one that is not a node ID is ignored.
+const LINK_NODE_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,62}$/;
+const LINK_NODE = LINK_NODE_RE.test(String(window.FMRB_ZENOH_NODE || '')) ? String(window.FMRB_ZENOH_NODE) : '';
+const LINK_APP = String(window.FMRB_LINK_APP || '');
+try { delete window.FMRB_ZENOH_NODE; delete window.FMRB_LINK_APP; } catch (e) { /* kept in the constants */ }
+
+// A pass comes from a console, and on a network a console runs the console
+// decides who the page is: every link it gives carries the node ID next to
+// the pass (doc/ruby_asterism, 2026-10-14). A link with a pass and no node
+// (a hand-made one, an older console's) would join under this browser's own
+// ID, so the same person would show up under another name depending on the
+// link. The page does not start and says to open it again from the console;
+// the pass is not used. Without a pass (a network with no console: a home
+// router, a development router) the page keeps its own ID as before.
+// A room's key (#room=, doc/ruby_asterism, G2): the page joins that room
+// through the door (wss://<router>/room?t=<key>, wasm/zenoh/zp_ws_emscripten.c)
+// and every Zenoh key it uses gets the room's prefix room/<slot>
+// (picoruby-asterism-zenoh's namespace, set from Module.zenohNamespace), so
+// the apps run unchanged inside the room. The page reads the slot and the
+// end from the key without checking it (the door checks it). In a room the
+// page is a node under the ID of the seat the door gives it (G2b, see
+// takeSeat below: wasm-0103 is seat 03 of slot 01): the router binds what a
+// seat may write and whom it may call as to that ID. A node ID in the link
+// is not used. A room link carries no pass; if one came with a pass anyway,
+// the room wins and the pass is not used.
+const ROOM_KEY = String(window.FMRB_ROOM_KEY || '');
+try { delete window.FMRB_ROOM_KEY; } catch (e) { window.FMRB_ROOM_KEY = undefined; }
+function readRoomKey(key) {
+  if (!key) return null;
+  try {
+    const body = key.split('.')[0].replace(/-/g, '+').replace(/_/g, '/');
+    const c = JSON.parse(atob(body + '='.repeat((4 - body.length % 4) % 4)));
+    if (!/^[0-9]{2}$/.test(String(c.slot)) || !/^[0-9a-f]{16}$/.test(String(c.room)) ||
+        typeof c.exp !== 'number') return null;
+    return { key: key, slot: String(c.slot), room: String(c.room), exp: c.exp, max: c.max };
+  } catch (e) {
+    return null;
+  }
+}
+const ROOM = readRoomKey(ROOM_KEY);
+const ROOM_NAMESPACE = ROOM ? 'room/' + ROOM.slot : '';
+function roomUntil() {
+  if (!ROOM) return '';
+  const d = new Date(ROOM.exp * 1000);
+  return d.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+const ROOM_REFUSED_TEXT = !ROOM_KEY ? '' :
+  (!ROOM ? 'This room link is broken (its key cannot be read). Ask for the link again.' :
+    (ROOM.exp * 1000 <= Date.now() ? 'This room has ended (' + roomUntil() + '). Ask for a new link.' : ''));
+
+const PASS_WITHOUT_NODE = !ROOM_KEY && !!ZENOH_PASS && !LINK_NODE;
+const PASS_WITHOUT_NODE_TEXT =
+  'This link has a pass but no node ID, so the page does not connect. ' +
+  'Open the browser build again from the console (Browser passes).';
+// The page does not start for these links (the overlay says why).
+const LINK_REFUSED = PASS_WITHOUT_NODE || !!ROOM_REFUSED_TEXT;
+const LINK_REFUSED_TEXT = ROOM_REFUSED_TEXT || PASS_WITHOUT_NODE_TEXT;
+
+// The app to open this visit: ?app= or the link's #app=.
+function urlApp() {
+  return new URLSearchParams(location.search).get('app') || LINK_APP;
+}
+
+const canvas = document.getElementById('screen');
+const screenBox = document.getElementById('screen-box');
+const ctx = canvas.getContext('2d');
+const startOverlay = document.getElementById('start');
+const statusLine = document.getElementById('status');
+
+let M = null;          // the emscripten module instance
+let lastSeq = -1;
+let imageData = null;
+
+// The CRT look (crt.js, doc/web_crt/): the WebGL2 view over #screen while it
+// is on, null while the page draws plain pixels.
+const crtCanvas = document.getElementById('crt-view');
+let crt = null;
+let crtSettings = Object.assign({}, FmrbCrt.DEFAULTS);
+
+function pushInput(type, a, b, c, d) {
+  if (!M) return;
+  const ring = M._fmrb_wasm_input_ring();
+  const events = M._fmrb_wasm_input_ring_events();
+  const wrPtr = M._fmrb_wasm_input_wr_ptr();
+  const heap = M.HEAPU32;
+  const wr = Atomics.load(heap, wrPtr >> 2);
+  const rec = (ring >> 2) + (wr % events) * 5;
+  heap[rec] = type;
+  heap[rec + 1] = a >>> 0;
+  heap[rec + 2] = b >>> 0;
+  heap[rec + 3] = c >>> 0;
+  heap[rec + 4] = d >>> 0;
+  Atomics.add(heap, wrPtr >> 2, 1);
+}
+
+// ---- display --------------------------------------------------------------
+
+function paint() {
+  requestAnimationFrame(paint);
+  if (!M) return;
+  if (M._fmrb_wasm_clip_out_seq_ptr) clipPollOut();
+  const seq = M._fmrb_wasm_frame_seq();
+  if (seq === lastSeq) {
+    if (crt) crt.flush();   // a resize or a setting; nothing when neither
+    return;
+  }
+  lastSeq = seq;
+  const w = M._fmrb_wasm_frame_width();
+  const h = M._fmrb_wasm_frame_height();
+  const ptr = M._fmrb_wasm_frame_rgba();
+  if (!w || !h || !ptr) return;
+  if (!imageData || imageData.width !== w || imageData.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+    imageData = ctx.createImageData(w, h);
+    applyZoom();   // the box stays the base size's (see baseSize)
+  }
+  // Copy out of the SharedArrayBuffer (ImageData refuses a SAB view).
+  imageData.data.set(new Uint8Array(M.HEAPU8.buffer, ptr, w * h * 4));
+  ctx.putImageData(imageData, 0, 0);
+  if (crt) {
+    crt.setImage(imageData);
+    crt.flush();
+  }
+}
+
+// ---- input ----------------------------------------------------------------
+
+// Where the pointer is on the machine's screen, in its pixels. With the CRT
+// look the curve is undone with the shader's own formula (crt.js), and a
+// point the curve leaves outside the picture gives null.
+function canvasPos(ev) {
+  if (crt) return crtPos(ev.clientX, ev.clientY);
+  const r = canvas.getBoundingClientRect();
+  const x = Math.round((ev.clientX - r.left) * canvas.width / r.width);
+  const y = Math.round((ev.clientY - r.top) * canvas.height / r.height);
+  return [Math.min(Math.max(x, 0), canvas.width - 1),
+          Math.min(Math.max(y, 0), canvas.height - 1)];
+}
+
+function crtPos(clientX, clientY) {
+  const r = canvas.getBoundingClientRect();
+  const p = FmrbCrt.warpToSource((clientX - r.left) / r.width, (clientY - r.top) / r.height,
+                                 crtSettings.curve);
+  if (!FmrbCrt.inside(p)) return null;
+  return [Math.min(Math.floor(p[0] * canvas.width), canvas.width - 1),
+          Math.min(Math.floor(p[1] * canvas.height), canvas.height - 1)];
+}
+
+// The last place the machine was told the pointer is. A release over the
+// curve's black edge goes there (a press must always end), and so does a
+// wheel turned there.
+let lastPointer = [0, 0];
+
+function hookInput() {
+  canvas.addEventListener('mousemove', (ev) => {
+    const pos = canvasPos(ev);
+    if (!pos) return;
+    lastPointer = pos;
+    pushInput(4, pos[0], pos[1], 0, 0);
+  });
+  canvas.addEventListener('mousedown', (ev) => {
+    ev.preventDefault();
+    canvas.focus();
+    const pos = canvasPos(ev);
+    if (!pos) return;
+    lastPointer = pos;
+    const [x, y] = pos;
+    const btn = ev.button === 2 ? 3 : ev.button === 1 ? 2 : 1;
+    pushInput(3, x, y, btn, 1);
+  });
+  canvas.addEventListener('mouseup', (ev) => {
+    ev.preventDefault();
+    const pos = canvasPos(ev) || lastPointer;
+    lastPointer = pos;
+    const [x, y] = pos;
+    const btn = ev.button === 2 ? 3 : ev.button === 1 ? 2 : 1;
+    pushInput(3, x, y, btn, 0);
+  });
+  canvas.addEventListener('contextmenu', (ev) => ev.preventDefault());
+
+  // Touch, turned into the same three events a mouse sends. A browser will
+  // synthesise a click from a tap on its own, but only a click: no move while
+  // the finger travels, which is exactly what dragging a window by its title
+  // bar needs. So one finger is followed here instead, and preventDefault
+  // stops both the page scrolling under the finger and the synthetic click
+  // arriving afterwards as a second press.
+  //
+  // Two fingers are left alone, so the page can still be pinched and scrolled
+  // from the screen; and a tap is a left button, since a touch screen has no
+  // other. Typing is a separate problem this does not solve -- there is no
+  // way to raise the on-screen keyboard for a canvas.
+  let touchId = null;
+  function touchPos(t) {
+    if (crt) return crtPos(t.clientX, t.clientY);
+    const r = canvas.getBoundingClientRect();
+    const x = Math.round((t.clientX - r.left) * canvas.width / r.width);
+    const y = Math.round((t.clientY - r.top) * canvas.height / r.height);
+    return [Math.min(Math.max(x, 0), canvas.width - 1),
+            Math.min(Math.max(y, 0), canvas.height - 1)];
+  }
+  canvas.addEventListener('touchstart', (ev) => {
+    if (ev.touches.length !== 1) return;
+    ev.preventDefault();
+    canvas.focus();
+    const t = ev.changedTouches[0];
+    const pos = touchPos(t);
+    if (!pos) return;
+    touchId = t.identifier;
+    lastPointer = pos;
+    const [x, y] = pos;
+    // Put the pointer there first: the machine tracks a cursor, and a press
+    // arriving from somewhere it has never been would act at the old place.
+    pushInput(4, x, y, 0, 0);
+    pushInput(3, x, y, 1, 1);
+  }, { passive: false });
+  canvas.addEventListener('touchmove', (ev) => {
+    if (touchId === null) return;
+    ev.preventDefault();
+    for (const t of ev.changedTouches) {
+      if (t.identifier !== touchId) continue;
+      const pos = touchPos(t);
+      if (!pos) continue;
+      lastPointer = pos;
+      pushInput(4, pos[0], pos[1], 0, 0);
+    }
+  }, { passive: false });
+  function touchRelease(ev) {
+    if (touchId === null) return;
+    for (const t of ev.changedTouches) {
+      if (t.identifier !== touchId) continue;
+      ev.preventDefault();
+      const pos = touchPos(t) || lastPointer;
+      lastPointer = pos;
+      const [x, y] = pos;
+      pushInput(3, x, y, 1, 0);
+      touchId = null;
+    }
+  }
+  canvas.addEventListener('touchend', touchRelease, { passive: false });
+  canvas.addEventListener('touchcancel', touchRelease, { passive: false });
+
+  // The wheel, in notches. A browser reports pixels, lines or pages depending
+  // on the device and the platform, and positive deltaY means towards the
+  // user -- the opposite of the sign the machine uses -- so it is converted
+  // here rather than anywhere further in. Fractions from a trackpad are
+  // accumulated so a slow two-finger drag still delivers whole notches.
+  let wheelAccum = 0;
+  canvas.addEventListener('wheel', (ev) => {
+    ev.preventDefault();
+    let lines = ev.deltaY;
+    if (ev.deltaMode === 1) lines *= 16;        // already lines: one row ~16px
+    else if (ev.deltaMode === 2) lines *= 400;  // pages
+    wheelAccum += -lines / 100;                 // 100px per notch, sign flipped
+    const notches = wheelAccum > 0 ? Math.floor(wheelAccum) : Math.ceil(wheelAccum);
+    if (notches === 0) return;
+    wheelAccum -= notches;
+    const pos = canvasPos(ev);
+    if (pos) lastPointer = pos;
+    const [x, y] = pos || lastPointer;
+    pushInput(5, x, y, notches, 0);
+  }, { passive: false });
+
+  canvas.addEventListener('keydown', (ev) => {
+    const sc = RD_HID_KEYMAP[ev.code];
+    if (!sc) return;
+    // The paste key: let the browser fire its paste event (the browser's
+    // text, with no permission asked) and hold the key until the text is in.
+    if ((ev.ctrlKey || ev.metaKey) && ev.code === 'KeyV' && M && M._fmrb_wasm_clip_in_seq_ptr) {
+      holdPasteKey(sc, rdModMask(ev));
+      return;
+    }
+    ev.preventDefault();
+    pushInput(1, sc, rdModMask(ev), 0, 0);
+  });
+  canvas.addEventListener('keyup', (ev) => {
+    const sc = RD_HID_KEYMAP[ev.code];
+    if (!sc) return;
+    ev.preventDefault();
+    if (heldPaste && heldPaste.sc === sc) releasePasteKey();
+    pushInput(2, sc, rdModMask(ev), 0, 0);
+  });
+  document.addEventListener('paste', (ev) => {
+    if (!M || !heldPaste) return;   // only the machine's paste key
+    ev.preventDefault();
+    const text = ev.clipboardData ? ev.clipboardData.getData('text/plain') : '';
+    if (text) clipWriteIn(text);
+    releasePasteKey();
+  });
+}
+
+// ---- clipboard (doc/linux_native L12a, wasm/backend/clip_wasm.c) ----------
+//
+// The machine's clipboard joined to the browser's. Out: the module's slot is
+// polled each animation frame and a new text goes to
+// navigator.clipboard.writeText. In: the paste event of the paste key. Each
+// slot has a sequence that is odd while it is being written. When the
+// browser refuses (writeText rejected, no paste event), the machine keeps its
+// own clipboard and the console says so.
+
+const CLIP_PASTE_WAIT_MS = 300;   // how long the paste key waits for the text
+let clipOutSeq = 0;
+let heldPaste = null;             // { sc, mod, timer } while waiting
+
+function clipPollOut() {
+  const heap = M.HEAPU32;
+  const seqIdx = M._fmrb_wasm_clip_out_seq_ptr() >> 2;
+  const s0 = Atomics.load(heap, seqIdx);
+  if (s0 === clipOutSeq || (s0 & 1)) return;
+  const len = Atomics.load(heap, M._fmrb_wasm_clip_out_len_ptr() >> 2);
+  const ptr = M._fmrb_wasm_clip_out_buf();
+  const bytes = M.HEAPU8.slice(ptr, ptr + len);   // a copy, out of the SAB
+  if (Atomics.load(heap, seqIdx) !== s0) return;  // rewritten: next frame
+  clipOutSeq = s0;
+  const text = new TextDecoder().decode(bytes);
+  if (!navigator.clipboard || !navigator.clipboard.writeText) {
+    console.warn('clipboard: this browser has no clipboard to write to; the machine keeps its own');
+    return;
+  }
+  navigator.clipboard.writeText(text).catch((e) => {
+    console.warn('clipboard: the browser refused the copy (' + e + '); the machine keeps its own');
+  });
+}
+
+function clipWriteIn(text) {
+  const bytes = new TextEncoder().encode(text);
+  const heap = M.HEAPU32;
+  const seqIdx = M._fmrb_wasm_clip_in_seq_ptr() >> 2;
+  Atomics.add(heap, seqIdx, 1);                    // odd: writing
+  // Over the maximum only the length goes: the machine refuses it.
+  if (bytes.length <= M._fmrb_wasm_clip_in_cap()) M.HEAPU8.set(bytes, M._fmrb_wasm_clip_in_buf());
+  Atomics.store(heap, M._fmrb_wasm_clip_in_len_ptr() >> 2, bytes.length);
+  Atomics.add(heap, seqIdx, 1);                    // even: done
+}
+
+function holdPasteKey(sc, mod) {
+  releasePasteKey();
+  heldPaste = { sc, mod, timer: setTimeout(() => {
+    if (heldPaste) console.warn('clipboard: no paste from the browser; the machine pastes its own');
+    releasePasteKey();
+  }, CLIP_PASTE_WAIT_MS) };
+}
+
+function releasePasteKey() {
+  if (!heldPaste) return;
+  clearTimeout(heldPaste.timer);
+  const { sc, mod } = heldPaste;
+  heldPaste = null;
+  pushInput(1, sc, mod, 0, 0);
+}
+
+// ---- audio ----------------------------------------------------------------
+
+// The AudioContext must be created inside the click (browser autoplay
+// rules); the worklet is wired once the module is up.
+async function startAudio(ac) {
+  if (!M) return;
+  await ac.audioWorklet.addModule('audio-worklet.js' + (window.FMRB_WASM_VER || ''));
+  const node = new AudioWorkletNode(ac, 'fmrb-apu', {
+    numberOfInputs: 0,
+    numberOfOutputs: 1,
+    outputChannelCount: [1],
+  });
+  node.port.postMessage({
+    buffer: M.HEAPU8.buffer,                 // the module's SAB memory
+    ringPtr: M._fmrb_wasm_audio_ring(),
+    ringSamples: M._fmrb_wasm_audio_ring_size(),
+    wrPtr: 0,                                 // no pointer export: poll helper below
+    rate: M._fmrb_wasm_audio_rate(),
+  });
+  // The write counter has no address export; forward it at 60 Hz. The ring
+  // is a second of audio, so this granularity is far below the slack.
+  setInterval(() => {
+    node.port.postMessage({ wr: M._fmrb_wasm_audio_wr() });
+  }, 16);
+  node.connect(ac.destination);
+  // From a real click this settles at once. Started by ?autostart=1 (which
+  // an ?app= link tends to carry, so the page opens straight into the app)
+  // there was no gesture, the browser keeps the context suspended, and the
+  // promise would hang here forever: race it, then wait for the first real
+  // press instead.
+  await Promise.race([ac.resume(), new Promise((r) => setTimeout(r, 500))]);
+  if (ac.state !== 'running') unlockAudioOnGesture(ac);
+}
+
+// The machine is up but silent because nobody clicked. The first press
+// anywhere on the page -- a key, a tap, a click on the machine's screen -- is
+// the gesture the browser wants; resume there, once, and say so until then.
+const AUDIO_HINT = 'running (click or press a key for sound)';
+function unlockAudioOnGesture(ac) {
+  const kinds = ['pointerdown', 'keydown', 'touchstart'];
+  const wake = async () => {
+    try { await ac.resume(); } catch (e) { return; }
+    if (ac.state !== 'running') return;
+    for (const k of kinds) window.removeEventListener(k, wake, true);
+    if (statusLine.textContent === AUDIO_HINT) statusLine.textContent = 'running';
+  };
+  for (const k of kinds) window.addEventListener(k, wake, true);
+  statusLine.textContent = AUDIO_HINT;
+}
+
+// ---- page settings (localStorage; the key never leaves this browser) ------
+
+// The web default look (cyberpunk palette + neon wallpaper) is baked into
+// the bundle; "light" -- the palette a device wears -- is requested via argv
+// and applied by the machine itself (wasm/backend/page_settings_wasm.c holds
+// it). The same word names it in Config, inside the machine.
+
+// The framebuffer sizes offered. 426x240 is what the hardware runs; the other
+// two are the same desktop with more room, which only the web build can afford
+// (doc/wasm/report/p5.md records what each one looks like).
+const RESOLUTIONS = ['426x240', '640x360', '852x480', '1280x720'];
+const DEFAULT_RES = '426x240';
+// The shipped window default (386x180 of 426x240) kept in proportion, so an
+// app window covers the same share of a larger screen instead of shrinking
+// into a corner of it.
+const USER_APP_W_RATIO = 386 / 426;
+const USER_APP_H_RATIO = 180 / 240;
+
+function readSetting(key, fallback) {
+  try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; }
+}
+
+function writeSetting(key, value) {
+  try { localStorage.setItem(key, value); } catch (e) {}
+}
+
+// ?w=&h= names the same thing the selector does; it is written through to the
+// stored setting so a plain reload (and a bookmark without the query) keeps it.
+function resolutionFromQuery() {
+  const q = new URLSearchParams(location.search);
+  const w = parseInt(q.get('w'), 10);
+  const h = parseInt(q.get('h'), 10);
+  if (!w || !h) return null;
+  const key = w + 'x' + h;
+  return RESOLUTIONS.includes(key) ? key : null;
+}
+
+// ?res=WxH is the same for this visit only: it is not stored, so a room link
+// that opens the 1280x720 mahjong table (docs of asterism-console, the room
+// page) leaves this browser's own choice as it was. The zoom of such a visit
+// is not stored either (sessionResolution below).
+function sessionResolution() {
+  const r = new URLSearchParams(location.search).get('res');
+  return r && RESOLUTIONS.includes(r) ? r : null;
+}
+
+function currentResolution() {
+  const session = sessionResolution();
+  if (session) return session;
+  const fromQuery = resolutionFromQuery();
+  if (fromQuery) {
+    writeSetting('fmrb_web_res', fromQuery);
+    return fromQuery;
+  }
+  const stored = readSetting('fmrb_web_res', DEFAULT_RES);
+  return RESOLUTIONS.includes(stored) ? stored : DEFAULT_RES;
+}
+
+// ---- the machine's own settings, carried across a reload -----------------
+//
+// Config (inside the machine) writes /flash/etc/system_conf.toml, which lives
+// outside /home and is therefore rebuilt from the bundle on every visit: the
+// save worked and was forgotten by the next one. These keys are read back out
+// of the file after a change and handed to the machine again at boot, where
+// page_settings_wasm.c puts them in before the kernel reads its settings.
+//
+// Values are stored as they appear in the file -- quotes, 0x, true -- so they
+// go straight back in. They are tied to the bundle they came from: a new
+// build starts from its own defaults rather than carrying an old file's
+// values into a format that may have moved on.
+const CONF_KEYS = [
+  'language', 'keyboard_layout', 'timezone', 'debug_mode',
+  // Choices made in Config or by editing the file, each a single token on
+  // its own line. startup_app is also what ?app= sets; that one is pushed
+  // after these, so the URL wins when both are present -- and a value that
+  // came from the URL is not captured (see captureConfSettings), so a link
+  // that opens one app does not turn into the page's permanent setting.
+  'boot_splash', 'startup_app', 'mouse_scale_x', 'mouse_scale_y', 'wheel_lines',
+  // A wallpaper chosen inside the machine. It is a quoted path, which is why
+  // the capture below stops at whitespace rather than at the end of the line.
+  'wallpaper',
+  // Mute and volume (doc/audio_mute/), which the machine writes itself when
+  // the speaker cell, the menu or Config changes them.
+  'audio_mute', 'audio_volume',
+  // the [theme] block, so a theme chosen inside the machine also survives
+  'desktop_bg', 'menu_bg', 'window_bg', 'text', 'text_light',
+  'highlight', 'border', 'button', 'dir_color',
+  // Where Asterism apps find the Zenoh router (doc/ruby_asterism, B2). Set in
+  // the Network panel below, or by editing the file inside the machine; like
+  // startup_app, a value that came from the URL (?zenoh=) is not captured.
+  'zenoh_router',
+];
+const CONF_STORE = 'fmrb_web_conf';
+
+function readConfSettings() {
+  try {
+    const raw = JSON.parse(readSetting(CONF_STORE, '') || '{}');
+    if (raw.v !== (window.FMRB_WASM_VER || '')) return {};
+    return raw.k || {};
+  } catch (e) { return {}; }
+}
+
+function writeConfSettings(keys) {
+  writeSetting(CONF_STORE, JSON.stringify({ v: window.FMRB_WASM_VER || '', k: keys }));
+}
+
+// A Zenoh router as the machine's apps take it: the WebSocket locator,
+// ws/<host>:<port>. ws/ also means wss:// -- the link picks the scheme from
+// the page (wasm/zenoh/zp_ws_emscripten.c) -- so there is nothing else to say.
+const ZENOH_RE = /^ws\/[A-Za-z0-9_.:\[\]-]+$/;
+
+// The router ?zenoh= names for this visit, or '' (none, or not a locator).
+function urlZenoh() {
+  const z = new URLSearchParams(location.search).get('zenoh');
+  return z && ZENOH_RE.test(z) ? z : '';
+}
+
+// Set once the Network panel has changed the stored router during this
+// visit: the file the machine booted with still has the old one, and must not
+// be captured over the new choice (see captureConfSettings).
+let routerSetHere = false;
+
+// Set while Erase is going through: the reload it ends with fires pagehide,
+// and that would capture the machine's settings straight back into the store
+// the erase has just cleared.
+let erasing = false;
+
+// Read the file the machine has been writing and remember the keys we carry.
+function captureConfSettings() {
+  if (!M || erasing) return;
+  let text;
+  try {
+    text = M.FS.readFile(CONF_PATH, { encoding: 'utf8' });
+  } catch (e) { return; }
+  // With ?app= in the URL the file's startup_app is the URL's doing, not a
+  // choice made inside the machine (Config has no field for it), so it is
+  // left out: the link opens its app this once, and the page comes back
+  // plain next time. Written into the file by hand, it is kept like the rest.
+  const linkApp = urlApp();
+  // The router in the file is the URL's (?zenoh=) or one the Network panel
+  // has since replaced in the store: either way the store already says what
+  // the next start should use, so it is kept as it is.
+  const keepRouter = !!urlZenoh() || routerSetHere;
+  const keys = {};
+  for (const k of CONF_KEYS) {
+    if (k === 'startup_app' && linkApp) continue;
+    if (k === 'zenoh_router' && keepRouter) continue;
+    const m = text.match(new RegExp('^' + k + ' = ([^\\s#]+)', 'm'));
+    if (m) keys[k] = m[1];
+  }
+  if (keepRouter) {
+    const stored = readConfSettings().zenoh_router;
+    if (stored) keys.zenoh_router = stored;
+  }
+  if (Object.keys(keys).length) writeConfSettings(keys);
+}
+
+// The theme is Config's, inside the machine, and only Config's. The page had
+// a selector of its own with two of Config's three presets, which meant one
+// setting with two doors and a rule about which won -- and the rule did not
+// hold: choosing here dropped what Config had saved, then the reload's own
+// pagehide read it straight back out of the still-running machine and put it
+// back, so nothing appeared to happen. Config also offers dark, which this
+// never did.
+
+const resSelect = document.getElementById('res-select');
+resSelect.value = currentResolution();
+resSelect.addEventListener('change', () => {
+  writeSetting('fmrb_web_res', resSelect.value);
+  // Drop a stale ?w=&h= (or ?res=) on the way out, or it would win over the
+  // new choice.
+  location.replace(location.pathname + location.hash);
+});
+
+// ---- the frame around the screen (doc/web_crt, C3) -----------------------
+//
+// A cabinet drawn by CSS around #screen-box (index.html): a flat-panel
+// monitor with Sharp pixels, a TV set or a tube monitor with CRT. Only the
+// look of the page: nothing is drawn on the canvases, so the screenshots,
+// the regression, the pointer's arithmetic and the shader are what they were.
+// On by default. It steps aside in full screen and where not even 1x with
+// the frame fits the window; the zoom (Fit and the first visit's default)
+// leaves room for it. ?frame= chooses for one visit, like ?look=, and stores
+// nothing.
+const FRAME_STORE = 'fmrb_web_frame';
+const FRAME_CHOICES = ['tv', 'monitor', 'off'];
+const frameEl = document.getElementById('frame');
+const frameSelect = document.getElementById('frame-select');
+const sessionFrame = (() => {
+  const f = new URLSearchParams(location.search).get('frame');
+  return FRAME_CHOICES.includes(f) ? f : null;
+})();
+let frameChoice = sessionFrame || readSetting(FRAME_STORE, 'tv');
+if (!FRAME_CHOICES.includes(frameChoice)) frameChoice = 'tv';
+frameSelect.value = frameChoice;
+
+// The frame the page would like now: the choice says whether, and which of
+// the two CRT cabinets; Sharp pixels always get the flat panel.
+function wantedFrame() {
+  if (frameChoice === 'off') return null;
+  return crt ? frameChoice : 'lcd';
+}
+
+// What a kind of frame adds around the canvas, in CSS pixels, measured on
+// the page itself (the CSS is the one place its sizes are written). The
+// canvas is given a stand-in size and the box no width cap meanwhile, so a
+// narrow window does not squeeze the answer; everything is put back before
+// the browser paints. The third number is the stand's height, part of the
+// second: the zoom does not make room for it (a stand may hang below the
+// window; the screen and the bezel do not).
+function frameExtra(kind) {
+  const was = frameEl.dataset.kind;
+  const cw = canvas.style.width, ch = canvas.style.height;
+  frameEl.dataset.kind = kind;
+  frameEl.style.maxWidth = 'none';
+  canvas.style.width = '320px';
+  canvas.style.height = '180px';
+  const f = frameEl.getBoundingClientRect();
+  const c = canvas.getBoundingClientRect();
+  const st = frameEl.querySelector('.stand').getBoundingClientRect();
+  canvas.style.width = cw;
+  canvas.style.height = ch;
+  frameEl.style.maxWidth = '';
+  if (was) frameEl.dataset.kind = was; else delete frameEl.dataset.kind;
+  return [Math.ceil(f.width - c.width), Math.ceil(f.height - c.height), Math.floor(st.height)];
+}
+
+// The default zoom follows the frame for someone who has not chosen one: on
+// a change of the look or of the frame it is chosen again, so the new frame
+// fits. A zoom chosen here (or stored from an earlier visit) stays, and the
+// frame steps aside if the two do not fit. On a ?res= visit nothing is
+// stored, so only a choice made during the visit counts.
+let zoomChosen = false;
+
+function rechooseZoom() {
+  if (zoomChosen) return;
+  if (!sessionRes && readSetting('fmrb_web_zoom', null)) return;
+  zoomSelect.value = defaultZoom();
+}
+
+function chooseFrame(choice) {
+  if (!FRAME_CHOICES.includes(choice)) return;
+  frameChoice = choice;
+  frameSelect.value = choice;
+  if (!sessionFrame) writeSetting(FRAME_STORE, choice);
+  rechooseZoom();
+  applyZoom();
+}
+
+frameSelect.addEventListener('change', () => chooseFrame(frameSelect.value));
+
+// The resolution is the framebuffer; the zoom is only how large that
+// framebuffer is drawn, so it takes effect without a reload.
+const zoomSelect = document.getElementById('zoom-select');
+// By default the largest whole multiple that fits the window (1x, 2x or 3x):
+// pixels stay square and even, which a fractional Fit does not keep (at
+// 1280x720 Fit would draw most screens at an odd scale). Only when not even
+// 1x fits (a phone) does it start fitted. Only the first visit: once the
+// selector has been used, that choice is what comes back -- except on a
+// visit with ?res=, whose zoom belongs to that resolution and is neither
+// read nor stored.
+const sessionRes = sessionResolution() !== null;
+
+// The frame counts (but not its stand): the multiple is the largest that
+// fits with it. Where not even 1x fits with the frame, the frame will not be
+// shown (applyZoom), so the multiple is chosen without it, as before.
+function defaultZoom() {
+  const [baseW, baseH] = baseSize();
+  const top = frameEl.getBoundingClientRect().top;
+  const availW = document.documentElement.clientWidth - 24;
+  const availH = document.documentElement.clientHeight - top - 24;
+  const kind = wantedFrame();
+  if (kind) {
+    const [ew, eh0, stand] = frameExtra(kind);
+    const eh = eh0 - stand;
+    const zf = Math.floor(Math.min((availW - ew) / baseW, (availH - eh) / baseH));
+    if (zf >= 1) return String(Math.min(zf, 3));
+  }
+  const z = Math.floor(Math.min(availW / baseW, availH / baseH));
+  return z >= 1 ? String(Math.min(z, 3)) : 'fit';
+}
+
+zoomSelect.addEventListener('change', () => {
+  zoomChosen = true;
+  if (!sessionRes) writeSetting('fmrb_web_zoom', zoomSelect.value);
+  applyZoom();
+});
+
+// The size the page lays the machine out for: the resolution chosen above,
+// not the framebuffer of the moment. A fullscreen app in the high-resolution
+// mode (doc/fullscreen_hires/) switches the framebuffer from 426x240 to
+// 640x360 and back; the machine must not jump to 1.5 times its size on the
+// page when that happens, only get finer. Both sizes are 16:9, so drawing
+// the frame into the base size's box keeps it undistorted.
+function baseSize() {
+  const m = /^(\d+)x(\d+)$/.exec(resSelect.value || DEFAULT_RES);
+  return m ? [parseInt(m[1], 10), parseInt(m[2], 10)] : [426, 240];
+}
+
+function applyZoom() {
+  const full = document.fullscreenElement === screenBox;
+  const [baseW, baseH] = baseSize();
+  const zoom = full ? 'fit' : zoomSelect.value;   // full screen means fill it
+  // The frame, if it fits: with Fit, 1x and the frame within the window;
+  // with a chosen multiple, that multiple and the frame within its width
+  // (a page that has to scroll sideways loses the frame, not the pixels).
+  // The page's top does not move with the frame (it starts at #frame).
+  const top = frameEl.getBoundingClientRect().top;
+  const pageW = document.documentElement.clientWidth - 24;
+  const pageH = document.documentElement.clientHeight - top - 24;
+  let kind = full ? null : wantedFrame();
+  let extra = [0, 0];
+  if (kind) {
+    const [ew, eh, stand] = frameExtra(kind);
+    extra = [ew, eh - stand];   // the stand may hang below the window
+    const fits = zoom === 'fit'
+      ? pageW >= baseW + extra[0] && pageH >= baseH + extra[1]
+      : pageW >= (parseFloat(zoom) || 1) * baseW + extra[0];
+    if (!fits) { kind = null; extra = [0, 0]; }
+  }
+  if (kind) frameEl.dataset.kind = kind; else delete frameEl.dataset.kind;
+  let scale;
+  if (zoom === 'fit') {
+    // Contain: the whole screen visible, aspect kept, page chrome (and the
+    // frame) left room for. Fractional scales stay crisp because the canvas
+    // is pixelated.
+    let availW, availH;
+    if (full) {
+      availW = window.innerWidth;
+      availH = window.innerHeight;
+    } else {
+      availW = Math.max(pageW - extra[0], 160);
+      availH = Math.max(pageH - extra[1], 120);
+    }
+    scale = Math.max(Math.min(availW / baseW, availH / baseH), 0.5);
+  } else {
+    scale = parseFloat(zoom) || 1;
+  }
+  canvas.style.width = Math.round(baseW * scale) + 'px';
+  canvas.style.height = Math.round(baseH * scale) + 'px';
+  placeCrtView();
+}
+
+window.addEventListener('resize', () => applyZoom());
+applyZoom();
+
+// ---- full screen ----------------------------------------------------------
+
+// The whole display for the machine. Esc is the browser's own way out of full
+// screen, so the app never sees it; the Keyboard Lock API hands it back where
+// the browser has one (Chrome), and where it does not the page says so rather
+// than leaving people wondering why Esc quits.
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+fullscreenBtn.addEventListener('click', async () => {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+    return;
+  }
+  try {
+    await screenBox.requestFullscreen({ navigationUI: 'hide' });
+  } catch (e) {
+    console.warn('full screen refused:', e);
+    return;
+  }
+  try {
+    if (navigator.keyboard && navigator.keyboard.lock) {
+      await navigator.keyboard.lock(['Escape', 'KeyW']);
+    }
+  } catch (e) {
+    console.warn('keyboard lock unavailable; Escape leaves full screen:', e);
+  }
+});
+
+document.addEventListener('fullscreenchange', () => {
+  const full = document.fullscreenElement === screenBox;
+  fullscreenBtn.textContent = full ? 'Leave full screen' : 'Full screen';
+  if (!full && navigator.keyboard && navigator.keyboard.unlock) {
+    navigator.keyboard.unlock();
+  }
+  if (full) canvas.focus();   // keys go to the machine, not the page
+  applyZoom();
+});
+
+// ---- the CRT look ---------------------------------------------------------
+//
+// Off by default: the page is then exactly what it was, #screen drawn by the
+// browser with pixelated scaling. On, a WebGL2 canvas (crt.js) covers #screen
+// at the same place and size, in device pixels, and lets the events through
+// to it; #screen stays the picture (screenshots and the regression read it)
+// and keeps the focus. ?look=crt turns it on with the default strengths for
+// one visit, like ?res=, and stores nothing.
+
+const LOOK_STORE = 'fmrb_web_look';
+const CRT_STORE = 'fmrb_web_crt';
+const lookSelect = document.getElementById('look-select');
+const lookNote = document.getElementById('look-note');
+const crtControls = document.getElementById('crt-controls');
+const crtSliders = {};
+for (const k of FmrbCrt.KEYS) crtSliders[k] = document.getElementById('crt-' + k);
+const sessionLook = (() => {
+  const l = new URLSearchParams(location.search).get('look');
+  return l === 'crt' || l === 'flat' ? l : null;
+})();
+// ?webgl=0: behave as a browser without WebGL2 (to check the fallback).
+const NO_WEBGL = new URLSearchParams(location.search).get('webgl') === '0';
+
+function storedCrtSettings() {
+  const out = Object.assign({}, FmrbCrt.DEFAULTS);
+  try {
+    const o = JSON.parse(readSetting(CRT_STORE, '') || '{}');
+    for (const k of FmrbCrt.KEYS) {
+      const v = Number(o[k]);
+      if (Number.isFinite(v)) out[k] = Math.max(0, Math.min(100, Math.round(v)));
+    }
+  } catch (e) {}
+  return out;
+}
+
+// Put the view exactly over #screen, at device-pixel resolution. Called from
+// applyZoom (zoom, window size, full screen); a change of the device pixel
+// ratio (the browser's own zoom) arrives there as a resize too.
+function placeCrtView() {
+  if (!crt) return;
+  const r = canvas.getBoundingClientRect();
+  const box = screenBox.getBoundingClientRect();
+  crtCanvas.style.left = (r.left - box.left - screenBox.clientLeft) + 'px';
+  crtCanvas.style.top = (r.top - box.top - screenBox.clientTop) + 'px';
+  crtCanvas.style.width = r.width + 'px';
+  crtCanvas.style.height = r.height + 'px';
+  const dpr = window.devicePixelRatio || 1;
+  crt.resize(r.width * dpr, r.height * dpr);
+}
+
+function lookUnavailable(why) {
+  lookSelect.value = 'flat';
+  lookSelect.disabled = true;
+  crtControls.hidden = true;
+  lookNote.textContent = 'CRT: ' + why;
+  lookNote.hidden = false;
+}
+
+// The view is made the first time it is wanted and kept (hidden) after that,
+// so turning the look off and on again does not build a new GL context.
+let crtView = null;
+
+function setLook(look) {
+  if (look === 'crt' && !crt) {
+    if (!crtView) {
+      if (NO_WEBGL) {
+        console.warn('fmrb: CRT look unavailable: WebGL2 turned off by ?webgl=0');
+      } else {
+        crtView = FmrbCrt.create(crtCanvas);
+      }
+      if (!crtView) {
+        lookUnavailable('not available in this browser (no WebGL2)');
+        return false;
+      }
+    }
+    if (crtView.lost) {
+      lookUnavailable('the graphics context was lost; reload the page');
+      return false;
+    }
+    crt = crtView;
+    crtCanvas.hidden = false;
+    crt.setSettings(crtSettings);
+    if (imageData) crt.setImage(imageData);
+  } else if (look !== 'crt' && crt) {
+    crt = null;
+    crtCanvas.hidden = true;
+  }
+  lookSelect.value = crt ? 'crt' : 'flat';
+  crtControls.hidden = !crt;
+  rechooseZoom();
+  // The frame follows the look (a flat panel or a CRT cabinet), and its size
+  // the zoom; this also puts the view over #screen.
+  applyZoom();
+  return !!crt;
+}
+
+function showCrtSliders() {
+  for (const k of FmrbCrt.KEYS) crtSliders[k].value = String(crtSettings[k]);
+}
+
+// A change from the panel (or the driver, which goes through the same door):
+// stored, except on a ?look= visit, whose look is that visit's only.
+function chooseLook(look) {
+  const on = setLook(look);
+  if (!sessionLook) writeSetting(LOOK_STORE, on ? 'crt' : 'flat');
+  return on;
+}
+
+function chooseCrtSettings(values) {
+  for (const k of FmrbCrt.KEYS) {
+    const v = Number(values[k]);
+    if (Number.isFinite(v)) crtSettings[k] = Math.max(0, Math.min(100, Math.round(v)));
+  }
+  if (crt) crt.setSettings(crtSettings);
+  showCrtSliders();
+  if (!sessionLook) writeSetting(CRT_STORE, JSON.stringify(crtSettings));
+}
+
+lookSelect.addEventListener('change', () => chooseLook(lookSelect.value));
+for (const k of FmrbCrt.KEYS) {
+  crtSliders[k].addEventListener('input', () => chooseCrtSettings({ [k]: crtSliders[k].value }));
+}
+document.getElementById('crt-defaults').addEventListener('click',
+  () => chooseCrtSettings(FmrbCrt.DEFAULTS));
+
+crtSettings = sessionLook === 'crt' ? Object.assign({}, FmrbCrt.DEFAULTS) : storedCrtSettings();
+showCrtSliders();
+setLook(sessionLook || readSetting(LOOK_STORE, 'flat'));
+
+// The zoom of this visit, chosen once the look (and with it the frame) is
+// known. Until here the page was laid out at the selector's first option.
+zoomSelect.value = (sessionRes ? null : readSetting('fmrb_web_zoom', null)) || defaultZoom();
+applyZoom();
+
+// The machine does not power on until the click -- that is the "start"
+// the overlay promises, and it puts the AudioContext (which needs the
+// gesture) in place BEFORE boot, so the boot jingle is actually heard.
+//
+// Say so out loud when the page is not cross-origin isolated: the firmware's
+// threads live in a SharedArrayBuffer, so without it the module fails to
+// instantiate with an error that names none of this. On a static host
+// coi-serviceworker installs itself and reloads once, and the second load is
+// isolated; if it still is not, the page cannot run and this is why.
+if (typeof crossOriginIsolated !== 'undefined' && !crossOriginIsolated) {
+  statusLine.textContent =
+    'waiting for cross-origin isolation (the page reloads itself once)';
+} else {
+  statusLine.textContent = 'ready';
+}
+if (LINK_REFUSED) {
+  statusLine.textContent = 'not started: ' + LINK_REFUSED_TEXT;
+  startOverlay.textContent = LINK_REFUSED_TEXT;
+  startOverlay.classList.add('refused');
+} else if (ROOM) {
+  statusLine.textContent = 'room ' + ROOM.slot + ' (until ' + roomUntil() + '): click to start';
+}
+
+const moduleConfig = {
+  // The .data (and .wasm) live next to core_web.js, not next to this page;
+  // emscripten resolves the data file against the page URL unless told.
+  // The version suffix is what keeps a fresh .data from being paired with a
+  // cached .wasm; `rake wasm:dist` fills both of these in (dev serves
+  // no-cache and leaves them at "../build/" and "").
+  locateFile: (p) => (window.FMRB_WASM_BASE || '') + p + (window.FMRB_WASM_VER || ''),
+  print: (t) => console.log(t),
+  printErr: (t) => console.warn(t),
+};
+// Settings travel as argv, NOT as page-side FS edits. The C side
+// (wasm/backend/page_settings_wasm.c) applies these on the machine's own
+// thread before the kernel reads its settings, which is the surer order
+// whatever the page can reach (see ?fsprobe=1 below and report/storage_t0.md).
+moduleConfig.arguments = [];
+{
+  const res = currentResolution();
+  if (res !== DEFAULT_RES) moduleConfig.arguments.push('--fmrb-res=' + res);
+  const conf = readConfSettings();
+  for (const k of Object.keys(conf)) {
+    moduleConfig.arguments.push('--fmrb-conf=' + k + '=' + conf[k]);
+  }
+  // ?app= opens one app as soon as the desktop is up, so a link can carry an
+  // app rather than instructions for finding it. Either a full path or an id
+  // that was installed from the store, which lives at a known place.
+  //
+  // The app has to be on the machine already: the page cannot install one,
+  // and it does not try -- the store is an app now, not part of this page.
+  const want = urlApp();
+  if (want && /^[A-Za-z0-9_./-]+$/.test(want)) {
+    const path = want.includes('/') ? want : `/app/usr/${want}/${want}.app.rb`;
+    moduleConfig.arguments.push(`--fmrb-conf=startup_app="${path}"`);
+  }
+  // ?zenoh=ws/<host>:<port> names the Zenoh router for this visit
+  // (zenoh_router in system_conf.toml; doc/ruby_asterism, B1). Like ?app=,
+  // it is not carried into the stored settings: a link that names a router
+  // does not change where the page goes next time. It comes after the stored
+  // settings, so it wins over the Network panel's router.
+  const zenoh = urlZenoh();
+  if (zenoh) moduleConfig.arguments.push(`--fmrb-conf=zenoh_router="${zenoh}"`);
+  // The pass goes to the link through the module object, never as an
+  // argument (arguments end up in the machine's settings).
+  if (ROOM && !LINK_REFUSED) {
+    // The room: its key goes to the link through the module object (never
+    // an argument), with the key space every session of the page gets.
+    moduleConfig.zenohRoom = ROOM.key;
+    moduleConfig.zenohNamespace = ROOM_NAMESPACE;
+    moduleConfig.zenohGaveUp = (fails) => {
+      statusLine.textContent = `room ${ROOM.slot}: ${fails} tries to connect again failed; the room may have ` +
+        'closed or ended (ask for a new link)';
+      showRoomState(' -- not connected (the room may have closed)');
+    };
+  } else if (ZENOH_PASS && !PASS_WITHOUT_NODE) {
+    moduleConfig.zenohPass = ZENOH_PASS;
+    moduleConfig.zenohPage = ZENOH_PAGE;
+    // The link stopped trying (zp_ws_emscripten.c): with a pass, most likely
+    // because the pass has closed.
+    moduleConfig.zenohGaveUp = (fails) => {
+      statusLine.textContent = `the network: ${fails} tries to connect again failed; the pass may have closed ` +
+        '(open the page again from the console for a new one)';
+    };
+  }
+}
+// Everything the page wants to do before main() goes in here, in order.
+moduleConfig.preRun = [];
+
+// ---- /home that outlives the tab ---------------------------------------
+//
+// There is one filesystem and it lives on this thread: every file call the
+// machine makes is proxied here (measured in report/storage_t0.md). So the
+// page can put a persistent mount under the machine's feet.
+//
+// /home is the one directory the bundle ships nothing into, which is what
+// makes this safe: the packer's own unpack runs after this and would
+// otherwise overwrite what we put down. We create the directory, mount
+// IDBFS over it, and read IndexedDB back BEFORE the machine boots -- as a
+// run dependency, the same gate the packed .data uses, so main() waits for
+// both.
+//
+// If any of it fails (private window, storage refused), the machine still
+// boots; /home is then an ordinary directory that lasts as long as the tab.
+const HOME_PATH = '/flash/home';
+const APPUSR_PATH = '/flash/app/usr';
+const HOME_DEP = 'fmrb-home-load';
+// Both places the visitor's own work lands. /home holds what they write;
+// /app/usr is where an app has to sit for the launcher to find it, so keeping
+// one without the other would mean a program that survives but cannot be
+// started. The tar carries each under its own name.
+const STORES = [
+  { path: HOME_PATH, tar: 'home' },
+  { path: APPUSR_PATH, tar: 'app-usr' },
+];
+let homeStore = 'volatile';
+
+// One tab writes. Two machines sharing one IndexedDB would overwrite each
+// other wholesale (last one to sync wins), so the second tab runs on a
+// copy of /home that is read once and thrown away, rather than eating the
+// first one's work. The lock is held
+// for the life of the page, which is exactly how long the machine runs.
+let homeWriter = null;
+let lockDecided = Promise.resolve();
+if (navigator.locks) {
+  let decided;
+  lockDecided = new Promise((r) => { decided = r; });
+  navigator.locks.request('fmrb-home', { ifAvailable: true }, (lock) => {
+    homeWriter = !!lock;
+    decided();
+    // Say so before the machine is even switched on: a second tab that is
+    // about to lose its work should hear about it first.
+    if (!lock) showStorageState();
+    return lock ? new Promise(() => {}) : undefined;
+  }).catch(() => { homeWriter = true; decided(); });
+} else {
+  homeWriter = true;
+}
+
+function mountHome(mod) {
+  mod.addRunDependency(HOME_DEP);
+  lockDecided.then(() => {
+    if (homeWriter === false) {
+      // A copy of what the writing tab saved, read once and never written
+      // back: the apps find their settings (the mahjong name, the switches)
+      // as the first tab left them, and nothing this tab changes reaches
+      // IndexedDB. No autoPersist, and every syncfs(false) below is only for
+      // homeStore === 'persistent'. It used to start empty, which made a
+      // room opened next to another tab forget the player's name.
+      homeStore = 'second tab';
+      console.warn('fmrb: another tab owns /home; this one runs on a copy ' +
+                   'that is thrown away');
+      try {
+        for (const st of STORES) {
+          mod.FS.mkdirTree(st.path);
+          mod.FS.mount(mod.FS.filesystems.IDBFS, { autoPersist: false }, st.path);
+        }
+        mod.FS.syncfs(true, (err) => {
+          if (err) console.warn('fmrb: the copy of the saved files could not be read:', err);
+          mod.removeRunDependency(HOME_DEP);
+          showStorageState();
+        });
+      } catch (e) {
+        console.warn('fmrb: the copy of the saved files could not be read:', e);
+        mod.removeRunDependency(HOME_DEP);
+        showStorageState();
+      }
+      return;
+    }
+    try {
+      for (const st of STORES) {
+        mod.FS.mkdirTree(st.path);
+        mod.FS.mount(mod.FS.filesystems.IDBFS, { autoPersist: true }, st.path);
+      }
+    } catch (e) {
+      homeStore = 'not available';
+      console.warn('fmrb: files will not persist (mount failed):', e);
+      mod.removeRunDependency(HOME_DEP);
+      showStorageState();
+      return;
+    }
+    // One syncfs reads every IDBFS mount back, so a single callback covers
+    // both stores.
+    mod.FS.syncfs(true, (err) => {
+      if (err) {
+        homeStore = 'not available';
+        console.warn('fmrb: saved files could not be read back:', err);
+      } else {
+        homeStore = 'persistent';
+      }
+      mod.removeRunDependency(HOME_DEP);
+      showStorageState();
+    });
+  });
+}
+moduleConfig.preRun.push(mountHome);
+
+// ---- this browser's Asterism node ID (doc/ruby_asterism, B2) -------------
+//
+// A board is told apart on the network by its mDNS name, fmruby-<6 hex>. A
+// browser has none, so the page makes one on its first visit, wasm-<6 hex>,
+// and keeps it in localStorage; the machine gets it as asterism_node, which
+// the apps use when /home/asterism/config.toml does not name the node.
+//
+// It is this browser's identity rather than a setting: Erase leaves it, and a
+// backup does not carry it (restored in another browser, it would put two
+// machines on the network under one name).
+//
+// One ID, one tab. The tab that holds the /home lock (above) uses the kept
+// ID. A second tab is already a throw-away machine -- its files are not
+// saved -- and it gets a fresh ID that is not kept either, so both tabs can
+// be on the network at once without one taking the other's name.
+//
+// A link from the console names the ID (#zenoh_node=, G1.5: tied to the
+// user who opened it, and a second page of the same user gets another
+// name). That ID is used for this visit in any tab and is not kept: the kept
+// one stays for visits without such a link.
+const NODE_STORE = 'fmrb_web_node';
+const NODE_RE = /^wasm-[0-9a-f]{6}$/;
+let nodeId = '';
+let nodeKept = false;
+
+function newNodeId() {
+  const b = new Uint8Array(3);
+  crypto.getRandomValues(b);
+  return 'wasm-' + Array.from(b, (x) => x.toString(16).padStart(2, '0')).join('');
+}
+
+// ---- a browser's seat in a room (G2b) -----------------------------------
+//
+// In a room everyone holds the same key, so the key alone cannot tell pages
+// apart. The router can: each slot has seats, each seat a certificate whose
+// ACL lets it write only under its own node ID and call only as itself
+// (asterism-console docs/rooms.md "Seats"). The page makes a secret of its
+// own for the room, once (16 random bytes), and before the machine starts it
+// asks the door for a seat with it (takeSeat: POST /room/seat). The door
+// answers with the seat's node ID (wasm-0103), the same one for the same
+// secret until the room is over, so a reload is the same node. The machine
+// runs as that node, and the WebSocket hands the secret over again as its
+// first message (zp_ws_emscripten.c), which is how the door knows which
+// seat's certificate to use. The secret goes nowhere else: not in a URL, an
+// argument, a file of the machine or the log.
+//
+// Coming back (GS10): the secret is also the page's way back into the room.
+// It is kept in localStorage for every tab of this browser, under the
+// room's ID (never under or next to the key), with the room's end:
+// fmrb_room_secret_<room> = {"s": <secret>, "exp": <the key's end>}. A tab
+// closed and opened again, or the link opened in a second tab, brings the
+// same secret, so the door gives the same seat -- the same node, and so the
+// same member at the game host: its seat, its name, its hand. The door
+// (asterism-console 0.3.9) cuts the older page's connections on that seat
+// when the newer page asks for it (closed 4403); a door before it gives the
+// seat too and leaves the older connection to end by itself. The tab that
+// asked last has the seat: it writes its own random ID to
+// fmrb_room_holder_<room> before it asks, and an older tab of this browser
+// that is cut (4403 makes it ask for its seat again, reseat) and finds
+// another ID there stops its tries and says the room is open in another
+// tab, instead of taking the seat back. The entries of rooms that have
+// ended are removed when a page starts (forgetEndedRooms), and so are those
+// of before GS10 (the secret alone, no end) of other rooms.
+const ROOM_SECRET_STORE = 'fmrb_room_secret_';
+const ROOM_HOLDER_STORE = 'fmrb_room_holder_';
+const SECRET_RE = /^[0-9a-f]{32}$/;
+let roomSecret = '';
+let roomSeat = '';
+
+function newSecret() {
+  const b = new Uint8Array(16);
+  crypto.getRandomValues(b);
+  return Array.from(b, (x) => x.toString(16).padStart(2, '0')).join('');
+}
+
+// This tab, for fmrb_room_holder_<room> (not a secret: it only tells tabs
+// apart).
+const TAB_ID = newSecret().slice(0, 16);
+
+// The secret of a kept entry ('' when there is none): {"s", "exp"}, or a
+// page's of before GS10, the secret alone.
+function keptSecret(v) {
+  if (SECRET_RE.test(v)) return v;
+  try {
+    const o = JSON.parse(v);
+    return o && typeof o === 'object' && SECRET_RE.test(String(o.s)) ? String(o.s) : '';
+  } catch (e) {
+    return '';
+  }
+}
+
+// The room's end in a kept entry (Unix seconds), 0 when it has none.
+function keptEnd(v) {
+  try {
+    const o = JSON.parse(v);
+    return o && typeof o === 'object' ? Number(o.exp) || 0 : 0;
+  } catch (e) {
+    return 0;
+  }
+}
+
+// Removes the kept secrets (and holders) of rooms that have ended: every
+// room but this page's own whose entry has no end in the future.
+function forgetEndedRooms() {
+  const now = Date.now() / 1000;
+  const keys = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i));
+  } catch (e) {
+    return;
+  }
+  for (const k of keys) {
+    let room = null;
+    if (k && k.startsWith(ROOM_SECRET_STORE)) room = k.slice(ROOM_SECRET_STORE.length);
+    else if (k && k.startsWith(ROOM_HOLDER_STORE)) room = k.slice(ROOM_HOLDER_STORE.length);
+    if (room === null || (ROOM && room === ROOM.room)) continue;
+    if (keptEnd(readSetting(ROOM_SECRET_STORE + room, '')) > now) continue;
+    try { localStorage.removeItem(k); } catch (e) {}
+  }
+}
+forgetEndedRooms();
+
+// The room's secret (roomSecret, nodeKept): the kept one, or a new one that
+// is kept from now on. Every tab of the browser uses the same one.
+let roomSecretKept = false;
+function decideRoomSecret() {
+  if (roomSecret) {
+    nodeKept = roomSecretKept;
+    return;
+  }
+  const key = ROOM_SECRET_STORE + ROOM.room;
+  let secret = keptSecret(readSetting(key, ''));
+  if (!secret) secret = newSecret();
+  writeSetting(key, JSON.stringify({ s: secret, exp: ROOM.exp }));
+  // Storage refused (a private window in some browsers): the secret lasts
+  // as long as the tab, and the panel says so.
+  nodeKept = keptSecret(readSetting(key, '')) === secret;
+  roomSecret = secret;
+  roomSecretKept = nodeKept;
+}
+
+// This tab asks for the seat (before the request, so an older tab cut by
+// it already reads this tab's ID).
+function holdRoomSeat() {
+  writeSetting(ROOM_HOLDER_STORE + ROOM.room, TAB_ID);
+}
+
+// Another tab of this browser asked for the seat after this one.
+function roomSeatElsewhere() {
+  const h = readSetting(ROOM_HOLDER_STORE + ROOM.room, '');
+  return h !== '' && h !== TAB_ID;
+}
+
+// This tab gives the seat up to the newer tab: no more tries.
+function giveRoomSeatUp(mod) {
+  mod.zenohRoomStop = true;
+  statusLine.textContent = 'room ' + ROOM.slot + ': not connected: the room was opened in another tab of this ' +
+    'browser, which has this seat now. Reload this page to take it back.';
+  showRoomState(' -- open in another tab (reload to take the seat back)');
+}
+
+// Where the room's door takes seat requests: the router of the link (?zenoh=,
+// else the Network panel's) as the WebSocket link reaches it,
+// https://<host>:<port>/room/seat. The link goes through the door only on
+// wss:// (zp_ws_emscripten.c): a page served over https and a router that is
+// not this computer. Anything else: '' (a room cannot be used).
+function seatUrl() {
+  if (location.protocol !== 'https:') return '';
+  const loc = urlZenoh() || storedRouter();
+  if (!loc) return '';
+  let u;
+  try { u = new URL('https://' + loc.slice(3) + '/'); } catch (e) { return ''; }
+  const host = u.hostname.toLowerCase();
+  if (host === 'localhost' || host.endsWith('.localhost') || /^127[.][0-9]+[.][0-9]+[.][0-9]+$/.test(host) ||
+      host === '[::1]') return '';
+  const port = loc.slice(3).match(/:([0-9]+)$/);
+  return 'https://' + u.hostname + (port ? ':' + port[1] : '') + '/room/seat';
+}
+
+// A seat's node ID: the console's prefix, the slot, the seat
+// (^<prefix>[0-9]{4}$; the prefix is wasm- unless the console says otherwise).
+const SEAT_NODE_RE = /^([A-Za-z0-9][A-Za-z0-9_.-]{0,20})([0-9]{2})([0-9]{2})$/;
+
+// Ask the door for this page's seat: { node } or { error, retry }.
+async function takeSeat() {
+  const url = seatUrl();
+  if (!url) {
+    return { error: 'A room needs the page on https:// and a router that is not this computer.' };
+  }
+  let res;
+  let data = null;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ t: ROOM.key, s: roomSecret }),
+      cache: 'no-store',
+      referrerPolicy: 'no-referrer',
+      credentials: 'omit',
+    });
+    data = await res.json().catch(() => null);
+  } catch (e) {
+    return { error: 'The room\'s router could not be reached.', retry: true };
+  }
+  if (res.status === 200 && data) {
+    const m = SEAT_NODE_RE.exec(String(data.node || ''));
+    if (m && m[2] === ROOM.slot && (!data.seat || String(data.seat) === m[3])) return { node: data.node, seat: m[3] };
+    return { error: 'The room\'s door gave a seat this page cannot use.' };
+  }
+  switch (res.status) {
+    case 409: return { error: 'Every seat in this room is taken.', retry: true };
+    case 410: return { error: 'This room has ended or was closed. Ask for a new link.' };
+    case 403: return { error: 'The room\'s door refused this link. Ask for the link again.' };
+    case 429: return { error: 'Too many tries at the room\'s door; wait a minute.', retry: true };
+    case 404: case 405:
+      return { error: 'The room\'s server is too old for this page (it has no seats). Ask whoever runs it to update.' };
+    default: return { error: 'The room\'s door answered ' + res.status + '.', retry: true };
+  }
+}
+
+// The link lost its seat (closed 4403, zp_ws_emscripten.c): the door no
+// longer holds one for the secret (it went to another page while this one
+// was away, or the table was lost). Take one again: the same node means
+// the link can go on; another node cannot be used by the running machine,
+// so the link stops and the page says to reload.
+let reseating = null;
+function reseat(mod) {
+  if (reseating) return;
+  // Cut because a newer tab of this browser came with the secret: that
+  // tab has the seat, this one does not take it back.
+  if (roomSeatElsewhere()) {
+    giveRoomSeatUp(mod);
+    return;
+  }
+  mod.zenohSeatWait = true;
+  reseating = takeSeat().then((got) => {
+    if (got.node && got.node === nodeId) return;
+    mod.zenohRoomStop = true;
+    const why = got.node ? 'the room\'s door no longer holds this page\'s seat.' : got.error;
+    statusLine.textContent = 'room ' + ROOM.slot + ': not connected: ' + why + ' Reload the page to take a seat again.';
+    showRoomState(' -- not connected (reload the page)');
+  }).finally(() => {
+    mod.zenohSeatWait = false;
+    reseating = null;
+  });
+}
+
+function decideNodeId() {
+  nodeKept = false;
+  if (ROOM) {
+    // The node is the seat's, known once the door has answered (startMachine).
+    decideRoomSecret();
+    nodeId = roomSeat ? nodeId : '';
+  } else if (LINK_NODE && !ROOM) {
+    nodeId = LINK_NODE;
+  } else if (homeWriter !== false) {
+    const kept = readSetting(NODE_STORE, '');
+    if (NODE_RE.test(kept)) {
+      nodeId = kept;
+      nodeKept = true;
+    } else {
+      nodeId = newNodeId();
+      writeSetting(NODE_STORE, nodeId);
+      // Storage refused (a private window in some browsers): the ID lasts as
+      // long as the tab, and the panel says so.
+      nodeKept = readSetting(NODE_STORE, '') === nodeId;
+    }
+  } else {
+    nodeId = newNodeId();
+  }
+  showNetworkState();
+}
+lockDecided.then(() => { if (!nodeId) decideNodeId(); });
+
+// ---- the Network panel: the router, and the ID above -------------------
+//
+// The router is the zenoh_router setting (CONF_KEYS), written into the store
+// the machine's settings live in, so it is handed in at the next start like
+// everything Config saves. Empty means the bundle's own (ws/localhost:7449).
+const routerInput = document.getElementById('router-input');
+const routerNote = document.getElementById('router-note');
+const nodeStateEl = document.getElementById('node-state');
+const ROUTER_NOTE = 'used from the next start; ?zenoh= in the URL overrides it once';
+
+function storedRouter() {
+  const v = readConfSettings().zenoh_router || '';
+  return v.replace(/^"(.*)"$/, '$1');
+}
+
+function showNetworkState() {
+  if (nodeStateEl) {
+    let text = nodeId ? 'node ' + nodeId : 'node: checking...';
+    if (ROOM) text = nodeId ? 'node ' + nodeId + ' (seat ' + roomSeat + ' in the room)' : 'node: the room gives a seat at start';
+    if (PASS_WITHOUT_NODE) text = 'node: none (the link has a pass but no node ID; not connecting)';
+    if (PASS_WITHOUT_NODE) { /* said above */ }
+    else if (nodeId && LINK_NODE && !ROOM) text += ' (from the link, this visit)';
+    else if (nodeId && !ROOM && homeWriter === false) text += ' (this tab only)';
+    else if ((nodeId || ROOM) && !nodeKept) text += ' (not kept: storage refused)';
+    nodeStateEl.textContent = text;
+  }
+  showRoomState('');
+}
+
+// The room this visit is in (G2): a line under the Network panel's heading.
+function showRoomState(extra) {
+  if (!ROOM || ROOM_REFUSED_TEXT) return;
+  const el = document.getElementById('room-state');
+  if (!el) return;
+  el.hidden = false;
+  el.textContent = 'Room ' + ROOM.slot + ' until ' + roomUntil() + ': keys under ' + ROOM_NAMESPACE +
+    '/, through the door with the room\'s key' + (extra || '');
+}
+
+if (routerInput) {
+  routerInput.value = storedRouter();
+  if (urlZenoh() && routerNote) {
+    routerNote.textContent = 'this visit: ' + urlZenoh() + ' (from the URL)';
+  }
+  if (ROOM && !LINK_REFUSED && routerNote) {
+    routerNote.textContent += '; room: set for this visit (not kept, sent on wss:// only)';
+  } else if (ZENOH_PASS && !PASS_WITHOUT_NODE && routerNote) {
+    routerNote.textContent += '; pass: set for this visit (not kept, sent on wss:// only)';
+  }
+  routerInput.addEventListener('change', () => {
+    const v = routerInput.value.trim();
+    if (v && !ZENOH_RE.test(v)) {
+      routerNote.textContent = 'not saved: write ws/<host>:<port>';
+      return;
+    }
+    const keys = readConfSettings();
+    if (v) keys.zenoh_router = '"' + v + '"';
+    else delete keys.zenoh_router;
+    writeConfSettings(keys);
+    routerSetHere = true;
+    routerNote.textContent = 'saved; ' + ROUTER_NOTE;
+  });
+}
+
+// What the page says about all this. "persistent" only means the files come
+// back on a reload; whether the browser may throw them away later is the
+// separate question navigator.storage.persist() answers.
+const storageStateEl = document.getElementById('storage-state');
+let storageDurable = null;
+let storageUsage = '';
+function showStorageState() {
+  if (!storageStateEl) return;
+  let text;
+  if (homeStore === 'persistent') {
+    text = 'kept in this browser';
+    if (storageDurable === true) text += ', protected from eviction';
+    else if (storageDurable === false) text += ', but the browser may reclaim it';
+  } else if (homeStore === 'second tab' || homeWriter === false) {
+    text = 'another tab has them open -- changes here are NOT saved';
+  } else {
+    text = 'not saved (this browser refuses storage; the tab keeps them only ' +
+           'while it is open)';
+  }
+  if (storageUsage) text += ' -- ' + storageUsage;
+  storageStateEl.textContent = text;
+}
+async function measureStorage() {
+  try {
+    if (navigator.storage && navigator.storage.persist && homeStore === 'persistent') {
+      storageDurable = await navigator.storage.persisted();
+      if (!storageDurable) storageDurable = await navigator.storage.persist();
+    }
+    if (navigator.storage && navigator.storage.estimate) {
+      const est = await navigator.storage.estimate();
+      if (est && est.usage != null) {
+        storageUsage = 'using ' + Math.max(1, Math.round(est.usage / 1024)) + ' KB';
+      }
+    }
+  } catch (e) {
+    console.warn('fmrb: storage estimate unavailable:', e);
+  }
+  showStorageState();
+}
+
+// ---- taking /home with you ---------------------------------------------
+//
+// Browser storage is not a safe place to keep the only copy: a private
+// window never keeps it, and a browser may reclaim it after a while of not
+// visiting. So the page can hand the whole of /home over as a tar and take
+// one back. tar (not zip) because it is a few lines to write and to read,
+// and because the device speaks it too.
+
+function tarOctal(value, length) {
+  let s = value.toString(8);
+  while (s.length < length - 1) s = '0' + s;
+  return s + '\0';
+}
+
+function tarHeader(name, size, isDir) {
+  const h = new Uint8Array(512);
+  const put = (offset, text) => {
+    for (let i = 0; i < text.length; i++) h[offset + i] = text.charCodeAt(i);
+  };
+  // 100 bytes of name is all a plain tar header has; longer paths would need
+  // the prefix field, and nothing in /home comes close.
+  put(0, name.slice(0, 100));
+  put(100, tarOctal(isDir ? 0o755 : 0o644, 8));
+  put(108, tarOctal(0, 8));
+  put(116, tarOctal(0, 8));
+  put(124, tarOctal(size, 12));
+  put(136, tarOctal(Math.floor(Date.now() / 1000), 12));
+  put(148, '        ');            // checksum field counts as spaces
+  put(156, isDir ? '5' : '0');
+  put(257, 'ustar\0' + '00');
+  let sum = 0;
+  for (let i = 0; i < 512; i++) sum += h[i];
+  put(148, sum.toString(8).padStart(6, '0') + '\0 ');
+  return h;
+}
+
+// Walk one store and return [{name, data|null, isDir}] with names relative
+// to its root.
+function storeEntries(mod, root) {
+  const out = [];
+  const walk = (dir, prefix) => {
+    let names;
+    try {
+      names = mod.FS.readdir(dir);
+    } catch (e) {
+      return;
+    }
+    for (const name of names) {
+      if (name === '.' || name === '..') continue;
+      const path = dir + '/' + name;
+      const rel = prefix + name;
+      let st;
+      try {
+        st = mod.FS.stat(path);
+      } catch (e) {
+        continue;
+      }
+      if (mod.FS.isDir(st.mode)) {
+        out.push({ name: rel + '/', isDir: true });
+        walk(path, rel + '/');
+      } else if (mod.FS.isFile(st.mode)) {
+        out.push({ name: rel, isDir: false, data: mod.FS.readFile(path) });
+      }
+    }
+  };
+  walk(root, '');
+  return out;
+}
+
+// The settings are not files -- they live in this browser's localStorage --
+// so without this the tar would restore someone's programs on another machine
+// and leave them typing in English again. One entry at the root of the
+// archive, recognised by name on the way back in.
+const SETTINGS_ENTRY = '.fmrb-settings.json';
+
+function settingsSnapshot() {
+  return JSON.stringify({
+    conf: readConfSettings(),
+    res: readSetting('fmrb_web_res', ''),
+    zoom: readSetting('fmrb_web_zoom', ''),
+    look: readSetting('fmrb_web_look', ''),
+    crt: readSetting('fmrb_web_crt', ''),
+    frame: readSetting(FRAME_STORE, ''),
+  });
+}
+
+// Restored settings are stamped with THIS bundle's version: they were asked
+// for here, so they apply here, whatever build wrote them.
+function applySettingsSnapshot(text) {
+  let o;
+  try { o = JSON.parse(text); } catch (e) { return false; }
+  if (!o || typeof o !== 'object') return false;
+  if (o.conf && typeof o.conf === 'object') writeConfSettings(o.conf);
+  if (o.res) writeSetting('fmrb_web_res', o.res);
+  if (o.zoom) writeSetting('fmrb_web_zoom', o.zoom);
+  if (o.look) writeSetting('fmrb_web_look', o.look);
+  if (o.crt) writeSetting('fmrb_web_crt', o.crt);
+  if (o.frame) writeSetting(FRAME_STORE, o.frame);
+  return true;
+}
+
+function exportHome() {
+  if (!M) return;
+  const parts = [];
+  for (const st of STORES) {
+    for (const e of storeEntries(M, st.path)) {
+      const name = st.tar + '/' + e.name;
+      const size = e.isDir ? 0 : e.data.length;
+      parts.push(tarHeader(name, size, e.isDir));
+      if (!e.isDir) {
+        parts.push(e.data);
+        const pad = (512 - (size % 512)) % 512;
+        if (pad) parts.push(new Uint8Array(pad));
+      }
+    }
+  }
+  {
+    const data = new TextEncoder().encode(settingsSnapshot());
+    parts.push(tarHeader(SETTINGS_ENTRY, data.length, false));
+    parts.push(data);
+    const pad = (512 - (data.length % 512)) % 512;
+    if (pad) parts.push(new Uint8Array(pad));
+  }
+  parts.push(new Uint8Array(1024));  // two empty blocks end a tar
+  const blob = new Blob(parts, { type: 'application/x-tar' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const now = new Date();
+  const stamp = now.toISOString().slice(0, 10).replace(/-/g, '');
+  a.download = 'fmrb-home-' + stamp + '.tar';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+  statusLine.textContent = 'wrote ' + entries.length + ' entries to a .tar';
+}
+
+// A tar from anywhere at all: every name is rebuilt from safe parts, so
+// nothing in the archive can name a path outside /home.
+function safeRelative(name) {
+  const parts = name.split('/').filter((p) => p !== '' && p !== '.' && p !== '..');
+  return parts.join('/');
+}
+
+// Where a tar entry belongs. Names written by this page start with the store
+// they came from; a tar from before there were two stores has neither prefix,
+// and every one of its files was /home's.
+function importTarget(rel) {
+  for (const st of STORES) {
+    if (rel === st.tar || rel.startsWith(st.tar + '/')) {
+      const tail = rel.slice(st.tar.length + 1);
+      return tail ? st.path + '/' + tail : null;  // the root itself is there
+    }
+  }
+  return HOME_PATH + '/' + rel;
+}
+
+function importTar(mod, bytes) {
+  let offset = 0;
+  let files = 0;
+  let settings = false;
+  const decoder = new TextDecoder();
+  while (offset + 512 <= bytes.length) {
+    const head = bytes.subarray(offset, offset + 512);
+    if (head.every((b) => b === 0)) break;
+    const rawName = decoder.decode(head.subarray(0, 100)).replace(/\0.*$/, '');
+    const sizeField = decoder.decode(head.subarray(124, 136)).replace(/[\0 ]/g, '');
+    const size = parseInt(sizeField, 8) || 0;
+    const type = String.fromCharCode(head[156]);
+    offset += 512;
+    const rel = safeRelative(rawName);
+    if (rel === SETTINGS_ENTRY) {
+      settings = applySettingsSnapshot(
+        new TextDecoder().decode(bytes.subarray(offset, offset + size)));
+      offset += Math.ceil(size / 512) * 512;
+      continue;
+    }
+    const full = rel ? importTarget(rel) : null;
+    if (full) {
+      if (type === '5') {
+        try { mod.FS.mkdirTree(full); } catch (e) { /* already there */ }
+      } else if (type === '0' || type === '\0' || type === '') {
+        const slash = full.lastIndexOf('/');
+        try { mod.FS.mkdirTree(full.slice(0, slash)); } catch (e) { /* already there */ }
+        mod.FS.writeFile(full, bytes.subarray(offset, offset + size));
+        files++;
+      }
+    }
+    offset += Math.ceil(size / 512) * 512;
+  }
+  return { files: files, settings: settings };
+}
+
+function removeHomeContents(mod) {
+  for (const st of STORES) {
+    const entries = storeEntries(mod, st.path).reverse();  // children first
+    for (const e of entries) {
+      const full = st.path + '/' + e.name.replace(/\/$/, '');
+      try {
+        if (e.isDir) mod.FS.rmdir(full);
+        else mod.FS.unlink(full);
+      } catch (e2) {
+        console.warn('fmrb: cannot remove ' + full + ':', e2);
+      }
+    }
+  }
+}
+
+// autoPersist writes back on its own after every change, but a tab that is
+// hidden or closed may go away before that timer runs; ask once more then.
+// beforeunload is not used on purpose -- the write is asynchronous and the
+// page is already gone by the time it would finish.
+function flushHome() {
+  if (homeStore !== 'persistent' || !M) return;
+  try {
+    M.FS.syncfs(false, (err) => {
+      if (err) console.warn('fmrb: /home flush failed:', err);
+    });
+  } catch (e) {
+    console.warn('fmrb: /home flush failed:', e);
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') { flushHome(); captureConfSettings(); }
+});
+window.addEventListener('pagehide', () => { flushHome(); captureConfSettings(); });
+
+// ---- Bringing files in ---------------------------------------------------
+//
+// A .tar was the only way to hand the machine anything, which is a strange
+// price for one picture. The write itself already existed for the ?drive=1
+// relay; what was missing was a way for a visitor to ask for it.
+//
+// Two rules run through all of it. Only /home and /app/usr survive a reload,
+// so nothing is ever written anywhere else -- a file put in /usr/share would
+// vanish at the next visit and look like a bug. And where a file lands is
+// chosen, never guessed from what it is: a .png is not quietly filed as a
+// wallpaper because it is a .png. Only a dropped *folder* is classified, and
+// only by the one mark that means "app" (see folderTarget).
+const INBOX_PATH = HOME_PATH + '/inbox';
+// Enough to stop a stray home directory from being walked in full, and far
+// more than the shape this is for (an app and its pictures).
+const ADD_MAX_FILES = 400;
+const ADD_MAX_DEPTH = 6;
+
+const destSelect = document.getElementById('add-dest');
+const addFilesBtn = document.getElementById('add-files-btn');
+const addFolderBtn = document.getElementById('add-folder-btn');
+const addFilesInput = document.getElementById('add-files');
+const addFolderInput = document.getElementById('add-folder');
+
+// The destinations on offer: the inbox, whatever the owner has already made
+// under /home (so a picture can be sent straight to /home/backgrounds), and
+// /app/usr. Rebuilt each time the list is opened, because the machine may
+// have made a directory since the page loaded.
+function refreshDestinations() {
+  if (!destSelect || !M) return;
+  const keep = destSelect.value;
+  const paths = [INBOX_PATH];
+  try {
+    for (const name of M.FS.readdir(HOME_PATH)) {
+      if (name === '.' || name === '..' || name === 'inbox') continue;
+      const full = HOME_PATH + '/' + name;
+      if (M.FS.isDir(M.FS.stat(full).mode)) paths.push(full);
+    }
+  } catch (e) { /* /home is always there; a failure just means fewer choices */ }
+  paths.push(APPUSR_PATH);
+  destSelect.innerHTML = '';
+  for (const p of paths) {
+    const o = document.createElement('option');
+    // The machine calls it /home; /flash is the browser's own prefix and
+    // means nothing to the person reading the row.
+    o.value = p;
+    o.textContent = p.replace(/^\/flash/, '');
+    destSelect.appendChild(o);
+  }
+  destSelect.value = paths.includes(keep) ? keep : INBOX_PATH;
+}
+if (destSelect) destSelect.addEventListener('mousedown', refreshDestinations);
+
+// Every name is rebuilt out of safe parts and then pinned under one of the
+// two stores, so no dropped name can reach the rest of the filesystem.
+function writeInto(mod, base, rel, bytes) {
+  const safe = safeRelative(rel);
+  if (!safe) return null;
+  const root = base.startsWith(APPUSR_PATH) ? APPUSR_PATH : HOME_PATH;
+  const full = base + '/' + safe;
+  if (!full.startsWith(root + '/')) return null;
+  const slash = full.lastIndexOf('/');
+  if (slash > 0) mod.FS.mkdirTree(full.slice(0, slash));
+  mod.FS.writeFile(full, bytes);
+  return full;
+}
+
+// Where a dropped folder goes. The launcher's own test is any .toml, which
+// it can afford: it is walking /app, where everything is an app by
+// construction. A folder from someone's disk has no such context, and a
+// settings or data file called *.toml would file their pictures under
+// /app/usr -- so require the documented name instead. Only the folder's own
+// files count: an app bundle sits one level under /app/usr, and a .app.toml
+// deeper than that would not be found by the launcher anyway.
+function folderTarget(name, items) {
+  for (const it of items) {
+    const parts = it.rel.split('/');
+    if (parts.length === 2 && parts[1].endsWith('.app.toml')) {
+      return { base: APPUSR_PATH + '/' + name, app: true };
+    }
+  }
+  return { base: HOME_PATH + '/' + name, app: false };
+}
+
+// A drop hands back entries, not files, and a directory can only be read
+// through this interface. The webkit prefix is historical -- every current
+// browser has it, so a dropped folder keeps its shape everywhere, not just
+// where the File System Access API exists.
+async function collectEntry(entry, prefix, out, depth) {
+  if (out.length >= ADD_MAX_FILES || depth > ADD_MAX_DEPTH) return;
+  if (entry.isFile) {
+    const file = await new Promise((res, rej) => entry.file(res, rej));
+    out.push({ rel: prefix + entry.name, file });
+    return;
+  }
+  const reader = entry.createReader();
+  for (;;) {
+    // readEntries answers in batches; an empty batch is the end.
+    const batch = await new Promise((res, rej) => reader.readEntries(res, rej));
+    if (!batch.length) break;
+    for (const e of batch) {
+      await collectEntry(e, prefix + entry.name + '/', out, depth + 1);
+    }
+  }
+}
+
+// Cheap: MEMFS and IDBFS both answer a stat from memory.
+function machineHas(path) {
+  try { M.FS.stat(path); return true; } catch (e) { return false; }
+}
+
+function humanSize(n) {
+  if (n < 1024) return n + ' B';
+  if (n < 1024 * 1024) return (n / 1024).toFixed(0) + ' KB';
+  return (n / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+// Writing is quick; making it stick is not, and the cost is in the store, not
+// in the file count. Timing the sync here is how we find out whether IndexedDB
+// can carry the pictures and music this is mostly going to be used for.
+function flushAndReport(prefix) {
+  if (homeStore !== 'persistent' || !M) {
+    statusLine.textContent = prefix + ' (this browser is not keeping them)';
+    return;
+  }
+  const t0 = performance.now();
+  try {
+    M.FS.syncfs(false, (err) => {
+      const ms = Math.round(performance.now() - t0);
+      if (err) {
+        statusLine.textContent = prefix + ' -- but saving them failed';
+        console.warn('fmrb: syncfs after add failed:', err);
+      } else {
+        statusLine.textContent = prefix + ' (saved in ' + ms + ' ms)';
+        console.log('fmrb: syncfs after add took ' + ms + ' ms');
+      }
+      measureStorage();
+    });
+  } catch (e) {
+    statusLine.textContent = prefix + ' -- but saving them failed';
+    console.warn('fmrb: syncfs after add failed:', e);
+  }
+}
+
+// items: [{ rel, file }]. base is the directory they go under.
+async function addItems(base, items, label) {
+  if (!M || !items.length) return;
+  let bytes = 0;
+  let wrote = 0;
+  let newApp = false;
+  for (const it of items) {
+    const data = new Uint8Array(await it.file.arrayBuffer());
+    const full = writeInto(M, base, it.rel, data);
+    if (!full) continue;
+    wrote++;
+    bytes += data.length;
+    if (full.startsWith(APPUSR_PATH + '/') && full.endsWith('.app.toml')) {
+      newApp = true;
+    }
+  }
+  if (!wrote) {
+    statusLine.textContent = 'nothing could be copied from that';
+    return;
+  }
+  const where = base.replace(/^\/flash/, '');
+  let msg = 'copied ' + (label || (wrote + ' file(s)')) +
+            ' (' + humanSize(bytes) + ') -> ' + where;
+  // The launcher lists what it found when it last looked. Changing a file it
+  // already knows needs nothing -- press the entry again and the new code
+  // runs. A name it has never seen is the one case that needs the rescan.
+  if (newApp) msg += ' -- right-click in the launcher to see it';
+  flushAndReport(msg);
+  refreshDestinations();
+}
+
+// One loose file goes where the row says, whatever it is. A .tar is the one
+// exception, and only because it is this page's own way of carrying a whole
+// /home: restoring one is a different act from copying a file into it.
+async function addLooseFiles(files) {
+  if (!M || !files.length) return;
+  if (files.length === 1 && files[0].name.toLowerCase().endsWith('.tar')) {
+    await restoreTarFile(files[0]);
+    return;
+  }
+  const dest = (destSelect && destSelect.value) || INBOX_PATH;
+  const items = [];
+  for (const f of files) {
+    // A folder picked with the folder button arrives as a flat list of files
+    // that remember where they sat.
+    items.push({ rel: f.webkitRelativePath || f.name, file: f });
+  }
+  await addItems(dest, items, items.length + ' file(s)');
+}
+
+async function restoreTarFile(file) {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  let got;
+  try {
+    got = importTar(M, bytes);
+  } catch (e) {
+    statusLine.textContent = 'that file could not be read as a .tar';
+    console.warn('fmrb: import failed:', e);
+    return;
+  }
+  flushAndReport('restored ' + got.files + ' file(s)' +
+                 (got.settings ? ' and the settings' : '') +
+                 ' -- reload the page to let the machine see them');
+}
+
+if (addFilesBtn && addFilesInput) {
+  addFilesBtn.addEventListener('click', () => addFilesInput.click());
+  addFilesInput.addEventListener('change', async () => {
+    const files = Array.from(addFilesInput.files || []);
+    addFilesInput.value = '';
+    await addLooseFiles(files);
+  });
+}
+if (addFolderBtn && addFolderInput) {
+  addFolderBtn.addEventListener('click', () => addFolderInput.click());
+  addFolderInput.addEventListener('change', async () => {
+    const files = Array.from(addFolderInput.files || []);
+    addFolderInput.value = '';
+    if (!files.length || !M) return;
+    // webkitRelativePath starts with the folder's own name, which is what
+    // decides where the whole thing goes.
+    const name = files[0].webkitRelativePath.split('/')[0];
+    const items = files.map((f) => ({ rel: f.webkitRelativePath, file: f }));
+    const t = folderTarget(name, items);
+    // The names are relative to the folder, and the folder is the base.
+    const inner = items.map((it) => ({
+      rel: it.rel.slice(name.length + 1), file: it.file,
+    }));
+    await addItems(t.base, inner, name + '/');
+  });
+}
+
+// The whole page takes drops, not a small target: someone dragging a file at
+// a machine is aiming at the machine.
+let dragDepth = 0;
+document.addEventListener('dragenter', (ev) => {
+  if (!M) return;
+  ev.preventDefault();
+  if (++dragDepth === 1) document.body.classList.add('dropping');
+});
+document.addEventListener('dragover', (ev) => { if (M) ev.preventDefault(); });
+document.addEventListener('dragleave', () => {
+  if (--dragDepth <= 0) { dragDepth = 0; document.body.classList.remove('dropping'); }
+});
+document.addEventListener('drop', async (ev) => {
+  if (!M) return;
+  ev.preventDefault();
+  dragDepth = 0;
+  document.body.classList.remove('dropping');
+  const dt = ev.dataTransfer;
+  if (!dt) return;
+  const entries = [];
+  for (const item of Array.from(dt.items || [])) {
+    const e = item.webkitGetAsEntry && item.webkitGetAsEntry();
+    if (e) entries.push(e);
+  }
+  if (!entries.length) {
+    await addLooseFiles(Array.from(dt.files || []));
+    return;
+  }
+  const loose = [];
+  for (const e of entries) {
+    if (e.isFile) {
+      loose.push(await new Promise((res, rej) => e.file(res, rej)));
+      continue;
+    }
+    // A folder decides its own destination, so each one is copied on its own
+    // rather than being pooled with the loose files.
+    const items = [];
+    await collectEntry(e, '', items, 1);
+    const inner = items.map((it) => ({
+      rel: it.rel.slice(e.name.length + 1), file: it.file,
+    }));
+    const t = folderTarget(e.name, items);
+    await addItems(t.base, inner, e.name + '/');
+  }
+  if (loose.length) await addLooseFiles(loose);
+});
+
+// ---- A folder on the owner's own disk (F2-F4) -----------------------------
+//
+// Dropping files works everywhere, but it is a gesture per edit. Where the
+// File System Access API exists, a folder can be linked once and then read
+// again and again: save a file in an editor on the machine outside, and a
+// second or two later the machine in the tab is running it. That is the loop
+// the real boards have over WiFi (put, then launch), brought here.
+//
+// Only Chromium desktop has the API. Everything above stays the only way
+// elsewhere, so the row hides itself rather than offering something that
+// cannot work.
+//
+// The folder holds the same two names the exported tar uses, so a tar that
+// has been unpacked IS a work folder:
+//
+//   <folder>/home     -> /flash/home
+//   <folder>/app-usr  -> /flash/app/usr
+//
+// Nothing is guessed from a file's name here: which store a file belongs to
+// is decided by where its owner put it.
+const WORK_SUPPORTED = typeof window.showDirectoryPicker === 'function';
+const WORK_DB = 'fmrb-workspace';
+const WORK_KEY = 'root';
+const WORK_POLL_MS = 2000;
+const WORK_MAX_FILES = 400;
+const WORK_MAX_DEPTH = 6;
+
+const workRow = document.getElementById('work');
+const workState = document.getElementById('work-state');
+const workLinkBtn = document.getElementById('work-link');
+const workStopBtn = document.getElementById('work-stop');
+const workPushBtn = document.getElementById('work-push');
+
+let workRoot = null;       // FileSystemDirectoryHandle, once permitted
+let workTimer = null;
+let workSeen = new Map();  // machine path -> lastModified we already copied
+let workBusy = false;
+
+// A handle survives in IndexedDB, so the folder is remembered between visits.
+// The permission does not: it comes back as "prompt", and asking again needs
+// a click. That turns re-picking the folder into pressing one button.
+function workDb() {
+  return new Promise((res, rej) => {
+    const req = indexedDB.open(WORK_DB, 1);
+    req.onupgradeneeded = () => req.result.createObjectStore('handles');
+    req.onsuccess = () => res(req.result);
+    req.onerror = () => rej(req.error);
+  });
+}
+async function workStore(handle) {
+  try {
+    const db = await workDb();
+    await new Promise((res, rej) => {
+      const tx = db.transaction('handles', 'readwrite');
+      tx.objectStore('handles').put(handle, WORK_KEY);
+      tx.oncomplete = res;
+      tx.onerror = () => rej(tx.error);
+    });
+    db.close();
+  } catch (e) { console.warn('fmrb: could not remember the folder:', e); }
+}
+async function workLoad() {
+  try {
+    const db = await workDb();
+    const h = await new Promise((res, rej) => {
+      const tx = db.transaction('handles', 'readonly');
+      const rq = tx.objectStore('handles').get(WORK_KEY);
+      rq.onsuccess = () => res(rq.result || null);
+      rq.onerror = () => rej(rq.error);
+    });
+    db.close();
+    return h;
+  } catch (e) { return null; }
+}
+// Without this, coming back to a linked folder copies every file in it again:
+// the map of what was already taken lives only in the page. A folder of
+// pictures would be read whole on every visit.
+async function workStoreSeen(map) {
+  try {
+    const db = await workDb();
+    const obj = {};
+    for (const [k, v] of map) obj[k] = v;
+    await new Promise((res, rej) => {
+      const tx = db.transaction('handles', 'readwrite');
+      tx.objectStore('handles').put(obj, WORK_KEY + ':seen');
+      tx.oncomplete = res;
+      tx.onerror = () => rej(tx.error);
+    });
+    db.close();
+  } catch (e) { /* the next pass simply copies more than it needed to */ }
+}
+async function workLoadSeen() {
+  try {
+    const db = await workDb();
+    const obj = await new Promise((res, rej) => {
+      const tx = db.transaction('handles', 'readonly');
+      const rq = tx.objectStore('handles').get(WORK_KEY + ':seen');
+      rq.onsuccess = () => res(rq.result || {});
+      rq.onerror = () => rej(rq.error);
+    });
+    db.close();
+    return new Map(Object.entries(obj));
+  } catch (e) { return new Map(); }
+}
+
+async function workForget() {
+  try {
+    const db = await workDb();
+    await new Promise((res) => {
+      const tx = db.transaction('handles', 'readwrite');
+      tx.objectStore('handles').delete(WORK_KEY);
+      tx.objectStore('handles').delete(WORK_KEY + ':seen');
+      tx.oncomplete = res;
+      tx.onerror = res;
+    });
+    db.close();
+  } catch (e) { /* nothing to forget */ }
+}
+
+function showWorkState(text) {
+  if (workState) workState.textContent = text;
+  const linked = !!workRoot;
+  if (workStopBtn) workStopBtn.hidden = !linked;
+  if (workPushBtn) workPushBtn.hidden = !linked;
+  if (workLinkBtn) workLinkBtn.textContent = linked ? 'Change...' : 'Link a folder...';
+}
+
+// The two names are made if they are not there, so the owner can point this
+// at an empty folder and never think about its shape.
+async function workStores(root) {
+  const out = [];
+  for (const st of STORES) {
+    // st.tar is "home" / "app-usr" -- the same names the export writes.
+    const dir = await root.getDirectoryHandle(st.tar, { create: true });
+    out.push({ dir, path: st.path, name: st.tar });
+  }
+  return out;
+}
+
+async function workWalk(dir, prefix, out, depth) {
+  if (out.length >= WORK_MAX_FILES || depth > WORK_MAX_DEPTH) return;
+  for await (const [name, handle] of dir.entries()) {
+    if (out.length >= WORK_MAX_FILES) return;
+    if (name.startsWith('.')) continue;   // editor droppings, .git and friends
+    if (handle.kind === 'file') {
+      out.push({ rel: prefix + name, handle });
+    } else {
+      await workWalk(handle, prefix + name + '/', out, depth + 1);
+    }
+  }
+}
+
+// One pass over the folder. Only files whose timestamp has moved since the
+// last pass are read at all -- a folder of pictures costs a stat each, not a
+// copy each, which is what makes a two-second poll affordable.
+// Which apps the launcher has had a chance to see. Only a name it has never
+// seen needs the rescan; changing a file it already lists needs nothing.
+const workKnownApps = new Set();
+
+async function workScan(announce) {
+  if (!workRoot || !M || workBusy) return;
+  workBusy = true;
+  let copied = 0;
+  let bytes = 0;
+  let newApp = false;
+  let total = 0;
+  try {
+    for (const st of await workStores(workRoot)) {
+      const items = [];
+      await workWalk(st.dir, '', items, 1);
+      total += items.length;
+      for (const it of items) {
+        const file = await it.handle.getFile();
+        const dest = st.path + '/' + safeRelative(it.rel);
+        // Both halves, not just the timestamp. The map says "the machine
+        // already has this version of this file", and it is kept across
+        // visits so a folder of pictures is not read whole every time -- but
+        // it cannot see the machine. A reload that lost what was in /home
+        // (a second tab, cleared storage, an eviction) left the map insisting
+        // the files were delivered while the machine sat empty, and only
+        // picking the folder again -- which starts from an empty map -- put
+        // them back.
+        if (workSeen.get(dest) === file.lastModified && machineHas(dest)) continue;
+        const data = new Uint8Array(await file.arrayBuffer());
+        const full = writeInto(M, st.path, it.rel, data);
+        if (!full) continue;
+        workSeen.set(dest, file.lastModified);
+        copied++;
+        bytes += data.length;
+        if (st.path === APPUSR_PATH && full.endsWith('.app.toml') &&
+            !workKnownApps.has(full)) {
+          workKnownApps.add(full);
+          newApp = true;
+        }
+      }
+    }
+  } catch (e) {
+    // A folder that has been moved, renamed or unplugged: stop rather than
+    // complain once every two seconds.
+    console.warn('fmrb: the work folder could not be read:', e);
+    workUnlink('the folder could not be read');
+    workBusy = false;
+    return;
+  }
+  workBusy = false;
+  showWorkState(workRoot.name + ' -- watching ' + total + ' file(s)');
+  if (!copied) return;
+  let msg = 'copied ' + copied + ' file(s) (' + humanSize(bytes) + ') from ' +
+            workRoot.name;
+  if (newApp) msg += ' -- right-click in the launcher to see it';
+  if (announce === false) msg = 'took ' + copied + ' file(s) from ' + workRoot.name;
+  workStoreSeen(workSeen);
+  flushAndReport(msg);
+  refreshDestinations();
+}
+function workStartPolling() {
+  if (workTimer) clearInterval(workTimer);
+  // A hidden tab is not being edited against, and its timers are throttled
+  // anyway; skip the pass rather than pile them up.
+  workTimer = setInterval(() => {
+    if (!document.hidden) workScan(true);
+  }, WORK_POLL_MS);
+}
+
+function workUnlink(why) {
+  if (workTimer) { clearInterval(workTimer); workTimer = null; }
+  workRoot = null;
+  workSeen = new Map();
+  workKnownApps.clear();
+  showWorkState(why || 'not linked');
+}
+
+async function workAdopt(handle, firstTime) {
+  workRoot = handle;
+  workSeen = firstTime ? new Map() : await workLoadSeen();
+  workKnownApps.clear();
+  // Whatever is in the machine already counts as seen, so linking a folder
+  // does not announce the whole of it as news.
+  showWorkState(handle.name + ' -- reading...');
+  await workScan(firstTime);
+  workStartPolling();
+}
+
+if (workRow && WORK_SUPPORTED) {
+  workRow.hidden = false;
+  workLinkBtn.addEventListener('click', async () => {
+    let handle;
+    try {
+      handle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    } catch (e) { return; }   // the picker was dismissed
+    await workStore(handle);
+    await workAdopt(handle, true);
+  });
+  workStopBtn.addEventListener('click', async () => {
+    await workForget();
+    workUnlink('not linked');
+    statusLine.textContent = 'the work folder is no longer watched';
+  });
+
+  // Coming back to a folder linked on an earlier visit. The handle is
+  // remembered; the permission is not, and asking for it needs a click --
+  // so offer the click rather than picking the folder again.
+  (async () => {
+    const handle = await workLoad();
+    if (!handle || !handle.queryPermission) return;
+    const opt = { mode: 'readwrite' };
+    let state = 'prompt';
+    try { state = await handle.queryPermission(opt); } catch (e) { return; }
+    if (state === 'granted') { await workAdopt(handle, false); return; }
+    if (state === 'denied') return;
+    showWorkState(handle.name + ' -- press to reconnect');
+    workLinkBtn.textContent = 'Reconnect ' + handle.name;
+    const reconnect = async () => {
+      let got = 'denied';
+      try { got = await handle.requestPermission(opt); } catch (e) { got = 'denied'; }
+      if (got !== 'granted') { showWorkState('permission refused'); return; }
+      workLinkBtn.removeEventListener('click', intercept, true);
+      await workAdopt(handle, false);
+    };
+    // Ahead of the picker handler, and it stops there: one click either
+    // reconnects or opens the picker, never both. Named so it can be taken
+    // off again -- an anonymous wrapper would leave the button hijacked for
+    // the rest of the visit.
+    const intercept = (ev) => { ev.stopImmediatePropagation(); reconnect(); };
+    workLinkBtn.addEventListener('click', intercept, true);
+  })();
+}
+
+// F4: the other direction, and only when asked for.
+//
+// Taking files in costs nothing if it is wrong -- the original is still on
+// the disk outside. Writing back overwrites the owner's own files, which is
+// not something to do on a timer because a clock looked newer. So it is a
+// button, and it says what it did.
+async function workPush() {
+  if (!workRoot || !M) return;
+  let wrote = 0;
+  let bytes = 0;
+  try {
+    for (const st of await workStores(workRoot)) {
+      const items = [];
+      collectMachineFiles(M, st.path, '', items);
+      for (const it of items) {
+        const data = M.FS.readFile(st.path + '/' + it);
+        let dir = st.dir;
+        const parts = it.split('/');
+        for (const part of parts.slice(0, -1)) {
+          dir = await dir.getDirectoryHandle(part, { create: true });
+        }
+        const fh = await dir.getFileHandle(parts[parts.length - 1], { create: true });
+        const w = await fh.createWritable();
+        await w.write(data);
+        await w.close();
+        workSeen.set(st.path + '/' + it, (await fh.getFile()).lastModified);
+        wrote++;
+        bytes += data.length;
+      }
+    }
+  } catch (e) {
+    statusLine.textContent = 'writing back failed -- ' + e.message;
+    console.warn('fmrb: work folder write failed:', e);
+    return;
+  }
+  statusLine.textContent = 'wrote ' + wrote + ' file(s) (' + humanSize(bytes) +
+                           ') to ' + workRoot.name;
+  // The files outside now carry a fresh timestamp, and their contents came
+  // from in here. Record them as taken; reading them straight back would copy
+  // every one of them for nothing.
+  workStoreSeen(workSeen);
+}
+if (workPushBtn) workPushBtn.addEventListener('click', workPush);
+
+// The machine's side of the same walk. exportHome has one of these, but it
+// flattens into tar entries and stops at the store root; this one is plain.
+function collectMachineFiles(mod, base, prefix, out, depth) {
+  const d = depth || 1;
+  if (d > WORK_MAX_DEPTH || out.length >= WORK_MAX_FILES) return;
+  let names;
+  try { names = mod.FS.readdir(base); } catch (e) { return; }
+  for (const name of names) {
+    if (name === '.' || name === '..') continue;
+    const full = base + '/' + name;
+    let st;
+    try { st = mod.FS.stat(full); } catch (e) { continue; }
+    if (mod.FS.isDir(st.mode)) {
+      collectMachineFiles(mod, full, prefix + name + '/', out, d + 1);
+    } else {
+      out.push(prefix + name);
+    }
+  }
+}
+
+const exportBtn = document.getElementById('home-export');
+const importBtn = document.getElementById('home-import-btn');
+const importInput = document.getElementById('home-import');
+const resetBtn = document.getElementById('home-reset');
+function enableStorageButtons() {
+  for (const b of [exportBtn, importBtn, resetBtn,
+                   addFilesBtn, addFolderBtn, destSelect, workLinkBtn]) {
+    if (b) b.disabled = false;
+  }
+  refreshDestinations();
+}
+if (exportBtn) exportBtn.addEventListener('click', exportHome);
+if (importBtn && importInput) {
+  importBtn.addEventListener('click', () => importInput.click());
+  importInput.addEventListener('change', async () => {
+    const file = importInput.files && importInput.files[0];
+    importInput.value = '';
+    if (!file || !M) return;
+    await restoreTarFile(file);
+  });
+}
+// Everything this page keeps in the browser: the two IDBFS stores, the
+// settings the machine saved through Config, and the page's own selectors.
+// Erase clears all of it, because "erase" that leaves the theme and the
+// language behind is a promise the word does not make.
+// The node ID (NODE_STORE) is not among them: it is who this browser is on
+// the network, not a setting, and a board keeps its name through a reset too.
+const PAGE_SETTING_KEYS = ['fmrb_web_res', 'fmrb_web_zoom', 'fmrb_web_look', 'fmrb_web_crt',
+                           FRAME_STORE];
+
+// Separate from the button so the driver can call it as well: headless
+// Chrome answers window.confirm with "no", so a test that went through the
+// click would never reach this.
+function eraseEverything() {
+  if (!M) return false;
+  erasing = true;
+  removeHomeContents(M);
+  for (const k of PAGE_SETTING_KEYS.concat([CONF_STORE])) {
+    try { localStorage.removeItem(k); } catch (e) {}
+  }
+  statusLine.textContent = 'erased -- starting again';
+  // Reload only once the files are really gone from IndexedDB. Reloading
+  // during the write would bring them back: the machine reads the store on
+  // the way up, and syncfs has not finished emptying it.
+  if (homeStore !== 'persistent') {
+    setTimeout(() => location.reload(), 200);
+    return true;
+  }
+  try {
+    M.FS.syncfs(false, (err) => {
+      if (err) console.warn('fmrb: erase flush failed:', err);
+      location.reload();
+    });
+  } catch (e) {
+    console.warn('fmrb: erase flush failed:', e);
+    location.reload();
+  }
+  return true;
+}
+
+if (resetBtn) {
+  resetBtn.addEventListener('click', () => {
+    if (!M) return;
+    if (!window.confirm('Erase your files (/home and /app/usr) and put every ' +
+                        'setting back to its default? Download them first if ' +
+                        'you want to keep them.')) return;
+    eraseEverything();
+  });
+}
+
+// ?fsprobe=1 -- a development measurement, not part of the machine.
+//
+// Two questions decide how storage can be made to persist
+// (doc/wasm/instruction_storage.md T0):
+//
+//   A. is the page's FS the same one the machine writes to?  The machine
+//      rewrites /flash/etc/system_conf.toml at startup (page_settings_wasm.c),
+//      so reading display_width back out through the page's FS answers it.
+//   B. does a preRun write survive?  The file packager appends its own
+//      unpack to Module.preRun, so anything the page writes there may be
+//      overwritten a moment later. A marker written in preRun says which.
+//
+// Every line goes to console.log so headless Chrome can collect them.
+const FSPROBE = new URLSearchParams(location.search).get('fsprobe') === '1';
+const CONF_PATH = '/flash/etc/system_conf.toml';
+const PROBE_MARK = '# fsprobe-marker';
+// Headless Chrome reports through --dump-dom far more reliably than through
+// its console log, so every probe line lands in the page as well.
+function probeLog(line) {
+  console.log(line);
+  let box = document.getElementById('fsprobe-out');
+  if (!box) {
+    box = document.createElement('pre');
+    box.id = 'fsprobe-out';
+    document.body.appendChild(box);
+  }
+  box.textContent += line + '\n';
+}
+if (FSPROBE) {
+  moduleConfig.preRun.push((mod) => {
+    // B: write a marker into a file the package also carries. Reading it
+    // first tells us whether the page even sees the packed tree yet.
+    let before = null;
+    try {
+      before = mod.FS.readFile(CONF_PATH, { encoding: 'utf8' });
+    } catch (e) {
+      before = null;
+    }
+    probeLog('FSPROBE preRun: conf readable before unpack = ' +
+             (before === null ? 'no' : 'yes (' + before.length + ' bytes)'));
+    try {
+      mod.FS.writeFile(CONF_PATH, PROBE_MARK + '\n' + (before || ''));
+      probeLog('FSPROBE preRun: marker written');
+    } catch (e) {
+      probeLog('FSPROBE preRun: marker write failed: errno=' + e.errno);
+    }
+    // The seam T2 needs: /home is in no package, so the page can make it
+    // here and put something in it. If that survives to the end of the boot,
+    // a mount can go in the same place.
+    try {
+      mod.FS.mkdirTree('/flash/home');
+      mod.FS.writeFile('/flash/home/fsprobe.txt', 'page-preRun');
+      probeLog('FSPROBE preRun: /flash/home made and written');
+    } catch (e) {
+      probeLog('FSPROBE preRun: /flash/home failed: errno=' + e.errno);
+    }
+  });
+}
+
+// ?fsprobe=1 also checks the one-writer rule, by loading a second copy of
+// this page in an iframe (same origin, so the same Web Lock) and reading the
+// line it shows. The child does not autostart -- it only asks for the lock.
+function fsprobeSecondTab() {
+  return new Promise((resolve) => {
+    const f = document.createElement('iframe');
+    f.style.display = 'none';
+    f.src = 'index.html?secondtab=1';
+    f.addEventListener('load', () => {
+      setTimeout(() => {
+        let text = '(unreadable)';
+        try {
+          text = f.contentDocument.getElementById('storage-state').textContent;
+        } catch (e) { /* keep the placeholder */ }
+        probeLog('FSPROBE lock: second tab says "' + text + '"');
+        f.remove();
+        resolve();
+      }, 1500);
+    });
+    document.body.appendChild(f);
+  });
+}
+
+function fsprobeReport(mod) {
+  let text = null;
+  try {
+    text = mod.FS.readFile(CONF_PATH, { encoding: 'utf8' });
+  } catch (e) {
+    probeLog('FSPROBE result: page cannot read ' + CONF_PATH + ': ' + e);
+    return;
+  }
+  const width = (text.match(/^display_width\s*=\s*(\d+)/m) || [])[1];
+  probeLog('FSPROBE result: display_width=' + width +
+           ' asked=' + currentResolution() +
+           ' marker=' + (text.indexOf(PROBE_MARK) === 0 ? 'kept' : 'gone'));
+  // A second, direct reading of A: a directory only the machine creates.
+  try {
+    mod.FS.stat('/flash/home');
+    probeLog('FSPROBE result: /flash/home visible to the page = yes');
+  } catch (e) {
+    probeLog('FSPROBE result: /flash/home visible to the page = no');
+  }
+  // And whether what the page put there before the boot is still there.
+  let kept = null;
+  try {
+    kept = mod.FS.readFile('/flash/home/fsprobe.txt', { encoding: 'utf8' });
+  } catch (e) {
+    kept = null;
+  }
+  probeLog('FSPROBE result: page file in /home after boot = ' +
+           (kept === null ? 'gone' : JSON.stringify(kept)));
+  probeLog('FSPROBE result: home store = ' + homeStore);
+  // The three buttons are useless while they are disabled, and a disabled
+  // button swallows the click without a sound -- which is exactly how this
+  // shipped broken once.
+  // What actually decides whether the page scrolls sideways on a phone.
+  probeLog('FSPROBE layout: client=' + document.documentElement.clientWidth +
+           ' body=' + document.body.scrollWidth +
+           ' doc=' + document.documentElement.scrollWidth +
+           ' canvas=' + Math.round(canvas.getBoundingClientRect().width) +
+           ' panels=' + Math.round(document.querySelector('#panels').getBoundingClientRect().width) +
+           ' about=' + Math.round(document.getElementById('about').getBoundingClientRect().width) +
+           ' h1=' + Math.round(document.querySelector('h1').getBoundingClientRect().width));
+  probeLog('FSPROBE result: buttons enabled = ' +
+           ['home-export', 'home-import-btn', 'home-reset']
+             .map((id) => id + '=' + !document.getElementById(id).disabled)
+             .join(' '));
+  // T4: write a couple of files, tar them in memory, wipe, restore, look.
+  try {
+    mod.FS.writeFile(HOME_PATH + '/t4.txt', 'hello');
+    mod.FS.mkdirTree(HOME_PATH + '/sub');
+    mod.FS.writeFile(HOME_PATH + '/sub/deep.txt', 'nested');
+    // The second store, and the settings entry, ride in the same archive.
+    mod.FS.mkdirTree(APPUSR_PATH);
+    mod.FS.writeFile(APPUSR_PATH + '/mine.app.rb', 'an app of my own');
+    writeConfSettings({ language: '"ja"' });
+    const parts = [];
+    for (const st of STORES) {
+      for (const e of storeEntries(mod, st.path)) {
+        const name = st.tar + '/' + e.name;
+        const size = e.isDir ? 0 : e.data.length;
+        parts.push(tarHeader(name, size, e.isDir));
+        if (!e.isDir) {
+          parts.push(e.data);
+          const pad = (512 - (size % 512)) % 512;
+          if (pad) parts.push(new Uint8Array(pad));
+        }
+      }
+    }
+    {
+      const data = new TextEncoder().encode(settingsSnapshot());
+      parts.push(tarHeader(SETTINGS_ENTRY, data.length, false));
+      parts.push(data);
+      const pad = (512 - (data.length % 512)) % 512;
+      if (pad) parts.push(new Uint8Array(pad));
+    }
+    // An entry that tries to climb out, appended by hand.
+    const evil = new TextEncoder().encode('owned');
+    parts.push(tarHeader('../escaped.txt', evil.length, false), evil,
+               new Uint8Array(512 - evil.length));
+    parts.push(new Uint8Array(1024));
+    let total = 0;
+    for (const p of parts) total += p.length;
+    const tar = new Uint8Array(total);
+    let at = 0;
+    for (const p of parts) { tar.set(p, at); at += p.length; }
+    removeHomeContents(mod);
+    writeConfSettings({});
+    probeLog('FSPROBE t4: after erase /home holds ' +
+             JSON.stringify(mod.FS.readdir(HOME_PATH)) +
+             ' /app/usr holds ' + JSON.stringify(mod.FS.readdir(APPUSR_PATH)) +
+             ' settings=' + JSON.stringify(readConfSettings()));
+    const got = importTar(mod, tar);
+    probeLog('FSPROBE t4: restored ' + got.files + ' file(s), /home holds ' +
+             JSON.stringify(mod.FS.readdir(HOME_PATH)) +
+             ' sub=' + JSON.stringify(mod.FS.readdir(HOME_PATH + '/sub')) +
+             ' deep=' + mod.FS.readFile(HOME_PATH + '/sub/deep.txt',
+                                        { encoding: 'utf8' }));
+    probeLog('FSPROBE t4: /app/usr holds ' +
+             JSON.stringify(mod.FS.readdir(APPUSR_PATH)) +
+             ' mine=' + mod.FS.readFile(APPUSR_PATH + '/mine.app.rb',
+                                        { encoding: 'utf8' }) +
+             ', settings back = ' + got.settings +
+             ' ' + JSON.stringify(readConfSettings()));
+    let escaped = 'no';
+    try { mod.FS.stat('/flash/escaped.txt'); escaped = 'YES'; } catch (e) { }
+    probeLog('FSPROBE t4: escaped out of /home = ' + escaped +
+             ', landed as ' + JSON.stringify(mod.FS.readdir(HOME_PATH)));
+    // leave nothing behind
+    removeHomeContents(mod);
+    writeConfSettings({});
+  } catch (e) {
+    probeLog('FSPROBE t4: failed: ' + e);
+  }
+
+  // The probe's own file must not settle into the user's /home.
+  try { mod.FS.unlink('/flash/home/fsprobe.txt'); } catch (e) { /* fine */ }
+  // What the MACHINE wrote into the mounted /home (the T2 path: worker ->
+  // proxied syscall -> IDBFS mount -> IndexedDB).
+  let machine = null;
+  try {
+    machine = mod.FS.readFile('/flash/home/machine_probe.txt', { encoding: 'utf8' });
+  } catch (e) {
+    machine = null;
+  }
+  probeLog('FSPROBE result: machine_probe = ' + (machine === null ? 'absent' : machine));
+  try {
+    probeLog('FSPROBE result: /home holds ' +
+             JSON.stringify(mod.FS.readdir('/flash/home')));
+  } catch (e) {
+    probeLog('FSPROBE result: /home unreadable: errno=' + e.errno);
+  }
+}
+
+let starting = false;
+startOverlay.addEventListener('click', async () => {
+  // A link with a pass and no node, or a room that has ended or cannot be
+  // read: the machine is not switched on at all (see LINK_REFUSED), so
+  // nothing connects with it.
+  if (LINK_REFUSED || starting) return;
+  starting = true;
+  startOverlay.style.display = 'none';
+  canvas.focus();
+  statusLine.textContent = 'booting the firmware...';
+
+  let ac = null;
+  try {
+    ac = new AudioContext();
+    // resume() from a real click settles at once; from anything the browser
+    // does not count as a gesture (autostart, some embeddings) it stays
+    // pending forever -- never let it hold the boot hostage.
+    await Promise.race([ac.resume(),
+                        new Promise((r) => setTimeout(r, 500))]);
+  } catch (e) {
+    console.warn('audio unavailable:', e);
+  }
+
+  // The node ID depends on whether this tab is the one that keeps /home.
+  await lockDecided;
+  if (!nodeId) decideNodeId();
+  if (ROOM) {
+    // A seat first (G2b): its node ID is the one the router lets this page
+    // write and call as. Without one the machine is not switched on.
+    statusLine.textContent = 'room ' + ROOM.slot + ': taking a seat...';
+    holdRoomSeat();
+    const got = await takeSeat();
+    if (!got.node) {
+      if (ac) ac.close().catch(() => {});
+      statusLine.textContent = 'room ' + ROOM.slot + ': not started: ' + got.error;
+      startOverlay.textContent = got.error + (got.retry ? ' Click to try again.' : '');
+      startOverlay.classList.add('refused');
+      startOverlay.style.display = '';
+      starting = !got.retry;
+      return;
+    }
+    nodeId = got.node;
+    roomSeat = got.seat;
+    showNetworkState();
+    moduleConfig.zenohRoomSecret = roomSecret;
+    moduleConfig.zenohReseat = () => reseat(moduleConfig);
+
+  }
+  moduleConfig.arguments.push(`--fmrb-conf=asterism_node="${nodeId}"`);
+
+  const mod = await createFmrbCore(moduleConfig);
+  M = mod;
+  statusLine.textContent = ROOM ? 'running in room ' + ROOM.slot + ' (until ' + roomUntil() + ')' : 'running';
+  // The machine rewrites the settings file early in its own boot; give it a
+  // moment before reading it back (the probe is a measurement, not a race).
+  if (FSPROBE) setTimeout(() => fsprobeReport(mod), 3000);
+  if (FSPROBE) setTimeout(fsprobeSecondTab, 6000);
+  measureStorage();
+  enableStorageButtons();
+  hookInput();
+  requestAnimationFrame(paint);
+  if (ac) {
+    try {
+      await startAudio(ac);
+    } catch (e) {
+      console.warn('audio unavailable:', e);
+    }
+  }
+});
+
+// ---- ?drive=1: let a tool outside the browser work the machine -----------
+//
+// The page asks the development server for a command, does it, and posts the
+// answer back (tools/fmrb_web.rb is the other end). Everything a hand can do
+// here -- click, type, look at the screen, look at a file -- can then be
+// scripted, which is what the Linux sim has had all along and the browser
+// had not.
+//
+// Events go into the same ring the real mouse and keyboard use, so a driven
+// run is indistinguishable from a used one on the machine's side. The
+// scancodes come from the tool (the firmware's own keymap, layout and all);
+// the page only carries them.
+const DRIVE = new URLSearchParams(location.search).get('drive') === '1';
+
+function driveSleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+// One turn of the event loop for the latency probe below. setTimeout, not a
+// MessageChannel ping-pong: the machine's file calls are proxied to this
+// thread, and a tight MessageChannel loop starved them (measured: the whole
+// machine stood still for seconds while the probe waited). The price is
+// resolution -- nested timers are clamped to ~4 ms.
+function driveYield() {
+  return new Promise((r) => setTimeout(r, 0));
+}
+
+// A signature of a rectangle of the frame the firmware last presented, read
+// from the wasm memory directly (the canvas is only refreshed once per
+// animation frame, which would round every measurement up to ~16 ms).
+function frameRectSig(r) {
+  const w = M._fmrb_wasm_frame_width();
+  const h = M._fmrb_wasm_frame_height();
+  const ptr = M._fmrb_wasm_frame_rgba();
+  const heap = M.HEAPU8;
+  let s = 0;
+  for (let y = Math.max(0, r.y); y < Math.min(h, r.y + r.h); y++) {
+    let i = ptr + (y * w + Math.max(0, r.x)) * 4;
+    for (let x = Math.max(0, r.x); x < Math.min(w, r.x + r.w); x++, i += 4) {
+      s = (Math.imul(s, 31) + heap[i] + heap[i + 1] * 7 + heap[i + 2] * 13) >>> 0;
+    }
+  }
+  return s;
+}
+
+async function runDriveCommand(cmd) {
+  switch (cmd.op) {
+    case 'input': {
+      for (const ev of cmd.events || []) {
+        const [type, a, b, c, d, delay] = ev;
+        if (delay) await driveSleep(delay);
+        pushInput(type, a || 0, b || 0, c || 0, d || 0);
+      }
+      return { events: (cmd.events || []).length };
+    }
+    case 'latency': {
+      // Input-to-screen latency: for each group of ring events, push it and
+      // wait until the watched rectangle of the presented frame changes.
+      // The rectangle is the caller's choice: somewhere only this input
+      // changes (the mouse cursor's destination, an editor's status line),
+      // so other windows redrawing do not end a sample early. -1 = no change
+      // within limit_ms. Resolution ~4 ms (see driveYield).
+      if (!M) throw new Error('the machine is not running yet');
+      const limit = cmd.limit_ms || 2000;
+      const samples = [];
+      for (const s of cmd.samples || []) {
+        await driveSleep(cmd.gap_ms || 100);
+        const sig0 = frameRectSig(s.rect);
+        const t0 = performance.now();
+        for (const ev of s.events) pushInput(ev[0], ev[1] || 0, ev[2] || 0, ev[3] || 0, ev[4] || 0);
+        let dt = -1;
+        while (performance.now() - t0 < limit) {
+          await driveYield();
+          if (frameRectSig(s.rect) !== sig0) { dt = performance.now() - t0; break; }
+        }
+        samples.push(Math.round(dt * 100) / 100);
+        for (const ev of s.after || []) pushInput(ev[0], ev[1] || 0, ev[2] || 0, ev[3] || 0, ev[4] || 0);
+      }
+      return { samples };
+    }
+    case 'frames': {
+      // How many frames the firmware presented in ms milliseconds.
+      if (!M) throw new Error('the machine is not running yet');
+      const seq0 = M._fmrb_wasm_frame_seq();
+      const t0 = performance.now();
+      await driveSleep(cmd.ms || 5000);
+      return { frames: M._fmrb_wasm_frame_seq() - seq0, ms: Math.round(performance.now() - t0) };
+    }
+    case 'screenshot': {
+      // The canvas holds exactly the frame the firmware produced, at its own
+      // resolution -- not the zoomed CSS size, which is what a browser-level
+      // screenshot would give.
+      const url = canvas.toDataURL('image/png');
+      return { width: canvas.width, height: canvas.height,
+               png: url.slice(url.indexOf(',') + 1) };
+    }
+    case 'view': {
+      // What the page shows: the CRT view at its device-pixel size while the
+      // look is on, otherwise the plain picture (as `screenshot`).
+      const look = crt ? 'crt' : 'flat';
+      const before = crt ? Object.assign({}, crt.stats) : null;
+      const url = crt ? crt.snapshot() : canvas.toDataURL('image/png');
+      const src = crt ? crtCanvas : canvas;
+      return { look, width: src.width, height: src.height, stats_before: before,
+               png: url.slice(url.indexOf(',') + 1) };
+    }
+    case 'crt': {
+      // The Look selector and the sliders, through the panel's own doors
+      // (stored like a hand's choice). Answers the state and the counters:
+      // uploads and draws of the view, frames of the picture.
+      if (cmd.defaults) chooseCrtSettings(FmrbCrt.DEFAULTS);
+      if (cmd.values) chooseCrtSettings(cmd.values);
+      if (cmd.look) chooseLook(cmd.look);
+      const bench = crt && cmd.bench ? crt.bench(cmd.bench) : undefined;
+      return {
+        bench_ms_per_draw: bench === undefined || bench === null ? undefined : Math.round(bench * 1000) / 1000,
+        look: crt ? 'crt' : 'flat',
+        available: !lookSelect.disabled,
+        settings: crtSettings,
+        stats: crtView ? Object.assign({}, crtView.stats) : null,
+        frame: M ? M._fmrb_wasm_frame_seq() : 0,
+        view: crt ? { width: crtCanvas.width, height: crtCanvas.height } : null,
+        css: { width: canvas.getBoundingClientRect().width, height: canvas.getBoundingClientRect().height },
+        dpr: window.devicePixelRatio || 1,
+      };
+    }
+    case 'zoom': {
+      // The Zoom selector, as a hand would use it (stored, except on a ?res=
+      // visit); `forget` drops the stored choice so the next visit picks its
+      // own again. Answers the value and whether one is stored.
+      if (cmd.value) {
+        zoomSelect.value = cmd.value;
+        zoomSelect.dispatchEvent(new Event('change'));
+      }
+      if (cmd.forget) {
+        try { localStorage.removeItem('fmrb_web_zoom'); } catch (e) {}
+        zoomChosen = false;
+      }
+      return { zoom: zoomSelect.value, stored: readSetting('fmrb_web_zoom', null) };
+    }
+    case 'dom': {
+      // Real DOM mouse events at a point of the shown screen (CSS pixels from
+      // its top-left corner), dispatched on #screen the way the browser
+      // would: they go through canvasPos (and the curve's inverse), unlike
+      // `input`, which writes the ring directly.
+      const r = canvas.getBoundingClientRect();
+      const clientX = r.left + cmd.x, clientY = r.top + cmd.y;
+      const types = cmd.kind === 'click' ? ['mousemove', 'mousedown', 'mouseup']
+                  : [cmd.kind === 'move' ? 'mousemove' : cmd.kind];
+      const mapped = crt ? crtPos(clientX, clientY)
+                   : canvasPos({ clientX, clientY });
+      for (const type of types) {
+        canvas.dispatchEvent(new MouseEvent(type, {
+          bubbles: true, cancelable: true, clientX, clientY, button: 0,
+          buttons: type === 'mouseup' ? 0 : 1, view: window,
+        }));
+        if (type !== 'mouseup') await driveSleep(cmd.gap_ms || 60);
+      }
+      return { types, machine: mapped };
+    }
+    case 'status':
+      return {
+        running: !!M,
+        width: canvas.width, height: canvas.height,
+        frame: M ? M._fmrb_wasm_frame_seq() : 0,
+        home: homeStore,
+        durable: storageDurable,
+        node: nodeId,
+        node_kept: nodeKept,
+      };
+    case 'fs': {
+      if (!M) throw new Error('the machine is not running yet');
+      const path = cmd.path || '';
+      if (cmd.action === 'ls') {
+        const out = [];
+        for (const name of M.FS.readdir(path)) {
+          if (name === '.' || name === '..') continue;
+          const st = M.FS.stat(path + '/' + name);
+          out.push({ name, dir: M.FS.isDir(st.mode), size: st.size });
+        }
+        return { entries: out };
+      }
+      if (cmd.action === 'cat') {
+        const data = M.FS.readFile(path);
+        let bin = '';
+        for (let i = 0; i < data.length; i += 0x8000) {
+          bin += String.fromCharCode.apply(null, data.subarray(i, i + 0x8000));
+        }
+        return { size: data.length, base64: btoa(bin) };
+      }
+      if (cmd.action === 'put') {
+        const raw = atob(cmd.base64 || '');
+        const data = new Uint8Array(raw.length);
+        for (let i = 0; i < raw.length; i++) data[i] = raw.charCodeAt(i);
+        const slash = path.lastIndexOf('/');
+        if (slash > 0) M.FS.mkdirTree(path.slice(0, slash));
+        M.FS.writeFile(path, data);
+        flushHome();
+        return { size: data.length };
+      }
+      if (cmd.action === 'rm') {
+        M.FS.unlink(path);
+        flushHome();
+        return { removed: path };
+      }
+      throw new Error('unknown fs action: ' + cmd.action);
+    }
+    case 'reload':
+      // Answer first; the page is gone a moment later.
+      setTimeout(() => location.reload(), 200);
+      return { reloading: true };
+    case 'reset':
+      // What the Erase button does, without the confirm a headless browser
+      // would answer "no" to. It reloads by itself once the store is empty.
+      if (!eraseEverything()) throw new Error('the machine is not running yet');
+      return { erased: true };
+    default:
+      throw new Error('unknown op: ' + cmd.op);
+  }
+}
+
+async function driveLoop() {
+  for (;;) {
+    let cmd = null;
+    try {
+      const res = await fetch('drive/cmd');
+      if (res.status === 200) cmd = await res.json();
+    } catch (e) {
+      await driveSleep(500);      // the server went away; keep trying
+      continue;
+    }
+    if (!cmd) continue;           // 204: nothing waiting, ask again
+    let body;
+    try {
+      body = { id: cmd.id, result: await runDriveCommand(cmd) };
+    } catch (e) {
+      body = { id: cmd.id, error: String(e && e.message ? e.message : e) };
+    }
+    try {
+      await fetch('drive/res', { method: 'POST', body: JSON.stringify(body) });
+    } catch (e) {
+      console.warn('fmrb: cannot report the result:', e);
+    }
+  }
+}
+if (DRIVE) driveLoop();
+
+// ?autostart=1 presses the power switch itself -- the headless regression's
+// hand. No gesture means the AudioContext may be refused; that path already
+// degrades to silent.
+if (new URLSearchParams(location.search).get('autostart') === '1' &&
+    !(typeof crossOriginIsolated !== 'undefined' && !crossOriginIsolated)) {
+  // ?holdload=N keeps the window load event open for N ms (a slow image the
+  // dev server serves), so headless Chrome's --screenshot, which fires at
+  // load, captures the booted machine instead of the boot message.
+  const hold = new URLSearchParams(location.search).get('holdload');
+  if (hold) {
+    const img = new Image();
+    img.style.display = 'none';
+    img.src = 'probe-hold?ms=' + encodeURIComponent(hold);
+    document.body.appendChild(img);
+  }
+  startOverlay.click();
+}
