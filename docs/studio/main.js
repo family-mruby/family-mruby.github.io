@@ -133,6 +133,7 @@ function paint() {
   requestAnimationFrame(paint);
   if (!M) return;
   if (M._fmrb_wasm_clip_out_seq_ptr) clipPollOut();
+  if (M._fmrb_wasm_text_cursor) imePollCursor();
   const seq = M._fmrb_wasm_frame_seq();
   if (seq === lastSeq) {
     if (crt) crt.flush();   // a resize or a setting; nothing when neither
@@ -195,7 +196,7 @@ function hookInput() {
   });
   canvas.addEventListener('mousedown', (ev) => {
     ev.preventDefault();
-    canvas.focus();
+    focusMachine();
     const pos = canvasPos(ev);
     if (!pos) return;
     lastPointer = pos;
@@ -236,7 +237,7 @@ function hookInput() {
   canvas.addEventListener('touchstart', (ev) => {
     if (ev.touches.length !== 1) return;
     ev.preventDefault();
-    canvas.focus();
+    focusMachine();
     const t = ev.changedTouches[0];
     const pos = touchPos(t);
     if (!pos) return;
@@ -295,9 +296,25 @@ function hookInput() {
     pushInput(5, x, y, notches, 0);
   }, { passive: false });
 
-  canvas.addEventListener('keydown', (ev) => {
+  const onKeyDown = (ev) => {
+    // A key the browser's IME takes (it is composing, or the key starts a
+    // composition: keyCode 229) is the IME's, not the machine's; its release
+    // stays with it too. The screen itself never composes, so there this
+    // never happens and every key goes as it always did.
+    if (ev.isComposing || ev.keyCode === 229) {
+      imeTakenKeys.add(ev.code);
+      if (ev.currentTarget === imeBox) imeGuess(true);
+      return;
+    }
     const sc = RD_HID_KEYMAP[ev.code];
     if (!sc) return;
+    // A printable key the IME let through: it is not composing now (off, or
+    // in its direct mode). Said before the key goes, so the indicator the
+    // key may change is the machine's own again.
+    if (ev.currentTarget === imeBox && ev.key && ev.key.length === 1 &&
+        !ev.ctrlKey && !ev.metaKey && !ev.altKey) {
+      imeGuess(false);
+    }
     // The paste key: let the browser fire its paste event (the browser's
     // text, with no permission asked) and hold the key until the text is in.
     if ((ev.ctrlKey || ev.metaKey) && ev.code === 'KeyV' && M && M._fmrb_wasm_clip_in_seq_ptr) {
@@ -306,20 +323,237 @@ function hookInput() {
     }
     ev.preventDefault();
     pushInput(1, sc, rdModMask(ev), 0, 0);
-  });
-  canvas.addEventListener('keyup', (ev) => {
+  };
+  const onKeyUp = (ev) => {
+    if (imeTakenKeys.delete(ev.code)) return;
     const sc = RD_HID_KEYMAP[ev.code];
     if (!sc) return;
     ev.preventDefault();
     if (heldPaste && heldPaste.sc === sc) releasePasteKey();
     pushInput(2, sc, rdModMask(ev), 0, 0);
-  });
+  };
+  canvas.addEventListener('keydown', onKeyDown);
+  canvas.addEventListener('keyup', onKeyUp);
+  imeBox.addEventListener('keydown', onKeyDown);
+  imeBox.addEventListener('keyup', onKeyUp);
+  hookIme();
   document.addEventListener('paste', (ev) => {
     if (!M || !heldPaste) return;   // only the machine's paste key
     ev.preventDefault();
     const text = ev.clipboardData ? ev.clipboardData.getData('text/plain') : '';
     if (text) clipWriteIn(text);
     releasePasteKey();
+  });
+}
+
+// ---- the browser's IME (doc/kanji_input K4, wasm/backend/input_wasm.c) -----
+//
+// An app that takes text (the editor, the Shell) says where its cursor is
+// (FmrbApp.set_text_cursor); the machine publishes the focused app's, in
+// frame coordinates, and while there is one the keys go to a text area put
+// at that place instead of to the screen. Keys the browser's IME does not
+// take go on exactly as from the screen. What the IME commits
+// (compositionend) goes to the machine as text records, which reach the app
+// as the same one-byte key events a composed kana does. While composing, the
+// text area shows what is being composed (the browser draws it there, and
+// puts its candidate window beside it). A game, or any app without a text
+// cursor, keeps the screen's own focus, so the IME never sees its keys.
+// Family mruby's own kana input is untouched. The page cannot read whether
+// the browser's IME is on; it guesses for the machine's kana indicators
+// (doc/kanji_input K4b, imeGuess).
+
+const imeBox = document.createElement('textarea');
+imeBox.id = 'ime-box';
+imeBox.setAttribute('autocomplete', 'off');
+imeBox.setAttribute('autocorrect', 'off');
+imeBox.setAttribute('autocapitalize', 'off');
+imeBox.setAttribute('spellcheck', 'false');
+imeBox.setAttribute('aria-label', 'text input');
+// No on-screen keyboard: a touch device has none today, and focusing this
+// must not bring one up.
+imeBox.setAttribute('inputmode', 'none');
+imeBox.tabIndex = -1;
+Object.assign(imeBox.style, {
+  position: 'absolute', left: '0px', top: '0px', width: '1px', height: '1px',
+  margin: '0', padding: '0', border: '0', outline: 'none', resize: 'none',
+  overflow: 'hidden', whiteSpace: 'pre', lineHeight: '1', zIndex: '5',
+  opacity: '0', caretColor: 'transparent', pointerEvents: 'none',
+  background: '#000', color: '#fff', fontFamily: 'sans-serif',
+  textDecoration: 'underline', textUnderlineOffset: '2px', boxSizing: 'border-box',
+  paddingLeft: '1px', paddingRight: '1px',
+});
+screenBox.appendChild(imeBox);
+// The text being composed, laid out in the same font to measure it: a text
+// area is never narrower than its own box, so it cannot say how wide its
+// text is.
+const imeMeasure = document.createElement('span');
+Object.assign(imeMeasure.style, {
+  position: 'absolute', left: '0px', top: '0px', visibility: 'hidden',
+  whiteSpace: 'pre', fontFamily: 'sans-serif', pointerEvents: 'none',
+});
+screenBox.appendChild(imeMeasure);
+
+const imeTakenKeys = new Set();   // codes whose press the IME took
+let imeCursor = { on: 0, x: 0, y: 0, h: 0 };
+let imeCursorSeq = -1;
+let imeComposing = false;
+let imeOn = false;                // the guess: the browser's IME composes
+let imeOnSent = -1;               // what the machine was told last
+
+// The machine's kana indicators follow the browser's IME as well as the page
+// can tell (doc/kanji_input K4b): a composition starting says it is on, a
+// printable key it let through says it is off. Only while the keys go to the
+// text area -- with the screen focused the IME sees no keys, and the
+// machine is told "off" (the guess is kept for when the text area is back).
+// A composition starting always tells the machine again: Family mruby's own
+// kana keys and indicators put the indicator back to its mode, and the next
+// composition must hide it again.
+function imeGuess(on, again) {
+  imeOn = on;
+  imeTellGuess(again);
+}
+
+function imeTellGuess(again) {
+  if (!M) return;
+  const v = (imeOn && document.activeElement === imeBox) ? 1 : 0;
+  if (v === imeOnSent && !again) return;
+  imeOnSent = v;
+  pushInput(7, v, 0, 0, 0);
+}
+
+// The element the keys should go to: the text area while the focused app
+// has a text cursor, the screen otherwise.
+function machineFocusTarget() {
+  return imeCursor.on ? imeBox : canvas;
+}
+
+function focusMachine() {
+  machineFocusTarget().focus({ preventScroll: true });
+}
+
+function imePollCursor() {
+  const base = M._fmrb_wasm_text_cursor() >> 2;
+  const heap = M.HEAP32;
+  const s0 = Atomics.load(heap, base);
+  if (s0 !== imeCursorSeq && !(s0 & 1)) {
+    const c = { on: heap[base + 1], x: heap[base + 2], y: heap[base + 3], h: heap[base + 4] };
+    if (Atomics.load(heap, base) === s0) {
+      imeCursorSeq = s0;
+      imeCursor = c;
+    }
+  }
+  imePlace();
+  // The machine has the keys (the screen or the text area): hand them to
+  // the one that should have them now. Not while composing -- the text
+  // being composed would be lost.
+  const active = document.activeElement;
+  if (!imeComposing && (active === canvas || active === imeBox) &&
+      active !== machineFocusTarget()) {
+    focusMachine();
+  }
+  imeTellGuess(false);
+}
+
+// The text area over the cursor, in the screen box's CSS pixels. While
+// composing it is as wide as the text being composed and stays inside the
+// screen: at the cursor while that fits, moved left as far as it must when
+// it does not, and as wide as the screen at most (then the text scrolls
+// inside, the caret kept in view).
+function imePlace() {
+  const r = canvas.getBoundingClientRect();
+  const b = screenBox.getBoundingClientRect();
+  if (!r.width || !canvas.width) return;
+  const k = r.width / canvas.width;
+  const h = Math.max(imeCursor.h, 8) * k;
+  const x0 = r.left - b.left;
+  let left = x0 + imeCursor.x * k;
+  const top = r.top - b.top + imeCursor.y * k;
+  const st = imeBox.style;
+  const font = Math.max(Math.round(h * 0.85), 8) + 'px';
+  st.top = Math.round(top) + 'px';
+  st.height = Math.round(h) + 'px';
+  st.lineHeight = Math.round(h) + 'px';
+  st.fontSize = font;
+  if (imeComposing) {
+    imeMeasure.style.fontSize = font;
+    imeMeasure.textContent = imeBox.value;
+    const want = Math.ceil(imeMeasure.getBoundingClientRect().width) + 4;  // caret, padding
+    const w = Math.min(Math.max(want, 4), Math.floor(r.width));
+    left = Math.max(x0, Math.min(left, x0 + r.width - w));
+    st.width = w + 'px';
+    if (imeBox.selectionEnd === imeBox.value.length) imeBox.scrollLeft = imeBox.scrollWidth;
+  }
+  st.left = Math.round(left) + 'px';
+}
+
+// The colours of the screen under the cursor, so the text being composed
+// looks like the app's own: the commonest colour of the line around the
+// cursor is the background, the commonest one far enough from it the ink.
+// The cursor's own cell is left out (the editor's cursor is coloured).
+function imeColours() {
+  const fallback = { bg: '#000', fg: '#fff' };
+  if (!imageData || !imeCursor.on) return fallback;
+  const w = imageData.width, hgt = imageData.height, d = imageData.data;
+  const x0 = Math.max(0, imeCursor.x - 48), x1 = Math.min(w, imeCursor.x + 48);
+  const y0 = Math.max(0, imeCursor.y), y1 = Math.min(hgt, imeCursor.y + Math.max(imeCursor.h, 1));
+  const count = new Map();
+  for (let y = y0; y < y1; y++) {
+    for (let x = x0; x < x1; x++) {
+      if (x >= imeCursor.x - 1 && x < imeCursor.x + 8) continue;
+      const i = (y * w + x) * 4;
+      const c = (d[i] << 16) | (d[i + 1] << 8) | d[i + 2];
+      count.set(c, (count.get(c) || 0) + 1);
+    }
+  }
+  if (!count.size) return fallback;
+  const byUse = [...count.entries()].sort((p, q) => q[1] - p[1]).map((e) => e[0]);
+  const luma = (c) => 0.299 * (c >> 16) + 0.587 * ((c >> 8) & 255) + 0.114 * (c & 255);
+  const bg = byUse[0];
+  let fg = byUse.find((c) => Math.abs(luma(c) - luma(bg)) > 96);
+  if (fg === undefined) fg = luma(bg) < 128 ? 0xffffff : 0x000000;
+  const css = (c) => '#' + c.toString(16).padStart(6, '0');
+  return { bg: css(bg), fg: css(fg) };
+}
+
+// Text the IME committed, to the machine: 12 bytes of UTF-8 per record.
+function sendImeText(text) {
+  const bytes = new TextEncoder().encode(text);
+  for (let i = 0; i < bytes.length; i += 12) {
+    const n = Math.min(12, bytes.length - i);
+    const w = [0, 0, 0];
+    for (let j = 0; j < n; j++) w[j >> 2] |= bytes[i + j] << (8 * (j & 3));
+    pushInput(6, n, w[0], w[1], w[2]);
+  }
+}
+
+function hookIme() {
+  imeBox.addEventListener('compositionstart', () => {
+    imeComposing = true;
+    imeGuess(true, true);
+    const c = imeColours();
+    Object.assign(imeBox.style, {
+      opacity: '1', caretColor: c.fg, background: c.bg, color: c.fg,
+      textDecorationColor: c.fg,
+    });
+    imePlace();
+  });
+  imeBox.addEventListener('compositionupdate', () => {
+    imePlace();
+  });
+  imeBox.addEventListener('compositionend', (ev) => {
+    imeComposing = false;
+    if (ev.data && M) sendImeText(ev.data);
+    imeBox.value = '';
+    Object.assign(imeBox.style, { opacity: '0', caretColor: 'transparent', width: '1px' });
+  });
+  // Nothing but the IME's composition is meant to stay in the text area
+  // (a key with no machine key, a paste the machine did not ask for).
+  imeBox.addEventListener('input', (ev) => {
+    if (imeComposing || ev.isComposing) {
+      imePlace();
+      return;
+    }
+    imeBox.value = '';
   });
 }
 
@@ -813,7 +1047,7 @@ document.addEventListener('fullscreenchange', () => {
   if (!full && navigator.keyboard && navigator.keyboard.unlock) {
     navigator.keyboard.unlock();
   }
-  if (full) canvas.focus();   // keys go to the machine, not the page
+  if (full) focusMachine();   // keys go to the machine, not the page
   applyZoom();
 });
 
@@ -939,8 +1173,12 @@ lookSelect.addEventListener('change', () => chooseLook(lookSelect.value));
 for (const k of FmrbCrt.KEYS) {
   crtSliders[k].addEventListener('input', () => chooseCrtSettings({ [k]: crtSliders[k].value }));
 }
-document.getElementById('crt-defaults').addEventListener('click',
-  () => chooseCrtSettings(FmrbCrt.DEFAULTS));
+// The sets (hosted/crt/crt_presets.h): all the strengths at once, the on/off
+// as it is.
+document.getElementById('crt-standard').addEventListener('click',
+  () => chooseCrtSettings(FmrbCrt.PRESETS.standard));
+document.getElementById('crt-strong').addEventListener('click',
+  () => chooseCrtSettings(FmrbCrt.PRESETS.strong));
 
 crtSettings = sessionLook === 'crt' ? Object.assign({}, FmrbCrt.DEFAULTS) : storedCrtSettings();
 showCrtSliders();
@@ -1029,6 +1267,9 @@ moduleConfig.arguments = [];
   } else if (ZENOH_PASS && !PASS_WITHOUT_NODE) {
     moduleConfig.zenohPass = ZENOH_PASS;
     moduleConfig.zenohPage = ZENOH_PAGE;
+    // Which way the door took each WebSocket (asterism-console T8): with
+    // the user's certificate, or the shared connection.
+    moduleConfig.zenohDoor = onDoorNotice;
     // The link stopped trying (zp_ws_emscripten.c): with a pass, most likely
     // because the pass has closed.
     moduleConfig.zenohGaveUp = (fails) => {
@@ -1422,6 +1663,76 @@ function decideNodeId() {
 }
 lockDecided.then(() => { if (!nodeId) decideNodeId(); });
 
+// ---- the door's notice: the name the router checked (T8) ----------------
+//
+// A page that came with a pass from the console asks the door which way it
+// took each WebSocket (zp_ws_emscripten.c, door=1): to zenohd's mutual-TLS
+// port with the user's certificate, where the router checks the page's node
+// ID (asterism-console docs/g1_5.md, "Browsers the router tells apart"), or
+// through the shared connection of every browser, where it does not. The
+// page counts as checked while every open WebSocket says so, for this
+// page's node. Then it writes the node to DOOR_FILE (the machine's
+// /tmp/.asterism_door), where the transfer app looks before it takes the
+// console's list of senders (/usr/share/transfer/transfer.app.rb); the file
+// goes when that stops being true. The router itself refuses every file key
+// to the shared connection, so the file only lets the app say yes where the
+// router has bound the callers to their certificates.
+//
+// A page opened later from the console takes the name over (T8c): the door
+// closes this page's WebSockets with the certificate, and they come back
+// through the shared connection with taken_over in the notice.
+const DOOR_FILE = '/flash/tmp/.asterism_door';
+const doorSlots = {};
+let doorState = null; // the last word: { verified, node, why, taken }
+let doorOpen = 0; // WebSockets open now that said which way they went
+
+function onDoorNotice(slot, notice) {
+  if (notice) doorSlots[slot] = notice;
+  else delete doorSlots[slot];
+  const open = Object.values(doorSlots);
+  doorOpen = open.length;
+  if (open.length) {
+    const shared = open.find((n) => !n.verified || n.node !== nodeId);
+    doorState = shared ? { verified: false, other: shared.verified ? shared.node : '', why: shared.why || '',
+                           taken: shared.taken_over === true }
+                       : { verified: true, node: nodeId };
+  }
+  const fs = (M || moduleConfig).FS;
+  try {
+    if (open.length && doorState && doorState.verified) {
+      fs.mkdirTree('/flash/tmp');
+      fs.writeFile(DOOR_FILE, nodeId);
+    } else {
+      fs.unlink(DOOR_FILE);
+    }
+  } catch (e) { /* not there: nothing to remove */ }
+  showNetworkState();
+}
+
+// The door's line under the Network panel's heading: [class, text], or
+// null where the door says nothing (no pass, a room, a link refused).
+// ok: the router checks this name (files can go); shared: it does not (no
+// files); wait: no WebSocket yet, or none open now.
+function doorLine() {
+  if (!ZENOH_PASS || ROOM || PASS_WITHOUT_NODE) return null;
+  const connect = ' (an Asterism app connects it, e.g. Receiving)';
+  if (!doorState) return ['wait', 'Router: not connected yet' + connect];
+  if (!doorOpen) return ['wait', 'Router: not connected now' + connect];
+  if (doorState.verified) {
+    return ['ok', 'Checked by the router: this page is ' + nodeId +
+      ' with your certificate (the console\'s door). Files can go.'];
+  }
+  // The pass is someone else's (or this user's other name): the router binds
+  // this page to that name, so it cannot act as the one it shows.
+  if (doorState.other) return ['shared', 'The door connected this page as ' + doorState.other + ', not as this ID: no files.'];
+  if (doorState.taken) {
+    return ['shared', 'Another page opened later from the console has taken over ' + nodeId +
+      '. This page is on the shared connection now: no files. Open it again from the console to send from here.'];
+  }
+  return ['shared', 'Shared connection: the router does not check this name' +
+    (doorState.why ? ' (' + doorState.why + ')' : '') + '. No files.'];
+}
+
 // ---- the Network panel: the router, and the ID above -------------------
 //
 // The router is the zenoh_router setting (CONF_KEYS), written into the store
@@ -1447,6 +1758,15 @@ function showNetworkState() {
     else if (nodeId && !ROOM && homeWriter === false) text += ' (this tab only)';
     else if ((nodeId || ROOM) && !nodeKept) text += ' (not kept: storage refused)';
     nodeStateEl.textContent = text;
+  }
+  const doorEl = document.getElementById('door-state');
+  if (doorEl) {
+    const line = doorLine();
+    doorEl.hidden = !line;
+    if (line) {
+      doorEl.className = 'door-line ' + line[0];
+      doorEl.textContent = line[1];
+    }
   }
   showRoomState('');
 }
@@ -1524,6 +1844,30 @@ async function measureStorage() {
     console.warn('fmrb: storage estimate unavailable:', e);
   }
   showStorageState();
+}
+
+// The browser's storage room, for the machine (FmrbApp.free_bytes of /home,
+// which the transfer app asks before it takes a file, doc/asterism_file_transfer
+// T3b): navigator.storage.estimate() answers only through a promise here, so
+// the page asks at the start and every STORAGE_ROOM_MS, and writes quota less
+// usage, a tenth kept back (it is an estimate), in KiB to a cell the machine
+// reads at once (wasm/backend/storage_wasm.c). No estimate: the cell keeps
+// "unknown" and the machine finds out by writing.
+const STORAGE_ROOM_MS = 10000;
+const STORAGE_ROOM_KEEP = 0.9;
+
+async function shareStorageRoom() {
+  if (!M || !M._fmrb_wasm_storage_free_kib_ptr) return;
+  try {
+    if (!navigator.storage || !navigator.storage.estimate) return;
+    const est = await navigator.storage.estimate();
+    if (!est || est.quota == null || est.usage == null) return;
+    const room = Math.max(0, est.quota - est.usage) * STORAGE_ROOM_KEEP;
+    const kib = Math.min(0xFFFFFFFE, Math.floor(room / 1024));
+    Atomics.store(M.HEAPU32, M._fmrb_wasm_storage_free_kib_ptr() >> 2, kib);
+  } catch (e) {
+    console.warn('fmrb: storage estimate unavailable:', e);
+  }
 }
 
 // ---- taking /home with you ---------------------------------------------
@@ -2679,7 +3023,7 @@ startOverlay.addEventListener('click', async () => {
   if (LINK_REFUSED || starting) return;
   starting = true;
   startOverlay.style.display = 'none';
-  canvas.focus();
+  focusMachine();
   statusLine.textContent = 'booting the firmware...';
 
   let ac = null;
@@ -2729,6 +3073,8 @@ startOverlay.addEventListener('click', async () => {
   if (FSPROBE) setTimeout(() => fsprobeReport(mod), 3000);
   if (FSPROBE) setTimeout(fsprobeSecondTab, 6000);
   measureStorage();
+  shareStorageRoom();
+  setInterval(shareStorageRoom, STORAGE_ROOM_MS);
   enableStorageButtons();
   hookInput();
   requestAnimationFrame(paint);
@@ -2851,6 +3197,7 @@ async function runDriveCommand(cmd) {
       // The Look selector and the sliders, through the panel's own doors
       // (stored like a hand's choice). Answers the state and the counters:
       // uploads and draws of the view, frames of the picture.
+      if (cmd.preset) chooseCrtSettings(FmrbCrt.PRESETS[cmd.preset]);
       if (cmd.defaults) chooseCrtSettings(FmrbCrt.DEFAULTS);
       if (cmd.values) chooseCrtSettings(cmd.values);
       if (cmd.look) chooseLook(cmd.look);
@@ -2900,6 +3247,68 @@ async function runDriveCommand(cmd) {
         if (type !== 'mouseup') await driveSleep(cmd.gap_ms || 60);
       }
       return { types, machine: mapped };
+    }
+    case 'ime': {
+      // The browser's IME as far as the page sees it (doc/kanji_input K4):
+      // a composition on the text area -- a press the IME takes, the start,
+      // each update, the commit, the release -- dispatched as the browser
+      // would. Real IME windows cannot be driven from here.
+      const st = () => ({
+        focused: document.activeElement === imeBox ? 'ime' :
+                 document.activeElement === canvas ? 'screen' :
+                 (document.activeElement ? document.activeElement.tagName : null),
+        cursor: imeCursor,
+        box: { left: imeBox.style.left, top: imeBox.style.top, height: imeBox.style.height,
+               width: imeBox.style.width, background: imeBox.style.background,
+               color: imeBox.style.color, font: imeBox.style.fontSize },
+        screen: (() => {
+          const r = canvas.getBoundingClientRect(), b = screenBox.getBoundingClientRect();
+          return { left: r.left - b.left, top: r.top - b.top, width: r.width, height: r.height };
+        })(),
+        composing: imeComposing,
+        guess: imeOn, told: imeOnSent,
+      });
+      if (cmd.end) {
+        // Commit a composition left open by `hold`.
+        if (imeComposing) {
+          imeBox.dispatchEvent(new CompositionEvent('compositionend',
+            { bubbles: true, data: imeBox.value }));
+        }
+        return st();
+      }
+      if (cmd.key) {
+        // A plain key on the text area, one the IME lets through (K4b: the
+        // guess goes back to "off").
+        if (document.activeElement !== imeBox) return Object.assign({ sent: false }, st());
+        const code = cmd.key.length === 1 ? 'Key' + cmd.key.toUpperCase() : cmd.key;
+        for (const type of ['keydown', 'keyup']) {
+          imeBox.dispatchEvent(new KeyboardEvent(type,
+            { bubbles: true, cancelable: true, key: cmd.key, code }));
+        }
+        return Object.assign({ sent: true }, st());
+      }
+      if (cmd.text === undefined) return st();
+      if (document.activeElement !== imeBox) return Object.assign({ sent: false }, st());
+      const code = cmd.code || 'Space';
+      // keyCode cannot be given to a synthetic event: isComposing stands in.
+      imeBox.dispatchEvent(new KeyboardEvent('keydown',
+        { bubbles: true, cancelable: true, key: 'Process', code, isComposing: true }));
+      imeBox.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true, data: '' }));
+      for (const part of cmd.updates || [cmd.text]) {
+        imeBox.value = part;
+        imeBox.dispatchEvent(new CompositionEvent('compositionupdate', { bubbles: true, data: part }));
+        imeBox.dispatchEvent(new InputEvent('input',
+          { bubbles: true, data: part, inputType: 'insertCompositionText', isComposing: true }));
+        await driveSleep(cmd.gap_ms || 60);
+      }
+      const during = st();
+      during.opacity = imeBox.style.opacity;
+      // Left open for a look (the box, the indicators); `ime --end` commits.
+      if (cmd.hold) return Object.assign({ sent: true, held: true }, during);
+      imeBox.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true, data: cmd.text }));
+      imeBox.dispatchEvent(new KeyboardEvent('keyup',
+        { bubbles: true, cancelable: true, key: 'Enter', code, isComposing: false }));
+      return Object.assign({ sent: true, during }, st());
     }
     case 'status':
       return {
