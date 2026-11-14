@@ -38,7 +38,11 @@ Retro. Modern is defined as the variation that assumes a higher-resolution digit
 and is meant to be used more seriously as a development environment. Today it runs on the
 Tab5.
 
-[Choose your hardware](getting_started/choose_hardware.md) has the details.
+[Choose your hardware](getting_started/choose_hardware.md) has the details. Without either board, the
+same system runs in a browser tab ([Studio](getting_started/studio.md)) and as a program on a
+Linux PC, and small headless boards (M5Stack StickS3, AtomS3R) join the others over
+[Asterism](api/network.md#asterism-objects-and-topics-across-machines), the network on which
+machines call each other's Ruby objects and pass running apps between them.
 
 <div align="center">
   <img src="/images/photo_two_machines.jpg" width="700" alt="Retro on the left, Modern on the right, running the same OS">
@@ -63,6 +67,7 @@ yourself.
 - [Firmware](https://github.com/family-mruby/family-mruby)
 - [Board Data](https://github.com/family-mruby/narya-board)
 - [Firmware Installer](https://github.com/family-mruby/family-mruby-installer)
+- [Asterism](https://github.com/ruby-asterism/asterism) (Ruby objects across machines, also a CRuby gem)
 
 ## Development Background
 

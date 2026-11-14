@@ -35,7 +35,11 @@ NTSC出力を持つNarya v3基板で動いていた Family mrubyは Retro と呼
 Modern は、より高解像度のデジタルディスプレイを前提として、より本格的に開発環境として使うことを想定したバリエーションとして定義しています。
 今はTab5で使うことができます。
 
-[機種の選択](getting_started/choose_hardware.md) に詳細を記載しています。
+[機種の選択](getting_started/choose_hardware.md) に詳細を記載しています。どちらのボードが無くても、
+同じシステムがブラウザのタブ ([スタジオ](getting_started/studio.md)) と Linux のパソコンのプログラムとして
+動きます。画面の無い小型機 (M5Stack StickS3、AtomS3R) は、端末どうしが Ruby のオブジェクトを
+呼び合い、動いているアプリを受け渡す網 [Asterism](api/network.md#asterism-端末をまたぐオブジェクトとトピック) で
+ほかの端末に加わります。
 
 <div align="center">
   <img src="/images/photo_two_machines.jpg" width="700" alt="左が Retro、右が Modern。同じOSが動いいます">
@@ -60,6 +64,7 @@ Retro は専用基板が必要です。[BOOTH](https://booth.pm/ja/items/8128031
 - [ファームウェア](https://github.com/family-mruby/family-mruby)
 - [基板データ](https://github.com/family-mruby/narya-board)
 - [書き込みツール](https://github.com/family-mruby/family-mruby-installer)
+- [Asterism](https://github.com/ruby-asterism/asterism) (端末をまたぐ Ruby のオブジェクト。CRuby の gem もあります)
 
 ## 開発の背景
 

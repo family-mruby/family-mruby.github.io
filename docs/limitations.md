@@ -10,7 +10,7 @@ welcome to use it.
 |---|---|
 | **Remote desktop** | No authentication. Anyone on the same network can open the address, watch the screen and send keyboard and mouse input — that is, operate the machine |
 | **The file and app endpoints beside it** | Also unauthenticated, and in the released build. Anyone who can reach the remote desktop can also list, read, write and delete files, and start or stop apps |
-| **BLE console and debug service** | No pairing, no bonding, no encryption (deliberately, because pairing breaks Web Bluetooth on Windows). Anyone in radio range can read and write files, read the log, and start or stop apps |
+| **BLE console and debug service** | Starts at boot by default on Retro and on Modern (Tab5, NARYA v4); turn it off with the BLE Auto Start setting (`ble_auto_start`). The headless AtomS3R and StickS3 run it only in setup mode. While it runs it uses no pairing, no bonding and no encryption (deliberately, because pairing breaks Web Bluetooth on Windows): anyone in radio range can connect, look at running apps and their variables, start or stop them, read the log, and read and write ordinary files. It cannot be stopped without a reboot |
 | **Remote debugger over TCP** | No authentication. It listens on all interfaces |
 | **Wi-Fi credentials** | Stored in plain text in `/etc/wifi.toml` on the device |
 | **Service keys** | An API key given to the speech service sits in plain text in `services.toml`, and the development build serves `/home` over HTTP |
@@ -18,8 +18,8 @@ welcome to use it.
 
 Use these features only on a network you trust, and at your own risk. Do not forward a port
 to the device from the internet. Wi-Fi can be kept off at boot with `wifi_auto_start` in
-Config, and on Retro BLE likewise with `ble_auto_start`; on Modern BLE always starts at
-boot and cannot be stopped while the machine is on.
+Config, and BLE likewise with `ble_auto_start` (BLE Auto Start); once BLE is running it
+cannot be stopped without a reboot.
 
 ## Differences from R2P2
 

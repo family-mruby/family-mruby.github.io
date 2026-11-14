@@ -63,8 +63,8 @@
 | `video_play.app.rb` | Motion JPEG を窓の中で再生します | [`FmrbGfx#video_open`](api/fmrb_gfx.md#動画-modern-のみ) |
 | `imu.app.rb` | 6 軸センサを水準器として表示します | [`I2C`](api/peripherals.md#i2c) |
 
-`/app/debug` と `/app/test` も入っていますが、わざと壊すためのもので、ランチャーにも
-出ません。写して使うサンプルではありません。
+`/app/debug` (開発用のビルドでは `/app/test` も) が入っていますが、わざと壊すためのもので、
+ランチャーにも出ません。写して使うサンプルではありません。
 
 ## 関連
 

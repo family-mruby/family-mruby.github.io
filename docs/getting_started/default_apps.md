@@ -51,6 +51,8 @@ On Modern a service host also runs in the background, holding the resident
 | PubDemo / SubDemo | A publisher and a subscriber, to run together |
 | LED Matrix | Drives a WS2812B matrix from the GROVE port |
 | I2C Kbd | Reads an I2C keyboard |
+| Avatar | Moku, a small mascot in a [frameless window](../file_formats/app_toml.md#frameless-windows) that lives on the desktop. Drag it anywhere; clicks on its see-through parts go to what is behind |
+| Walk Scroller | A walker that takes a step each time a step counter on the [Asterism](../api/network.md#asterism-objects-and-topics-across-machines) network reports one. Not in Retro images |
 
 ## Python — `/app/python`
 
@@ -88,6 +90,9 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 | Breakout.py | The Python sample game: sprites, tiles, Japanese text, a tune on the main sound chip and effects on the other |
 | Robo Explorer | A maze you cannot play directly. The robot takes no keys — it publishes its state and obeys commands that arrive over [pub/sub](../api/pubsub.md) |
 | Robo Pilot | The pilot that drives it. The part you write is `my_pilot.rb`: it gets the keys, a `think` call five times a second, and every result. There is a Python pilot too |
+| Hide Jong | A riichi mahjong table, up to four players with CPUs in the other seats. Needs a game host ([asterism-games](https://github.com/ruby-asterism/asterism-games)) on the same Asterism network. Not in Retro images |
+| Othello (table) | An othello table on the same game host: two seats and spectators |
+| Board | A drawing board everyone at the table draws on together, on the same game host |
 
 <div align="center">
   <img src="/images/tab5_rpg_demo.png" width="600" alt="The RPG demo running on a Tab5">
@@ -107,6 +112,7 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 | Sprite Editor | Edits a 16x16 RGB332 tile sheet: load a BMP, pick a tile, edit pixels, save back |
 | PicoRabbit+ | Presents a slide deck written in Markdown, fullscreen. It opens on a list of every deck it can find — yours under `/home/slides`, the samples under `/usr/share/samples/slides`, and the SD card — and can write a deck out as one picture per slide |
 | GPIO Viewer | Live pin status for every GPIO, colour-coded by what is using it |
+| Receiving | Whether this machine accepts files and apps sent from other machines over Asterism, and from whom |
 
 <div align="center">
   <img src="/images/picorabbit.png" width="620" alt="A slide presented fullscreen, with a rabbit and a turtle on a track along the bottom and the slide number at the right">
@@ -130,7 +136,8 @@ Retro.
 — an app that raises, one that fails to compile, one that saturates the input queue, MIDI
 timing benchmarks, an NTSC colour chart, a network check, SD card and tile-map checks. They
 are hidden from the launcher on every machine, but the files are there: run one from the
-editor or the shell when a device misbehaves.
+editor or the shell when a device misbehaves. `/app/test` is in development builds only; the
+release images and the public browser build leave it out.
 
 ## Machine-specific apps
 

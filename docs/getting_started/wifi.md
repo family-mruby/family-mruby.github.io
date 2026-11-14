@@ -18,7 +18,24 @@ Only 2.4 GHz networks are supported.
     Use this on a network you trust, and read [Security](../limitations.md#security) before
     putting the device on a network you share with strangers.
 
-## Write your network into `/etc/wifi.toml`
+## Pick a network on the screen
+
+The quickest way, with a keyboard attached:
+
+1. Click the Wi-Fi bars in the menu bar (or system menu → Network)
+2. Press **Wi-Fi...** in the Network dialog. The Wi-Fi page lists the networks in reach, with
+   their strength
+3. Choose yours, type the password on the keyboard, and connect
+
+The machine remembers up to five networks. At startup, and whenever the connection drops,
+it joins the strongest one it remembers among those in reach — home, a venue, a phone's
+hotspot. **Forget** removes one. What it remembers is written to `/home/wifi.toml`, which
+cannot be read over the remote desktop's file endpoints.
+
+The simulator and the browser build have no Wi-Fi page; the Linux program's Settings app has
+the same page, over the PC's own network manager.
+
+## Or write your network into `/etc/wifi.toml`
 
 Credentials live in a file on the device. Released firmware ships without that file —
 your network's password is yours, not something that can be baked into a public build — so
@@ -41,6 +58,19 @@ you create it once, on the device, using the editor.
     ```
 
 4. Save, then reboot: system menu → Reset
+
+The Wi-Fi page writes the newer form to `/home/wifi.toml`, which wins over `/etc/wifi.toml`.
+It holds up to five networks, newest first:
+
+```toml
+[wifi]
+enable = true
+
+[[networks]]
+ssid = "your-ssid"
+password = "your-password"   # "" or left out for an open network
+# hidden = true              # a network that does not broadcast its name
+```
 
 | Key | Meaning |
 |---|---|

@@ -81,6 +81,13 @@ through the three. It is there from boot, in every language, because on a keyboa
 half-width/full-width key — or with no keyboard at all — that click is the way in.
 `Ctrl` + `Space` does the same thing from the keyboard.
 
+**Kanji conversion.** On a board with the kanji dictionary on its SD card
+(`/sd/dict/fmrb_kanji.dic`), a reading typed in kana mode collects in
+a line at the bottom of the screen: `Space` (or the JIS Henkan key) shows candidates and steps
+through them, `Enter` or a digit commits, `Esc` goes back. Without the dictionary kana input
+works as before. Studio uses the browser's own Japanese input method and the Linux program
+the PC's. The guide on the device, `/usr/share/doc/kanji.md`, says where to get the dictionary and how to put it there.
+
 ### BLE
 
 | Appearance | Meaning |
@@ -171,10 +178,14 @@ Double-click an icon to start an app. Arrow keys move the selection and `Enter` 
 | Move | Drag the title bar |
 | Focus | Click anywhere in the window, or click its taskbar square |
 | Close | The button in the title bar, or `Ctrl` + `Q` |
+| Window menu | Right-click the title bar: **Send to** (move a movable app to another machine), **Reload** (start an app again from its edited file) and **Close** |
 | Resize | Drag the corner — only for apps that declare `resizable` |
 
 A click is decided on release, with a small movement tolerance, so a slightly shaky press
 does not turn into a drag.
+
+Some apps have no frame at all (an avatar on the desktop, for instance). Drag them from
+anywhere; a right-click or a one-second press opens the same window menu.
 
 ## Scrolling
 

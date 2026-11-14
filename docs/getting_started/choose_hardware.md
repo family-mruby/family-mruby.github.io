@@ -70,6 +70,14 @@ battery-backed clock.
 - The [simulator](simulator.md), which runs the whole system on Linux with no hardware
   at all.
 
+## Other ways to run it
+
+| | What it is |
+|---|---|
+| [Studio](studio.md) | The whole system in a browser tab, nothing to install. Modern's screen |
+| The Linux program | Family mruby as one program on a Linux PC (amd64 `.deb`, attached to each release on GitHub; Ubuntu 26.04 or newer). Pick **Family mruby** at the login screen and it is the desktop, with the PC's own apps in Family mruby windows. Modern's screen, scaled to the display |
+| M5Stack StickS3 / AtomS3R | Small boards that run a single app and join an [Asterism](../api/network.md#asterism-objects-and-topics-across-machines) network, with no desktop. Flashed from the same Web Installer |
+
 ## What is different in your code
 
 Almost nothing — but two things are worth knowing:
@@ -79,8 +87,8 @@ your app is actually given rather than from a hardcoded number, and the same cod
 screens:
 
 ```ruby
-cx = @user_area_x0 + @user_area_width  / 2
-cy = @user_area_y0 + @user_area_height / 2
+cx = @user_area_width  / 2
+cy = @user_area_height / 2
 ```
 
 See [FmrbApp > Window geometry](../api/fmrb_app.md) for the full set.
@@ -95,7 +103,7 @@ pin = case FmrbConst::BOARD
       end
 ```
 
-`FmrbConst::BOARD` is one of `"tab5"`, `"naryav4"`, `"atom_display"`, `"narya_v3"` or
-`"linux"`.
+`FmrbConst::BOARD` is one of `"tab5"`, `"naryav4"`, `"atom_display"`, `"atoms3r"`,
+`"sticks3"`, `"narya_v3"`, `"linux"` or `"wasm"`.
 
 See [Hardware](../hardware.md) for the full pin assignments of both machines.

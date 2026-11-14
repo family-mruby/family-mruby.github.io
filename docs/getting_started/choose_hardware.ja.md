@@ -67,6 +67,14 @@ ESP32-P4 が 1 個で OS・描画・音・入力の全部を動かし、その�
 - Ruby のネットワーク API、MIDI 出力
 - [シミュレータ](simulator.md)。実機が無くても Linux 上で全部動きます
 
+## ほかの動かし方
+
+| | どんなものか |
+|---|---|
+| [スタジオ](studio.md) | ブラウザのタブの中で全体が動きます。インストール不要。画面は Modern |
+| Linux 版 | Linux のパソコンで 1 つのプログラムとして動く Family mruby (amd64 の `.deb`。GitHub の各リリースに添付。Ubuntu 26.04 以降)。ログイン画面で **Family mruby** を選ぶとそれがデスクトップになり、パソコンのアプリも Family mruby の窓として並びます。画面は Modern を画面に合わせて拡大したもの |
+| M5Stack StickS3 / AtomS3R | デスクトップを持たず、1 つのアプリだけを動かして [Asterism](../api/network.md#asterism-端末をまたぐオブジェクトとトピック) の網に加わる小型機。同じ Web Installer で書き込みます |
+
 ## コードで気をつける違い
 
 ほとんどありませんが、2 つだけ知っておくとよいことがあります。
@@ -75,8 +83,8 @@ ESP32-P4 が 1 個で OS・描画・音・入力の全部を動かし、その�
 アプリに与えられた描画領域から組み立てると、同じコードが両方の画面を埋めます。
 
 ```ruby
-cx = @user_area_x0 + @user_area_width  / 2
-cy = @user_area_y0 + @user_area_height / 2
+cx = @user_area_width  / 2
+cy = @user_area_height / 2
 ```
 
 一覧は [FmrbApp > ウィンドウの座標](../api/fmrb_app.md) を参照してください。
@@ -90,7 +98,7 @@ pin = case FmrbConst::BOARD
       end
 ```
 
-`FmrbConst::BOARD` は `"tab5"` / `"naryav4"` / `"atom_display"` / `"narya_v3"` / `"linux"`
-のいずれかです。
+`FmrbConst::BOARD` は `"tab5"` / `"naryav4"` / `"atom_display"` / `"atoms3r"` / `"sticks3"` /
+`"narya_v3"` / `"linux"` / `"wasm"` のいずれかです。
 
 両機種のピン配置は [ハードウェア](../hardware.md) にあります。

@@ -64,8 +64,8 @@ A full list of what ships, in every language, is in
 | `video_play.app.rb` | A Motion JPEG file playing inside a window | [`FmrbGfx#video_open`](api/fmrb_gfx.md#video-modern-only) |
 | `imu.app.rb` | The six-axis sensor as a bubble level | [`I2C`](api/peripherals.md#i2c) |
 
-`/app/debug` and `/app/test` also ship, but they exist to break things on purpose and are
-hidden from the launcher. They are not examples to copy.
+`/app/debug` (and, in development builds, `/app/test`) also exist, but they are there to break
+things on purpose and are hidden from the launcher. They are not examples to copy.
 
 ## Related
 

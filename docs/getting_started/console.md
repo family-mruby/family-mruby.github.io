@@ -28,8 +28,8 @@ Open the following URL in your browser.
     The device does not pair, bond or encrypt — that is what keeps Web Bluetooth working on
     Windows, and it also means the connection asks nothing of whoever makes it. Anyone with a
     browser in radio range can read and write the files on the board, read its log, and start
-    or stop apps. On Retro you can keep BLE off at boot with `ble_auto_start` in Config; on
-    Modern it always starts and cannot be stopped while the machine is on. See
+    or stop apps. You can keep BLE off at boot with `ble_auto_start` (BLE Auto Start) in
+    Config; once it is running it cannot be stopped without a reboot. See
     [Security](../limitations.md#security).
 
 !!! warning "If you have trouble connecting on Windows"
@@ -86,8 +86,7 @@ ESP32-S3 has one radio, so BLE and Wi-Fi are a choice — see
 [Connecting to Wi-Fi](wifi.md).
 
 If the device does not appear in the browser's dialog at all, BLE may not be running. Check
-`ble_auto_start` in Config, or start it by hand from the system menu (Retro only -- on
-Modern BLE always starts at boot).
+`ble_auto_start` in Config, or start it by hand from the system menu (Retro only).
 
 ## Notes
 
