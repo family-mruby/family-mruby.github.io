@@ -61,18 +61,18 @@ The device runs a debug service that speaks a msgpack protocol over one of two t
 
 ### The command-line client
 
-`tool/debug/fmrb_dbg_client.py` in the repository is both a library and a small interactive
+`tools/debug/fmrb_dbg_client.py` in the repository is both a library and a small interactive
 client:
 
 ```bash
 # One-shot command
-python3 tool/debug/fmrb_dbg_client.py localhost:5555 stack_trace
+python3 tools/debug/fmrb_dbg_client.py localhost:5555 stack_trace
 
 # Interactive session
-python3 tool/debug/fmrb_dbg_client.py localhost:5555
+python3 tools/debug/fmrb_dbg_client.py localhost:5555
 
 # Over BLE, scanning for a single Family mruby device
-python3 tool/debug/fmrb_dbg_client.py ble
+python3 tools/debug/fmrb_dbg_client.py ble
 ```
 
 The target is `host[:port]` for TCP (port 5555 by default), or `ble`, or
@@ -82,7 +82,7 @@ It needs the `msgpack` package; BLE additionally needs `bleak`.
 
 ### From an editor that speaks DAP
 
-`tool/debug/fmrb_dap_adapter.py` puts a Debug Adapter Protocol front end on the same client,
+`tools/debug/fmrb_dap_adapter.py` puts a Debug Adapter Protocol front end on the same client,
 so an editor that speaks DAP — VS Code, among others — can set breakpoints, step, and
 inspect variables against the running device.
 

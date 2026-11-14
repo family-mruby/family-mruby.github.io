@@ -224,11 +224,11 @@ notes. An external General MIDI module has no such limit; see [MIDI](../api/midi
 
 ### Converting to FMSQ
 
-For music you want as a fixed sequence rather than live playback, `tool/midi/smf2fmsq.rb` in
+For music you want as a fixed sequence rather than live playback, `tools/midi/smf2fmsq.rb` in
 the repository converts a `.mid` into an [FMSQ](#fmsq) stream:
 
 ```
-ruby tool/midi/smf2fmsq.rb input.mid -o out.fmsq
+ruby tools/midi/smf2fmsq.rb input.mid -o out.fmsq
 ```
 
 It emits register writes carrying full APU state, so the result plays identically on both

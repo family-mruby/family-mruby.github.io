@@ -224,10 +224,10 @@ GM 音源にはこの制約がありません。[MIDI](../api/midi.md) を参照
 ### FMSQ に変換する
 
 その場で演奏するのではなく決まったシーケンスとして持ちたい場合は、リポジトリの
-`tool/midi/smf2fmsq.rb` で `.mid` を [FMSQ](#fmsq) に変換できます。
+`tools/midi/smf2fmsq.rb` で `.mid` を [FMSQ](#fmsq) に変換できます。
 
 ```
-ruby tool/midi/smf2fmsq.rb input.mid -o out.fmsq
+ruby tools/midi/smf2fmsq.rb input.mid -o out.fmsq
 ```
 
 APU の状態を丸ごと運ぶレジスタ書き込みだけを出力するので、どちらの FMSQ 再生系でも同じに

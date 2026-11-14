@@ -142,7 +142,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 
 ## マップを作るツール
 
-タイルシートとマップは Web ツール で作成できます（`fmruby-core/tool/web/` に同梱）:
+タイルシートとマップは Web ツール で作成できます（`fmruby-core/tools/web/` に同梱）:
 
 - スプライトエディタ: 16x16 RGB332 タイルを並べた BMP を作る
 - マップエディタ: タイル配置 + イベント編集 → 詰めた `.map.bin` か `fmrb_map` JSON で書き出し。読み込みは両方に対応

@@ -60,18 +60,18 @@
 
 ### コマンドから使う
 
-リポジトリの `tool/debug/fmrb_dbg_client.py` は、ライブラリでもあり、対話的に使える
+リポジトリの `tools/debug/fmrb_dbg_client.py` は、ライブラリでもあり、対話的に使える
 小さな道具でもあります。
 
 ```bash
 # 1 つのコマンドだけ実行する
-python3 tool/debug/fmrb_dbg_client.py localhost:5555 stack_trace
+python3 tools/debug/fmrb_dbg_client.py localhost:5555 stack_trace
 
 # 対話的に使う
-python3 tool/debug/fmrb_dbg_client.py localhost:5555
+python3 tools/debug/fmrb_dbg_client.py localhost:5555
 
 # BLE で、見つかった 1 台につなぐ
-python3 tool/debug/fmrb_dbg_client.py ble
+python3 tools/debug/fmrb_dbg_client.py ble
 ```
 
 対象の指定は、TCP なら `host[:port]` (既定の port は 5555)、BLE なら `ble`、複数台ある
@@ -81,7 +81,7 @@ python3 tool/debug/fmrb_dbg_client.py ble
 
 ### DAP に対応した編集環境から
 
-`tool/debug/fmrb_dap_adapter.py` は、同じ仕組みに Debug Adapter Protocol の入口を
+`tools/debug/fmrb_dap_adapter.py` は、同じ仕組みに Debug Adapter Protocol の入口を
 つけたものです。DAP に対応した編集環境 (VS Code など) から、動いている実機に対して
 停止点を置き、1 行ずつ進め、変数を見られます。
 

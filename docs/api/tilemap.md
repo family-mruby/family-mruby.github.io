@@ -142,7 +142,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 
 ## Map Creation Tools
 
-Tile sheets and maps can be created with web tools (bundled in `fmruby-core/tool/web/`):
+Tile sheets and maps can be created with web tools (bundled in `fmruby-core/tools/web/`):
 
 - Sprite Editor: Create a BMP with 16x16 RGB332 tiles arranged in a grid
 - Map Editor: Place tiles + edit events -> export as a packed `.map.bin` or as `fmrb_map` JSON. It reads both
