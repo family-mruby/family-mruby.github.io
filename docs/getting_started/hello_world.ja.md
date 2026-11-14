@@ -4,7 +4,7 @@
 
 !!! note "このページは GUI アプリのサンプルです"
     Family mruby のアプリは大きく分けて、画面に描画する GUI アプリ と、画面を持たない headless アプリ（バックグラウンドで動く処理）があります。このページでは GUI アプリの最小例を扱います。
-    headless アプリ は、まだサポートしてませんが、Shellアプリからスクリプトとして実行することは可能です。
+    headless アプリは `.app.toml` に `default_window_mode = "background"` と書きます。`@gfx` は `nil` です。
 
 ## 最小のアプリ構成
 
@@ -39,8 +39,6 @@ class HelloApp < FmrbApp
     @gfx.present
   end
 end
-
-HelloApp.new.start
 ```
 
 コードの説明
@@ -50,9 +48,12 @@ HelloApp.new.start
 | `class HelloApp < FmrbApp` | `FmrbApp` を継承するアプリクラス |
 | `on_create` | 起動時に 1 回呼ばれる初期化処理 |
 | `@gfx.clear(...)` | キャンバス全体を黒で塗りつぶし |
-| `@gfx.draw_text(0, 0, ...)` | ウィンドウ左上 (0, 0) に文字を描画 |
+| `@gfx.draw_text(0, 0, ...)` | アプリの区画の左上 (0, 0)、つまりウィンドウ枠のすぐ内側に文字を描画 |
 | `@gfx.present` | バッファを画面に反映（必須） |
-| `HelloApp.new.start` | アプリを実行 |
+
+末尾に `HelloApp.new.start` は書きません。ファイルを読み終えると、ランタイムがそのファイルで
+定義された `FmrbApp` の子クラスを作って起動します。うまくいかないとき (子クラスが無い、起動中に
+例外が出た) は、理由がエラーの窓に出ます。
 
 ### `hello.app.toml` ファイル
 
@@ -72,11 +73,11 @@ default_window_pos_y = 40
 |---|---|
 | `app_handle_name` | 内部ハンドル名（`.rb` ファイル名のベースと一致させる） |
 | `app_screen_name` | ランチャーやタイトルバーの表示名 |
-| `default_window_mode` | `"window"` / `"fullwindow"` / `"fullscreen"` |
+| `default_window_mode` | `"window"` / `"fullscreen"` |
 | `default_window_width/height` | ウィンドウサイズ (px) |
 | `default_window_pos_x/y` | ウィンドウ左上座標 |
 
-全キーの説明は [アプリ設定ファイル (.toml)](../file_formats/app_toml.md) を参照。
+同じキーは `.rb` 先頭の `#---fmrb` コメントにも書けるので、1 ファイルだけのアプリなら `.app.toml` は無くてもかまいません。全キーの説明は [アプリ設定ファイル (.app.toml)](../file_formats/app_toml.md) を参照。
 
 ### 起動して画面に表示する
 
@@ -89,10 +90,9 @@ default_window_pos_y = 40
 
 ## Step 2: ウィンドウ枠を表示する
 
-Step1では、文字を表示しただけなので、実用的な GUI アプリにするには、以下の点に注意して タイトルバーと閉じるボタンを描画する必要があります。
-
-1. ウィンドウ全体ではなく アプリの描画可能領域 (user area) だけ を塗りつぶす（タイトルバーや枠線を消さない）
-2. 描画後に `draw_window_frame` を呼ぶ（基底クラスが用意したタイトルバー描画を再実行）
+Step1では、文字を表示しただけです。タイトルバーと閉じるボタンを残すには、キャンバス全体ではなく
+アプリの描画可能領域 (user area) だけを塗りつぶします。それをするのが `clear_user_area` で、
+ついでに枠も描き直します。
 
 以下のように、更新してください。
 
@@ -103,24 +103,22 @@ class HelloApp < FmrbApp
   end
 
   def redraw
-    clear_user_area(FmrbGfx::WHITE)   # user area を白で塗りつぶし
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4, "Hello, Family mruby!", FmrbGfx::BLACK)
-    draw_window_frame                  # タイトルバー・枠線を再描画
-    @gfx.present # 画面表示に反映
+    clear_user_area                    # user area をテーマの紙の色で塗りつぶし
+    @gfx.draw_text(4, 4, "Hello, Family mruby!", theme_fg)
+    @gfx.present                       # 画面表示に反映
   end
 end
-
-HelloApp.new.start
 ```
 
 | ポイント | 説明 |
 |---|---|
-| `@gfx.clear(FmrbGfx::BLACK)` → `clear_user_area(FmrbGfx::WHITE)` | タイトルバー以外の領域を指定の色でクリアする |
-| `draw_window_frame` の追加 | 基底クラスが用意したフレームを再描画。タイトルバーや、閉じるボタンが描画される |
+| `@gfx.clear(FmrbGfx::BLACK)` → `clear_user_area` | 枠の内側をクリアし、枠を描き直す。色を省くとシステムのテーマの紙の色 |
+| 決め打ちの色の代わりに `theme_fg` | テーマに合う文字の色。利用者の配色に従う |
 | 描画ロジックを `redraw` に分離 | 後で再描画しやすくするための整理 |
 
-!!! tip "@user_area_* とは"
-    タイトルバーや枠線を除いた アプリが自由に描いてよい領域の座標です。詳細は [FmrbApp ▸ アプリから読めるもの](../api/fmrb_app.md#アプリから読めるもの) を参照。
+!!! tip "(0, 0) はどこ?"
+    `@gfx` とマウスのイベントは、アプリが描いてよい区画の左上から測ります。ここでは枠の内側、
+    全画面なら画面の左上です。大きさは `@user_area_width` × `@user_area_height`。詳細は [FmrbApp ▸ アプリから読めるもの](../api/fmrb_app.md#アプリから読めるもの) を参照。
 
 再起動してアプリを実行すると、タイトルバーやウィンドウ枠が描画されて、右上のボタンをクリックしてアプリを終了できるはずです。
 
@@ -128,8 +126,8 @@ HelloApp.new.start
 
 ## 起動中アプリを修正してリロードしたい場合
 
-コードを書き換えて、起動中のアプリのタイトルバーを 右クリック すると、リロードするボタンが表示されます。
-リロードを実行することで、アプリを閉じて開きなおす手間が省けます。
+コードを書き換えて、起動中のアプリのタイトルバーを 右クリック し、ウィンドウのメニューから「読み直し」を選びます。
+アプリを閉じて開きなおす手間が省けます。
 
 ## ショートカット: `create_app` でひな型を生成する
 
@@ -148,7 +146,7 @@ Tip: edit it with `edit /app/usr/my_clock.app.rb`
 
 これで以下のファイルが自動作成されて、ひな形として利用できます。
 
-- `/app/usr/my_clock.app.rb` — Step 2 ベース（`clear_user_area` + `draw_window_frame` 入り、全 `on_*` ライフサイクルメソッドのひな型あり）
+- `/app/usr/my_clock.app.rb` — Step 2 ベース（`clear_user_area` 入り、全 `on_*` ライフサイクルメソッドのひな型あり）
 - `/app/usr/my_clock.app.toml` — 標準サイズのウィンドウ設定
 
 ### ランチャーに反映する
@@ -212,5 +210,9 @@ snake_case → CamelCase + `App` でクラス名、Title Case で表示名 (`app
 ### 画面に何も出ない
 
 - `@gfx.present` を呼んでいるか確認
-- 描画座標が `@user_area_x0 / y0 / width / height` の範囲内か確認
+- 描画座標が `0..@user_area_width`、`0..@user_area_height` の範囲内か確認
+
+### アプリを起動できないとエラーの窓が出る
+
+- ファイルに `FmrbApp` の子クラスがあるか確認。2 つ以上あるときは `.app.toml` の `class = "..."` で起動するものを名指しする
 

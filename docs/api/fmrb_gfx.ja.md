@@ -7,7 +7,9 @@
 
 ## 座標系
 
-ウィンドウ左上が原点 (0, 0)、X が右方向、Y が下方向の座標系。ウィンドウの外は描画できません。
+アプリが描いてよい区画の左上が原点 (0, 0)、X が右方向、Y が下方向の座標系です。枠のあるウィンドウでは枠の内側 (タイトルバーの下)、枠なし (`window_frame = "none"`) ではウィンドウの左上、全画面では画面の左上です。どの形でも同じコードが同じ所に描き、区画の大きさは `@user_area_width` × `@user_area_height` です。マウスのイベント (`ev[:x]`、`ev[:y]`)、スプライト、[UI 部品](ui.md) も同じ原点です。
+
+区画の外 (枠の上や自前のタイトル) に描くときは、同じキャンバスに描く 2 つめの `FmrbGfx` である `window_gfx` を使います。こちらはウィンドウの左上が (0, 0) です。`clear` は今もキャンバス全体を塗るので、区画を消すときは `clear_user_area` を使います。
 
 ウィンドウ毎に座標系を持ちます。イメージは以下を参照してください。
 
@@ -162,8 +164,8 @@ ASCII と日本語が混ざった文字列を 1 回の `draw_text` で描けま�
 キーワード引数は呼ぶたびに Hash を作るので、確保をしてはいけない再描画の経路では使えません。
 こちらは作りません。
 
-!!! tip "`draw_window_frame` はフォントを保存・復元"
-    `FmrbApp#draw_window_frame` はタイトルバーを必ず既定の 6x8 で描いてから 呼び出し前のフォント設定を復元 します。アプリ側で毎フレーム `set_font` を再指定する必要はありません。
+!!! tip "窓枠の描画はフォントを保存・復元"
+    基底クラスの枠の描画 (`clear_user_area`、`draw_window_frame`) はタイトルバーを必ず既定の 6x8 で描いてから 呼び出し前のフォント設定を復元 します。アプリ側で毎フレーム `set_font` を再指定する必要はありません。
 
 !!! note "JA フォントの読み込みコスト"
     `set_font(:ja, ...)` 初回は グラフィックス側でフォントデータを準備するため数十 ms 程度かかります。`on_create` 内で一度だけ呼ぶのが理想です。
@@ -175,14 +177,11 @@ class HelloJaApp < FmrbApp
   def on_create
     clear_user_area(FmrbGfx::WHITE)
     @gfx.set_font(:ja, 12)
-    @gfx.draw_text(@user_area_x0 + 8, @user_area_y0 + 8,
+    @gfx.draw_text(8, 8,
                    "こんにちは、Family mruby!", FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 end
-
-HelloJaApp.new.start
 ```
 
 PicoRuby デモ (`/app/demo/picoruby.app.rb`) の Fonts のページで、既定のフォント、日本語の 8・12・16 画素、混在描画、拡大まで一通り切り替えられます。
@@ -277,7 +276,7 @@ sheet.load_bmp("/usr/share/sprites/test/tilesheet.bmp")
 
 ```ruby
 # 上 10px を点数の帯にして、スプライトはその下だけに出す
-@gfx.set_sprite_clip(@user_area_x0, @user_area_y0 + 10,
+@gfx.set_sprite_clip(0, 10,
                      @user_area_width, @user_area_height - 10)
 ```
 
@@ -355,14 +354,13 @@ CRT モニタでの色調整に使います（[NTSC 出力テスト](../examples
 class ShapesApp < FmrbApp
   def on_create
     clear_user_area(FmrbGfx::WHITE)
-    x = @user_area_x0 + 5
-    y = @user_area_y0 + 5
+    x = 5
+    y = 5
     @gfx.fill_rect(x, y, 30, 20, FmrbGfx::RED)
     @gfx.fill_circle(x + 60, y + 10, 10, FmrbGfx::GREEN)
     @gfx.draw_round_rect(x + 90, y, 30, 20, 4, FmrbGfx::BLUE)
     @gfx.draw_text(x, y + 30, "Shapes",
                    FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 
@@ -370,8 +368,6 @@ class ShapesApp < FmrbApp
     500
   end
 end
-
-ShapesApp.new.start
 ```
 
 ## 注意事項
@@ -379,8 +375,8 @@ ShapesApp.new.start
 !!! warning "描画は present でまとめる"
     高頻度に呼び出される `on_update` 内では、複数の描画コマンドの後に 1 回だけ `present` を呼ぶのが推奨です。コマンドごとに `present` すると UART 帯域を圧迫します。
 
-!!! warning "ウィンドウ枠を侵さない"
-    `@user_area_x0/y0/width/height` の範囲内で描画してください。タイトルバーや枠線を上書きすると見た目が崩れます。
+!!! warning "区画の中に描く"
+    `0..@user_area_width`、`0..@user_area_height` の範囲内で描画してください。枠のあるウィンドウで下端や右端を越えると枠線を上書きします。
 
 ## 関連
 

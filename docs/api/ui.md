@@ -14,7 +14,6 @@ def on_create
 end
 
 def on_event(ev)
-  super
   case @ui.handle(ev)
   when :round, :diamond then redraw
   when :save then save
@@ -40,8 +39,8 @@ calling `present` once, and not at all when nothing was dirty.
 
 `FmrbUI.new(app, bg: …, text_size: 1, bg_painter: nil)`
 
-Pass the app itself. The canvas and the user-area origin are read from it, so widget
-coordinates are relative to the user area.
+Pass the app itself. The canvas is read from it, and widget coordinates are those of `@gfx`:
+(0, 0) is the top-left of the user area, and moves with it on a resize or fullscreen.
 
 | Argument | |
 |---|---|
@@ -110,7 +109,6 @@ Call `flush` after drawing your own picture, so `present` happens once.
 | `set_visible(id, flag)` | Show or hide. Hide before the flush that is meant to take it off screen |
 | `move(id, x, y, w, h)` | Move and resize |
 | `focus(id)` | Give a widget the focus |
-| `set_origin(x0, y0)` | Move the user-area origin the widgets are placed against, after a resize |
 | `invalidate_all` | Mark every widget for redraw |
 
 ## What an author has to know

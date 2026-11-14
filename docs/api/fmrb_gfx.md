@@ -7,7 +7,9 @@
 
 ## Coordinate System
 
-The origin (0, 0) is at the top-left of the window, with X increasing to the right and Y increasing downward. You cannot draw outside the window.
+The origin (0, 0) is at the top-left of the area the app owns, with X increasing to the right and Y increasing downward: inside the frame of a framed window (below the title bar), the window's top-left for a frameless window (`window_frame = "none"`), and the screen's top-left in fullscreen. The same code draws in the same place in all three, and the size of the area is `@user_area_width` × `@user_area_height`. Mouse events (`ev[:x]`, `ev[:y]`), sprites and [UI widgets](ui.md) use the same origin.
+
+To draw outside the area — over the frame, or a title of the app's own — use `window_gfx`, a second `FmrbGfx` on the same canvas whose (0, 0) is the window's top-left. `clear` still paints the whole canvas; to wipe the area, use `clear_user_area`.
 
 Each window has its own coordinate system. See the image below for reference.
 
@@ -162,8 +164,8 @@ Convenient for code examples and bilingual UI strings.
 arguments. Keyword arguments build a Hash on every call, which a redraw path that must not
 allocate cannot afford; this form does not.
 
-!!! tip "`draw_window_frame` saves and restores the font"
-    `FmrbApp#draw_window_frame` always draws the title bar with the default 6x8 font and then restores the font setting from before the call. There is no need to call `set_font` again each frame in your app.
+!!! tip "The window frame keeps your font"
+    The base class's frame drawing (`clear_user_area`, `draw_window_frame`) always draws the title bar with the default 6x8 font and then restores the font setting from before the call. There is no need to call `set_font` again each frame in your app.
 
 !!! note "JA font loading cost"
     The first call to `set_font(:ja, ...)` takes several tens of milliseconds as the graphics side prepares the font data. Ideally, call it once in `on_create`.
@@ -175,14 +177,11 @@ class HelloJaApp < FmrbApp
   def on_create
     clear_user_area(FmrbGfx::WHITE)
     @gfx.set_font(:ja, 12)
-    @gfx.draw_text(@user_area_x0 + 8, @user_area_y0 + 8,
+    @gfx.draw_text(8, 8,
                    "こんにちは、Family mruby!", FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 end
-
-HelloJaApp.new.start
 ```
 
 The Fonts pages of the PicoRuby demo (`/app/demo/picoruby.app.rb`) switch between them all: the default font, Japanese at 8, 12 and 16 pixels, mixed and hybrid drawing, and Japanese scaled up.
@@ -278,7 +277,7 @@ only needed to narrow it further:
 
 ```ruby
 # reserve the top 10px for the score; sprites stay below it
-@gfx.set_sprite_clip(@user_area_x0, @user_area_y0 + 10,
+@gfx.set_sprite_clip(0, 10,
                      @user_area_width, @user_area_height - 10)
 ```
 
@@ -356,14 +355,13 @@ Used for color adjustment on CRT monitors (see [NTSC Output Test](../examples.md
 class ShapesApp < FmrbApp
   def on_create
     clear_user_area(FmrbGfx::WHITE)
-    x = @user_area_x0 + 5
-    y = @user_area_y0 + 5
+    x = 5
+    y = 5
     @gfx.fill_rect(x, y, 30, 20, FmrbGfx::RED)
     @gfx.fill_circle(x + 60, y + 10, 10, FmrbGfx::GREEN)
     @gfx.draw_round_rect(x + 90, y, 30, 20, 4, FmrbGfx::BLUE)
     @gfx.draw_text(x, y + 30, "Shapes",
                    FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 
@@ -371,8 +369,6 @@ class ShapesApp < FmrbApp
     500
   end
 end
-
-ShapesApp.new.start
 ```
 
 ## Notes
@@ -380,8 +376,8 @@ ShapesApp.new.start
 !!! warning "Batch drawing with present"
     Within `on_update`, which is called at high frequency, it is recommended to issue multiple drawing commands and then call `present` only once. Calling `present` after every individual command can saturate the UART bandwidth.
 
-!!! warning "Do not draw outside the window frame"
-    Draw within the `@user_area_x0/y0/width/height` bounds. Overwriting the title bar or borders will break the visual appearance.
+!!! warning "Stay inside the area"
+    Draw within `0..@user_area_width` and `0..@user_area_height`. Drawing past the bottom or right edge of a framed window paints over its border.
 
 ## Related
 

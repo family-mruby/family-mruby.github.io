@@ -99,8 +99,6 @@ class LedToggle < FmrbApp
     20
   end
 end
-
-LedToggle.new.start
 ```
 
 ## I2C
@@ -190,8 +188,6 @@ class LedStrip < FmrbApp
     @rmt.write([g, r, b])
   end
 end
-
-LedStrip.new.start
 ```
 
 A WS2812B matrix sample is available in `/app/demo/led_matrix.app.rb`.
@@ -248,13 +244,11 @@ class ClockSyncApp < FmrbApp
     Log.info("time: #{now[:year]}-#{now[:month]}-#{now[:day]} #{now[:hour]}:#{now[:minute]}")
   end
 end
-
-ClockSyncApp.new.start
 ```
 
 !!! note "You usually do not need this"
     The system syncs from the RTC at boot, and `FmrbApp.wallclock` /
-    `FmrbApp.set_wallclock` go through the system clock (POSIX epoch), which also writes
+    `FmrbSystem.set_wallclock` go through the system clock (POSIX epoch), which also writes
     back to the RTC. Reach for the driver classes only when you want the chip's own
     features — the low-voltage flag, or the RX8900's temperature sensor.
 

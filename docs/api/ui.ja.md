@@ -14,7 +14,6 @@ def on_create
 end
 
 def on_event(ev)
-  super
   case @ui.handle(ev)
   when :maru, :hishi then redraw
   when :save then save
@@ -40,8 +39,8 @@ end
 
 `FmrbUI.new(app, bg: …, text_size: 1, bg_painter: nil)`
 
-`app` には自分自身を渡します。描画先と user area の位置をそこから読むので、部品の座標は
-user area からの相対になります。
+`app` には自分自身を渡します。描画先をそこから読み、部品の座標は `@gfx` と同じく user area の
+左上が (0, 0) です。大きさの変更や全画面の出入りでも、原点は一緒に動きます。
 
 | 引数 | |
 |---|---|
@@ -109,7 +108,6 @@ id を返し、`Esc` で焦点が外れます。カーソルは点滅しませ�
 | `set_visible(id, flag)` | 出す/隠す。画面から消したい `flush` の前に隠します |
 | `move(id, x, y, w, h)` | 置き直す |
 | `focus(id)` | 焦点を当てる |
-| `set_origin(x0, y0)` | 大きさが変わったあと、部品を置く原点をずらす |
 | `invalidate_all` | 全部を描き直しの印にする |
 
 ## 書く人が知っておくこと

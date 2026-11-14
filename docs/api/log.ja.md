@@ -87,7 +87,6 @@ class MyApp < FmrbApp
   end
 
   def on_event(ev)
-    super
     Log.debug(TAG, "event=#{ev[:type]}")
   end
 

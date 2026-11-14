@@ -143,8 +143,8 @@ class SpriteApp < FmrbApp
       frames << img
     end
     @sprite = SpriteInstance.new(@gfx, frames,
-                                  x: @user_area_x0 + 50,
-                                  y: @user_area_y0 + 30, z: 1)
+                                  x: 50,
+                                  y: 30, z: 1)
     @frame = 0
   end
 
@@ -155,8 +155,6 @@ class SpriteApp < FmrbApp
     150
   end
 end
-
-SpriteApp.new.start
 ```
 
 ## GfxBlock
@@ -197,8 +195,8 @@ SpriteApp.new.start
 ```ruby
 class BatteryGauge < FmrbApp
   def on_create
-    x = @user_area_x0 + 5
-    y = @user_area_y0 + 5
+    x = 5
+    y = 5
     @gauge = GfxBlock.new(@gfx, fill: 50) do |r, fill:|
       r.draw_rect(x, y, 60, 12, FmrbGfx::WHITE)
       r.fill_rect(x + 1, y + 1, fill, 10, FmrbGfx::GREEN)
@@ -217,8 +215,6 @@ class BatteryGauge < FmrbApp
     @gauge.destroy if @gauge
   end
 end
-
-BatteryGauge.new.start
 ```
 
 ### 例外

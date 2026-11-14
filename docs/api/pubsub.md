@@ -49,7 +49,6 @@ class PubDemo < FmrbApp
   end
 
   def on_event(ev)
-    super
     if ev[:type] == :mouse_up && ev[:button] == 1
       @count += 1
       publish(TOPIC, {"msg" => "hello", "n" => @count})
@@ -63,14 +62,11 @@ class PubDemo < FmrbApp
 
   def redraw
     clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
+    @gfx.draw_text(4, 4,
                    "Sent: #{@count}", FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 end
-
-PubDemo.new.start
 ```
 
 ### Subscriber
@@ -103,13 +99,10 @@ class SubDemo < FmrbApp
 
   def redraw
     clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4, @last, FmrbGfx::BLACK)
-    draw_window_frame
+    @gfx.draw_text(4, 4, @last, FmrbGfx::BLACK)
     @gfx.present
   end
 end
-
-SubDemo.new.start
 ```
 
 `/app/demo/pub_demo.app.rb` and `sub_demo.app.rb` are a matching pair of samples that demonstrate this behavior.

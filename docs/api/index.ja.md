@@ -27,6 +27,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `P5` | Processing/p5.js 風の描画 DSL | [Processing 風の描画](p5.md) |
 | `FmrbAudio` | BGM・効果音・音声合成・WAV 再生・マイク（`@audio`） | [音声](audio.md) |
 | `MIDI::Device` / `FmrbMidi` | MIDI 出力。内蔵 APU にも外部音源にも | [MIDI](midi.md) |
+| `FmrbSystem` | 本体の設定を変える: 時計・再起動・電源・音量・WiFi・BLE (デスクトップと設定のアプリ向け) | [アプリ](fmrb_app.md#本体の設定-fmrbsystem) |
 | Pub/Sub (`subscribe` / `publish`) | アプリ間メッセージング | [アプリ間通信](pubsub.md) |
 
 ### ファイル・データ
@@ -36,6 +37,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `IO` / `File` / `Dir` | ファイル・ディレクトリ操作 | [ファイル・I/O](filesystem.md) |
 | `Log` | ロギング | [ログ](log.md) |
 | `Net::HTTP` / WebSocket / TLS | ネットワーク通信 | [ネットワーク](network.md) |
+| `FmrbAsterism::Link` / `Asterism::Connection` | Asterism でほかの端末とオブジェクトやトピックを共有 | [ネットワーク](network.md#asterism-端末をまたぐオブジェクトとトピック) |
 | `JSON` | JSON のパース・生成 | [ユーティリティ](utilities.md#json) |
 | `MessagePack` | バイナリシリアライズ | [ユーティリティ](utilities.md#messagepack) |
 | `BMP332` | RGB332 BMP 画像のパース | [ユーティリティ](utilities.md#bmp332) |
@@ -61,17 +63,21 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 
 | メソッド | 概要 |
 |---|---|
-| `initialize` | フレームワーク初期化（`@gfx`, `@user_area_*` 等を準備） |
+| `initialize` | フレームワーク初期化（`@gfx`, `@user_area_width` / `@user_area_height` 等を準備）。アプリはファイルを読み終えたあとランタイムが作る |
 | `on_create` | アプリ起動時に1回呼ばれる（初期化処理） |
 | `on_update` | フレームごとに呼ばれる（戻り値=次回までの待機 ms） |
 | `on_event(ev)` | キーボード／マウス／ゲームパッド／HID 受信時 |
 | `on_suspend` / `on_resume` | フルスクリーンアプリへの入替時 |
 | `on_destroy` | 終了時に1回呼ばれる |
+| `on_checkpoint` / `on_restore` / `on_checkpoint_refused(reason)` | 運べるアプリがイメージに書かれた・イメージから続ける・断られた |
 | `start` / `stop` / `destroy` | 実行制御 |
 | `subscribe(topic)` / `unsubscribe(topic)` / `publish(topic, data)` | Pub/Sub |
 | `send_message(dest_pid, msg_type, data)` | 直接メッセージ送信 |
 | `set_window_position(x, y)` | ウィンドウ位置 |
-| `draw_window_frame` / `clear_user_area` | ウィンドウ装飾 |
+| `clear_user_area` / `draw_window_frame` | 区画を消す (枠も描き直す) / 枠を描き直す |
+| `window_gfx` | ウィンドウの左上を (0, 0) として区画の外に描く |
+| `set_timer(ms) { }` / `clear_timer(id)` | 1 回限りのタイマ |
+| `checkpoint` / `move_to(node_id)` | 自分をイメージに書く / 別の端末へ移す |
 | `request_fullscreen(on)` / `toggle_fullscreen` | 窓と全画面の切り替え |
 | `wheel_rows(ev)` / `wheel_notches(ev)` | ホイールのイベントを読む |
 | `theme_bg` / `theme_fg` / `theme_accent` / `theme_border` / `theme_fg_light` | システムの色 |
@@ -166,15 +172,14 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `running?` | アプリが動作中なら `true` |
 | `fullscreen?` | フルスクリーンモードか否か |
 | `@window_width` / `@window_height` | ウィンドウ全体のサイズ |
-| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | アプリ描画可能領域の境界（ウィンドウ座標系） |
-| `@user_area_width` / `@user_area_height` | 描画可能領域のサイズ |
+| `@user_area_width` / `@user_area_height` | アプリの区画のサイズ。`@gfx` とマウスのイベントはその左上を (0, 0) とする |
 | `@pos_x` / `@pos_y` | ウィンドウ左上座標（スクリーン座標系）。ウィンドウを移動すると変化する |
 
 `@fullscreen` の場合は `(@pos_x,@pos_y)` が `(0,0)` であり、スクリーンの左上を指す。
 
 ## 座標系・色フォーマット
 
-- 座標系: 左上原点 (0, 0)、X 右方向 / Y 下方向
+- 座標系: アプリの区画の左上が原点 (0, 0) (枠のあるウィンドウでは枠の内側、それ以外はウィンドウか画面の左上)、X 右方向 / Y 下方向
 - 色: RGB332（8bit, R:3 G:3 B:2）。`FmrbGfx::WHITE` などの定数か `FmrbGfx.rgb_to_332(r, g, b)` で生成
 
 ## 描画の流れ

@@ -4,7 +4,7 @@ Run a minimal GUI app that displays "Hello, mruby!" on screen, and learn the wor
 
 !!! note "This page covers a GUI app example"
     Family mruby apps fall into two main categories: GUI apps that draw to the screen, and headless apps that run in the background without a display. This page walks through a minimal GUI app.
-    Headless apps are not yet supported, but you can run scripts from the Shell app.
+    A headless app declares `default_window_mode = "background"` in its `.app.toml`; its `@gfx` is `nil`.
 
 ## Minimal app structure
 
@@ -39,8 +39,6 @@ class HelloApp < FmrbApp
     @gfx.present
   end
 end
-
-HelloApp.new.start
 ```
 
 Code explanation
@@ -50,9 +48,12 @@ Code explanation
 | `class HelloApp < FmrbApp` | App class that inherits from `FmrbApp` |
 | `on_create` | Initialization called once at startup |
 | `@gfx.clear(...)` | Fills the entire canvas with black |
-| `@gfx.draw_text(0, 0, ...)` | Draws text at the top-left corner (0, 0) of the window |
+| `@gfx.draw_text(0, 0, ...)` | Draws text at (0, 0), the top-left of the app's area (just inside the window frame) |
 | `@gfx.present` | Flushes the buffer to the screen (required) |
-| `HelloApp.new.start` | Runs the app |
+
+There is no `HelloApp.new.start` at the end: once the file has been read, the runtime makes
+the `FmrbApp` subclass it defines and starts it. If something goes wrong (no subclass, an
+exception while starting), an error window says why.
 
 ### `hello.app.toml` file
 
@@ -72,11 +73,11 @@ default_window_pos_y = 40
 |---|---|
 | `app_handle_name` | Internal handle name (should match the base name of the `.rb` file) |
 | `app_screen_name` | Display name shown in the launcher and title bar |
-| `default_window_mode` | `"window"` / `"fullwindow"` / `"fullscreen"` |
+| `default_window_mode` | `"window"` / `"fullscreen"` |
 | `default_window_width/height` | Window size (px) |
 | `default_window_pos_x/y` | Top-left coordinates of the window |
 
-See [App configuration file (.toml)](../file_formats/app_toml.md) for a full list of keys.
+The same keys can instead go in a `#---fmrb` comment at the top of the `.rb`, so a one-file app needs no `.app.toml`. See [App configuration file (.app.toml)](../file_formats/app_toml.md) for a full list of keys.
 
 ### Launching and displaying on screen
 
@@ -89,10 +90,9 @@ See [App configuration file (.toml)](../file_formats/app_toml.md) for a full lis
 
 ## Step 2: Displaying the window frame
 
-In Step 1 we only drew text. To make a practical GUI app, you need to draw the title bar and close button by paying attention to the following:
-
-1. Fill only the app's drawable area (user area) instead of the entire window (so the title bar and border are not erased)
-2. Call `draw_window_frame` after drawing (to re-render the title bar provided by the base class)
+In Step 1 we only drew text. To keep the title bar and close button, fill only the app's
+drawable area (the user area) instead of the entire canvas. `clear_user_area` does that, and
+puts the frame back as it goes.
 
 Update the code as follows.
 
@@ -103,24 +103,23 @@ class HelloApp < FmrbApp
   end
 
   def redraw
-    clear_user_area(FmrbGfx::WHITE)   # Fill user area with white
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4, "Hello, Family mruby!", FmrbGfx::BLACK)
-    draw_window_frame                  # Redraw title bar and border
-    @gfx.present # Flush to screen
+    clear_user_area                    # Fill the user area with the theme's page colour
+    @gfx.draw_text(4, 4, "Hello, Family mruby!", theme_fg)
+    @gfx.present                       # Flush to screen
   end
 end
-
-HelloApp.new.start
 ```
 
 | Point | Description |
 |---|---|
-| `@gfx.clear(FmrbGfx::BLACK)` to `clear_user_area(FmrbGfx::WHITE)` | Clears the area outside the title bar with the specified color |
-| Added `draw_window_frame` | Redraws the frame provided by the base class. The title bar and close button are drawn |
+| `@gfx.clear(FmrbGfx::BLACK)` to `clear_user_area` | Clears the area inside the frame and redraws the frame. With no colour it uses the system theme's page colour |
+| `theme_fg` instead of a fixed colour | The ink that goes with the theme, so the app follows the user's colours |
 | Drawing logic extracted into `redraw` | Organized for easier redraws later |
 
-!!! tip "What are @user_area_* variables?"
-    Coordinates of the area where the app is free to draw, excluding the title bar and borders. See [FmrbApp > What the app can read](../api/fmrb_app.md#what-the-app-can-read) for details.
+!!! tip "Where is (0, 0)?"
+    `@gfx` and mouse events measure from the top-left of the area the app owns: inside the
+    frame here, the screen's top-left in fullscreen. Its size is `@user_area_width` ×
+    `@user_area_height`. See [FmrbApp > What the app can read](../api/fmrb_app.md#what-the-app-can-read) for details.
 
 Restart and run the app — the title bar and window frame will be drawn, and you should be able to close the app by clicking the button at the top right.
 
@@ -128,8 +127,8 @@ Restart and run the app — the title bar and window frame will be drawn, and yo
 
 ## Reloading a running app after edits
 
-After editing the code, right-click the title bar of the running app and a reload button will appear.
-Running reload saves you the trouble of closing and reopening the app.
+After editing the code, right-click the title bar of the running app and choose Reload from the
+window menu. It saves you the trouble of closing and reopening the app.
 
 ## Shortcut: Generate a template with `create_app`
 
@@ -148,7 +147,7 @@ Tip: edit it with `edit /app/usr/my_clock.app.rb`
 
 This automatically creates the following files, which you can use as a template.
 
-- `/app/usr/my_clock.app.rb` — Based on Step 2 (includes `clear_user_area` + `draw_window_frame`, with templates for all `on_*` lifecycle methods)
+- `/app/usr/my_clock.app.rb` — Based on Step 2 (includes `clear_user_area`, with templates for all `on_*` lifecycle methods)
 - `/app/usr/my_clock.app.toml` — Standard-sized window configuration
 
 ### Reflecting changes in the launcher
@@ -212,5 +211,9 @@ Editing these files directly lets you customize the output of subsequent `create
 ### Nothing appears on screen
 
 - Check that `@gfx.present` is being called
-- Check that drawing coordinates are within the `@user_area_x0 / y0 / width / height` range
+- Check that drawing coordinates are within `0..@user_area_width` and `0..@user_area_height`
+
+### An error window says the app could not start
+
+- The file must define a subclass of `FmrbApp`. With more than one, name the one to start with `class = "..."` in the `.app.toml`
 

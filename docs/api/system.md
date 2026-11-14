@@ -42,7 +42,7 @@ Provides clock, delay, system reset, memory information, and more.
 | `Machine.set_hwclock(unix_timestamp)` | Set a UNIX timestamp on the hardware clock |
 | `Machine.get_hwclock` | Returns `[tv_sec, tv_nsec]` |
 
-Normally, `FmrbApp.set_wallclock(year, month, ...)` is easier to use, and it calls `Machine.set_hwclock` internally.
+Normally, `FmrbSystem.set_wallclock(year, month, ...)` is easier to use, and it calls `Machine.set_hwclock` internally.
 
 ### Uptime Information
 
@@ -86,15 +86,12 @@ class UptimeView < FmrbApp
 
   def redraw
     clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
+    @gfx.draw_text(4, 4,
                    "Uptime: #{Machine.uptime_formatted}",
                    FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 end
-
-UptimeView.new.start
 ```
 
 ### Short Delay

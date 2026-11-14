@@ -112,7 +112,6 @@ class MiniPiano < FmrbApp
   end
 
   def on_event(ev)
-    super
     return unless ev[:character]
     if ev[:type] == :key_down && (freq = KEYS[ev[:character]])
       @audio.note_on(@ch, freq, 10, 2, 0)
@@ -121,8 +120,6 @@ class MiniPiano < FmrbApp
     end
   end
 end
-
-MiniPiano.new.start
 ```
 
 ## Track Numbers and Playback Control

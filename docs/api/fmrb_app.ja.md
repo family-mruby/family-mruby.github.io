@@ -7,10 +7,8 @@
 ```ruby
 class MyApp < FmrbApp
   def on_create
-    clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Hello, mruby!", FmrbGfx::BLACK)
-    draw_window_frame
+    clear_user_area
+    @gfx.draw_text(4, 4, "Hello, mruby!", theme_fg)
     @gfx.present
   end
 
@@ -18,11 +16,15 @@ class MyApp < FmrbApp
     100  # 100ms 待つ
   end
 end
-
-MyApp.new.start
 ```
 
-`.toml` でウィンドウサイズなどを指定します（[アプリ設定ファイル (.toml)](../file_formats/app_toml.md) 参照）。
+ファイルにはクラスを書くだけです。末尾に起動のコードは要りません。ファイルを読み終えると、
+ランタイムがそのファイルで定義された `FmrbApp` の子クラスを作って起動します。1 つのファイルに
+子クラスを 2 つ以上書くときは、`.app.toml` (か `#---fmrb` の囲み) に `class = "MyApp"` と書いて
+起動するものを名指しします。決まらないときや起動中に例外が出たときは、理由がエラーの窓とログに
+出ます。
+
+ウィンドウサイズなどは `.app.toml` か、`.rb` 先頭の `#---fmrb` コメントで指定します（[アプリ設定ファイル (.app.toml)](../file_formats/app_toml.md) 参照）。
 
 ## ライフサイクル
 
@@ -35,9 +37,11 @@ MyApp.new.start
 | `on_resume` | 中断状態から復帰したとき | 任意 |
 | `on_resize(w, h)` | 窓の大きさが変わったとき。角のドラッグや全画面の切り替え。`fullscreen?` と描画可能領域は更新済み | 任意 |
 | `on_quit_request` | `Ctrl` + `Q` のとき。すぐ閉じる代わりに呼ばれる | 任意 |
+| `on_checkpoint` / `on_restore` | 運べるアプリがイメージに書かれたとき、イメージから続けるとき (別の端末を含む)。[動いているアプリを運ぶ](#動いているアプリを運ぶ) を参照 | 任意 |
 | `on_destroy` | アプリ終了時に1回 | 任意 |
 
 ```
+(ファイルを読み終えると、ランタイムが子クラスを作って start を呼ぶ)
 start
   └─ on_create
        └─ main_loop:
@@ -101,13 +105,19 @@ ev_alt?(ev)    # Alt が押されている
 ```ruby
 when :mouse_down, :mouse_up
   ev[:button]  # 1=左, 2=中, 3=右
-  ev[:x]       # ウィンドウ内 X 座標
-  ev[:y]       # ウィンドウ内 Y 座標
+  ev[:x]       # アプリの区画の左上からの X (@gfx の 0 と同じ所)
+  ev[:y]       # 同じく Y
+  ev[:wx]      # ウィンドウの左上 (タイトルバーを含む) からの X
+  ev[:wy]      # 同じく Y
 when :mouse_move
   ev[:x], ev[:y]
 ```
 
-タイトルバー上のクリック（左クリックでクローズ／右クリックでリロード）は、アプリの `on_event` が呼ばれる前に基底クラスが処理します。呼ぶものは何もありません。`super` を書かなくても閉じる動作もリロードも効きます。2.0 向けに書いたアプリは `on_event` の先頭で `super(ev)` を呼んでいることが多いですが、2.1 以降それは空のメソッドに届くだけなので、残しても消してもかまいません。
+`ev[:x]` / `ev[:y]` は `@gfx` と原点が同じなので、描いた位置とクリックの位置が食い違いません。
+`ev[:wx]` / `ev[:wy]` は、枠を気にする珍しいアプリ (自前の閉じるボタンなど) のためのものです。
+
+タイトルバー上のクリック（閉じるボタンと、右クリックで出るウィンドウのメニュー: 送る・読み直し・閉じる）は、
+アプリの `on_event` が呼ばれる前に基底クラスが処理します。呼ぶものは何もなく、`super(ev)` も書きません。
 
 ### ホイール
 
@@ -150,12 +160,14 @@ when :gamepad_axis
 | メソッド | 用途 |
 |---|---|
 | `set_window_position(x, y)` | ウィンドウ位置を変更 |
-| `draw_window_frame` | ウィンドウ枠（タイトルバー + 縁）を描画。基底クラスが管理する `GfxBlock` を再利用 |
-| `clear_user_area(color = FmrbConst::THEME_WINDOW_BG)` | アプリ描画可能領域（タイトルバー・枠を除く）を塗りつぶす。既定色はシステムのテーマに従い、この呼び出しで窓枠の描き直しと、付いている部品の再描画指定も行われる |
+| `clear_user_area(color = FmrbConst::THEME_WINDOW_BG)` | アプリの区画（タイトルバー・枠の内側）を塗りつぶす。既定色はシステムのテーマに従い、この呼び出しで窓枠の描き直しと、付いている部品の再描画指定も行われる |
+| `draw_window_frame` | ウィンドウ枠（タイトルバー + 縁）を描き直す。`clear_user_area` が済ませるので、呼ぶのは区画の隅に描いたあと (枠の角の丸みが区画にかかるため) だけ |
+| `window_gfx` | 同じキャンバスに描く 2 つめの `FmrbGfx` で、(0, 0) がウィンドウの左上。区画の外 (自前の枠やタイトル) に描くときに使う。書体はキャンバスで共通なので `set_font` は `@gfx` で呼ぶ |
 | `request_fullscreen(on)` / `toggle_fullscreen` | 窓と全画面を切り替える。VM は動いたままなのでアプリの状態は残る。結果は `on_resize` で届き、そのとき `fullscreen?` と描画可能領域は更新済み |
 | `request_file_select(mode = "open")` | システムのファイル選択ダイアログを呼び出し |
 | `sync_file(path, dest: nil)` | 描画・音声側にあるファイルの複製を、こちらのものと一致させる。違うときだけ転送する。画面を持たないアプリでも使える |
-| `request_reload` | スクリプトをリロード（タイトルバー右クリックで自動呼び出しされる） |
+| `request_reload` | スクリプトをリロード（ウィンドウのメニューの「読み直し」） |
+| `request_window_menu(x, y)` | ウィンドウのメニュー（送る・読み直し・閉じる）をウィンドウ内の位置に出す |
 
 スクロールバーは移動しました。`draw_scrollbar` と `scrollbar_hit` は無くなり、部品になって
 います。[UI 部品](ui.md) を参照してください。
@@ -178,7 +190,7 @@ when :gamepad_axis
 | メソッド | |
 |---|---|
 | `set_timer(interval) { ... }` | `interval` ミリ秒後にブロックを 1 回実行します。id を返します |
-| `clear_time(id)` | まだ発火していないものを取り消します |
+| `clear_timer(id)` | まだ発火していないものを取り消します |
 
 タイマは 1 回限りです。繰り返したいときは、ブロックの中で次を張り直します。確認はアプリの
 ループ 1 周につき 1 回なので、細かさは `on_update` の戻り値で決まります。
@@ -213,14 +225,12 @@ when :gamepad_axis
 
 | メソッド | 用途 |
 |---|---|
-| `start` | イベントループ開始（`on_create` が呼ばれる）。ここから `running?` は true |
+| `start` | イベントループ開始（`on_create` が呼ばれる）。ここから `running?` は true。ファイルを読み終えたあとランタイムが呼ぶので、アプリは呼ばない |
 | `stop` | 終わらせる。`running?` が false になり、次の `_spin` の後 `destroy` へ |
 | `destroy` | カーネルへ exit を通知し、`@gfx.destroy`、`on_destroy`、`_cleanup` |
 
 | `on_quit_request` | `Ctrl` + `Q` のときに、すぐ終了する代わりに呼ばれる。既定は終了。保存していないものがあるなら、上書きして先に尋ねる |
 | `request_early_update` | 今の待ちをすぐ終える。アプリが指定した待ち時間を待たずに `on_update` へ進む |
-
-通常は `MyApp.new.start` だけ書けば足ります。
 
 `request_early_update` があるおかげで、暇なアプリは長く眠れます。抜ける手立てが無いと
 「次の期限まで眠る」は、後から急ぎで頼まれるかもしれない用事に合わせて短く刻むしかなく、
@@ -253,8 +263,9 @@ when :gamepad_axis
 | `rounded_corners?` | この窓の角が丸いかどうか。枠を自分で描くアプリ向け |
 | `@window_width` / `@window_height` | ウィンドウ全体のサイズ |
 | `@pos_x` / `@pos_y` | ウィンドウ左上の絶対座標 |
-| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | タイトルバーや枠を除いた描画可能領域 の境界 |
-| `@user_area_width` / `@user_area_height` | 描画可能領域のサイズ |
+| `@user_area_width` / `@user_area_height` | アプリの区画（`@gfx` が描く所）のサイズ |
+| `frameless?` | `window_frame = "none"` の枠なしウィンドウなら `true` |
+| `window_gfx` | ウィンドウの左上を (0, 0) として描く |
 
 !!! note "`@_` で始まる名前は基底クラスのものです"
     2.1 から、基底クラスは自分の状態を `@_` 付きの変数に持ちます。`@_` で始まらない変数は
@@ -264,8 +275,13 @@ when :gamepad_axis
 
     音源はここには入りません。アプリが `FmrbAudio.new(self)` で自分の分を作ります。
 
-!!! tip "ウィンドウ枠を侵さない描画"
-    タイトルバーがあるウィンドウモードでは、絶対に `@user_area_*` の範囲内で描画してください。`@user_area_x0`, `@user_area_y0` から始めて、幅 `@user_area_width`、高さ `@user_area_height` 内で完結させます。
+!!! tip "(0, 0) はアプリの区画の左上"
+    `@gfx` は、アプリが描いてよい区画の左上から描きます。枠のあるウィンドウでは枠の内側、
+    枠なし (`window_frame = "none"`) ではウィンドウの左上、全画面では画面の左上です。どの形でも
+    同じコードで描き、幅 `@user_area_width`・高さ `@user_area_height` に収めます。原点は全画面への
+    出入り・枠の切り替え・画面の大きさの違う端末への移動で変わりますが、基底が持ち直すので
+    `on_resize` では描き直すだけで済みます。スプライト、`set_sprite_clip`、[UI 部品](ui.md) も
+    同じ原点です。
 
 ## ファイル・ディレクトリのパス
 
@@ -279,7 +295,6 @@ when :gamepad_axis
 | `FmrbApp.ps` | 全プロセスの状態（id, name, state, vm_type, mem_*, stack_water など）の Array of Hash |
 | `FmrbApp.config(section)` | アプリの `.toml` から指定セクションを読み出し |
 | `FmrbApp.wallclock` | 現在時刻 (`{year, month, day, hour, minute, second}`) |
-| `FmrbApp.set_wallclock(year, month, day, hour, minute, second)` | RTC・システム時刻を設定 |
 | `FmrbApp.gfx_stats` | 描画統計 `{cmds:, presents:}` |
 | `FmrbApp.sys_pool_info` | システムメモリプール情報 |
 | `FmrbApp.pool_used` | 自分のプールを何バイト使ったか。読めないときは `-1`。処理の前後で引き算すると、その処理が出したごみの量が分かります |
@@ -290,8 +305,48 @@ when :gamepad_axis
 | `FmrbApp.wifi_info` / `FmrbApp.wifi_connected?` | つながっているネットワークの情報と、つながっているかどうか |
 | `FmrbApp.usb_devices` | USB ホスト端子につながっているもの |
 | `FmrbApp.set_kana_mode(mode)` | かな入力の切替。0 ASCII、1 ひらがな、2 カタカナ。結果は `kana_mode` イベントで返ります |
-| `FmrbApp.reboot` | 再起動します |
+| `FmrbApp.audio_volume` / `FmrbApp.audio_muted?` | 音量の段と、ミュート中かどうか |
+| `FmrbApp.battery_level` / `FmrbApp.battery_charging?` | 電池の残量 (%。電池の無い機種では `nil`) と、充電中かどうか |
+| `FmrbApp.clipboard` / `FmrbApp.set_clipboard(text)` | 共有のクリップボード |
+| `FmrbApp.app_meta(path)` | アプリファイルの記述 (`.app.toml` と `#---fmrb` を合わせたもの) を文字列の Hash で。アプリでなければ `nil` |
+| `FmrbApp.pid` / `FmrbApp.script_path` | 自分のプロセス id と、起動したファイル |
+| `FmrbApp.checkpoint(pid)` / `FmrbApp.move(pid, to)` | ほかのアプリをイメージに書く・別の端末へ移すよう頼む (Shell の `checkpoint` / `move`) |
 | `FmrbApp._get_last_error` | 最後のアプリエラー（あれば `{name:, error:}`） |
+
+### 本体の設定 (`FmrbSystem`)
+
+本体の設定やサービスを**変える**メソッドは、普通のアプリが使うものと分けて `FmrbSystem` に
+あります。デスクトップと設定のアプリのためのものです。
+
+| メソッド | 用途 |
+|---|---|
+| `FmrbSystem.set_wallclock(year, month, day, hour, minute, second)` | RTC・システム時刻を設定 |
+| `FmrbSystem.reboot` | 再起動します |
+| `FmrbSystem.power_actions` / `FmrbSystem.power(action)` | この端末でできる電源の操作 (端末では `:reset`、Linux 機では `:power_off`・`:suspend` など) と、その実行 |
+| `FmrbSystem.set_audio_mute(on)` / `FmrbSystem.set_audio_volume(step)` | ミュートと音量 |
+| `FmrbSystem.wifi_networks(scan)` / `wifi_connect(ssid, password)` / `wifi_disconnect` / `wifi_forget(ssid)` | WiFi の設定 |
+| `FmrbSystem.ble_start` / `ble_state` | Bluetooth LE のサービス |
+
+全部 (34 個。Linux 版の設定を含む) は `sig/fmrb_system.rbs` にあります。これらを
+`FmrbApp.<名前>` で呼ぶと `NoMethodError` になります。
+
+## 動いているアプリを運ぶ
+
+`.app.toml` に `movable = true` と書いた (mruby で動く) アプリは、イメージに書いて、そこから
+続けられます。同じ端末でも、Asterism でつながった別の端末でもかまいません (ウィンドウの
+メニューの「送る」、Shell の `checkpoint` / `move`)。
+
+| メソッド | 用途 |
+|---|---|
+| `checkpoint(restart: false)` | 自分を `/tmp/<名前>.ckpt` に書いて閉じるよう頼む。`restart: true` ですぐ起動し直す。頼めたら `nil`、頼めないときは理由の文字列 |
+| `move_to(node_id)` | 自分を別の端末へ移すよう頼む |
+| `on_checkpoint` | イメージが書けて、ここで閉じる直前に呼ばれる (`on_destroy` は来ない) |
+| `on_restore` | イメージから続ける直前に呼ばれる。インスタンス変数・Task・タイマ、ウィンドウと購読は戻っているが、**描いた絵は戻らない**のでここで描き直す。画面の大きさが違う端末へ移ったときは先に `on_resize` が来る |
+| `on_checkpoint_refused(reason)` | イメージが書けなかった・移動を断られた。アプリはそのまま続く |
+
+移った先のビルドには、すべての端末に共通でないメソッドが無いことがあります。`respond_to?` で
+確認するか、無いと続けられないものを `.app.toml` の `requires = [...]` に書くと、それが無い
+ビルドへは移りません。
 
 ## 定数
 
@@ -313,7 +368,6 @@ class CounterApp < FmrbApp
   end
 
   def on_event(ev)
-    super  # クローズボタン処理を継承
     if ev[:type] == :mouse_down && ev[:button] == 1
       @count += 1
       redraw
@@ -330,13 +384,9 @@ class CounterApp < FmrbApp
   private
 
   def redraw
-    clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Count: #{@count}", FmrbGfx::BLACK)
-    draw_window_frame
+    clear_user_area
+    @gfx.draw_text(4, 4, "Count: #{@count}", theme_fg)
     @gfx.present
   end
 end
-
-CounterApp.new.start
 ```

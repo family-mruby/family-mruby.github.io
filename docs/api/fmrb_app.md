@@ -7,10 +7,8 @@
 ```ruby
 class MyApp < FmrbApp
   def on_create
-    clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Hello, mruby!", FmrbGfx::BLACK)
-    draw_window_frame
+    clear_user_area
+    @gfx.draw_text(4, 4, "Hello, mruby!", theme_fg)
     @gfx.present
   end
 
@@ -18,11 +16,15 @@ class MyApp < FmrbApp
     100  # Wait 100ms
   end
 end
-
-MyApp.new.start
 ```
 
-Window size and other settings are specified in a `.toml` file (see [App Configuration File (.toml)](../file_formats/app_toml.md)).
+The file only defines the class. There is no starting code at the end: once the file has
+been read, the runtime makes the `FmrbApp` subclass it defined and starts it. When a file
+defines more than one subclass, name the one to start with `class = "MyApp"` in the
+`.app.toml` (or the `#---fmrb` header); a file where none can be picked shows the reason in an
+error window and the log, as does an exception while starting.
+
+Window size and other settings are specified in a `.app.toml` file or a `#---fmrb` comment at the top of the `.rb` (see [App Configuration File (.app.toml)](../file_formats/app_toml.md)).
 
 ## Lifecycle
 
@@ -35,9 +37,11 @@ Window size and other settings are specified in a `.toml` file (see [App Configu
 | `on_resume` | When returning from a suspended state | Any |
 | `on_resize(w, h)` | When the window changes size — a drag on the corner, or a switch to or from fullscreen. `fullscreen?` and the user area are already updated | Any |
 | `on_quit_request` | On `Ctrl` + `Q`, instead of closing outright | Any |
+| `on_checkpoint` / `on_restore` | When a movable app is written to an image, and when it carries on from one (another machine included). See [Moving a running app](#moving-a-running-app) | Any |
 | `on_destroy` | Once when the app exits | Any |
 
 ```
+(the file is read; the runtime makes the subclass and calls start)
 start
   +-- on_create
        +-- main_loop:
@@ -101,13 +105,21 @@ ev_alt?(ev)    # Alt is pressed
 ```ruby
 when :mouse_down, :mouse_up
   ev[:button]  # 1=left, 2=middle, 3=right
-  ev[:x]       # X coordinate within the window
-  ev[:y]       # Y coordinate within the window
+  ev[:x]       # X from the top-left of the app's area (where @gfx draws 0)
+  ev[:y]       # Y, likewise
+  ev[:wx]      # X from the window's top-left (title bar included)
+  ev[:wy]      # Y, likewise
 when :mouse_move
   ev[:x], ev[:y]
 ```
 
-Clicks on the title bar (left-click to close / right-click to reload) are handled by the base class before your `on_event` runs, so there is nothing to call: an `on_event` that never calls `super` still closes and reloads. Apps written against 2.0 often open with `super(ev)`; since 2.1 that reaches an empty method and does nothing, so it can stay or go.
+`ev[:x]` / `ev[:y]` use the same origin as `@gfx`, so what you draw at a point and what a click
+at that point reports agree. `ev[:wx]` / `ev[:wy]` are there for the rare app that cares about
+the frame (its own close button, say).
+
+Clicks on the title bar (the close button, and a right-click for the window menu: Send to,
+Reload, Close) are handled by the base class before your `on_event` runs, so there is nothing to
+call and no `super(ev)` to write.
 
 ### Wheel
 
@@ -150,12 +162,14 @@ when :gamepad_axis
 | Method | Purpose |
 |---|---|
 | `set_window_position(x, y)` | Change the window position |
-| `draw_window_frame` | Draw the window frame (title bar + border). Reuses a `GfxBlock` managed by the base class |
-| `clear_user_area(color = FmrbConst::THEME_WINDOW_BG)` | Fill the drawable area (excluding title bar and border). The default follows the system theme, and the call redraws the window frame and marks any attached widgets |
+| `clear_user_area(color = FmrbConst::THEME_WINDOW_BG)` | Fill the app's area (inside the title bar and border). The default follows the system theme, and the call redraws the window frame and marks any attached widgets |
+| `draw_window_frame` | Draw the window frame again (title bar + border). `clear_user_area` already does this; call it only after drawing into the corners of the area, whose rounding the frame draws over |
+| `window_gfx` | A second `FmrbGfx` on the same canvas whose (0, 0) is the window's top-left, for drawing outside the area — a frame or title of the app's own. Call `set_font` on `@gfx`; the font belongs to the canvas |
 | `request_fullscreen(on)` / `toggle_fullscreen` | Switch between windowed and fullscreen. The VM keeps running, so app state survives; the answer arrives as `on_resize`, with `fullscreen?` and the user area already updated |
 | `request_file_select(mode = "open")` | Invoke the system file selection dialog |
 | `sync_file(path, dest: nil)` | Make the graphics/audio side's copy of a file match this one, transferring it only when it differs. A headless app can do this too |
-| `request_reload` | Reload the script (automatically called on title bar right-click) |
+| `request_reload` | Reload the script (the window menu's Reload) |
+| `request_window_menu(x, y)` | Open the window menu (Send to, Reload, Close) at a point of the window |
 
 Scrollbars moved: `draw_scrollbar` and `scrollbar_hit` are gone, and a scrollbar is now a
 widget — see [UI Widgets](ui.md).
@@ -178,7 +192,7 @@ For details and receive handlers, see [Pub/Sub](pubsub.md).
 | Method | |
 |---|---|
 | `set_timer(interval) { ... }` | Run the block once, `interval` ms from now. Returns an id |
-| `clear_time(id)` | Cancel one that has not fired |
+| `clear_timer(id)` | Cancel one that has not fired |
 
 A timer is one-shot: to repeat, set the next one from inside the block. They are checked
 once per turn of the app loop, so the resolution is whatever `on_update` returns.
@@ -214,14 +228,12 @@ by itself.
 
 | Method | Purpose |
 |---|---|
-| `start` | Starts the event loop (`on_create` is called). `running?` is true from here |
+| `start` | Starts the event loop (`on_create` is called). `running?` is true from here. The runtime calls it after reading the file; an app does not |
 | `stop` | Ends it: `running?` turns false, and `destroy` follows after the next `_spin` |
 | `destroy` | Notifies the kernel of exit, calls `@gfx.destroy`, `on_destroy`, `_cleanup` |
 
 | `on_quit_request` | Called on `Ctrl` + `Q` instead of stopping the app outright. The default is to close; override it to ask first when there is unsaved work |
 | `request_early_update` | End the current wait now, so the loop reaches `on_update` without waiting out the timeout the app asked for |
-
-Normally, writing just `MyApp.new.start` is sufficient.
 
 `request_early_update` is what lets an idle app sleep for a long time at all: without a way
 out, "sleep until the next deadline" has to be capped at whatever the app might later be
@@ -255,8 +267,9 @@ the machine's theme and the user's [colour overrides](../file_formats/colors.md)
 | `rounded_corners?` | Whether this window's corners are rounded, for an app drawing its own frame |
 | `@window_width` / `@window_height` | Overall window size |
 | `@pos_x` / `@pos_y` | Absolute coordinates of the window's top-left corner |
-| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | Boundaries of the drawable area, excluding title bar and borders |
-| `@user_area_width` / `@user_area_height` | Size of the drawable area |
+| `@user_area_width` / `@user_area_height` | Size of the app's area (where `@gfx` draws) |
+| `frameless?` | `true` for a window with `window_frame = "none"` |
+| `window_gfx` | Draws with the window's top-left as (0, 0) |
 
 !!! note "Names beginning with `@_` belong to the base class"
     Since 2.1 the base keeps its own state in `@_`-prefixed variables, so anything you
@@ -266,8 +279,14 @@ the machine's theme and the user's [colour overrides](../file_formats/colors.md)
 
     The sound chip is not one of these: an app makes its own with `FmrbAudio.new(self)`.
 
-!!! tip "Drawing within the window frame"
-    In windowed mode with a title bar, always draw within the `@user_area_*` bounds. Start from `@user_area_x0`, `@user_area_y0` and stay within `@user_area_width` and `@user_area_height`.
+!!! tip "(0, 0) is the top-left of the app's area"
+    `@gfx` draws from the top-left of the area the app owns: inside the frame of a framed
+    window, the window's top-left for a frameless window (`window_frame = "none"`), and the
+    screen's top-left in fullscreen. Write the same code for all three and stay within
+    `@user_area_width` × `@user_area_height`. The origin moves with the window (fullscreen in and
+    out, a frame switched on or off, a move to a machine with another screen); the base keeps it
+    up to date, so `on_resize` only has to redraw. Sprites, `set_sprite_clip` and
+    [UI widgets](ui.md) use the same origin.
 
 ## File and Directory Paths
 
@@ -281,7 +300,6 @@ Pass root-relative paths (e.g. `/home/foo.txt`) or SD card paths like `/mnt/sd/.
 | `FmrbApp.ps` | Array of Hash showing all process states (id, name, state, vm_type, mem_*, stack_water, etc.) |
 | `FmrbApp.config(section)` | Read a specified section from the app's `.toml` |
 | `FmrbApp.wallclock` | Current time (`{year, month, day, hour, minute, second}`) |
-| `FmrbApp.set_wallclock(year, month, day, hour, minute, second)` | Set RTC / system time |
 | `FmrbApp.gfx_stats` | Drawing statistics `{cmds:, presents:}` |
 | `FmrbApp.sys_pool_info` | System memory pool information |
 | `FmrbApp.pool_used` | How many bytes of its own pool this app has used, or `-1`. Subtract it across a piece of work to see the garbage that work made |
@@ -292,8 +310,48 @@ Pass root-relative paths (e.g. `/home/foo.txt`) or SD card paths like `/mnt/sd/.
 | `FmrbApp.wifi_info` / `FmrbApp.wifi_connected?` | The network the machine is on, and whether it is on one |
 | `FmrbApp.usb_devices` | What is plugged into the USB host port |
 | `FmrbApp.set_kana_mode(mode)` | Switch kana input: 0 ASCII, 1 hiragana, 2 katakana. The change comes back as a `kana_mode` event |
-| `FmrbApp.reboot` | Restart the machine |
+| `FmrbApp.audio_volume` / `FmrbApp.audio_muted?` | The volume step, and whether sound is muted |
+| `FmrbApp.battery_level` / `FmrbApp.battery_charging?` | Battery percentage (`nil` without a battery), and whether it is charging |
+| `FmrbApp.clipboard` / `FmrbApp.set_clipboard(text)` | The shared clipboard |
+| `FmrbApp.app_meta(path)` | The metadata of an app file (`.app.toml` and `#---fmrb` merged) as a Hash of Strings, or `nil` |
+| `FmrbApp.pid` / `FmrbApp.script_path` | This app's process id, and the file it was started from |
+| `FmrbApp.checkpoint(pid)` / `FmrbApp.move(pid, to)` | Ask for another app to be written to an image, or moved to another machine (the shell's `checkpoint` / `move`) |
 | `FmrbApp._get_last_error` | Last app error (returns `{name:, error:}` if present) |
+
+### System settings (`FmrbSystem`)
+
+The methods that **change** the machine's settings and services live in `FmrbSystem`, apart
+from the ones an ordinary app uses. They are for the desktop and the settings apps:
+
+| Method | Purpose |
+|---|---|
+| `FmrbSystem.set_wallclock(year, month, day, hour, minute, second)` | Set RTC / system time |
+| `FmrbSystem.reboot` | Restart the machine |
+| `FmrbSystem.power_actions` / `FmrbSystem.power(action)` | Which power actions the machine offers (`:reset` on a device; `:power_off`, `:suspend` and others on a Linux machine), and doing one |
+| `FmrbSystem.set_audio_mute(on)` / `FmrbSystem.set_audio_volume(step)` | Mute, and set the volume |
+| `FmrbSystem.wifi_networks(scan)` / `wifi_connect(ssid, password)` / `wifi_disconnect` / `wifi_forget(ssid)` | Wi-Fi settings |
+| `FmrbSystem.ble_start` / `ble_state` | The Bluetooth LE service |
+
+The full list (34 methods, including the Linux program's settings) is in `sig/fmrb_system.rbs`.
+Calling one of these as `FmrbApp.<name>` is a `NoMethodError`.
+
+## Moving a running app
+
+An app whose `.app.toml` says `movable = true` (and runs on mruby) can be written to an image
+and carried on from it — on the same machine, or on another one over Asterism (the window
+menu's Send to, the shell's `checkpoint` / `move`).
+
+| Method | Purpose |
+|---|---|
+| `checkpoint(restart: false)` | Ask for this app to be written to `/tmp/<name>.ckpt` and closed; `restart: true` starts it again at once. `nil` when asked, else a String saying why not |
+| `move_to(node_id)` | Ask for this app to be moved to another machine |
+| `on_checkpoint` | Called once the image is written, just before the app closes here (`on_destroy` does not come) |
+| `on_restore` | Called before it carries on from the image. Instance variables, Tasks and timers are back, and so are the window and subscriptions; **what was drawn is not**, so redraw here. A move to a machine with another screen calls `on_resize` first |
+| `on_checkpoint_refused(reason)` | The image could not be written or the move was refused; the app goes on |
+
+The build at the other end may lack a method not common to every machine: check with
+`respond_to?`, or list the ones the app cannot do without in `requires = [...]` in its
+`.app.toml` so it is not moved to a build without them.
 
 ## Constants
 
@@ -315,7 +373,6 @@ class CounterApp < FmrbApp
   end
 
   def on_event(ev)
-    super  # Inherit close button handling
     if ev[:type] == :mouse_down && ev[:button] == 1
       @count += 1
       redraw
@@ -332,13 +389,9 @@ class CounterApp < FmrbApp
   private
 
   def redraw
-    clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Count: #{@count}", FmrbGfx::BLACK)
-    draw_window_frame
+    clear_user_area
+    @gfx.draw_text(4, 4, "Count: #{@count}", theme_fg)
     @gfx.present
   end
 end
-
-CounterApp.new.start
 ```

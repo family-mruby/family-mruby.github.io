@@ -99,8 +99,6 @@ class LedToggle < FmrbApp
     20
   end
 end
-
-LedToggle.new.start
 ```
 
 ## I2C
@@ -190,8 +188,6 @@ class LedStrip < FmrbApp
     @rmt.write([g, r, b])
   end
 end
-
-LedStrip.new.start
 ```
 
 `/app/demo/led_matrix.app.rb` に WS2812B マトリクスのサンプルがあります。
@@ -247,13 +243,11 @@ class ClockSyncApp < FmrbApp
     Log.info("time: #{now[:year]}-#{now[:month]}-#{now[:day]} #{now[:hour]}:#{now[:minute]}")
   end
 end
-
-ClockSyncApp.new.start
 ```
 
 !!! note "普段は使わなくて済みます"
     システムは起動時に RTC から時刻を取り込みますし、`FmrbApp.wallclock` /
-    `FmrbApp.set_wallclock` はシステム時計 (POSIX epoch) 経由で RTC にも書き戻します。
+    `FmrbSystem.set_wallclock` はシステム時計 (POSIX epoch) 経由で RTC にも書き戻します。
     このクラスを直接使うのは、電圧低下フラグや RX8900 の温度センサなど、部品自身の機能が
     要るときだけです。
 

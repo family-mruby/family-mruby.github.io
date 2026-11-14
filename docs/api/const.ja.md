@@ -9,8 +9,8 @@
 | 定数 | 値 |
 |---|---|
 | `FmrbConst::PLATFORM` | `"linux"` または `"esp32"` |
-| `FmrbConst::BOARD` | `"tab5"` / `"naryav4"` / `"atom_display"` / `"narya_v3"` / `"linux"`。`PLATFORM` や `CHIP_MODEL` より細かく、基板ごとの配線を選ぶのに使います |
-| `FmrbConst::HW_FAMILY` | `"modern"` か `"retro"`。3 つの中で一番粗い区別で、機能が片方の系統にしか無いときはこれを見ます |
+| `FmrbConst::BOARD` | `"tab5"` / `"naryav4"` / `"atom_display"` / `"atoms3r"` / `"sticks3"` / `"narya_v3"` / `"linux"` (シミュレータと Linux 版。区別は `FmrbConst::NATIVE`) / `"wasm"` (スタジオ)。`PLATFORM` や `CHIP_MODEL` より細かく、基板ごとの配線を選ぶのに使います |
+| `FmrbConst::HW_FAMILY` | `"modern"`・`"retro"`・`"mini"` (1 つのアプリだけを動かす小型機。AtomS3R と StickS3)。3 つの中で一番粗い区別で、機能が片方の系統にしか無いときはこれを見ます |
 | `FmrbConst::OS_VERSION` | OS バージョン文字列 |
 | `FmrbConst::GA_VERSION` | fmruby-graphics-audio 側のバージョン |
 | `FmrbConst::LINK_VERSION` | UART リンクプロトコルバージョン |
@@ -183,7 +183,6 @@ Meta (Windows / Command) キーのマスクはありません。ファームウ�
 
 ```ruby
 def on_event(ev)
-  super
   if ev[:type] == :key_down
     case ev[:scancode]
     when FmrbConst::KEY_LEFT  then @x -= 4
@@ -216,18 +215,15 @@ end
 class SysInfo < FmrbApp
   def on_create
     clear_user_area(FmrbGfx::WHITE)
-    x = @user_area_x0 + 4
-    y = @user_area_y0 + 4
+    x = 4
+    y = 4
     @gfx.draw_text(x, y,      "OS: #{FmrbConst::OS_VERSION}", FmrbGfx::BLACK)
     @gfx.draw_text(x, y + 10, "Chip: #{FmrbConst::CHIP_MODEL}", FmrbGfx::BLACK)
     @gfx.draw_text(x, y + 20, "PSRAM: #{FmrbConst::PSRAM_SIZE_MB}MB", FmrbGfx::BLACK)
     @gfx.draw_text(x, y + 30, "MAC: #{FmrbConst::MAC_ADDRESS}", FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 end
-
-SysInfo.new.start
 ```
 
 ## FmrbHw

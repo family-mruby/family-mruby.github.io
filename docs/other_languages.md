@@ -16,31 +16,31 @@ to the Ruby apps, start the same way, and run at the same time as each other.
 | `.rb` | PicoRuby | The main language. Everything in the [API Reference](api/index.md) |
 | `.py` | MicroPython | The same app framework as Ruby: windows, drawing, sprites, sound. One Python app at a time |
 | `.bas` | FMRuby BASIC | Family BASIC compatible. Its own text screen and sprites |
-| `.lua` | Lua 5.4 | |
+| `.lua` | Lua 5.4 | Functions `on_create` / `on_update` / `on_event` and a global `gfx`; the system draws the window and runs the loop |
 
 ---
 
 # MicroPython
 
 A `.py` file is an app like any other. It uses the same framework Ruby apps use — subclass
-`FmrbApp`, override the lifecycle methods, start it:
+`FmrbApp`, override the lifecycle methods, start it. Unlike a Ruby file, a Python file still
+ends with the line that starts the app:
 
 ```python
 class PythonDemoApp(FmrbApp):
     def on_create(self):
         Log.info("started on " + self.platform)
-        self.draw_window_frame()
+        self.clear_user_area()   # (0, 0) is the top-left inside the frame, as in Ruby
+        self.gfx.present()
 
     def on_update(self):
         return 500          # ms until the next turn
 
     def on_event(self, ev):
-        super().on_event(ev)
         if ev.get("type") == "mouse_up" and ev.get("button") == 1:
             self.next_page()
 
-app = PythonDemoApp()
-app.start()
+PythonDemoApp().start()
 ```
 
 Windows, events and drawing are reachable through the built-in `_fmrb` module, wrapped in
@@ -132,6 +132,57 @@ boundary in `on_update`. Lua behaves the same way.
 Not provided: tile map classes (`draw_tile` is there — lay them out yourself), image masks,
 `GfxBlock` and the other drawing optimisations, arcs, `get_pixel`, extra canvases, the p5
 layer, the microphone and MIDI out.
+
+---
+
+# Lua
+
+A `.lua` app runs on a shell the system provides in C: the system makes the window, draws its
+frame and runs the loop, and the app only defines functions. The shape follows the Ruby app's:
+
+```lua
+local seconds = 0
+
+function on_create()            -- once, after the window is made
+  FmrbApp.clear_user_area()     -- the area in the theme colour, frame redrawn
+  gfx:draw_text("Hello", 2, 2, FmrbApp.THEME_TEXT)
+  gfx:present()
+end
+
+function on_update()            -- called again after the ms it returns (330 if not a number)
+  seconds = seconds + 1
+  return 1000
+end
+
+function on_event(ev)           -- one input at a time
+  if ev.type == "key_down" and ev.character == string.byte("q") then
+    FmrbApp.stop()
+  end
+end
+```
+
+- The top level of the file runs once first, to define functions and variables; `gfx` does
+  not exist yet there. A file that defines none of `on_create`, `on_update` and `on_event`
+  does not start, and an error window says so.
+- Optional: `on_destroy`, `on_suspend` / `on_resume`, `on_resize(w, h)` (after the shell has
+  repainted the area and the frame) and `on_quit_request` (Ctrl+Q; closes when absent).
+- An error in a function shows an error window with the message and traceback, and the app
+  ends. Do not wait long inside a function: return the wait from `on_update`. A function that
+  does not return for a second is cut off by the close button and by kill.
+- `gfx` draws with (0, 0) at the top-left inside the frame, as a Ruby app's `@gfx` does:
+  `fill_rect`, `draw_rect`, `fill_round_rect`, `draw_round_rect`, `draw_line`, `fill_circle`,
+  `draw_text(text, x, y, c [, bg])` and `present()`. `gfx:clear(c)` wipes the whole canvas,
+  frame included; `FmrbApp.clear_user_area([c])` wipes the area and redraws the frame. The
+  area's size is `FmrbApp.user_area_width` / `user_area_height`.
+- `ev` has the same keys as in Ruby, with `ev.type` a string: `"key_down"`, `"key_up"`,
+  `"mouse_down"`, `"mouse_up"`, `"mouse_move"`, `"mouse_wheel"`, `"gamepad_down"`,
+  `"gamepad_up"`, `"gamepad_axis"`, `"kana_mode"`. Mouse events carry `x` / `y` (the area)
+  and `wx` / `wy` (the window). The close button, the title bar's window menu and dragging
+  are handled for the app.
+- Colours are `FmrbGfx.BLACK` and the other constants, and the theme's
+  `FmrbApp.THEME_WINDOW_BG`, `THEME_TEXT`, `THEME_BORDER` and the rest.
+
+The sample is `/app/lua/lua.app.lua`.
 
 ---
 

@@ -42,7 +42,7 @@ end
 | `Machine.set_hwclock(unix_timestamp)` | ハードウェアクロックに UNIX 時刻を設定 |
 | `Machine.get_hwclock` | `[tv_sec, tv_nsec]` を返す |
 
-通常は `FmrbApp.set_wallclock(year, month, ...)` のほうが扱いやすく、それが内部で `Machine.set_hwclock` を呼びます。
+通常は `FmrbSystem.set_wallclock(year, month, ...)` のほうが扱いやすく、それが内部で `Machine.set_hwclock` を呼びます。
 
 ### 稼働情報
 
@@ -86,15 +86,12 @@ class UptimeView < FmrbApp
 
   def redraw
     clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
+    @gfx.draw_text(4, 4,
                    "Uptime: #{Machine.uptime_formatted}",
                    FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 end
-
-UptimeView.new.start
 ```
 
 ### 短時間のディレイ

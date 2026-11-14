@@ -28,6 +28,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `P5` | Processing/p5.js-style drawing DSL | [Processing-style Drawing](p5.md) |
 | `FmrbAudio` | BGM, sound effects, tone synthesis, WAV playback and the microphone (`@audio`) | [Sound](audio.md) |
 | `MIDI::Device` / `FmrbMidi` | MIDI out, to the built-in APU or an external instrument | [MIDI](midi.md) |
+| `FmrbSystem` | Changing the machine's settings: clock, reboot, power, volume, Wi-Fi, BLE (for the desktop and settings apps) | [Application](fmrb_app.md#system-settings-fmrbsystem) |
 | Pub/Sub (`subscribe` / `publish`) | Inter-app messaging | [Inter-App Messaging](pubsub.md) |
 
 ### Files and Data
@@ -37,6 +38,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | `IO` / `File` / `Dir` | File and directory operations | [Files & I/O](filesystem.md) |
 | `Log` | Logging | [Logging](log.md) |
 | `Net::HTTP` / WebSocket / TLS | Talking to the network | [Network](network.md) |
+| `FmrbAsterism::Link` / `Asterism::Connection` | Objects and topics shared with other machines over Asterism | [Network](network.md#asterism-objects-and-topics-across-machines) |
 | `JSON` | JSON parsing and generation | [Utilities](utilities.md#json) |
 | `MessagePack` | Binary serialization | [Utilities](utilities.md#messagepack) |
 | `BMP332` | RGB332 BMP image parsing | [Utilities](utilities.md#bmp332) |
@@ -62,17 +64,21 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 
 | Method | Summary |
 |---|---|
-| `initialize` | Framework initialization (prepares `@gfx`, `@user_area_*`, etc.) |
+| `initialize` | Framework initialization (prepares `@gfx`, `@user_area_width` / `@user_area_height`, etc.). The runtime makes the app after reading its file |
 | `on_create` | Called once when the app starts (initialization logic) |
 | `on_update` | Called every frame (return value = wait time in ms until next call) |
 | `on_event(ev)` | Called on keyboard / mouse / gamepad / HID input |
 | `on_suspend` / `on_resume` | Called when switching to/from a fullscreen app |
 | `on_destroy` | Called once when the app exits |
+| `on_checkpoint` / `on_restore` / `on_checkpoint_refused(reason)` | A movable app written to an image, carrying on from one, or refused |
 | `start` / `stop` / `destroy` | Execution control |
 | `subscribe(topic)` / `unsubscribe(topic)` / `publish(topic, data)` | Pub/Sub |
 | `send_message(dest_pid, msg_type, data)` | Direct message sending |
 | `set_window_position(x, y)` | Window position |
-| `draw_window_frame` / `clear_user_area` | Window decorations |
+| `clear_user_area` / `draw_window_frame` | Wipe the area (and redraw the frame) / redraw the frame |
+| `window_gfx` | Draw with the window's top-left as (0, 0), outside the area |
+| `set_timer(ms) { }` / `clear_timer(id)` | One-shot timer |
+| `checkpoint` / `move_to(node_id)` | Write this app to an image / move it to another machine |
 | `request_fullscreen(on)` / `toggle_fullscreen` | Switch between windowed and fullscreen |
 | `wheel_rows(ev)` / `wheel_notches(ev)` | Read a wheel event |
 | `theme_bg` / `theme_fg` / `theme_accent` / `theme_border` / `theme_fg_light` | The system colours |
@@ -167,8 +173,7 @@ Key constants: `PLATFORM`, `PROC_ID_KERNEL`, etc., `MSG_TYPE_*`, `OS_VERSION`, `
 | `running?` | `true` while the app is running |
 | `fullscreen?` | Whether the app is in fullscreen mode |
 | `@window_width` / `@window_height` | Overall window size |
-| `@user_area_x0` / `@user_area_y0` / `@user_area_x1` / `@user_area_y1` | Boundaries of the drawable area for the app (window coordinate system) |
-| `@user_area_width` / `@user_area_height` | Size of the drawable area |
+| `@user_area_width` / `@user_area_height` | Size of the app's area. `@gfx` and mouse events take its top-left as (0, 0) |
 | `@pos_x` / `@pos_y` | Top-left coordinates of the window (screen coordinate system). Changes when the window is moved |
 
 In fullscreen, `(@pos_x, @pos_y)` is `(0, 0)`, pointing at the top-left of the screen.
@@ -177,7 +182,7 @@ its own — see [FmrbApp](fmrb_app.md#what-the-app-can-read).
 
 ## Coordinate System and Color Format
 
-- Coordinate system: origin at top-left (0, 0), X increases rightward, Y increases downward
+- Coordinate system: origin at the top-left (0, 0) of the app's area (inside the frame of a framed window, the window or screen otherwise), X increases rightward, Y increases downward
 - Color: RGB332 (8-bit, R:3 G:3 B:2). Use constants like `FmrbGfx::WHITE` or generate with `FmrbGfx.rgb_to_332(r, g, b)`
 
 ## Drawing Flow

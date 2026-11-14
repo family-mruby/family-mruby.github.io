@@ -9,8 +9,8 @@ A module that provides constants referenced throughout the system.
 | Constant | Value |
 |---|---|
 | `FmrbConst::PLATFORM` | `"linux"` or `"esp32"` |
-| `FmrbConst::BOARD` | `"tab5"`, `"naryav4"`, `"atom_display"`, `"narya_v3"` or `"linux"`. Finer-grained than `PLATFORM` and `CHIP_MODEL`: use it to pick board-specific wiring |
-| `FmrbConst::HW_FAMILY` | `"modern"` or `"retro"`. The coarsest of the three, and the one to ask when a feature exists on one family and not the other |
+| `FmrbConst::BOARD` | `"tab5"`, `"naryav4"`, `"atom_display"`, `"atoms3r"`, `"sticks3"`, `"narya_v3"`, `"linux"` (the simulator and the Linux program; `FmrbConst::NATIVE` tells them apart) or `"wasm"` (Studio). Finer-grained than `PLATFORM` and `CHIP_MODEL`: use it to pick board-specific wiring |
+| `FmrbConst::HW_FAMILY` | `"modern"`, `"retro"` or `"mini"` (the small single-app boards, AtomS3R and StickS3). The coarsest of the three, and the one to ask when a feature exists on one family and not the other |
 | `FmrbConst::OS_VERSION` | OS version string |
 | `FmrbConst::GA_VERSION` | fmruby-graphics-audio version |
 | `FmrbConst::LINK_VERSION` | UART link protocol version |
@@ -183,7 +183,6 @@ In `on_event(ev)`, when `ev[:type] == :gamepad_down` / `:gamepad_up`, `ev[:butto
 
 ```ruby
 def on_event(ev)
-  super
   if ev[:type] == :key_down
     case ev[:scancode]
     when FmrbConst::KEY_LEFT  then @x -= 4
@@ -216,18 +215,15 @@ end
 class SysInfo < FmrbApp
   def on_create
     clear_user_area(FmrbGfx::WHITE)
-    x = @user_area_x0 + 4
-    y = @user_area_y0 + 4
+    x = 4
+    y = 4
     @gfx.draw_text(x, y,      "OS: #{FmrbConst::OS_VERSION}", FmrbGfx::BLACK)
     @gfx.draw_text(x, y + 10, "Chip: #{FmrbConst::CHIP_MODEL}", FmrbGfx::BLACK)
     @gfx.draw_text(x, y + 20, "PSRAM: #{FmrbConst::PSRAM_SIZE_MB}MB", FmrbGfx::BLACK)
     @gfx.draw_text(x, y + 30, "MAC: #{FmrbConst::MAC_ADDRESS}", FmrbGfx::BLACK)
-    draw_window_frame
     @gfx.present
   end
 end
-
-SysInfo.new.start
 ```
 
 ## FmrbHw

@@ -5,7 +5,7 @@
     `/etc/system_conf.toml` and `/etc/wifi.toml` — see
     [System Configuration](system_conf.md).
 
-A Family mruby app consists of an `.app.rb` main file paired with an `.app.toml` file of the same name. The `.app.toml` file specifies the app name, window settings, and other options.
+A Family mruby app consists of an `.app.rb` main file paired with an `.app.toml` file of the same name. The `.app.toml` file specifies the app name, window settings, and other options. A Ruby app can instead carry the same keys in a `#---fmrb` comment at the top of the `.rb` ([below](#metadata-in-the-rb-file)), and can use both.
 
 ## File Naming Rules
 
@@ -40,9 +40,10 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 
 | Key | Type | Required | Default | Purpose |
 |---|---|---|---|---|
-| `app_handle_name` | string | Recommended | (none) | Internal handle name for the app. Should match the base name of the main file |
-| `app_screen_name` | string | Optional | `nil` | Display name shown on-screen and in the launcher |
-| `default_window_mode` | string | Optional | `"window"` | `"window"` / `"fullwindow"` / `"fullscreen"` |
+| `app_handle_name` | string | Optional | (none) | A handle name, conventionally the base name of the main file. The system does not read it |
+| `app_screen_name` | string | Optional | the file name | Display name shown on-screen and in the launcher |
+| `class` | string | Optional | (none) | The class to start (`"MyApp"`). Without it, the one `FmrbApp` subclass the file defines is started (a subclass that is the parent of another is not counted). Needed when a file defines more than one |
+| `default_window_mode` | string | Optional | `"window"` | `"window"` / `"fullscreen"` / `"background"` |
 | `default_window_width` | integer | Optional | `100` | Window width (px) |
 | `default_window_height` | integer | Optional | `100` | Window height (px) |
 | `default_window_pos_x` | integer | Optional | `50` | Window top-left X coordinate |
@@ -56,6 +57,14 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 | `app_screen_name_<lang>` | string | Optional | (none) | Localized display name, e.g. `app_screen_name_ja`. Used when the system language matches; otherwise `app_screen_name` |
 | `task_stack_kb` | integer | Optional | 16 | The app task's C stack, in KB. Raise it only if the app hits a stack protection fault. Clamped to 16-64 |
 | `fullscreen_switchable` | integer (0/1) | Optional | `0` | Set to `1` if a fullscreen app can be parked and restored on `Ctrl` + `Tab` (it must rebuild its canvas in `on_resume`) |
+| `fullscreen_hires` | bool | Optional | `false` | Let a fullscreen app run at 640x360 while it is fullscreen (Modern and the browser build). The size arrives in `on_resize` |
+| `window_frame` | string | Optional | `"normal"` | `"none"` for a window with no frame, title bar or close button ([below](#frameless-windows)) |
+| `window_drag` | string | Optional | `"title"` (framed), `"anywhere"` (frameless) | Where the window can be grabbed and moved: `"title"`, `"anywhere"` or `"none"` |
+| `single_instance` | bool | Optional | `false` | Refuse a second copy of the same file |
+| `exclusive_group` | string | Optional | (none) | Refuse to start while another app with the same name (up to 15 bytes) runs, for apps that share a single resource |
+| `movable` | bool | Optional | `false` | The app may be written to an image and moved to another machine ([Moving a running app](../api/fmrb_app.md#moving-a-running-app)) |
+| `requires` | array | Optional | (none) | Method names a movable app cannot go on without; it is not moved to a build that lacks them |
+| `screens` / `needs_pointer` | array / bool | Optional | (none) | For the keyboard-only desktop of the Linux program (320x170): the screen shapes the app can draw (`["426x240", "320x170"]`), and `needs_pointer = false` when it works without a mouse. Write them before the first `[table]` |
 | `icon` | string | Optional | (default per extension) | Icon file path (`.icon` format) |
 
 ## Window Modes
@@ -63,11 +72,10 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 | Mode | Behavior | Size / Position |
 |---|---|---|
 | `window` | Window with title bar | Uses `default_window_*` values |
-| `fullwindow` | Full window without title bar | Uses `default_window_*` values |
 | `fullscreen` | Occupies the entire screen (other apps are suspended) | Size matches screen resolution; position is fixed at `(0, 0)` |
-| `background` | Not supported: headless (no display) | Not applicable |
+| `background` | Headless: no window, runs in the background (`@gfx` is `nil`) | Not applicable |
 
-In `fullscreen` mode, `@user_area_*` refers to the entire screen. In `window` mode, `@user_area_*` is the area excluding the title bar (11px) and borders.
+In `fullscreen` mode the app's area is the entire screen. In `window` mode it is the area inside the title bar (11px) and borders. Either way `@gfx` draws from its top-left as (0, 0), and its size is `@user_area_width` × `@user_area_height`.
 
 A fullscreen app can also declare `fullscreen_switchable = 1`, which lets the user park it
 with `Ctrl` + `Tab` and come back to it later. See
@@ -91,18 +99,59 @@ Corresponding Ruby file:
 # /app/demo/hello.app.rb
 class HelloApp < FmrbApp
   def on_create
-    clear_user_area(FmrbGfx::WHITE)
-    @gfx.draw_text(@user_area_x0 + 4, @user_area_y0 + 4,
-                   "Hello!", FmrbGfx::BLACK)
-    draw_window_frame
+    clear_user_area
+    @gfx.draw_text(4, 4, "Hello!", theme_fg)
     @gfx.present
   end
 
   def on_update; 500; end
 end
-
-HelloApp.new.start
 ```
+
+There is no start code at the end of the file: the runtime starts the `FmrbApp` subclass the
+file defines.
+
+## Metadata in the `.rb` file
+
+The same keys can go in a comment at the top of the `.rb`, so a one-file app needs no
+`.app.toml`. The block sits within the first 512 bytes, before the first line of code, and
+is TOML with `# ` in front of each line:
+
+```ruby
+#---fmrb
+# app_screen_name = "Hello"
+# default_window_width = 200
+# default_window_height = 120
+#---
+class HelloApp < FmrbApp
+```
+
+- When both are there they are merged key by key, and **a key in the `.app.toml` wins**: the
+  comment can hold the defaults and the `.app.toml` override some of them.
+- Only `.rb` files are read this way (`.lua`, `.bas` and `.py` use other comment marks).
+- The launcher lists an `.app.rb` that has only the comment too.
+- An app distributed through the App Store needs an `.app.toml`: its `app_id` and the other
+  installation keys are read from there.
+- From Ruby, `FmrbApp.app_meta(path)` returns an app file's merged metadata as a Hash of Strings.
+
+## Frameless Windows
+
+```toml
+window_frame = "none"
+```
+
+A window with no frame, title bar or close button, for an avatar or a mascot. The app's area
+is the whole window and its ground is transparent, so only what the app draws shows. The
+window is moved by dragging it anywhere (`window_drag = "anywhere"`, the default here); a
+press that does not move is a click, and holding still for a second is a long press. A right
+click or a long press calls `on_frameless_right_click(ev)`, which by default opens the window
+menu (Send to, Reload, Close); Ctrl+Q also closes it.
+
+By default the whole rectangle of the window takes clicks. To let clicks through where
+nothing is drawn, declare the shape: `set_hit_shape([[x, y, w, h], ...])`,
+`set_hit_mask(hit_mask_from_art(rows, transparent: ".", scale: 3), x, y)` or
+`add_hit_sprite(sprite)`. A press outside it reaches the window behind. The sample is
+`/app/demo/avatar.app.rb`.
 
 ## Fullscreen App Example
 
