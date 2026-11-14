@@ -151,7 +151,7 @@ returns a JSON summary you can poll. `POST /app/launch?path=`, `POST /app/kill?p
 
 ```
 $ curl -s http://fmruby.local/status
-{"ip":"192.168.10.16","mode":"mjpeg","streaming":false,"fps":0.0,"kbps":0}
+{"ip":"192.0.2.16","mode":"mjpeg","streaming":false,"fps":0.0,"kbps":0}
 ```
 
 Frames are encoded on the P4's own hardware — the PPA block converts colour space and the

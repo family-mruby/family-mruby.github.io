@@ -21,7 +21,7 @@ Linux のシミュレータでも、ホストのネットワークと OpenSSL �
 ```ruby
 if FmrbApp.wifi_connected?
   info = FmrbApp.wifi_info
-  # => { connected: true, ip: "192.168.10.16", ssid: "my-ap", hostname: "fmruby" }
+  # => { connected: true, ip: "192.0.2.16", ssid: "my-ap", hostname: "fmruby" }
   Log.info("address: #{info[:ip]}")
 end
 ```
@@ -161,8 +161,81 @@ JSON を解析して描画します。ネットワークを待ち、最初に成
 写して始めるのに向いています。
 
 **Net Test** (`/app/test/net_test.app.rb`) は API を一つずつ試すもので、うまく動かないときの
-切り分けに使えます。`/app/test` の他のものと同じくランチャーには出ないので、エディタか
-シェルから起動してください。
+切り分けに使えます。`/app/test` (開発用のビルドにだけ入っています) の他のものと同じくランチャーには出ないので、
+エディタかシェルから起動してください。
+
+## Asterism: 端末をまたぐオブジェクトとトピック
+
+Asterism は、Family mruby の端末、ブラウザ版、CRuby の PC (`asterism` gem)、ROS 2 を Zenoh の上で
+1 つの網にします。アプリは Ruby のオブジェクトを公開して別の端末から手元のもののように呼ばせ、
+トピックに値を流してほかのアプリに購読させられます。ウィンドウのメニューの **送る** (動いている
+アプリを別の端末へ移す) もこの網を通ります。
+
+### 設定
+
+端末はルータと自分の名前を `/home/asterism/config.toml` から読みます。
+
+```toml
+router = "tcp/192.0.2.2:7447"   # Zenoh ルータの場所 (TLS のルータなら tls/...)
+node   = "fmruby-aaaaaa"        # この端末のノード ID (省略可)
+name   = "Desk"                 # ほかの端末に見える名前 (省略可)
+```
+
+このファイルが無いときは `/etc/system_conf.toml` の `zenoh_router` を使います。ノード ID の
+既定は端末の mDNS 名です。
+
+### アプリからつなぐ
+
+`FmrbAsterism::Link` が、Asterism のアプリに毎回要ること (WiFi を待つ、端末の設定でつなぐ、
+poll する、切れたのに気づいてつなぎ直す) を引き受けます。接続は `link.conn` (`Asterism::Connection`)
+です。つなぐたびに新しい接続になり、アプリが接続に載せたものは接続と一緒に消えるので、
+オブジェクトやトピックはつないだあと毎回呼ばれる `link_up` で載せます。
+
+```ruby
+class StepApp < FmrbApp
+  def on_create
+    @steps = 0
+    @link = FmrbAsterism::Link.new(self, "step")   # 網の上では <node>/step
+  end
+
+  def link_up(link)          # つないだあと毎回
+    c = link.conn
+    c.expose("counter", self, methods: [:steps])  # ほかからは <node>/step/counter を呼ぶ
+    @topic = c.publish("pedometer/step", type: :number)
+    @sub = c.subscribe("*/step/pedometer/step") do |v, info|
+      Log.info("#{info.node}: #{v}")
+    end
+  end
+
+  def link_down(link)        # 省略可。理由は link.state と link.reason
+  end
+
+  def steps
+    @steps
+  end
+
+  def on_update
+    if @link.update          # poll する。つながっている間 true
+      # 変わったら @topic.put(@steps)
+    end
+    100
+  end
+
+  def on_destroy
+    @link.close
+  end
+end
+```
+
+別の端末からは `net["fmruby-aaaaaa/step/counter"].steps` で呼べます。接続のメソッド (`expose`・`[]`・
+`publish`・`subscribe`・`status`・`profile_of`・`define_type` など) は
+[asterism の README](https://github.com/ruby-asterism/asterism#the-portable-api) にあります。
+
+!!! note "通信の決まり (wire protocol) 2"
+    今のファームウェアは Asterism の wire protocol 2 (asterism gem 0.14.0 以降) で話します。
+    protocol 1 とは互換が無く、網の上の端末とプログラムは一緒に入れ替えます。protocol 1 の
+    ノードからもほかのノードは見えますが、両者の間の呼び出しは断られ、状態とトピックは
+    見えません。相手の protocol は `net.protocol_of(node)` で分かります。
 
 ## 関連
 

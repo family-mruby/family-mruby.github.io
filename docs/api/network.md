@@ -22,7 +22,7 @@ The device needs Wi-Fi credentials in `/etc/wifi.toml`. See
 ```ruby
 if FmrbApp.wifi_connected?
   info = FmrbApp.wifi_info
-  # => { connected: true, ip: "192.168.10.16", ssid: "my-ap", hostname: "fmruby" }
+  # => { connected: true, ip: "192.0.2.16", ssid: "my-ap", hostname: "fmruby" }
   Log.info("address: #{info[:ip]}")
 end
 ```
@@ -164,7 +164,83 @@ success, and is a good starting point to copy.
 
 The Net Test app (`/app/test/net_test.app.rb`) exercises the API piece by piece and is
 useful when something does not work. It is hidden from the launcher with the rest of
-`/app/test`, so start it from the editor or the shell.
+`/app/test`, which only development builds include, so start it from the editor or the shell.
+
+## Asterism: objects and topics across machines
+
+Asterism joins Family mruby machines, the browser build, PCs running CRuby (the `asterism`
+gem) and ROS 2 into one network over Zenoh. An app exposes Ruby objects that another machine
+calls like local ones, and streams values on topics that others subscribe to. The window
+menu's **Send to** (moving a running app to another machine) travels over it too.
+
+### Settings
+
+The machine finds its router and its name in `/home/asterism/config.toml`:
+
+```toml
+router = "tcp/192.0.2.2:7447"   # the Zenoh router's locator (tls/... for a router with TLS)
+node   = "fmruby-aaaaaa"        # this machine's node ID (optional)
+name   = "Desk"                 # the name others see (optional)
+```
+
+Without the file the machine uses `zenoh_router` in `/etc/system_conf.toml`. The node ID
+defaults to the machine's mDNS name.
+
+### Connecting from an app
+
+`FmrbAsterism::Link` does what every Asterism app needs: it waits for Wi-Fi, connects with
+the machine's settings, polls, notices a lost connection and connects again. Its connection
+is `link.conn`, an `Asterism::Connection`. Every connect is a new one, and what an app puts
+on a connection ends with it, so the app declares its objects and topics in `link_up`, which
+runs after every connect:
+
+```ruby
+class StepApp < FmrbApp
+  def on_create
+    @steps = 0
+    @link = FmrbAsterism::Link.new(self, "step")   # <node>/step on the network
+  end
+
+  def link_up(link)          # after every connect
+    c = link.conn
+    c.expose("counter", self, methods: [:steps])  # others call <node>/step/counter
+    @topic = c.publish("pedometer/step", type: :number)
+    @sub = c.subscribe("*/step/pedometer/step") do |v, info|
+      Log.info("#{info.node}: #{v}")
+    end
+  end
+
+  def link_down(link)        # optional: link.state and link.reason say why
+  end
+
+  def steps
+    @steps
+  end
+
+  def on_update
+    if @link.update          # polls; true while connected
+      # @topic.put(@steps) when it changes
+    end
+    100
+  end
+
+  def on_destroy
+    @link.close
+  end
+end
+```
+
+On another machine the object is `net["fmruby-aaaaaa/step/counter"].steps`. The connection's
+methods (`expose`, `[]`, `publish`, `subscribe`, `status`, `profile_of`, `define_type` and the
+rest) are described in the
+[asterism README](https://github.com/ruby-asterism/asterism#the-portable-api).
+
+!!! note "Wire protocol 2"
+    The current firmware speaks Asterism wire protocol 2 (the asterism gem 0.14.0 and
+    later). It is not compatible with protocol 1: every machine and program on a network
+    moves together. A protocol 1 node still sees the others, but calls between the two are
+    refused and statuses and topics are not seen. `net.protocol_of(node)` tells what a node
+    speaks.
 
 ## Related
 

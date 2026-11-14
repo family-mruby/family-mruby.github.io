@@ -116,7 +116,7 @@ restart = true         # 落ちたら起動し直す (kill したものは止ま
 
 ```toml
 [tts.config]
-server = "http://192.168.10.5:50021"   # パソコンで動かす VOICEVOX
+server = "http://192.0.2.5:50021"   # パソコンで動かす VOICEVOX
 speaker = 1
 timeout_ms = 3000
 ```

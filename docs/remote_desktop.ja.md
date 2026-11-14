@@ -147,7 +147,7 @@ ruby tools/fmrb_rd_snap.rb  <ip> out.jpg
 
 ```
 $ curl -s http://fmruby.local/status
-{"ip":"192.168.10.16","mode":"mjpeg","streaming":false,"fps":0.0,"kbps":0}
+{"ip":"192.0.2.16","mode":"mjpeg","streaming":false,"fps":0.0,"kbps":0}
 ```
 
 フレームの符号化は P4 のハードウェアで行います。色の変換は PPA、H.264 は専用の回路で、

@@ -114,7 +114,7 @@ Two ways to synthesise:
 
 ```toml
 [tts.config]
-server = "http://192.168.10.5:50021"   # a VOICEVOX server on your PC
+server = "http://192.0.2.5:50021"   # a VOICEVOX server on your PC
 speaker = 1
 timeout_ms = 3000
 ```
