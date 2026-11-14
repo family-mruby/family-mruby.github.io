@@ -3,7 +3,14 @@ set -euo pipefail
 
 # Source ref of fmruby-core (override with FMRUBY_CORE_REF env var if needed)
 SRC_REF="${FMRUBY_CORE_REF:-main}"
-SRC_BASE="https://raw.githubusercontent.com/family-mruby/fmruby-core/${SRC_REF}/tool/web"
+RAW="https://raw.githubusercontent.com/family-mruby/fmruby-core/${SRC_REF}"
+# fmruby-core moved tool/ to tools/ (develop, 2026-11-15); main keeps tool/
+# until the next release. Use whichever the ref has.
+if curl -fsI "${RAW}/tools/web/index.html" >/dev/null 2>&1; then
+  SRC_BASE="${RAW}/tools/web"
+else
+  SRC_BASE="${RAW}/tool/web"
+fi
 # Where it goes (override with CONSOLE_DEST: docs/console-dev holds develop's console)
 DEST_DIR="${CONSOLE_DEST:-docs/console}"
 
