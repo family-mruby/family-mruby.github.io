@@ -8,6 +8,78 @@ runs the newest one.
 Every release replaces the whole flash image, `/home` included. Copy anything you want to
 keep off the device before flashing — see [Console](getting_started/console.md).
 
+## In development (after 3.0.0)
+
+Not in a release yet: this is what the development branch — and [Studio](getting_started/studio.md),
+which is built from it — does now. These pages describe it.
+
+### Changed: writing an app
+
+Apps written for 3.0.0 need small changes:
+
+- **No start code at the end of the file.** The runtime starts the `FmrbApp` subclass the
+  file defines; delete the trailing `MyApp.new.start` (and its `begin`/`rescue`). A file with
+  more than one subclass names the one to start with `class = "MyApp"` in its metadata. A file
+  where none can be picked, or an exception while starting, shows the reason in an error
+  window. → [Hello World](getting_started/hello_world.md)
+- **`@gfx` draws from the top-left of the app's own area.** Inside the frame of a framed
+  window, the window's top-left without a frame, the screen's in fullscreen. `@user_area_x0`
+  and `@user_area_y0` are gone: drop the `@user_area_x0 +` additions. Mouse `ev[:x]` /
+  `ev[:y]`, sprites and UI widgets use the same origin; `ev[:wx]` / `ev[:wy]` and `window_gfx`
+  are there for the window's own coordinates. → [Drawing](api/fmrb_gfx.md#coordinate-system)
+- **System methods moved to `FmrbSystem`.** The 34 class methods that change the machine
+  (`reboot`, `set_wallclock`, the Wi-Fi, BLE, power and volume settings ...) are
+  `FmrbSystem.<name>` now; `FmrbApp.<name>` keeps the ones an app reads.
+  → [Application](api/fmrb_app.md#system-settings-fmrbsystem)
+- `clear_time` is `clear_timer`.
+- **Metadata in the `.rb`.** The `.app.toml` keys can also go in a `#---fmrb` comment at the
+  top of the file; with both, a key in the `.app.toml` wins.
+  → [App Config](file_formats/app_toml.md#metadata-in-the-rb-file)
+- **Lua apps** run on a shell the system provides: define `on_create` / `on_update` /
+  `on_event` and draw with the global `gfx`. → [Other languages](other_languages.md#lua)
+
+### New
+
+- **Kanji conversion** in kana input, with a dictionary on the SD card.
+  → [The Desktop](getting_started/desktop.md#kana-input)
+- **Wi-Fi from the screen.** The Network dialog opens a Wi-Fi page: pick a network, type the
+  password; up to five are remembered and the strongest in reach is joined.
+  → [Connecting to Wi-Fi](getting_started/wifi.md)
+- **The window menu.** Right-click a title bar for Send to, Reload and Close.
+- **Frameless windows** (`window_frame = "none"`), with the Avatar sample.
+  → [App Config](file_formats/app_toml.md#frameless-windows)
+- **Asterism wire protocol 2** (the asterism gem 0.14.0): connections are objects, topics
+  carry declared types, and a shared place holds data with no single owner. Not compatible
+  with 3.0.0 on the wire. → [Network](api/network.md#asterism-objects-and-topics-across-machines)
+- **Sending files and apps between machines** over Asterism, with the Receiving app deciding
+  whether, and from whom, this machine takes them.
+- `/app/test` is left out of the release images and the public browser build.
+
+## 3.0.0 — 2026-11-07
+
+Applies to Modern, Retro, the headless boards, the Linux program and Studio.
+
+### New
+
+- **The Linux program.** Family mruby as one program on a Linux PC: an amd64 `.deb` on the
+  GitHub release (Ubuntu 26.04 or newer), chosen at the login screen.
+  → [Choose your hardware](getting_started/choose_hardware.md#other-ways-to-run-it)
+- **Headless boards.** M5Stack StickS3 and AtomS3R run a single app on an Asterism network,
+  flashed from the Web Installer.
+- **Moving a running app.** An app that declares `movable = true` can be written to an image
+  and carried on from it, on the same machine or another one.
+  → [Application](api/fmrb_app.md#moving-a-running-app)
+- **Asterism.** Machines on one network call each other's Ruby objects, with a game host for
+  shared tables: Hide Jong (mahjong), Othello and a drawing board.
+  → [Default Apps](getting_started/default_apps.md#games--appgame)
+- **A high-resolution fullscreen.** An app with `fullscreen_hires = true` runs at 640x360 while
+  it is fullscreen on Modern and in Studio.
+
+### Updating
+
+The core and the graphics-audio firmware must be the same version: on Retro, flash both
+chips.
+
 ## 2.1.0 — 2026-09-09
 
 Applies to Modern, Retro, the simulator and Studio.

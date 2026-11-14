@@ -8,6 +8,73 @@
 書き込むとフラッシュの内容は `/home` も含めて置き換わります。残したいものは先に取り出して
 おいてください ([コンソール](getting_started/console.md))。
 
+## 開発中 (3.0.0 の後)
+
+まだリリースには入っていません。開発中の版 (と、それから作っている [Studio](getting_started/studio.md))
+の今の姿で、このサイトの各ページはこちらに合わせてあります。
+
+### 変わったこと: アプリの書き方
+
+3.0.0 向けに書いたアプリは、少し直す必要があります。
+
+- **ファイルの末尾に起動のコードを書きません。** ファイルが定義した `FmrbApp` の子クラスを
+  ランタイムが起動します。末尾の `MyApp.new.start` (と `begin`/`rescue`) は消してください。
+  子クラスが 2 つ以上あるファイルは、記述に `class = "MyApp"` と書いて起動するものを名指しします。
+  決まらないときや起動中の例外は、理由がエラーの窓に出ます。 → [Hello World](getting_started/hello_world.md)
+- **`@gfx` はアプリの区画の左上から描きます。** 枠のある窓では枠の内側、枠なしでは窓の左上、
+  全画面では画面の左上です。`@user_area_x0` と `@user_area_y0` は無くなったので、
+  `@user_area_x0 +` の足し算を消してください。マウスの `ev[:x]` / `ev[:y]`、スプライト、UI 部品も
+  同じ原点です。窓の座標が要るときは `ev[:wx]` / `ev[:wy]` と `window_gfx` を使います。
+  → [描画](api/fmrb_gfx.md#座標系)
+- **本体を変えるメソッドは `FmrbSystem` へ。** 本体の設定を変える 34 個のクラスメソッド
+  (`reboot`、`set_wallclock`、WiFi・BLE・電源・音量の設定など) は `FmrbSystem.<名前>` になりました。
+  `FmrbApp.<名前>` には、アプリが読むものが残ります。 → [アプリ](api/fmrb_app.md#本体の設定-fmrbsystem)
+- `clear_time` は `clear_timer` になりました。
+- **記述を `.rb` の中に。** `.app.toml` のキーは、ファイル先頭の `#---fmrb` コメントにも書けます。
+  両方あるときは `.app.toml` のキーが勝ちます。 → [アプリ設定](file_formats/app_toml.md#rb-ファイルの中の記述)
+- **Lua のアプリ**は本体が用意する殻の上で動きます。`on_create` / `on_update` / `on_event` を
+  定義し、グローバルの `gfx` で描きます。 → [ほかの言語](other_languages.md#lua)
+
+### 新しいこと
+
+- **漢字変換**。SD カードの辞書を使って、かな入力から変換します。
+  → [デスクトップ](getting_started/desktop.md#かな入力)
+- **画面から WiFi**。Network の画面から Wi-Fi のページを開き、ネットワークを選んでパスワードを
+  打ちます。5 つまで覚え、届く範囲でいちばん強いものにつなぎます。 → [WiFi につなぐ](getting_started/wifi.md)
+- **窓のメニュー**。タイトルバーの右クリックで、送る・読み直し・閉じる。
+- **枠なしの窓** (`window_frame = "none"`) と、見本のアバター。
+  → [アプリ設定](file_formats/app_toml.md#枠なしのウィンドウ)
+- **Asterism の通信の決まり (wire protocol) 2** (asterism gem 0.14.0)。接続がオブジェクトになり、
+  トピックは型を宣言し、持ち主の決まらないデータは共有の置き場に置きます。3.0.0 とは通信の互換が
+  ありません。 → [ネットワーク](api/network.md#asterism-端末をまたぐオブジェクトとトピック)
+- **端末の間でファイルとアプリを送る** (Asterism)。受け取るかどうか、誰から受け取るかは
+  「受け取り」アプリで決めます。
+- `/app/test` は、リリースのイメージと公開しているブラウザ版から外しました。
+
+## 3.0.0 — 2026-11-07
+
+Modern、Retro、画面の無い小型機、Linux 版、Studio が対象です。
+
+### 新しいこと
+
+- **Linux 版**。Linux のパソコンで 1 つのプログラムとして動く Family mruby です。GitHub の
+  リリースに amd64 の `.deb` (Ubuntu 26.04 以降) があり、ログイン画面で選びます。
+  → [機種の選択](getting_started/choose_hardware.md#ほかの動かし方)
+- **画面の無い小型機**。M5Stack StickS3 と AtomS3R が、Asterism の網の上で 1 つのアプリを
+  動かします。Web Installer から書き込めます。
+- **動いているアプリを運ぶ**。`movable = true` を宣言したアプリは、イメージに書いて、同じ端末でも
+  別の端末でも続きから動かせます。 → [アプリ](api/fmrb_app.md#動いているアプリを運ぶ)
+- **Asterism**。同じ網の端末どうしが Ruby のオブジェクトを呼び合います。ゲームのホストを使う卓の
+  アプリとして、ヒデ雀 (麻雀)・オセロ・お絵かきが入りました。
+  → [標準アプリ](getting_started/default_apps.md#ゲーム--appgame)
+- **全画面の高解像度**。`fullscreen_hires = true` のアプリは、Modern とスタジオで全画面の間だけ
+  640x360 で動きます。
+
+### 更新するとき
+
+core と graphics-audio のファームウェアは同じ版でなければなりません。Retro では両方のチップに
+書き込んでください。
+
 ## 2.1.0 — 2026-09-09
 
 対象: Modern、Retro、シミュレータ、Studio。
