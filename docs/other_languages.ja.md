@@ -7,16 +7,16 @@ Family mruby は Ruby を中心に作られていますが、動く言語は Rub
 ランチャーに出て、同じように起動し、互いに同時に動きます。
 
 <div align="center">
-  <img src="/images/tab5_three_vms.png" width="620" alt="1 つのデスクトップに 3 つの窓。Ruby、Lua、Python のデモが同時に動いている">
-  <br><em>VM が 3 つ同時に動いているところ。Ruby、Lua、MicroPython が、それぞれ別の窓と別のヒープで動きます</em>
+  <img src="/images/tab5_three_vms.png" width="620" alt="1 つのデスクトップに 3 つのウィンドウ。Ruby、Lua、Python のデモが同時に動いている">
+  <br><em>VM が 3 つ同時に動いているところ。Ruby、Lua、MicroPython が、それぞれ別のウィンドウと別のヒープで動きます</em>
 </div>
 
 | 拡張子 | 実行系 | 備考 |
 |---|---|---|
 | `.rb` | PicoRuby | 中心となる言語。[API リファレンス](api/index.md) の全部が使えます |
-| `.py` | MicroPython | Ruby と同じアプリの枠組み。窓・描画・スプライト・音。同時に 1 本だけ |
+| `.py` | MicroPython | Ruby と同じアプリの枠組み。ウィンドウ・描画・スプライト・音。同時に 1 本だけ |
 | `.bas` | FMRuby BASIC | Family BASIC 互換。専用のテキスト画面とスプライトを持ちます |
-| `.lua` | Lua 5.4 | 関数 `on_create` / `on_update` / `on_event` とグローバルの `gfx`。窓とループは本体が持ちます |
+| `.lua` | Lua 5.4 | 関数 `on_create` / `on_update` / `on_event` とグローバルの `gfx`。ウィンドウとループは本体が持ちます |
 
 ---
 
@@ -43,7 +43,7 @@ class PythonDemoApp(FmrbApp):
 PythonDemoApp().start()
 ```
 
-窓・イベント・描画は組み込みの `_fmrb` から使えます。継承する `FmrbApp` がそれを
+ウィンドウ・イベント・描画は組み込みの `_fmrb` から使えます。継承する `FmrbApp` がそれを
 包んでいます。`FmrbApp` / `FmrbGfx` / `FmrbAudio` / `SpriteImage` / `SpriteInstance` /
 `Log` はアプリの名前空間に用意済みで、import は要りません。
 
@@ -137,14 +137,14 @@ traceback をログに出してアプリが終わります。Ruby のメモリ�
 
 # Lua
 
-`.lua` のアプリは、本体が C で用意する殻の上で動きます。窓を作り、枠を描き、ループを回すのは
+`.lua` のアプリは、本体が C で用意するアプリシェルの上で動きます。ウィンドウを作り、枠を描き、ループを回すのは
 本体で、アプリは関数を定義するだけです。形は Ruby のアプリにそろえてあります。
 
 ```lua
 local seconds = 0
 
-function on_create()            -- 窓ができた後に 1 回
-  FmrbApp.clear_user_area()     -- 区画をテーマの色で塗り、枠を描き直す
+function on_create()            -- ウィンドウができた後に 1 回
+  FmrbApp.clear_user_area()     -- 描画領域をテーマの色で塗り、枠を描き直す
   gfx:draw_text("Hello", 2, 2, FmrbApp.THEME_TEXT)
   gfx:present()
 end
@@ -163,21 +163,21 @@ end
 
 - ファイルのトップレベルは最初に 1 回だけ走ります (関数と変数を定義する所)。そこではまだ
   `gfx` はありません。`on_create`・`on_update`・`on_event` のどれも定義しないファイルは起動せず、
-  エラーの窓が出ます。
-- 任意の関数: `on_destroy`、`on_suspend` / `on_resume`、`on_resize(w, h)` (殻が区画を塗り直して
+  エラーウィンドウが出ます。
+- 任意の関数: `on_destroy`、`on_suspend` / `on_resume`、`on_resize(w, h)` (アプリシェルが描画領域を塗り直して
   枠を描いた後)、`on_quit_request` (Ctrl+Q。無ければ閉じる)。
-- 関数の中でエラーになると、メッセージとトレースバックのエラーの窓が出てアプリは終わります。
+- 関数の中でエラーになると、メッセージとトレースバックのエラーウィンドウが出てアプリは終わります。
   関数の中で長く待たず、待ちは `on_update` の返り値で表します。1 秒以上戻らない関数は、
   閉じるボタンと kill で打ち切られます。
 - `gfx` は Ruby の `@gfx` と同じく、枠の内側の左上を (0, 0) として描きます: `fill_rect`・
   `draw_rect`・`fill_round_rect`・`draw_round_rect`・`draw_line`・`fill_circle`・
   `draw_text(text, x, y, c [, bg])`・`present()`。`gfx:clear(c)` は枠ごとキャンバス全体を消し、
-  `FmrbApp.clear_user_area([c])` は区画を消して枠を描き直します。区画の大きさは
+  `FmrbApp.clear_user_area([c])` は描画領域を消して枠を描き直します。描画領域の大きさは
   `FmrbApp.user_area_width` / `user_area_height`。
 - `ev` のキーは Ruby と同じで、`ev.type` は文字列です: `"key_down"`・`"key_up"`・
   `"mouse_down"`・`"mouse_up"`・`"mouse_move"`・`"mouse_wheel"`・`"gamepad_down"`・
-  `"gamepad_up"`・`"gamepad_axis"`・`"kana_mode"`。マウスのイベントは `x` / `y` (区画) と
-  `wx` / `wy` (窓) を持ちます。閉じるボタン、タイトルバーのウィンドウのメニュー、ドラッグは
+  `"gamepad_up"`・`"gamepad_axis"`・`"kana_mode"`。マウスのイベントは `x` / `y` (描画領域) と
+  `wx` / `wy` (ウィンドウ) を持ちます。閉じるボタン、タイトルバーのウィンドウのメニュー、ドラッグは
   本体が受け持ちます。
 - 色は `FmrbGfx.BLACK` などの定数と、テーマの `FmrbApp.THEME_WINDOW_BG`・`THEME_TEXT`・
   `THEME_BORDER` など。
@@ -218,7 +218,7 @@ Family BASIC の意味論、28 x 24 文字の画面、`PLAY` / `BEEP` による�
 app_handle_name = "mygame"
 app_screen_name = "My Game"
 app_screen_name_ja = "マイゲーム"
-# .bas は既定で全画面。窓にしたいときだけ書きます:
+# .bas は既定で全画面。ウィンドウにしたいときだけ書きます:
 #default_window_mode = "window"
 ```
 

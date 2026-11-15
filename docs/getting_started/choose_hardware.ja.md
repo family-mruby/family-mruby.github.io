@@ -72,8 +72,8 @@ ESP32-P4 が 1 個で OS・描画・音・入力の全部を動かし、その�
 | | どんなものか |
 |---|---|
 | [スタジオ](studio.md) | ブラウザのタブの中で全体が動きます。インストール不要。画面は Modern |
-| Linux 版 | Linux のパソコンで 1 つのプログラムとして動く Family mruby (amd64 の `.deb`。GitHub の各リリースに添付。Ubuntu 26.04 以降)。ログイン画面で **Family mruby** を選ぶとそれがデスクトップになり、パソコンのアプリも Family mruby の窓として並びます。画面は Modern を画面に合わせて拡大したもの |
-| M5Stack StickS3 / AtomS3R | デスクトップを持たず、1 つのアプリだけを動かして [Asterism](../api/network.md#asterism-端末をまたぐオブジェクトとトピック) の網に加わる小型機。同じ Web Installer で書き込みます |
+| Linux 版 | Linux のパソコンで 1 つのプログラムとして動く Family mruby (amd64 の `.deb`。GitHub の各リリースに添付。Ubuntu 26.04 以降)。ログイン画面で **Family mruby** を選ぶとそれがデスクトップになり、パソコンのアプリも Family mruby のウィンドウとして並びます。画面は Modern を画面に合わせて拡大したもの |
+| M5Stack StickS3 / AtomS3R | デスクトップを持たず、1 つのアプリだけを動かして [Asterism](../api/network.md#asterism-端末をまたぐオブジェクトとトピック) のネットワークに加わる小型機。同じ Web Installer で書き込みます |
 
 ## コードで気をつける違い
 

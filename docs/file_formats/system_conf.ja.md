@@ -30,7 +30,7 @@ Config ダイアログから。システムメニューの Config には、実�
 | `system_name` | string | 起動時と About に出る名前 |
 | `display_width` / `display_height` | int | 表示バッファの大きさ。Modern は 426 x 240、Retro は 320 x 240 |
 | `display_margin_x` / `display_margin_y` | int | 画面の端に空けておく画素数。Retro ではブラウン管が端を隠す (オーバースキャン) ので余白が要りますが、Modern はバッファ全体が見えるのでどちらも 0 です |
-| `default_user_app_width` / `default_user_app_height` | int | アプリの `.app.toml` に指定が無いときの窓の大きさ |
+| `default_user_app_width` / `default_user_app_height` | int | アプリの `.app.toml` に指定が無いときのウィンドウの大きさ |
 | `display_mode` | string | どの表示ドライバを使うか (下記) |
 
 `display_mode` は `ntsc_ipc` (Retro、子チップ経由のコンポジット映像)、`tab5_dsi`

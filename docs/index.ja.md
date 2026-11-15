@@ -11,7 +11,7 @@ Family mruby は、RubyとC言語で実装された、Rubyで書かれたアプ�
 パソコンを利用せずとも、それ単体で、キーボードとマウス、ディスプレイをつないで、プログラミングを楽しめる環境を目指しています。
 
 <div align="center">
-  <img src="/images/photo_editor_run.jpg" width="620" alt="flappy.app.rb を開いたエディタと、そこから起動したゲームが隣の窓で動いている">
+  <img src="/images/photo_editor_run.jpg" width="620" alt="flappy.app.rb を開いたエディタと、そこから起動したゲームが隣のウィンドウで動いている">
   <br><em>エディタ、そのコードを実行した結果のアプリ</em>
 </div>
 
@@ -38,7 +38,7 @@ Modern は、より高解像度のデジタルディスプレイを前提とし�
 [機種の選択](getting_started/choose_hardware.md) に詳細を記載しています。どちらのボードが無くても、
 同じシステムがブラウザのタブ ([スタジオ](getting_started/studio.md)) と Linux のパソコンのプログラムとして
 動きます。画面の無い小型機 (M5Stack StickS3、AtomS3R) は、端末どうしが Ruby のオブジェクトを
-呼び合い、動いているアプリを受け渡す網 [Asterism](api/network.md#asterism-端末をまたぐオブジェクトとトピック) で
+呼び合い、動いているアプリを受け渡すネットワーク [Asterism](api/network.md#asterism-端末をまたぐオブジェクトとトピック) で
 ほかの端末に加わります。
 
 <div align="center">

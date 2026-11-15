@@ -10,7 +10,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
     同じ ESP32-P4 です。呼び方は同じで、違うのは費用だけです (Modern のほうが安く済みます)。
 
     片方の機種にしか無いものもいくつかあります (Retro の NTSC 出力調整、Modern のタッチ)。
-    それぞれの箇所に印をつけてあります。一覧は
+    それぞれの箇所にアノテーションを付けてあります。一覧は
     [機種の選択](../getting_started/choose_hardware.md) を参照してください。
 
 ## 早見表
@@ -22,7 +22,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `FmrbApp` | アプリ基底クラス。ライフサイクル、ウィンドウ、メッセージング | [アプリ](fmrb_app.md) |
 | `FmrbGfx` | 図形・テキスト描画（`@gfx`） | [描画](fmrb_gfx.md) |
 | `SpriteImage` / `SpriteInstance` / `GfxBlock` | スプライト | [スプライト](sprite.md) |
-| `FmrbUI` | ボタン・切替・数値入力など。自分で窓を描くアプリ向け | [UI 部品](ui.md) |
+| `FmrbUI` | ボタン・切替・数値入力など。自分でウィンドウを描くアプリ向け | [UI 部品](ui.md) |
 | `TileSheet` / `TileMap` | タイルマップ描画。`.map.bin` か fmrb_map JSON から読む | [タイルマップ](tilemap.md) |
 | `P5` | Processing/p5.js 風の描画 DSL | [Processing 風の描画](p5.md) |
 | `FmrbAudio` | BGM・効果音・音声合成・WAV 再生・マイク（`@audio`） | [音声](audio.md) |
@@ -74,11 +74,11 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `subscribe(topic)` / `unsubscribe(topic)` / `publish(topic, data)` | Pub/Sub |
 | `send_message(dest_pid, msg_type, data)` | 直接メッセージ送信 |
 | `set_window_position(x, y)` | ウィンドウ位置 |
-| `clear_user_area` / `draw_window_frame` | 区画を消す (枠も描き直す) / 枠を描き直す |
-| `window_gfx` | ウィンドウの左上を (0, 0) として区画の外に描く |
+| `clear_user_area` / `draw_window_frame` | 描画領域を消す (枠も描き直す) / 枠を描き直す |
+| `window_gfx` | ウィンドウの左上を (0, 0) として描画領域の外に描く |
 | `set_timer(ms) { }` / `clear_timer(id)` | 1 回限りのタイマ |
 | `checkpoint` / `move_to(node_id)` | 自分をイメージに書く / 別の端末へ移す |
-| `request_fullscreen(on)` / `toggle_fullscreen` | 窓と全画面の切り替え |
+| `request_fullscreen(on)` / `toggle_fullscreen` | ウィンドウと全画面の切り替え |
 | `wheel_rows(ev)` / `wheel_notches(ev)` | ホイールのイベントを読む |
 | `theme_bg` / `theme_fg` / `theme_accent` / `theme_border` / `theme_fg_light` | システムの色 |
 | `on_quit_request` | Ctrl+Q で閉じる前に呼ばれる |
@@ -172,14 +172,14 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | `running?` | アプリが動作中なら `true` |
 | `fullscreen?` | フルスクリーンモードか否か |
 | `@window_width` / `@window_height` | ウィンドウ全体のサイズ |
-| `@user_area_width` / `@user_area_height` | アプリの区画のサイズ。`@gfx` とマウスのイベントはその左上を (0, 0) とする |
+| `@user_area_width` / `@user_area_height` | アプリの描画領域のサイズ。`@gfx` とマウスのイベントはその左上を (0, 0) とする |
 | `@pos_x` / `@pos_y` | ウィンドウ左上座標（スクリーン座標系）。ウィンドウを移動すると変化する |
 
 `@fullscreen` の場合は `(@pos_x,@pos_y)` が `(0,0)` であり、スクリーンの左上を指す。
 
 ## 座標系・色フォーマット
 
-- 座標系: アプリの区画の左上が原点 (0, 0) (枠のあるウィンドウでは枠の内側、それ以外はウィンドウか画面の左上)、X 右方向 / Y 下方向
+- 座標系: アプリの描画領域の左上が原点 (0, 0) (枠のあるウィンドウでは枠の内側、それ以外はウィンドウか画面の左上)、X 右方向 / Y 下方向
 - 色: RGB332（8bit, R:3 G:3 B:2）。`FmrbGfx::WHITE` などの定数か `FmrbGfx.rgb_to_332(r, g, b)` で生成
 
 ## 描画の流れ

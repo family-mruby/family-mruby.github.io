@@ -81,7 +81,7 @@ python3 tools/debug/fmrb_dbg_client.py ble
 
 ### DAP に対応した編集環境から
 
-`tools/debug/fmrb_dap_adapter.py` は、同じ仕組みに Debug Adapter Protocol の入口を
+`tools/debug/fmrb_dap_adapter.py` は、同じ仕組みに Debug Adapter Protocol のフロントエンドを
 つけたものです。DAP に対応した編集環境 (VS Code など) から、動いている実機に対して
 停止点を置き、1 行ずつ進め、変数を見られます。
 
