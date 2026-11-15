@@ -23566,103 +23566,57 @@ default_window_mode = "fullscreen"
 # exclusivity -- the LARGE pool is a single 1MB block, so only one such app
 # runs at a time -- which is fine for a fullscreen game.
 large_memory = 1
-FmrbApp.sleep(100)
+-- Sample Lua app for Family mruby.
+--
+-- The system makes the window, draws its frame and runs the loop; the app
+-- only defines functions. gfx draws from the top-left of the area inside the
+-- frame, the same as @gfx of a Ruby app, and takes the same arguments in the
+-- same order (gfx:draw_text(x, y, text, color)).
 
--- Create canvas for this app
-local canvas_id = FmrbApp.create_canvas(FmrbApp.WINDOW_WIDTH, FmrbApp.WINDOW_HEIGHT)
-print("Canvas created: ID=" .. tostring(canvas_id))
+local seconds = 0
+local clicks = 0
 
--- Initialize graphics
-local gfx = FmrbGfx.new(canvas_id)
-print("Graphics initialized")
-
--- Sample Lua Application for FMRuby
-print("Hello from Lua!")
-print("Lua version: " .. _VERSION)
-print("Sample Lua app is running successfully")
-
-function draw_window_frame()
-    local TITLE_BAR_H = 11
-    local CORNER_R = 4
-    local w = FmrbApp.WINDOW_WIDTH
-    local h = FmrbApp.WINDOW_HEIGHT
-    -- Colours come from the system theme, so this window matches every other
-    -- one. Spelling them out (this used to say 0xC5 and 0x60) is what left a
-    -- Lua window in the classic colours after the theme changed.
-    local bar = FmrbApp.THEME_MENU_BG
-    local on_bar = FmrbApp.THEME_TEXT_LIGHT
-    -- Title bar background: rounded rect on top, flatten the bottom edge
-    gfx:fill_round_rect(0, 0, w, TITLE_BAR_H, CORNER_R, bar)
-    gfx:fill_rect(0, CORNER_R, w, TITLE_BAR_H - CORNER_R, bar)
-    -- Hamburger menu (3 horizontal lines)
-    gfx:fill_rect(2, 3, 8, 1, on_bar)
-    gfx:fill_rect(2, 5, 8, 1, on_bar)
-    gfx:fill_rect(2, 7, 8, 1, on_bar)
-    gfx:draw_text("Lua App", 12, 2, on_bar)
-    -- Close button
-    gfx:fill_circle(w - 6, 5, 3, on_bar)
-    -- Rounded window border
-    gfx:draw_round_rect(0, 0, w, h, CORNER_R, FmrbApp.THEME_BORDER)
+local function draw_counter()
+    -- Erase in the page colour, not white: on a dark theme a white band
+    -- would be left behind.
+    gfx:fill_rect(0, 40, FmrbApp.user_area_width(), 10, FmrbApp.THEME_WINDOW_BG)
+    gfx:draw_text(8, 40, "Running: " .. tostring(seconds) .. "s", FmrbApp.THEME_BORDER)
+    gfx:fill_rect(0, 52, FmrbApp.user_area_width(), 10, FmrbApp.THEME_WINDOW_BG)
+    gfx:draw_text(8, 52, "Clicks: " .. tostring(clicks), FmrbApp.THEME_BORDER)
+    gfx:present()
 end
 
--- Clear screen with the theme's page colour
-gfx:clear(FmrbApp.THEME_WINDOW_BG)
-draw_window_frame()
-gfx:present()
+function on_create()
+    print("Hello from Lua! " .. _VERSION)
+    FmrbApp.clear_user_area()
+    -- Theme ink, not FmrbGfx.BLUE: 0x03 vanishes on a dark page.
+    gfx:draw_text(2, 2, "Hello from Lua!", FmrbApp.THEME_TEXT)
+    gfx:draw_text(2, 12, "FMRuby Graphics", FmrbApp.THEME_TEXT)
+    gfx:draw_text(2, 22, _VERSION, FmrbGfx.RED)
+    draw_counter()
+end
 
--- Print window info from FmrbApp
-print("Window size: " .. tostring(FmrbApp.WINDOW_WIDTH) .. "x" .. tostring(FmrbApp.WINDOW_HEIGHT))
-print("Headless mode: " .. tostring(FmrbApp.HEADLESS))
+function on_update()
+    draw_counter()
+    seconds = seconds + 1
+    return 1000
+end
 
-
-
--- -- Draw some rectangles
--- -- gfx:fill_rect(10, 10, 100, 50, FmrbGfx.RED)
--- gfx:fill_rect(0, 0, 100, 100, FmrbGfx.RED)
--- gfx:present()
--- FmrbApp.sleep(500)
--- gfx:fill_rect(0, 0, 100, 100, FmrbGfx.BLUE)
--- gfx:present()
--- FmrbApp.sleep(500)
--- gfx:fill_rect(0, 0, 100, 100, FmrbGfx.BLACK)
--- FmrbApp.sleep(30)
-
--- Main loop to keep app running
-print("Entering main loop...")
-local running = true
-local frame_count = 0
-
--- Theme ink, not FmrbGfx.BLUE: 0x03 is very dark and vanished into
--- the page once the page followed a dark theme.
-gfx:draw_text("Hello from Lua!", 3, 14, FmrbApp.THEME_TEXT)
-gfx:draw_text("FMRuby Graphics", 3, 24, FmrbApp.THEME_TEXT)
-gfx:draw_text(_VERSION, 3, 34, FmrbGfx.RED)
-gfx:draw_text("Running: 0 s", 10, 54, FmrbApp.THEME_BORDER)
-gfx:present()
-
-while running do
-    -- Simple animation: update frame counter
-    frame_count = frame_count + 1
-
-    -- Update display every 60 frames (about 1 second at 60fps)
-    if frame_count % 60 == 0 then
-        local seconds = math.floor(frame_count / 60)
-        -- Clear the counter area and redraw
-
-        -- Erase in the page colour, not white: on a dark theme a white
-        -- band would be left behind.
-        gfx:fill_rect(0, 54, FmrbApp.WINDOW_WIDTH-1, 64, FmrbApp.THEME_WINDOW_BG)
-        gfx:draw_text("Running: " .. tostring(seconds) .. "s", 10, 54, FmrbApp.THEME_BORDER)
-        draw_window_frame()
-        gfx:present()
-        print("Running: " .. tostring(seconds) .. "s")
+function on_event(ev)
+    -- A press on the title bar reaches the app too (y < 0, above the
+    -- area), as it does a Ruby app; only presses in the area count.
+    if ev.type == "mouse_down" and ev.button == 1 and ev.y >= 0 then
+        clicks = clicks + 1
+        gfx:fill_circle(ev.x, ev.y, 2, FmrbApp.THEME_HIGHLIGHT)
+        draw_counter()
+    elseif ev.type == "key_down" and ev.character == string.byte("q") then
+        FmrbApp.stop()
     end
-
-    -- Sleep for 16ms to maintain approximately 60fps
-    FmrbApp.sleep(16)
 end
 
-print("Lua app execution completed")
+function on_destroy()
+    print("Lua app ends after " .. tostring(seconds) .. "s")
+end
 # script name must be "app_handle_name.app.rb"
 app_handle_name = "sample_lua_app"
 app_screen_name = "Lua app demo"
@@ -24616,7 +24570,7 @@ class PythonDemoApp(FmrbApp):
         self.uptime = 0
         self.lang = language()
         self.note_i = -1
-        self.toml_bytes = len(_fmrb.read_file(MY_TOML) or "")
+        self.toml_bytes = len(FmrbFile.read(MY_TOML) or b"")
         self.subscribe(TOPIC)
         self.tick_blink()
         self.draw_page()
@@ -25009,7 +24963,59 @@ def rows(app):
         ("from", str(got.get("msg", "-")) if got else "-"),
         ("list", str(got.get("list", "-")) if got else "-"),
     )
-# GPIO Viewer - Real-time GPIO pin status monitor
+# A wasm app written in TinyGo (doc/wasm_apps W1b). The source is in the SDK
+# repository (family-mruby-sdk: tinygo/examples/bounce); rebuild with
+#   ruby tinygo/build.rb bounce -o <fmruby-core>/flash/app/tinygo
+app_screen_name = "TinyGo bounce"
+app_screen_name_ja = "TinyGo バウンド"
+language = "tinygo"
+default_window_mode = "window"
+default_window_width = 180
+default_window_height = 120
+default_window_pos_x = 30
+default_window_pos_y = 30
+ asm   x` `  ` ````` `|||`}}}`~````~ ` ` ` �fmrbapp_name fmrbapp_pid  fmrbapp_stop  fmrbaudio_note_off fmrbaudio_note_on_raw fmrb	file_size 
+fmrbgfx_area_height fmrbgfx_area_width fmrbgfx_draw_text_raw fmrbgfx_fill_rect fmrbgfx_fill_round_rect fmrbgfx_present_raw fmrbgfx_rgb_to_332 fmrblog_info_raw   		  A���memory 	on_create 	on_update fmrb_event_buffer on_event 
+on_destroy 
+on_suspend 	on_resume 	on_resize on_quit_request fminimum 	fminimumf fmaximum 	fmaximumf  _initialize !
+�3 �@ E   A :     j"AkA :   AI   A :   A :  AkA :   AkA :   AI   A :  AkA :   A	I   A   kAq"j" A 6     kA|q"j"AkA 6  A	I   A 6  A 6 AkA 6  AkA 6  AI   A 6  A 6  A 6  A 6 AkA 6  AkA 6  AkA 6  AkA 6    AqAr"k!   j! @ A I  B 7   AjB 7   AjB 7   AjB 7   A j!  A k!  �@   j!  j"AqE  FrE@  -  :   Aj!  k!@@ Aq"E@@  j!   j! AIE@  ( 6  Aj Aj( 6  Aj Aj) 7  Aj! Ak! AO@  ( 6  Aj Aj( 6  Aj! Aj! Aq@  ( 6  Aj! Aj! Aq@  /  ;   Aj! Aj! Aq@ A I  ( !@@@@@@ Ak   :   Aj Av:   Aj Av:    kAk!@   j! AI Aj  j"Aj( "At Avr6  Aj Aj( "At Avr6  Aj Aj( "At Avr6  Aj Aj( "At Avr6  Aj! Ak!    :   Aj Av:    kAk!@   j! AI Aj  j"Aj( "At Avr6  Aj Aj( "At Avr6  A
+j Aj( "At Avr6  Aj Aj( "At Avr6  Aj! Ak!    :   As j!@   j! AI Aj  j"Aj( "At Avr6  Aj Aj( "At Avr6  A	j Aj( "At Avr6  Aj Aj( "At Avr6  Aj! Ak!    jAj! Aj!  jAj! Aj!  jAj! Aj! AO@  -  :    ( 6   ) 7   / ;   - :  Aj! Aj! Aq@  )  7   Aj! Aj! Aq@  (  6   Aj! Aj! Aq@  /  ;   Aj! Aj! AqE  -  :    �~# A�k" $   A6�  A�jA�   A�( "6�A�  A�j6 A��A A A�6 A�A�A�A�6 A !A��A 6 A�� 6 A��B����7 A��B�����7   A�j�    (�"6�  A� jÀA   (�A��  (|6 A��  (x"6   AЀ6�   6�AЀA"B Y@  A� j     (p"6�  A� jA�A   (t    (h"6�  A� j   (lA�A    (`"6�  A��( "6�  A� j A��(    (dA��  (\6 A��  (X"6    6�  A�j"A� @ A�  "A H@A !   A� O@   "6�A !    "I  A� j    (L!  (H  A� j  A�j   (T!  (P"6�   6�  A@kA�A      (@"6�  A8j   (DA��A    (8"6�  (<!  A0jA��4     (0"6�  A(j     (4    (("6�  A j   (,A��A    ( "6�  ($!  AjA��4     ("6�  Aj     (    ("6�  Aj   (A��A    ("6�   (A� 6   A�j$ �~# A@j"$  B7$A�( !A� A j6   6 @ P@A!A��! A 6 B 7 B 7  B?�"� }!A!@@ PE@ AK Aj j  B
+�"B
+~}�A0r:   Ak!@ B Y@ Aj! AK Aj jA-:    Aj jA k (! ( !A� A0j6  A� 6    6   6  A@k$ �# Ak"$  A 6 B7A�( !A� 6   6 @ E@ ! ! E@ ! !  j""   j  A� 6    6   6  Aj$ �# A� k"$  A6 AjA�  A�( "6A� Aj6 @@  E@A��!@  AmO A؂A؂)   �|7 A��A��) B|7   Aj" Apq!  Av!@AЂ! @@@   6   ( "6 E@ A 6   6  ( ! (  O  6  Aj" 6X    6  E  ( !  ("6$@ @  ( " 6(   6  ("60   6  !  6,  K@  j  k#  64 A��kAvAk!A! @AȂ(   j"Avj" -     Aqtr:  A!  Ak" @  Ak" j"E  A 6   jE     A 64 Aq@A!$AqA�( # " A��  k%A`! @  @   A��j( "68 ( &  Aj! @ Â( " 6<  @A !Â  ( "6   6@  A��kAv"Ak! AȂ( !@@ !  AF   Aq!  Av!	  Ak!  Aj!  	j-   vAqAF AtA��j k Aj%A !AЂA 6 AԂ( !@@ AtA��j!A ! @@   j"E AȂ( "	 Ak"
+Avj"-   
+Aq"
+vAqAF   	6D  -  A 
+tAsq:    Ak!  Ak!  @  6H A   k#   k! E  Ak6L Ak"@ Ak! AȂ( ! ( AG@  6P   Avj" -  A  Aqts:  AȂ( !@  "E   Ak" Avj-    AqvAqAF A!A�A�( Aj6  AȂ( " 6T  A��kAn AtM $   A� 6  A� j$  A� A� j6  W# Ak"$  B7A�( !A� 6   6    !A� 6    6   6  Aj$ R# Ak"$  A6A�( !A� 6   6    A  " 6   A� 6  Aj$ �# A� k" $ A��A��( "A��( j"6 A��A��( "A��( j"6   B 78  A64  B 7@  B 7HA�( !A�  A0j6    60@ A N@A��(  AjNA��A  k6 A��  Atk6 @ AJ@A��(  AjNA��A  k6 A��  Atk6 A��A��) B|7 @A��( "A L A�� Ak"6   A A A A A A��( A��( A��( 	AA��AA�(   A(jA��)     (("68  A jAǁA   (,    ( "6<  Aj   ($ÁA    ("6@  (!  AjA��4     ("6D  Aj     (    ("6HA   (A�(   A��( "6LA A��( A�( A��( "AK@A�  A� j6  A A��( A��( AAA Al"(�� (�� (��
+A A A A A� 6   A� j$ A!^# Ak"$  A6A�( !A� 6   6   A  "6A A     AA A� 6  Aj$  A���# Ak"$   @@@@  (    ($" A� F@A��  6 A��A��( AjAo" 6 A A   A� lA�jA
+AA A��A6  Aj$ A� 6  �# A0k" $   B 7$  B7A�( !A�  Aj6    6A��( A J@A A   AjA��)     ("6   AjA��A   (    ("6$     (A��A    ( "6(   (A� 6   A0j$  A ! A��A 6 A��  6 �~# Ak"  9  9 @  �"B��������� U@ Aj! �"B��������� U   Aj B��������� �  B S B��������� �  B SU! + s# Ak"  8  8 Aj  �"A����J  Aj �"A����J  Aj Aj A����s  A H A����s  A HJ* �~# Ak" 9    9@  �"B��������� �  B S"B���������S@ Aj! �"B��������� �  B S"B���������S   Aj  U! + w# Ak" 8   8 Aj  �"A����s  A H"A����xH  Aj �"A����s  A H"A����xH  Aj Aj  J* �# Ak" $   A 6  B7A�( !A�  6    6 AĂ? At"6 "  AȂ( "6   6   kAԂ( "@A��B 7 A�� 6 AЂA��6 AĂ? At6 A� 6   Aj$ 3AȂAĂ( "   A��kA� nk" 6 AԂ  A��kAv6 �# Ak!A�( !AЂ!@@@@@ ( "E ( !  ( K@ Aj!  E  (  F !  A 6   6   6    6   E   (6    6A� 6 A� 6  �# A k" $   B 7  A6A�( !A�  Aj6    6? @ AG"@AĂ( !AĂ? At6   AȂ( "6   6AԂ( !"  AȂ( "6    k   AtA��j"6 AԂ(  k#A� 6   A j$  g# Ak"$  A6A�( !A� 6   6 @ AIE@   6  ( & Ak!  Aj! A� 6  Aj$ �# Ak!A�( !@@  A��I   AȂ( "O    A��k" Avj-    Av" AqvAqE @   Avj"-  "A�F@  A|qAj! @@   Aq"vAqAk   Aj!  A t r:    AtA��j" E  Â( 6 Â  6 A� 6 A� 6  � A���0   �   @   @   @   �   @   @   �   �   �   �       �   `   �       �   �   pid /app/tinygo/bounce.app.toml  toml  Bbounce: hello from TinyGo,  (area x)bounce: bye after  framesTinyGo on Family mrubyframe   key  A��H    L    P    �  �name main�' <github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.appName;github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.appPid<github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.appStopAgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.audioNoteOffCgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.audioNoteOnRaw=github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.fileSizeBgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxAreaHeightAgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxAreaWidthCgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxDrawTextRaw	@github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxFillRect
+Egithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxFillRoundRectBgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxPresentRaw@github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxRgbTo332?github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.logInfoRaw__wasm_call_ctorsmemsetmemcpy	on_create9github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.Itoaruntime.stringConcatruntime.allocruntime.stringFromBytes<github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.LogInfo	on_updateC(github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.Gfx).DrawTextfmrb_event_bufferon_event
+on_destroy	on_resizefminimum	fminimumffmaximum 	fmaximumf!_initialize"runtime.calculateHeapAddresses#runtime.insertFreeRange$runtime.growHeap%runtime.scanConservative&runtime.markRoot __stack_pointer	 .rodata	.rodata.1 �	producerslanguageC11 C99 processed-byclang\22.1.4 (https://github.com/tinygo-org/llvm-project 472a22901c0dd9edc2903ad5c435d9076a745a6e)TinyGo0.44.0 Atarget_features+mutable-globals+nontrapping-fptoint+sign-ext# The app of the SDK's getting-started guide (family-mruby-sdk:
+# docs/getting_started.md, tinygo/examples/hello). Rebuild with
+#   ruby tinygo/build.rb hello -o <fmruby-core>/flash/app/tinygo
+app_screen_name = "TinyGo hello"
+default_window_mode = "window"
+default_window_width = 160
+default_window_height = 70
+default_window_pos_x = 60
+default_window_pos_y = 50
+ asm   a`  ` ` ``` `|||`}}}````` `~ ` �fmrbapp_stop fmrbgfx_area_height fmrbgfx_area_width fmrbgfx_draw_text_raw fmrbgfx_fill_rect 	fmrbgfx_present_raw 
+fmrbgfx_rgb_to_332 fmrblog_info_raw       A���memory 	on_create 	on_update fmrb_event_buffer on_event 
+on_destroy 
+on_suspend 	on_resume 	on_resize on_quit_request fminimum 	fminimumf fmaximum 	fmaximumf _initialize 
+�+ �@   j!  j"AqE  FrE@  -  :   Aj!  k!@@ Aq"E@@  j!   j! AIE@  ( 6  Aj Aj( 6  Aj Aj) 7  Aj! Ak! AO@  ( 6  Aj Aj( 6  Aj! Aj! Aq@  ( 6  Aj! Aj! Aq@  /  ;   Aj! Aj! Aq@ A I  ( !@@@@@@ Ak   :   Aj Av:   Aj Av:    kAk!@   j! AI Aj  j"Aj( "At Avr6  Aj Aj( "At Avr6  Aj Aj( "At Avr6  Aj Aj( "At Avr6  Aj! Ak!    :   Aj Av:    kAk!@   j! AI Aj  j"Aj( "At Avr6  Aj Aj( "At Avr6  A
+j Aj( "At Avr6  Aj Aj( "At Avr6  Aj! Ak!    :   As j!@   j! AI Aj  j"Aj( "At Avr6  Aj Aj( "At Avr6  A	j Aj( "At Avr6  Aj Aj( "At Avr6  Aj! Ak!    jAj! Aj!  jAj! Aj!  jAj! Aj! AO@  -  :    ( 6   ) 7   / ;   - :  Aj! Aj! Aq@  )  7   Aj! Aj! Aq@  (  6   Aj! Aj! Aq@  /  ;   Aj! Aj! AqE  -  :    �@ E   A :     j"AkA :   AI   A :   A :  AkA :   AkA :   AI   A :  AkA :   A	I   A   kAq"j" A 6     kA|q"j"AkA 6  A	I   A 6  A 6 AkA 6  AkA 6  AI   A 6  A 6  A 6  A 6 AkA 6  AkA 6  AkA 6  AkA 6    AqAr"k!   j! @ A I  B 7   AjB 7   AjB 7   AjB 7   A j!  A k!  FA��A A A�6 A�A�A�! A�A6 A�A��6 A�  6 A��AR# Ak"$  A6A܁( !A܁ 6   6    A  " 6   A܁ 6  Aj$ �# A0k" $ A��A��) B|7   B 7   A6  B 7(A܁( !A܁  Aj6    6A A A A A A��( AA��AA�(   AjA��)     ("6   AjA��A   (    ("6$A   (A�(   A�( "6(  AÀA A�(     ( "6,A   (A�( A A A A A܁ 6   A0j$ A� ^# Ak"$  A6A܁( !A܁ 6   6   A  "6A A     AA A܁ 6  Aj$ �~# A@j"$  B7$A܁( !A܁ A j6   6 @ P@A!A��! A 6 B 7 B 7  B?�"� }!A!@@ PE@ AK Aj j  B
+�"B
+~}�A0r:   Ak!@ B Y@ Aj! AK Aj jA-:  A k"" Aj j 	A܁ A0j6  A܁ 6    6   6  A@k$ �# Ak"$  A 6 B7A܁( !A܁ 6   6 @ E@ ! !  j""  	 j  	A܁ 6    6   6  Aj$  A���# A k"$  B7A܁( !A܁ 6   6 @@@  @  (   ($" E@  A G@  A� G A�A6 A�A��6 A��B 7 A!  A� M@A!  !  A�M@  A?qA�r!  AvA@r!A!A!A�!A�!A�!  A�pqA��F  A��M@  A?qA�r!  AvA`r!  AvA?qA�r!  A��� K  A?qA�r!  AvApr!  AvA?qA�r!  AvA?qA�r!A!A܁ Aj6    :  A� 6   :   :   : A� 6 A܁ 6  A j$ �# A� k"$  A6 AjA� 
+ A܁( "6A܁ Aj6 @@  E@A��!@  AmO AȁAȁ)   �|7 AЁAЁ) B|7   Aj" Apq!  Av!@A��! @@@   6   ( "6 E@ A 6   6  ( ! (  O  6  Aj" 6X    6  E  ( !  ("6$@ @  ( " 6(   6  ("60   6  !  6,  K@  j  k  64 A��kAvAk!A! @A��(   j"Avj" -     Aqtr:  A!  Ak" @  Ak" j"E  A 6   jE    
+ A 64 Aq@A!AqA܁( # " A��  kA`! @  @   A��j( "68 (   Aj! @ A��( " 6<  @A !A��  ( "6   6@  A��kAv"Ak! A��( !@@ !  AF   Aq!  Av!	  Ak!  Aj!  	j-   vAqAF AtA��j k AjA !A��A 6 Aā( !@@ AtA��j!A ! @@   j"E A��( "	 Ak"
+Avj"-   
+Aq"
+vAqAF   	6D  -  A 
+tAsq:    Ak!  Ak!  @  6H A   k   k! E  Ak6L Ak"@ Ak! A��( ! ( AG@  6P   Avj" -  A  Aqts:  A��( !@  "E   Ak" Avj-    AqvAqAF A!A؁A؁( Aj6  A��( " 6T  A��kAn AtM    A܁ 6  A� j$  A܁ A� j6  �# A k" $   A 6  B7A܁( !A܁  Aj6    6  AjA��)     ("6  A��A   (    ( "6   (A܁ 6   A j$  �~# Ak"  9  9 @  �"B��������� U@ Aj! �"B��������� U   Aj B��������� �  B S B��������� �  B SU! + s# Ak"  8  8 Aj  �"A����J  Aj �"A����J  Aj Aj A����s  A H A����s  A HJ* �~# Ak" 9    9@  �"B��������� �  B S"B���������S@ Aj! �"B��������� �  B S"B���������S   Aj  U! + w# Ak" 8   8 Aj  �"A����s  A H"A����xH  Aj �"A����s  A H"A����xH  Aj Aj  J* �# Ak" $   A 6  B7A܁( !A܁  6    6 A��? At"6   A��( "6   6   k
+Aā( "@A��B 7 A�� 6 A��A��6 A��? At6 A܁ 6   Aj$ 3A��A��( "   A��kA� nk" 6 Aā  A��kAv6 �# Ak!A܁( !A��!@@@@@ ( "E ( !  ( K@ Aj!  E  (  F !  A 6   6   6    6   E   (6    6A܁ 6 A܁ 6  �# A k" $   B 7  A6A܁( !A܁  Aj6    6? @ AG"@A��( !A��? At6   A��( "6   6Aā( !  A��( "6    k	   AtA��j"6 Aā(  kA܁ 6   A j$  g# Ak"$  A6A܁( !A܁ 6   6 @ AIE@   6  (  Ak!  Aj! A܁ 6  Aj$ �# Ak!A܁( !@@  A��I   A��( "O    A��k" Avj-    Av" AqvAqE @   Avj"-  "A�F@  A|qAj! @@   Aq"vAqAk   Aj!  A t r:    AtA��j" E  A��( 6 A��  6 A܁ 6 A܁ 6  u A��m0-hello: startedhello: bye at count spaceHello, Family mruby!count key          �     �     �     �   �name main�  <github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.appStopBgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxAreaHeightAgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxAreaWidthCgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxDrawTextRaw@github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxFillRectBgithub.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxPresentRaw@github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.gfxRgbTo332?github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.logInfoRaw__wasm_call_ctors	memcpy
+memset	on_create<github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.LogInfo	on_updateC(github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.Gfx).DrawText9github.com/family-mruby/family-mruby-sdk/tinygo/fmrb.Itoaruntime.stringConcatfmrb_event_bufferon_eventruntime.alloc
+on_destroy	on_resizefminimum	fminimumffmaximum	fmaximumf_initializeruntime.calculateHeapAddressesruntime.insertFreeRangeruntime.growHeapruntime.scanConservativeruntime.markRoot __stack_pointer	
+ .rodata �	producerslanguageC11 C99 processed-byclang\22.1.4 (https://github.com/tinygo-org/llvm-project 472a22901c0dd9edc2903ad5c435d9076a745a6e)TinyGo0.44.0 Atarget_features+mutable-globals+nontrapping-fptoint+sign-ext# GPIO Viewer - Real-time GPIO pin status monitor
 # Displays all GPIO pins with color-coded usage status.
 
 GRID_COLS = 13
@@ -28193,7 +28199,11 @@ k�ٌ��yo�DH1
 AD�*rM�1�Vhc9u�k�*�^�����V���S!�/b5i҄k�8q��ݻ9]��|
 r9��w�I=0��v����V�	\4���q<�״]���������d��a9v�~ﯜo޵�~�K,qS�T��9�h��/�Qg[L�"V�v�T* ���C�:]��߿�����ݶmg�b�ڵ))|��Z���)��Û �׬���`9~Ē�!#n���v�p��6��$%f���?S�}ϵ���xY�ς�祝��[�ˎl�ߺ�H֬����"�L&�0a�~��y����l����ׯ�N�:r�HoZ�rF�|�����=z\�v�a ��`X�h�����r������KN�f�:ml{��c\E*�jI_��0| �E��H�g:�*�b�$�M=~��ʲo7k�'SF�O�u��k4�f  $��4�+�l���YU?��y�vn������v���U(BRҩK��W���z���ڵk :�nҤIS�L)R���n��/�b�hѢaÆ�vx���Ν;�$)�J�H$�6m��E?��7���  ��+��=QE ��Я_fj]��� �j�v�A=����w�F��AAb���v�Q/  P4p�\���F48D>j|��i  &�`;|3dSSY��H6|�So�&N�8~�x���ٳg�_���{0+\�p���r �x��M��3V�U��CVI$����⠘8Yڱ3<dRS�'� ��T�p٠���̐�>�f��>�_���B�r���v�7�(�M��HӌN'dU@߁�C��։�R�T���������oҤɊ+�9�BE���ǍW�b�'Np�$&���P���Y�1�*sv;�X,�ze2��|�B�RY袈 |�Օ@*��\������V���:7Ȗ-[�1�D�9}2"ca�  H�1�߮Rs�hP��ސP�W���`�P�s\QbX����f-�]n�y�	�IZ����a�"1VҢUگ�,ǏmZXh��u{Y��h���kِd�&iKXN�RBT�)6���c���P����^/�HJ�(W^�����O�6 @ĕ+Wd���;`����'�ٌ�Tx���`ݠi��F�Ep-�ts
 �����8MN�z٨i�׻x��q*S� �� ���
- ���JN|I��K}J9���@F P��r����?�?��p����-����O,?܂��KP�D���h�~�R,��7�P��]��0�p�S�n��X~�~b�����[�:�Ӫ{��    IEND�B`��PNG
+ ���JN|I��K}J9���@F P��r����?�?��p����-����O,?܂��KP�D���h�~�R,��7�P��]��0�p�S�n��X~�~b�����[�:�Ӫ{��    IEND�B`�FMSQ H ^   ���:�
+���:�
+�3�� ���2�1�t �0�|�	 �u�����ĵ��	 ��ķ��Ķ��ĵĴ	��ĳĲ� ��ı�  �FMSQ H y   ���;�
+�s�r�}�	 �s�u½��4��	���:�
+�4΁� �w�5�2�v�4�1 �u�3¾�0 �t½¼½¾� �s�2½¼½¾�r ½�1�q�  ��PNG
 
    IHDR  �   �   ޏ��  LfIDATx��}}tU�u��d����a[x	N.��	��q�4fM��]m�,��L�m��Ӯt9�4錛��dO;m=�ql�qW=4ͬ�NӅ[��nL\�ğ�
 �F��$$���?�{[睏}�9����������{�����폳wS�5������Cs���"""""�EDDDD��������/b��o;��ؘ�����E��!��eY�
@@ -30318,6 +30328,19 @@ is what to use, not `gfx.clear`.
 `gfx.clear` paints the whole canvas, taking the title bar and the border
 with it.
 
+# FmrbApp#clear_user_area_raw
+
+clear_user_area_raw(Integer color) -> void
+
+clear_user_area with nothing left out
+
+The simple form. A negative color is the theme's page colour (the colour
+key on a frameless window). The wrapper is clear_user_area (no colour is
+the same as a negative one).
+```ruby
+clear_user_area_raw(-1)
+```
+
 # FmrbApp.clipboard
 
 clipboard() -> String
@@ -30343,9 +30366,22 @@ To tell a change without reading the text.
 g = FmrbApp.clipboard_gen
 ```
 
-# FmrbApp#closable
+# FmrbApp.clipboard_raw
 
-closable() -> bool
+clipboard_raw(Integer limit) -> String
+
+clipboard with nothing left out
+
+The simple form, with no argument left out. limit 0 gives all of it; above
+0, at most that many bytes, never cutting a character. The wrapper is
+clipboard (limit left out is 0).
+```ruby
+text = FmrbApp.clipboard_raw(0)
+```
+
+# FmrbApp#closable?
+
+closable?() -> bool
 
 Whether the close button ends it
 
@@ -30435,8 +30471,11 @@ Redraw the frame and the title
 Draws the title bar, the border and the close button. Does nothing in
 full screen.
 
-**An app that can be resized must call this on every redraw.** Drawing
-the frame once leaves it broken the first time the window grows.
+**Usually there is no need to call it.** The base draws the frame when
+the app starts, and clear_user_area draws it again after painting the
+area. After a resize, redrawing from clear_user_area in on_resize brings
+the frame along. Call it only after drawing over the frame's edge (when
+the area was painted with fill_rect instead of clear_user_area, say).
 
 The title bar uses the default font, but the font in force before the
 call is put back, so `set_font(:ja)` does not have to be re-applied
@@ -30452,7 +30491,7 @@ Shows the mouse pointer; the desktop does this at boot.
 
 # FmrbApp#ev_alt?
 
-ev_alt?(Hash ev) -> bool
+ev_alt?(event ev) -> bool
 
 Whether Alt was held
 
@@ -30462,7 +30501,7 @@ if ev_alt?(ev)
 
 # FmrbApp#ev_ctrl?
 
-ev_ctrl?(Hash ev) -> bool
+ev_ctrl?(event ev) -> bool
 
 Whether Ctrl was held
 
@@ -30480,7 +30519,7 @@ if ev_ctrl?(ev) &&
 
 # FmrbApp#ev_shift?
 
-ev_shift?(Hash ev) -> bool
+ev_shift?(event ev) -> bool
 
 Whether Shift was held
 
@@ -30512,9 +30551,9 @@ the filesystem under it. nil when it cannot be known (the browser's /home).
 FmrbApp.free_bytes("/tmp")
 ```
 
-# FmrbApp#fullscreen
+# FmrbApp#fullscreen?
 
-fullscreen() -> bool
+fullscreen?() -> bool
 
 Whether it fills the screen
 
@@ -30549,7 +30588,7 @@ gfx.present
 
 # FmrbApp.gfx_stats
 
-gfx_stats() -> Hash
+gfx_stats() -> gfx_stats
 
 A tally of the frames sent
 
@@ -30761,6 +30800,17 @@ is false.
 FmrbApp.notify("Saved", "/home/a.txt")
 ```
 
+# FmrbApp.notify_raw
+
+notify_raw(String summary, String body) -> bool
+
+notify with nothing left out
+
+The simple form. The wrapper is notify (body left out is "").
+```ruby
+FmrbApp.notify_raw("Saved", "")
+```
+
 # FmrbApp#on_checkpoint
 
 on_checkpoint() -> void
@@ -30818,7 +30868,7 @@ before then.
 
 # FmrbApp#on_event
 
-on_event(Hash ev) -> void
+on_event(event ev) -> void
 
 called on key and mouse input
 
@@ -30847,7 +30897,7 @@ end
 
 # FmrbApp#on_frameless_right_click
 
-on_frameless_right_click(Hash ev) -> void
+on_frameless_right_click(event ev) -> void
 
 Right click or long press, frameless
 
@@ -31001,7 +31051,7 @@ me = FmrbApp.pid
 
 # FmrbApp#platform
 
-platform() -> Symbol
+platform() -> (:esp32 | :linux)
 
 Which machine this is
 
@@ -31122,6 +31172,18 @@ Pass "open" or "save".
 request_file_select("open")
 ```
 
+# FmrbApp#request_file_select_raw
+
+request_file_select_raw(String mode) -> void
+
+request_file_select with nothing left out
+
+The simple form. The wrapper is request_file_select (mode left out is
+"open").
+```ruby
+request_file_select_raw("save")
+```
+
 # FmrbApp#request_fullscreen
 
 request_fullscreen(bool on) -> void
@@ -31154,6 +31216,20 @@ Run a file as an app
 request_run("/app/usr/mine.app.rb")
 ```
 
+# FmrbApp#request_run_raw
+
+request_run_raw(String path, Integer prev_pid) -> void
+
+request_run with nothing left out
+
+The simple form. prev_pid is the app an earlier request started, which
+the kernel stops first; negative for none. The wrapper is request_run
+(prev_pid left out is none). The answer arrives at on_control as
+run_result.
+```ruby
+request_run_raw("/app/usr/mine.app.rb", -1)
+```
+
 # FmrbApp#request_window_menu
 
 request_window_menu(Integer x, Integer y) -> void
@@ -31165,9 +31241,20 @@ Asks the desktop for this window's menu at (x, y) of the window: Send to
 click on the title bar, and on a frameless window the default right
 click and long press, call this.
 
-# FmrbApp#rounded_corners
+# FmrbApp#resizable?
 
-rounded_corners() -> bool
+resizable?() -> bool
+
+Whether the window resizes from its corner
+
+The app's .app.toml resizable; the frame shows the mark at the corner.
+```ruby
+pad = resizable? ? 9 : 0
+```
+
+# FmrbApp#rounded_corners?
+
+rounded_corners?() -> bool
 
 Whether the corners are rounded
 
@@ -31175,9 +31262,9 @@ Whether the corners are rounded
 r = rounded_corners ? 6 : 0
 ```
 
-# FmrbApp#running
+# FmrbApp#running?
 
-running() -> bool
+running?() -> bool
 
 Whether it is still running
 
@@ -31360,7 +31447,7 @@ subscribe("clock/hour")
 
 # FmrbApp.sys_pool_info
 
-sys_pool_info() -> Hash
+sys_pool_info() -> sys_pool_info
 
 The whole machine's memory
 
@@ -31442,9 +31529,19 @@ Stop receiving a kind of notice
 unsubscribe("clock/hour")
 ```
 
+# FmrbApp.uptime_ms
+
+uptime_ms() -> int64
+
+Milliseconds since power-on
+
+```ruby
+t0 = FmrbApp.uptime_ms
+```
+
 # FmrbApp.uptime_us
 
-uptime_us() -> Integer
+uptime_us() -> int64
 
 Microseconds since power-on
 
@@ -31466,9 +31563,31 @@ FmrbApp.usb_devices.each do |d|
 end
 ```
 
+# FmrbApp#user_area_height
+
+user_area_height() -> Integer
+
+Height of the area the app owns
+
+```ruby
+h = user_area_height
+```
+
+# FmrbApp#user_area_width
+
+user_area_width() -> Integer
+
+Width of the area the app owns
+
+Inside the frame (the whole window when it has none or is fullscreen);
+gfx's (0, 0) is its top-left.
+```ruby
+w = user_area_width
+```
+
 # FmrbApp.wallclock
 
-wallclock() -> Hash?
+wallclock() -> wallclock?
 
 The date and time now
 
@@ -31656,6 +31775,18 @@ FmrbUI の部品にも描き直しの印を付けます。Window のアプリで
 `gfx.clear` は canvas 全体を塗るので、自分で描いたタイトルバーもわくも
 消えます。
 
+# FmrbApp#clear_user_area_raw
+
+clear_user_area_raw(Integer color) -> void
+
+clear_user_area の省略なしの形
+
+引数を省略できない単純な形。color が負ならテーマの紙の色 (枠なしでは
+透ける色)。包みは clear_user_area (色を省くと負と同じ)。
+```ruby
+clear_user_area_raw(-1)
+```
+
 # FmrbApp.clipboard
 
 clipboard() -> String
@@ -31681,9 +31812,21 @@ clipboard_gen() -> Integer
 g = FmrbApp.clipboard_gen
 ```
 
-# FmrbApp#closable
+# FmrbApp.clipboard_raw
 
-closable() -> bool
+clipboard_raw(Integer limit) -> String
+
+clipboard の省略なしの形
+
+引数を省略できない単純な形。limit が 0 なら全部、正なら そのバイト数までを、
+文字の途中で切らずに返す。包みは clipboard (limit を省くと 0)。
+```ruby
+text = FmrbApp.clipboard_raw(0)
+```
+
+# FmrbApp#closable?
+
+closable?() -> bool
 
 閉じるボタンで終われるか
 
@@ -31771,8 +31914,11 @@ Window のふちと題名を描き直す
 
 タイトルバーとわく、閉じるボタンを描きます。全画面のときは何もしません。
 
-**大きさの変わるアプリは、描き直すたびに呼ぶこと。** 一度描いたきりに
-すると、Window を広げたときにわくが壊れます。
+**ふつうは呼ばなくてよい。** 起動したときは基底が描き、
+clear_user_area も区画を塗った後に枠を描き直します。大きさが変わった
+ときは、on_resize で clear_user_area から描き直せば枠も付いてきます。
+呼ぶのは、区画の端に描いて枠の線を踏んだとき (clear_user_area を
+使わずに fill_rect で塗ったときなど) だけです。
 
 タイトルバーは既定のフォントで描かれますが、**呼ぶ前のフォント設定は
 戻されます**。`set_font(:ja)` を毎フレーム掛け直す必要はありません。
@@ -31787,7 +31933,7 @@ enable_cursor() -> void
 
 # FmrbApp#ev_alt?
 
-ev_alt?(Hash ev) -> bool
+ev_alt?(event ev) -> bool
 
 Alt を押していたかどうか
 
@@ -31797,7 +31943,7 @@ if ev_alt?(ev)
 
 # FmrbApp#ev_ctrl?
 
-ev_ctrl?(Hash ev) -> bool
+ev_ctrl?(event ev) -> bool
 
 Ctrl を押していたかどうか
 
@@ -31815,7 +31961,7 @@ if ev_ctrl?(ev) &&
 
 # FmrbApp#ev_shift?
 
-ev_shift?(Hash ev) -> bool
+ev_shift?(event ev) -> bool
 
 Shift を押していたかどうか
 
@@ -31843,9 +31989,9 @@ free_bytes(String path) -> Integer?
 FmrbApp.free_bytes("/tmp")
 ```
 
-# FmrbApp#fullscreen
+# FmrbApp#fullscreen?
 
-fullscreen() -> bool
+fullscreen?() -> bool
 
 全画面かどうか
 
@@ -31879,7 +32025,7 @@ gfx.present
 
 # FmrbApp.gfx_stats
 
-gfx_stats() -> Hash
+gfx_stats() -> gfx_stats
 
 絵を送った回数の記録
 
@@ -32088,6 +32234,17 @@ notify(String summary, String body) -> bool
 FmrbApp.notify("Saved", "/home/a.txt")
 ```
 
+# FmrbApp.notify_raw
+
+notify_raw(String summary, String body) -> bool
+
+notify の省略なしの形
+
+引数を省略できない単純な形。包みは notify (body を省くと "")。
+```ruby
+FmrbApp.notify_raw("Saved", "")
+```
+
 # FmrbApp#on_checkpoint
 
 on_checkpoint() -> void
@@ -32144,7 +32301,7 @@ on_destroy() -> void
 
 # FmrbApp#on_event
 
-on_event(Hash ev) -> void
+on_event(event ev) -> void
 
 キーやマウスの入力が来たとき
 
@@ -32173,7 +32330,7 @@ end
 
 # FmrbApp#on_frameless_right_click
 
-on_frameless_right_click(Hash ev) -> void
+on_frameless_right_click(event ev) -> void
 
 枠なしの Window の右クリック・長押し
 
@@ -32323,7 +32480,7 @@ me = FmrbApp.pid
 
 # FmrbApp#platform
 
-platform() -> Symbol
+platform() -> (:esp32 | :linux)
 
 動いている機械の種類
 
@@ -32444,6 +32601,17 @@ request_file_select(String mode) -> void
 request_file_select("open")
 ```
 
+# FmrbApp#request_file_select_raw
+
+request_file_select_raw(String mode) -> void
+
+request_file_select の省略なしの形
+
+引数を省略できない単純な形。包みは request_file_select (mode を省くと "open")。
+```ruby
+request_file_select_raw("save")
+```
+
 # FmrbApp#request_fullscreen
 
 request_fullscreen(bool on) -> void
@@ -32475,6 +32643,19 @@ request_run(String path) -> void
 request_run("/app/usr/mine.app.rb")
 ```
 
+# FmrbApp#request_run_raw
+
+request_run_raw(String path, Integer prev_pid) -> void
+
+request_run の省略なしの形
+
+引数を省略できない単純な形。prev_pid は前に頼んで起動したアプリ
+(カーネルが先に止める)。負なら無し。包みは request_run (prev_pid を
+省くと無し)。答えは on_control に run_result で届く。
+```ruby
+request_run_raw("/app/usr/mine.app.rb", -1)
+```
+
 # FmrbApp#request_window_menu
 
 request_window_menu(Integer x, Integer y) -> void
@@ -32486,9 +32667,17 @@ Window のメニューを出す
 タイトルバーの右クリックと、枠なしの右クリック・長押しの既定がこれを
 呼ぶ。
 
-# FmrbApp#rounded_corners
+# FmrbApp#resizable?
 
-rounded_corners() -> bool
+resizable?() -> bool
+
+右下の角で大きさを変えられるか
+
+.app.toml の resizable。枠の右下に印が出る。
+
+# FmrbApp#rounded_corners?
+
+rounded_corners?() -> bool
 
 Window の角が丸いかどうか
 
@@ -32496,9 +32685,9 @@ Window の角が丸いかどうか
 r = rounded_corners ? 6 : 0
 ```
 
-# FmrbApp#running
+# FmrbApp#running?
 
-running() -> bool
+running?() -> bool
 
 動いている最中かどうか
 
@@ -32678,7 +32867,7 @@ subscribe("clock/hour")
 
 # FmrbApp.sys_pool_info
 
-sys_pool_info() -> Hash
+sys_pool_info() -> sys_pool_info
 
 機械全体のメモリの様子
 
@@ -32760,9 +32949,19 @@ unsubscribe(String topic) -> void
 unsubscribe("clock/hour")
 ```
 
+# FmrbApp.uptime_ms
+
+uptime_ms() -> int64
+
+電源を入れてからの時間 (ミリ秒)
+
+```ruby
+t0 = FmrbApp.uptime_ms
+```
+
 # FmrbApp.uptime_us
 
-uptime_us() -> Integer
+uptime_us() -> int64
 
 電源を入れてからの時間 (百万分の一秒)
 
@@ -32784,9 +32983,30 @@ FmrbApp.usb_devices.each do |d|
 end
 ```
 
+# FmrbApp#user_area_height
+
+user_area_height() -> Integer
+
+中に描ける区画の高さ (ドット)
+
+```ruby
+h = user_area_height
+```
+
+# FmrbApp#user_area_width
+
+user_area_width() -> Integer
+
+中に描ける区画の横幅 (ドット)
+
+枠の内側 (枠なし・全画面では Window 全体)。gfx の (0, 0) はここの左上。
+```ruby
+w = user_area_width
+```
+
 # FmrbApp.wallclock
 
-wallclock() -> Hash?
+wallclock() -> wallclock?
 
 今の日付と時刻
 
@@ -32854,7 +33074,7 @@ w = window_width
 ```
 # FmrbAudio#load_fmsq
 
-load_fmsq(Integer slot_id, String binary_data) -> void
+load_fmsq(Integer slot_id, bin binary_data) -> void
 
 Put song data into a slot
 
@@ -32919,9 +33139,22 @@ The frequency is in Hz. It sounds over a tune that is already playing.
 @audio.note_on(0, 440)
 ```
 
+# FmrbAudio#note_on_raw
+
+note_on_raw(Integer channel, Integer freq, Integer volume, Integer duty, Integer sweep) -> void
+
+note_on with nothing left out
+
+The simple form, with no argument left out, for where speed matters (many
+notes in a tune). volume 0 to 15 (10 in the wrapper), duty the pulse width
+0 to 3 (2 in the wrapper), sweep 0 (as the wrapper). The wrapper is note_on.
+```ruby
+@audio.note_on_raw(0, 440, 10, 2, 0)
+```
+
 # FmrbAudio#nsf_status
 
-nsf_status() -> Hash[Symbol, Integer]?
+nsf_status() -> nsf_status?
 
 Ask where the song is
 
@@ -32954,6 +33187,18 @@ Plays an NSF. The tunes live in /usr/share/sounds/nsf.
 @audio.play("/usr/share/sounds/nsf/test.nsf")
 ```
 
+# FmrbAudio#play_raw
+
+play_raw(String path, Integer track) -> void
+
+play with nothing left out
+
+The simple form, with no argument left out. track is the song inside the
+NSF, from 0. The wrapper is play (track: left out is 0).
+```ruby
+@audio.play_raw("/usr/share/sounds/nsf/test.nsf", 0)
+```
+
 # FmrbAudio#play_slot
 
 play_slot(Integer slot_id) -> void
@@ -32962,6 +33207,20 @@ Play the song in a slot
 
 ```ruby
 @audio.play_slot(0)
+```
+
+# FmrbAudio#play_slot_raw
+
+play_slot_raw(Integer slot_id, Integer instance) -> void
+
+play_slot with nothing left out
+
+The simple form, with no argument left out. instance is the APU that plays
+it, MAIN (0) or SUB (1): a long tune on MAIN and the short effects on SUB,
+so an effect never cuts the tune. The wrapper is play_slot (instance: left
+out is MAIN).
+```ruby
+@audio.play_slot_raw(0, FmrbAudio::SUB)
 ```
 
 # FmrbAudio#play_wav
@@ -33005,7 +33264,7 @@ Stop the WAV that is playing
 ```
 # FmrbAudio#load_fmsq
 
-load_fmsq(Integer slot_id, String binary_data) -> void
+load_fmsq(Integer slot_id, bin binary_data) -> void
 
 曲のデータを箱に入れる
 
@@ -33069,9 +33328,22 @@ note_on(Integer channel, Integer freq) -> void
 @audio.note_on(0, 440)
 ```
 
+# FmrbAudio#note_on_raw
+
+note_on_raw(Integer channel, Integer freq, Integer volume, Integer duty, Integer sweep) -> void
+
+note_on の省略なしの形
+
+引数を省略できない単純な形。曲の中で何度も鳴らすような、速さが要る所で
+使う。volume は 0〜15 (包みは 10)、duty は矩形波の幅 0〜3 (包みは 2)、
+sweep は 0 (包みと同じ)。包みは note_on。
+```ruby
+@audio.note_on_raw(0, 440, 10, 2, 0)
+```
+
 # FmrbAudio#nsf_status
 
-nsf_status() -> Hash[Symbol, Integer]?
+nsf_status() -> nsf_status?
 
 曲がどこまで進んだかを聞く
 
@@ -33104,6 +33376,18 @@ NSF を鳴らす。曲は /usr/share/sounds/nsf にある。
 @audio.play("/usr/share/sounds/nsf/test.nsf")
 ```
 
+# FmrbAudio#play_raw
+
+play_raw(String path, Integer track) -> void
+
+play の省略なしの形
+
+引数を省略できない単純な形。track は NSF の中の曲の番号 (0 から)。
+包みは play (track: を省くと 0)。
+```ruby
+@audio.play_raw("/usr/share/sounds/nsf/test.nsf", 0)
+```
+
 # FmrbAudio#play_slot
 
 play_slot(Integer slot_id) -> void
@@ -33112,6 +33396,19 @@ play_slot(Integer slot_id) -> void
 
 ```ruby
 @audio.play_slot(0)
+```
+
+# FmrbAudio#play_slot_raw
+
+play_slot_raw(Integer slot_id, Integer instance) -> void
+
+play_slot の省略なしの形
+
+引数を省略できない単純な形。instance は鳴らす APU で、MAIN (0) か SUB (1)。
+長い曲は MAIN、短い効果音は SUB に置くと、効果音が曲を切らない。
+包みは play_slot (instance: を省くと MAIN)。
+```ruby
+@audio.play_slot_raw(0, FmrbAudio::SUB)
 ```
 
 # FmrbAudio#play_wav
@@ -33152,6 +33449,255 @@ stop_wav() -> bool
 
 ```ruby
 @audio.stop_wav
+```
+# FmrbFile.append
+
+append(String path, bin data) -> bool
+
+Add to the end of a file
+
+Makes the file when it is not there; true when it was written.
+```ruby
+FmrbFile.append("/home/log.txt",
+                "one more\n")
+```
+
+# FmrbFile.delete
+
+delete(String path) -> bool
+
+Delete a file or an empty directory
+
+true when it was deleted.
+```ruby
+FmrbFile.delete("/home/old.txt")
+```
+
+# FmrbFile.exist?
+
+exist?(String path) -> bool
+
+Whether a file or a directory is there
+
+```ruby
+FmrbFile.exist?("/home/memo.txt")
+```
+
+# FmrbFile.free_bytes
+
+free_bytes(String path) -> int64?
+
+How many more bytes can be written where the path lives
+
+/tmp: what is left of the RAM filesystem; elsewhere: the free space of
+the filesystem under it. nil when it cannot be known.
+```ruby
+FmrbFile.free_bytes("/tmp")
+```
+
+# FmrbFile.list
+
+list(String dir) -> Array[String]?
+
+The names in a directory
+
+A directory's name ends in "/". nil when it cannot be read.
+```ruby
+FmrbFile.list("/home").each do |n|
+  Log.info(n)
+end
+```
+
+# FmrbFile.list_raw
+
+list_raw(String dir) -> String?
+
+list as one String, a name per line
+
+The names joined by "\n", one after the last name too; a directory's
+name ends in "/". nil when it cannot be read. The wrapper is list (an
+Array).
+```ruby
+FmrbFile.list_raw("/home")
+```
+
+# FmrbFile.mkdir
+
+mkdir(String path) -> bool
+
+Make a directory
+
+true when it was made, or is there already.
+```ruby
+FmrbFile.mkdir("/home/notes")
+```
+
+# FmrbFile.path_read_only?
+
+path_read_only?(String path) -> bool
+
+Whether the entry cannot be deleted or renamed
+
+true for the PC build's distribution tree and /mnt/root; always false on
+the devices, the simulation and the browser.
+```ruby
+FmrbFile.path_read_only?("/mnt/root/etc/hostname")
+```
+
+# FmrbFile.read
+
+read(String path) -> bin?
+
+Read a whole file
+
+nil when it is not there or cannot be read.
+```ruby
+text = FmrbFile.read("/home/memo.txt")
+```
+
+# FmrbFile.size
+
+size(String path) -> int64?
+
+A file's size in bytes
+
+nil when it is not there.
+```ruby
+n = FmrbFile.size("/home/memo.txt")
+```
+
+# FmrbFile.write
+
+write(String path, bin data) -> bool
+
+Write a whole file, replacing it
+
+true when it was written.
+```ruby
+FmrbFile.write("/home/memo.txt",
+               "hello")
+```
+# FmrbFile.append
+
+append(String path, bin data) -> bool
+
+ファイルの終わりに足す
+
+無ければ作る。書けたら true。
+```ruby
+FmrbFile.append("/home/log.txt",
+                "one more\n")
+```
+
+# FmrbFile.delete
+
+delete(String path) -> bool
+
+ファイルか空のディレクトリを消す
+
+消せたら true。
+```ruby
+FmrbFile.delete("/home/old.txt")
+```
+
+# FmrbFile.exist?
+
+exist?(String path) -> bool
+
+ファイルかディレクトリがあるか
+
+```ruby
+FmrbFile.exist?("/home/memo.txt")
+```
+
+# FmrbFile.free_bytes
+
+free_bytes(String path) -> int64?
+
+その場所にあと何バイト書けるか
+
+/tmp は RAM のファイルシステムの空き、ほかはその下のファイルシステムの空き。
+分からないとき (ブラウザ版の SD など) は nil。
+```ruby
+FmrbFile.free_bytes("/tmp")
+```
+
+# FmrbFile.list
+
+list(String dir) -> Array[String]?
+
+ディレクトリの中の名前の一覧
+
+ディレクトリの名前は後ろに "/" が付く。読めないときは nil。
+```ruby
+FmrbFile.list("/home").each do |n|
+  Log.info(n)
+end
+```
+
+# FmrbFile.list_raw
+
+list_raw(String dir) -> String?
+
+list の省略なしの形 (名前を改行でつなぐ)
+
+名前を "\n" でつないだ 1 つの文字列 (最後の名前の後にも "\n")。
+ディレクトリの名前は後ろに "/"。読めないときは nil。包みは list (配列にする)。
+
+# FmrbFile.mkdir
+
+mkdir(String path) -> bool
+
+ディレクトリを作る
+
+作れたら true (もうあるときも true)。
+```ruby
+FmrbFile.mkdir("/home/notes")
+```
+
+# FmrbFile.path_read_only?
+
+path_read_only?(String path) -> bool
+
+消せない・名前を変えられない場所か
+
+PC 版の配布物の木と /mnt/root で true。端末・sim・ブラウザ版では常に false。
+```ruby
+FmrbFile.path_read_only?("/mnt/root/etc/hostname")
+```
+
+# FmrbFile.read
+
+read(String path) -> bin?
+
+ファイル全体を読む
+
+無い・読めないときは nil。
+```ruby
+text = FmrbFile.read("/home/memo.txt")
+```
+
+# FmrbFile.size
+
+size(String path) -> int64?
+
+ファイルの大きさ (バイト)
+
+無いときは nil。
+```ruby
+n = FmrbFile.size("/home/memo.txt")
+```
+
+# FmrbFile.write
+
+write(String path, bin data) -> bool
+
+ファイル全体を書く (前の中身は消える)
+
+書けたら true。
+```ruby
+FmrbFile.write("/home/memo.txt",
+               "hello")
 ```
 # FmrbGfx#area_width
 
@@ -33234,7 +33780,7 @@ gfx.clear_sprite_clip
 
 # FmrbGfx#clear_viewport
 
-clear_viewport() -> void
+clear_viewport() -> FmrbGfx
 
 Put the shown part back
 
@@ -33243,7 +33789,7 @@ Undo set_viewport: the whole canvas is composited again. Modern
 
 # FmrbGfx#create_image
 
-create_image(String path) -> Hash?
+create_image(String path) -> image_info?
 
 Make an image from a file
 
@@ -33264,7 +33810,7 @@ gfx.draw_image(img[:id], x: 0, y: 0) if img
 
 # FmrbGfx#create_mask
 
-create_mask(Integer width, Integer height, String data) -> Integer
+create_mask(Integer width, Integer height, bin data) -> Integer
 
 Make a mask
 
@@ -33307,7 +33853,7 @@ them when the app exits, so a missing cleanup at exit does not leak.
 
 # FmrbGfx#delete_mask
 
-delete_mask(Integer mask_id) -> void
+delete_mask(Integer mask_id) -> FmrbGfx
 
 Let go of a mask
 
@@ -33375,7 +33921,7 @@ gfx.draw_ellipse(50, 30, 30, 15,
 
 # FmrbGfx#draw_free_iram
 
-draw_free_iram(Integer x, Integer y, Integer color, Integer bg_color) -> FmrbGfx
+draw_free_iram(Integer x, Integer y, Integer color, Integer bg_color) -> bool
 
 Draw how much memory is free
 
@@ -33410,6 +33956,32 @@ Draw an image through a mask
 Copies a SpriteImage onto the canvas only where the mask's bits are set.
 The position is passed by keyword (x:, y:): the image's (xx, yy) lands at
 (x + xx, y + yy).
+
+# FmrbGfx#draw_image_masked_raw
+
+draw_image_masked_raw(Integer image_id, Integer mask_id, Integer x, Integer y) -> FmrbGfx
+
+draw_image_masked, plain arguments
+
+The position as plain arguments rather than keywords. The wrapper is
+draw_image_masked.
+```ruby
+gfx.draw_image_masked_raw(img.id,
+  @mask_id, 10, 20)
+```
+
+# FmrbGfx#draw_image_raw
+
+draw_image_raw(Integer image_id, Integer x, Integer y, Float scale_x, Float scale_y) -> FmrbGfx
+
+draw_image with nothing left out
+
+The simple form, with no argument left out. A scale_y of 0.0 means the
+same as scale_x. The wrapper is draw_image.
+```ruby
+gfx.draw_image_raw(id, 10, 20,
+                   1.0, 0.0)
+```
 
 # FmrbGfx#draw_line
 
@@ -33453,7 +34025,7 @@ gfx.draw_round_rect(10, 10, 80, 40,
 
 # FmrbGfx#draw_text
 
-draw_text(Integer x, Integer y, String str, Integer color) -> FmrbGfx
+draw_text(Integer x, Integer y, String text, Integer color) -> FmrbGfx
 
 draw a string
 
@@ -33472,6 +34044,21 @@ class MyApp < FmrbApp
     gfx.present
   end
 end
+```
+
+# FmrbGfx#draw_text_raw
+
+draw_text_raw(Integer x, Integer y, String text, Integer color, Integer bg_color, bool mixed) -> FmrbGfx
+
+draw_text with nothing left out
+
+The simple form, with no argument left out, for where speed matters
+(drawing many times a frame). A negative bg_color leaves the background
+alone; mixed true draws ASCII in 6x8 and the rest in misaki 8 (draw_text's
+mixed: true). The wrapper is draw_text.
+```ruby
+gfx.draw_text_raw(10, 20, "hi",
+  FmrbGfx::WHITE, -1, false)
 ```
 
 # FmrbGfx#draw_thick_line
@@ -33504,6 +34091,19 @@ gfx.draw_tile(sheet.id, 0, 0, 16, 16,
               dst_x: 32, dst_y: 16)
 ```
 
+# FmrbGfx#draw_tile_raw
+
+draw_tile_raw(Integer image_id, Integer src_x, Integer src_y, Integer w, Integer h, Integer dst_x, Integer dst_y) -> FmrbGfx
+
+draw_tile with nothing left out
+
+The destination as plain arguments rather than keywords. The wrapper is
+draw_tile.
+```ruby
+gfx.draw_tile_raw(sheet.id, 0, 0,
+                  16, 16, 32, 16)
+```
+
 # FmrbGfx#draw_triangle
 
 draw_triangle(Integer x0, Integer y0, Integer x1, Integer y1, Integer x2, Integer y2, Integer color) -> FmrbGfx
@@ -33518,7 +34118,7 @@ gfx.draw_triangle(50, 10, 20, 50,
 
 # FmrbGfx#draw_wallclock
 
-draw_wallclock(Integer x, Integer y, Integer color, Integer bg_color) -> FmrbGfx
+draw_wallclock(Integer x, Integer y, Integer color, Integer bg_color) -> bool
 
 Draw the time now
 
@@ -33531,7 +34131,7 @@ gfx.draw_wallclock(300, 2,
 
 # FmrbGfx#file_status
 
-file_status(String path) -> Hash
+file_status(String path) -> file_info
 
 Whether the file arrived
 
@@ -33681,8 +34281,10 @@ origin_x() -> Integer
 
 Where the origin is on the canvas (x)
 
-Every coordinate drawn is added to it on its way to the canvas: 1 for a
-framed window's gfx, 0 for window_gfx and the rest.
+Every coordinate drawn is added to it on its way to the canvas (the
+firmware adds it): 1 for a framed window's gfx, 0 for window_gfx and the
+rest. While drawing into a sprite image it is not added to what is drawn,
+but it still is to sprite coordinates (set_sprite_clip, SpriteInstance).
 
 # FmrbGfx#present
 
@@ -33701,6 +34303,19 @@ whole-screen transfer each time.
 gfx.clear(FmrbGfx::BLACK)
 gfx.draw_text(10, 10, "hi", FmrbGfx::WHITE)
 gfx.present   # now it appears
+```
+
+# FmrbGfx#present_raw
+
+present_raw(Integer x, Integer y, bool positioned) -> FmrbGfx
+
+present with nothing left out
+
+With positioned false the canvas goes where the window is (x and y are
+not used); with true it goes to (x, y) on the screen. The wrapper is
+present (present(x, y) gives a position).
+```ruby
+gfx.present_raw(0, 0, false)
 ```
 
 # FmrbGfx.rgb_to_332
@@ -33727,7 +34342,7 @@ amplitude. It does nothing on Modern; 0 gives a black-and-white picture.
 
 # FmrbGfx#set_composite_regions
 
-set_composite_regions(Array regions) -> void
+set_composite_regions(Array[Hash] regions) -> FmrbGfx
 
 Set the regions that are composited
 
@@ -33738,6 +34353,22 @@ transparency and the middle can take the fast path. Eight at most; nil or
 
 For a windowed app the system sets this from rounded_corners in the
 .app.toml, so calling it directly is rarely needed.
+
+# FmrbGfx#set_composite_regions_raw
+
+set_composite_regions_raw(Array[composite_region] regions) -> FmrbGfx
+
+set_composite_regions, every field given
+
+Every field of each rectangle written out: src_x, src_y, dst_x, dst_y,
+w, h and transparent. An empty array restores the default (the whole
+canvas). The wrapper is set_composite_regions.
+```ruby
+gfx.set_composite_regions_raw([
+  { src_x: 0, src_y: 0, dst_x: 0,
+    dst_y: 0, w: 8, h: 8,
+    transparent: true }])
+```
 
 # FmrbGfx#set_font
 
@@ -33753,6 +34384,20 @@ is the [family, size] actually chosen -- which is also how you find out
 that bold was unavailable and you should thicken the text yourself.
 ```ruby
 got = gfx.set_font(:ja, 12)
+```
+
+# FmrbGfx#set_font_raw
+
+set_font_raw(:default | :ja | :ja_bold family, Integer size) -> FmrbGfx
+
+set_font with nothing left out
+
+The simple form, with no argument left out. It does not pick the nearest
+face this machine has, so a size it lacks is an error (:ja takes 8, 12
+and 16, :ja_bold 12; :default ignores size). current_font is left as it
+is. The wrapper is set_font.
+```ruby
+gfx.set_font_raw(:ja, 12)
 ```
 
 # FmrbGfx#set_output_level
@@ -33784,7 +34429,8 @@ limit where sprites may appear
 Sprites are composited on top of everything drawn into the canvas, so
 without a clip they paint over the window frame and title bar. This
 confines them to the given rect, in the same coordinates as
-SpriteInstance#move.
+SpriteInstance#move (from the origin, also while drawing into a sprite
+image).
 
 Windowed apps start with their user area set, so calling this is only
 needed to narrow it further - e.g. to keep sprites out of a score bar.
@@ -33805,9 +34451,21 @@ Scales the selected font by an integer factor. It is the same glyphs
 enlarged, so the edges get blocky. text_width reports the width after the
 multiplier.
 
+# FmrbGfx#set_text_size_raw
+
+set_text_size_raw(Integer size) -> FmrbGfx
+
+set_text_size without the wrapper
+
+Only sends the scale (1 to 4) to the graphics side; current_text_size and
+what text_width measures stay as they were. The wrapper is set_text_size.
+```ruby
+gfx.set_text_size_raw(2)
+```
+
 # FmrbGfx#set_viewport
 
-set_viewport(Integer src_x, Integer src_y, Integer w, Integer h) -> void
+set_viewport(Integer src_x, Integer src_y, Integer w, Integer h) -> FmrbGfx
 
 Shift what part of the canvas is shown
 
@@ -33837,9 +34495,21 @@ gfx.sync_file("/home/bird.bmp",
               dest: "/cache/app/x/bird.bmp")
 ```
 
+# FmrbGfx#sync_file_raw
+
+sync_file_raw(String path, String dest) -> bool
+
+sync_file with nothing left out
+
+The destination cannot be left out. The wrapper is sync_file (without
+dest: it uses the same path).
+```ruby
+gfx.sync_file_raw(path, path)
+```
+
 # FmrbGfx#text_width
 
-text_width(String str) -> Integer
+text_width(String text) -> Integer
 
 Measure how wide text would be
 
@@ -33849,9 +34519,9 @@ mixed Japanese and ASCII string gives a real pixel width rather than a
 character count.
 
 ```ruby
-w = gfx.text_width(str)
+w = gfx.text_width(text)
 x = (gfx.area_width - w) / 2
-gfx.draw_text(x, 20, str, FmrbGfx::WHITE)
+gfx.draw_text(x, 20, text, FmrbGfx::WHITE)
 ```
 
 # FmrbGfx#transfer_file
@@ -33863,6 +34533,17 @@ Send a file again whatever happens
 Transfers unconditionally, without looking at what is already there.
 sync_file is the usual choice; this one is for when the destination is
 known to need rewriting.
+
+# FmrbGfx#transfer_file_raw
+
+transfer_file_raw(String path, String dest) -> bool
+
+transfer_file with nothing left out
+
+The destination cannot be left out. The wrapper is transfer_file.
+```ruby
+gfx.transfer_file_raw(path, path)
+```
 # FmrbGfx#area_width
 
 area_width() -> Integer
@@ -33940,7 +34621,7 @@ gfx.clear_sprite_clip
 
 # FmrbGfx#clear_viewport
 
-clear_viewport() -> void
+clear_viewport() -> FmrbGfx
 
 ずらした場所を元に戻す
 
@@ -33949,7 +34630,7 @@ set_viewport と同じく Modern (ESP32-P4) だけで効く。
 
 # FmrbGfx#create_image
 
-create_image(String path) -> Hash?
+create_image(String path) -> image_info?
 
 絵のファイルから絵を作る
 
@@ -33969,7 +34650,7 @@ gfx.draw_image(img[:id], x: 0, y: 0) if img
 
 # FmrbGfx#create_mask
 
-create_mask(Integer width, Integer height, String data) -> Integer
+create_mask(Integer width, Integer height, bin data) -> Integer
 
 型ぬきの形を作る
 
@@ -34011,7 +34692,7 @@ delete_image(Integer image_id) -> FmrbGfx
 
 # FmrbGfx#delete_mask
 
-delete_mask(Integer mask_id) -> void
+delete_mask(Integer mask_id) -> FmrbGfx
 
 型ぬきの形を片づける
 
@@ -34077,7 +34758,7 @@ gfx.draw_ellipse(50, 30, 30, 15,
 
 # FmrbGfx#draw_free_iram
 
-draw_free_iram(Integer x, Integer y, Integer color, Integer bg_color) -> FmrbGfx
+draw_free_iram(Integer x, Integer y, Integer color, Integer bg_color) -> bool
 
 空きメモリの量を描く
 
@@ -34110,6 +34791,31 @@ draw_image_masked(Integer image_id, Integer mask_id) -> FmrbGfx
 
 SpriteImage の絵を、マスクのビットが立っているところだけ canvas に写す。
 置き場所はキーワード (x:, y:)。絵の (xx, yy) が canvas の (x+xx, y+yy) に来る。
+
+# FmrbGfx#draw_image_masked_raw
+
+draw_image_masked_raw(Integer image_id, Integer mask_id, Integer x, Integer y) -> FmrbGfx
+
+draw_image_masked の省略なしの形
+
+置き場所をキーワードでなく位置の引数で渡す形。包みは draw_image_masked。
+```ruby
+gfx.draw_image_masked_raw(img.id,
+  @mask_id, 10, 20)
+```
+
+# FmrbGfx#draw_image_raw
+
+draw_image_raw(Integer image_id, Integer x, Integer y, Float scale_x, Float scale_y) -> FmrbGfx
+
+draw_image の省略なしの形
+
+引数を省略できない単純な形。scale_y に 0.0 を渡すと scale_x と同じ倍率。
+包みは draw_image。
+```ruby
+gfx.draw_image_raw(id, 10, 20,
+                   1.0, 0.0)
+```
 
 # FmrbGfx#draw_line
 
@@ -34153,7 +34859,7 @@ gfx.draw_round_rect(10, 10, 80, 40,
 
 # FmrbGfx#draw_text
 
-draw_text(Integer x, Integer y, String str, Integer color) -> FmrbGfx
+draw_text(Integer x, Integer y, String text, Integer color) -> FmrbGfx
 
 文字列を描く
 
@@ -34172,6 +34878,20 @@ class MyApp < FmrbApp
     gfx.present
   end
 end
+```
+
+# FmrbGfx#draw_text_raw
+
+draw_text_raw(Integer x, Integer y, String text, Integer color, Integer bg_color, bool mixed) -> FmrbGfx
+
+draw_text の省略なしの形
+
+引数を省略できない単純な形。毎フレーム何度も描くような、速さが要る所で
+使う。bg_color が負なら背景は塗らない。mixed が true なら英数を 6x8、
+それ以外を misaki 8 で描く (draw_text の mixed: true)。包みは draw_text。
+```ruby
+gfx.draw_text_raw(10, 20, "hi",
+  FmrbGfx::WHITE, -1, false)
 ```
 
 # FmrbGfx#draw_thick_line
@@ -34202,6 +34922,18 @@ gfx.draw_tile(sheet.id, 0, 0, 16, 16,
               dst_x: 32, dst_y: 16)
 ```
 
+# FmrbGfx#draw_tile_raw
+
+draw_tile_raw(Integer image_id, Integer src_x, Integer src_y, Integer w, Integer h, Integer dst_x, Integer dst_y) -> FmrbGfx
+
+draw_tile の省略なしの形
+
+置き場所をキーワードでなく位置の引数で渡す形。包みは draw_tile。
+```ruby
+gfx.draw_tile_raw(sheet.id, 0, 0,
+                  16, 16, 32, 16)
+```
+
 # FmrbGfx#draw_triangle
 
 draw_triangle(Integer x0, Integer y0, Integer x1, Integer y1, Integer x2, Integer y2, Integer color) -> FmrbGfx
@@ -34216,7 +34948,7 @@ gfx.draw_triangle(50, 10, 20, 50,
 
 # FmrbGfx#draw_wallclock
 
-draw_wallclock(Integer x, Integer y, Integer color, Integer bg_color) -> FmrbGfx
+draw_wallclock(Integer x, Integer y, Integer color, Integer bg_color) -> bool
 
 今の時刻を描く
 
@@ -34228,7 +34960,7 @@ gfx.draw_wallclock(300, 2,
 
 # FmrbGfx#file_status
 
-file_status(String path) -> Hash
+file_status(String path) -> file_info
 
 送った先にファイルがあるか
 
@@ -34374,8 +35106,10 @@ origin_x() -> Integer
 
 原点の canvas 上の x
 
-描く座標はすべてここに足されて canvas に届く。枠のある Window の gfx は
-1、window_gfx などは 0。
+描く座標はすべてここに足されて canvas に届く (本体の側で足す)。枠のある
+Window の gfx は 1、window_gfx などは 0。スプライトの画像へ描いている間は
+描く座標に足さないが、スプライトの座標 (set_sprite_clip・SpriteInstance)
+には足す。
 
 # FmrbGfx#present
 
@@ -34394,6 +35128,18 @@ SpriteInstance#move や visible= の後にも要る。
 gfx.clear(FmrbGfx::BLACK)
 gfx.draw_text(10, 10, "hi", FmrbGfx::WHITE)
 gfx.present   # ここで画面に出る
+```
+
+# FmrbGfx#present_raw
+
+present_raw(Integer x, Integer y, bool positioned) -> FmrbGfx
+
+present の省略なしの形
+
+positioned が false なら Window の位置に出し (x, y は使わない)、true なら
+画面の (x, y) に出す。包みは present (present(x, y) で位置を渡す)。
+```ruby
+gfx.present_raw(0, 0, false)
 ```
 
 # FmrbGfx.rgb_to_332
@@ -34419,7 +35165,7 @@ Modern には効かない。0 にすると白黒になる。
 
 # FmrbGfx#set_composite_regions
 
-set_composite_regions(Array regions) -> void
+set_composite_regions(Array[Hash] regions) -> FmrbGfx
 
 重ねて見せる場所を決める
 
@@ -34429,6 +35175,21 @@ canvas のどの矩形をどう合成するかを指定する。角の丸い Win
 
 Window のアプリでは .app.toml の rounded_corners から系が設定するので、ふつうは
 自分で呼ぶ必要はない。
+
+# FmrbGfx#set_composite_regions_raw
+
+set_composite_regions_raw(Array[composite_region] regions) -> FmrbGfx
+
+set_composite_regions の省略なしの形
+
+矩形ごとに src_x・src_y・dst_x・dst_y・w・h・transparent を全部書く形。
+空の配列で既定 (canvas 全体) に戻る。包みは set_composite_regions。
+```ruby
+gfx.set_composite_regions_raw([
+  { src_x: 0, src_y: 0, dst_x: 0,
+    dst_y: 0, w: 8, h: 8,
+    transparent: true }])
+```
 
 # FmrbGfx#set_font
 
@@ -34443,6 +35204,19 @@ size は画素の高さで、:ja は 8 と 12 と 16、:ja_bold は 12。持っ�
 これで分かる (自分で太く描くときの判断に使う)。
 ```ruby
 got = gfx.set_font(:ja, 12)
+```
+
+# FmrbGfx#set_font_raw
+
+set_font_raw(:default | :ja | :ja_bold family, Integer size) -> FmrbGfx
+
+set_font の省略なしの形
+
+引数を省略できない単純な形。機種が持つ字への置き換えはしないので、
+無い大きさはエラーになる (:ja は 8・12・16、:ja_bold は 12。:default の
+size は使われない)。current_font は変わらない。包みは set_font。
+```ruby
+gfx.set_font_raw(:ja, 12)
 ```
 
 # FmrbGfx#set_output_level
@@ -34473,7 +35247,8 @@ set_sprite_clip(Integer x, Integer y, Integer w, Integer h) -> FmrbGfx
 
 スプライトは canvas に描いた絵の上に重ねて合成されるので、何も
 しないと Window のわくやタイトルバーの上にもはみ出す。この四角の中だけに
-出るようにする。x, y, w, h は SpriteInstance#move と同じ座標。
+出るようにする。x, y, w, h は SpriteInstance#move と同じ座標 (原点から。
+スプライトの画像へ描いている間も原点を足す)。
 
 Window のアプリは起動時に Window の中身の範囲が入っているので、ふつうは呼ぶ
 必要はない。点数を出す帯など、さらに狭い範囲に閉じ込めたいときに使う。
@@ -34493,9 +35268,21 @@ set_text_size(Integer size) -> FmrbGfx
 選んでいる字を整数倍で拡大する。字が増えるわけではないので、大きくすると
 角が目立つ。倍率をかけた後の幅は text_width が返す。
 
+# FmrbGfx#set_text_size_raw
+
+set_text_size_raw(Integer size) -> FmrbGfx
+
+set_text_size の包みのない形
+
+倍率 (1〜4) を描画側へ送るだけで、current_text_size と text_width の
+測り方は変わらない。包みは set_text_size。
+```ruby
+gfx.set_text_size_raw(2)
+```
+
 # FmrbGfx#set_viewport
 
-set_viewport(Integer src_x, Integer src_y, Integer w, Integer h) -> void
+set_viewport(Integer src_x, Integer src_y, Integer w, Integer h) -> FmrbGfx
 
 画面の見せる場所をずらす
 
@@ -34523,9 +35310,20 @@ gfx.sync_file("/home/bird.bmp",
               dest: "/cache/app/x/bird.bmp")
 ```
 
+# FmrbGfx#sync_file_raw
+
+sync_file_raw(String path, String dest) -> bool
+
+sync_file の省略なしの形
+
+送り先を省略できない形。包みは sync_file (dest: を省くと同じパス)。
+```ruby
+gfx.sync_file_raw(path, path)
+```
+
 # FmrbGfx#text_width
 
-text_width(String str) -> Integer
+text_width(String text) -> Integer
 
 字を描いたときの横幅を測る
 
@@ -34534,9 +35332,9 @@ text_width(String str) -> Integer
 なく実際の幅が返る。
 
 ```ruby
-w = gfx.text_width(str)
+w = gfx.text_width(text)
 x = (gfx.area_width - w) / 2
-gfx.draw_text(x, 20, str, FmrbGfx::WHITE)
+gfx.draw_text(x, 20, text, FmrbGfx::WHITE)
 ```
 
 # FmrbGfx#transfer_file
@@ -34547,6 +35345,17 @@ transfer_file(String path) -> bool
 
 中身を見ずに必ず送り直す。ふつうは sync_file でよく、こちらは送り先を
 書き換えたことが分かっているときに使う。
+
+# FmrbGfx#transfer_file_raw
+
+transfer_file_raw(String path, String dest) -> bool
+
+transfer_file の省略なしの形
+
+送り先を省略できない形。包みは transfer_file。
+```ruby
+gfx.transfer_file_raw(path, path)
+```
 # FmrbHitMask#bits
 
 bits() -> String
@@ -36319,7 +37128,7 @@ s = @gfx.fit_text(name, 80)
 
 # FmrbText#draw_text_lines
 
-draw_text_lines(Integer x, Integer y, String str, Integer width, Integer color, Integer line_h) -> Integer
+draw_text_lines(Integer x, Integer y, String text, Integer width, Integer color, Integer line_h) -> Integer
 
 Draw a text wrapped into lines
 
@@ -36333,7 +37142,7 @@ y = @gfx.draw_text_lines(x, y, msg,
 
 # FmrbText#fit_text
 
-fit_text(String str, Integer width) -> String
+fit_text(String text, Integer width) -> String
 
 Cut a text to fit a width in pixels
 
@@ -36352,7 +37161,7 @@ with (nil means the current one).
 
 # FmrbText#wrap_text
 
-wrap_text(String str, Integer width) -> Array[String]
+wrap_text(String text, Integer width) -> Array[String]
 
 Wrap a text into at most two lines
 
@@ -36377,7 +37186,7 @@ s = @gfx.fit_text(name, 80)
 
 # FmrbText#draw_text_lines
 
-draw_text_lines(Integer x, Integer y, String str, Integer width, Integer color, Integer line_h) -> Integer
+draw_text_lines(Integer x, Integer y, String text, Integer width, Integer color, Integer line_h) -> Integer
 
 折った文字を行ごとに描く
 
@@ -36390,7 +37199,7 @@ y = @gfx.draw_text_lines(x, y, msg,
 
 # FmrbText#fit_text
 
-fit_text(String str, Integer width) -> String
+fit_text(String text, Integer width) -> String
 
 文字を幅に収まるよう切る
 
@@ -36408,7 +37217,7 @@ fit_text(String str, Integer width) -> String
 
 # FmrbText#wrap_text
 
-wrap_text(String str, Integer width) -> Array[String]
+wrap_text(String text, Integer width) -> Array[String]
 
 文字を最大 2 行に折る
 
@@ -38925,6 +39734,192 @@ yield(*untyped arguments) -> untyped
 確かめる。
 ```ruby
 yield(v) if block_given?
+```
+# Log
+
+Log はクラスごと本体との境界に載る (%a{fmrb.boundary}、doc/app_boundary)。
+info などは包みで、隣に省略なしの _raw の形がある (mruby の包みは C で、
+前に書いたタグを 1 つめに受ける形 `Log.info("TAG", msg)` も読む)。
+
+# Log.debug
+
+debug(String msg) -> void
+
+Write a debug line to the log
+
+The line starts with the app's name.
+```ruby
+Log.debug("x = #{x}")
+```
+
+# Log.debug_raw
+
+debug_raw(String msg) -> void
+
+debug with nothing left out
+
+Writes one line, debug (D). The wrapper is debug.
+```ruby
+Log.debug_raw("ready")
+```
+
+# Log.error
+
+error(String msg) -> void
+
+Write an error to the log
+
+The line starts with the app's name.
+```ruby
+Log.error("x = #{x}")
+```
+
+# Log.error_raw
+
+error_raw(String msg) -> void
+
+error with nothing left out
+
+Writes one line, an error (E). The wrapper is error.
+```ruby
+Log.error_raw("ready")
+```
+
+# Log.info
+
+info(String msg) -> void
+
+Write a line to the log
+
+The line starts with the app's name.
+```ruby
+Log.info("saved #{path}")
+```
+
+# Log.info_raw
+
+info_raw(String msg) -> void
+
+info with nothing left out
+
+Writes one line, an ordinary note (I). The wrapper is info.
+```ruby
+Log.info_raw("ready")
+```
+
+# Log.warn
+
+warn(String msg) -> void
+
+Write a warning to the log
+
+The line starts with the app's name.
+```ruby
+Log.warn("x = #{x}")
+```
+
+# Log.warn_raw
+
+warn_raw(String msg) -> void
+
+warn with nothing left out
+
+Writes one line, a warning (W). The wrapper is warn.
+```ruby
+Log.warn_raw("ready")
+```
+# Log
+
+Log はクラスごと本体との境界に載る (%a{fmrb.boundary}、doc/app_boundary)。
+info などは包みで、隣に省略なしの _raw の形がある (mruby の包みは C で、
+前に書いたタグを 1 つめに受ける形 `Log.info("TAG", msg)` も読む)。
+
+# Log.debug
+
+debug(String msg) -> void
+
+細かい様子をログに書く
+
+行の頭にアプリの名前が付く。
+```ruby
+Log.debug("x = #{x}")
+```
+
+# Log.debug_raw
+
+debug_raw(String msg) -> void
+
+debug の省略なしの形
+
+細かい様子 (D) の 1 行を書く。包みは debug。
+```ruby
+Log.debug_raw("ready")
+```
+
+# Log.error
+
+error(String msg) -> void
+
+エラーをログに書く
+
+行の頭にアプリの名前が付く。
+```ruby
+Log.error("x = #{x}")
+```
+
+# Log.error_raw
+
+error_raw(String msg) -> void
+
+error の省略なしの形
+
+エラー (E) の 1 行を書く。包みは error。
+```ruby
+Log.error_raw("ready")
+```
+
+# Log.info
+
+info(String msg) -> void
+
+ログに書く
+
+行の頭にアプリの名前が付く。
+```ruby
+Log.info("saved #{path}")
+```
+
+# Log.info_raw
+
+info_raw(String msg) -> void
+
+info の省略なしの形
+
+ふつうの知らせ (I) の 1 行を書く。包みは info。
+```ruby
+Log.info_raw("ready")
+```
+
+# Log.warn
+
+warn(String msg) -> void
+
+注意をログに書く
+
+行の頭にアプリの名前が付く。
+```ruby
+Log.warn("x = #{x}")
+```
+
+# Log.warn_raw
+
+warn_raw(String msg) -> void
+
+warn の省略なしの形
+
+注意 (W) の 1 行を書く。包みは warn。
+```ruby
+Log.warn_raw("ready")
 ```
 # MIDI::Device#all_notes_off
 
@@ -43990,16 +44985,19 @@ to_s	Float
 gfx	FmrbApp
 window_gfx	FmrbApp
 name	FmrbApp
-running	FmrbApp
+running?	FmrbApp
 window_width	FmrbApp
 window_height	FmrbApp
 pos_x	FmrbApp
 pos_y	FmrbApp
+user_area_width	FmrbApp
+user_area_height	FmrbApp
 platform	FmrbApp
-fullscreen	FmrbApp
-rounded_corners	FmrbApp
-closable	FmrbApp
+fullscreen?	FmrbApp
+rounded_corners?	FmrbApp
+closable?	FmrbApp
 frameless?	FmrbApp
+resizable?	FmrbApp
 on_create	FmrbApp
 on_update	FmrbApp
 on_destroy	FmrbApp
@@ -44027,6 +45025,7 @@ request_close_confirm	FmrbApp
 main_loop	FmrbApp
 draw_window_frame	FmrbApp
 clear_user_area	FmrbApp
+clear_user_area_raw	FmrbApp
 theme_bg	FmrbApp
 theme_fg	FmrbApp
 theme_accent	FmrbApp
@@ -44049,15 +45048,19 @@ unsubscribe	FmrbApp
 publish	FmrbApp
 send_message	FmrbApp
 request_file_select	FmrbApp
+request_file_select_raw	FmrbApp
 request_run	FmrbApp
+request_run_raw	FmrbApp
 checkpoint	FmrbApp
 move_to	FmrbApp
 idle_gc	FmrbApp
 language	FmrbApp
 clipboard	FmrbApp
+clipboard_raw	FmrbApp
 set_clipboard	FmrbApp
 clipboard_gen	FmrbApp
 notify	FmrbApp
+notify_raw	FmrbApp
 ps	FmrbApp
 ps_gen	FmrbApp
 checkpoint	FmrbApp
@@ -44068,6 +45071,7 @@ pool_used	FmrbApp
 sys_pool_info	FmrbApp
 config	FmrbApp
 uptime_us	FmrbApp
+uptime_ms	FmrbApp
 wallclock	FmrbApp
 gfx_stats	FmrbApp
 enable_cursor	FmrbApp
@@ -44100,6 +45104,7 @@ linux_resize	FmrbApp
 linux_close	FmrbApp
 new	FmrbAudio
 play	FmrbAudio
+play_raw	FmrbAudio
 stop	FmrbAudio
 nsf_status	FmrbAudio
 pause	FmrbAudio
@@ -44107,10 +45112,12 @@ resume	FmrbAudio
 load_fmsq	FmrbAudio
 load_fmsq_file	FmrbAudio
 play_slot	FmrbAudio
+play_slot_raw	FmrbAudio
 main_volume=	FmrbAudio
 play_wav	FmrbAudio
 stop_wav	FmrbAudio
 note_on	FmrbAudio
+note_on_raw	FmrbAudio
 note_off	FmrbAudio
 parse	NsfHeader
 song_name	NsfHeader
@@ -44118,6 +45125,17 @@ artist	NsfHeader
 copyright	NsfHeader
 total_songs	NsfHeader
 starting_song	NsfHeader
+read	FmrbFile
+write	FmrbFile
+append	FmrbFile
+exist?	FmrbFile
+size	FmrbFile
+delete	FmrbFile
+mkdir	FmrbFile
+list	FmrbFile
+list_raw	FmrbFile
+path_read_only?	FmrbFile
+free_bytes	FmrbFile
 FmrbText	FmrbText
 fit_text	FmrbText
 wrap_text	FmrbText
@@ -44149,8 +45167,11 @@ fill_triangle	FmrbGfx
 draw_arc	FmrbGfx
 fill_arc	FmrbGfx
 draw_text	FmrbGfx
+draw_text_raw	FmrbGfx
 set_font	FmrbGfx
+set_font_raw	FmrbGfx
 set_text_size	FmrbGfx
+set_text_size_raw	FmrbGfx
 text_width	FmrbGfx
 font_height	FmrbGfx
 draw_wallclock	FmrbGfx
@@ -44158,22 +45179,29 @@ draw_free_iram	FmrbGfx
 load_image	FmrbGfx
 create_image	FmrbGfx
 draw_image	FmrbGfx
+draw_image_raw	FmrbGfx
 delete_image	FmrbGfx
 draw_tile	FmrbGfx
+draw_tile_raw	FmrbGfx
 create_mask	FmrbGfx
 delete_mask	FmrbGfx
 draw_image_masked	FmrbGfx
+draw_image_masked_raw	FmrbGfx
 present	FmrbGfx
+present_raw	FmrbGfx
 destroy	FmrbGfx
 set_viewport	FmrbGfx
 clear_viewport	FmrbGfx
 set_composite_regions	FmrbGfx
+set_composite_regions_raw	FmrbGfx
 set_sprite_clip	FmrbGfx
 clear_sprite_clip	FmrbGfx
 set_output_level	FmrbGfx
 set_chroma_level	FmrbGfx
 sync_file	FmrbGfx
+sync_file_raw	FmrbGfx
 transfer_file	FmrbGfx
+transfer_file_raw	FmrbGfx
 file_status	FmrbGfx
 rgb_to_332	FmrbGfx
 hsv_to_rgb	FmrbGfx
@@ -44241,6 +45269,15 @@ lang	FmrbI18n
 t	FmrbI18n
 text_width	FmrbI18n
 truncate_to	FmrbI18n
+Log	Log
+debug	Log
+debug_raw	Log
+info	Log
+info_raw	Log
+warn	Log
+warn_raw	Log
+error	Log
+error_raw	Log
 open	File
 exist?	File
 read	File
@@ -57770,10 +58807,9 @@ class {{class}} < FmrbApp
     500
   end
 
-  # Keyboard / mouse / gamepad events.
-  # Always call super to keep the close button and reload working.
+  # Keyboard / mouse / gamepad events. The close button, the window menu and
+  # dragging are the system's; the app sees only what is its own.
   def on_event(ev)
-    super
     # case ev[:type]
     # when :key_down
     # when :mouse_down
@@ -57797,11 +58833,10 @@ class {{class}} < FmrbApp
     # clear_user_area with no colour paints the system theme's page colour,
     # and theme_fg is the ink that goes with it (see [theme] in
     # system_conf.toml). Name colours yourself only when the picture is the
-    # point of the app.
+    # point of the app. It draws the window frame again too.
     clear_user_area
     @gfx.draw_text(4, 4,
                    "{{title}}", theme_fg)
-    draw_window_frame
     @gfx.present
   end
 end
