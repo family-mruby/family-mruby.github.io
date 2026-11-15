@@ -14,17 +14,36 @@ program run next to the desktop.
 
 | | |
 |---|---|
-| User app slots | 5. How many fill depends on the memory the machine has, and `max_apps` can lower it |
-| Heap per app | 500 KB, or 1 MB with `large_memory = 1` |
+| User app slots | 5 on Modern, the Linux builds and Studio (`max_apps` can lower it). 3 at a time on the ESP32-S3 boards (Retro, StickS3, AtomS3R) |
+| Heap per app | Depends on the machine — see the table below |
 | Languages | Ruby (PicoRuby), MicroPython, BASIC, Lua |
+
+| Machine | Ordinary pool | With `large_memory = 1` |
+|---|---|---|
+| Retro, StickS3, AtomS3R (ESP32-S3) | 500 KB | 1 MB |
+| Modern (ESP32-P4) | 1 MB | 2 MB |
+| Linux simulator and Linux program (64-bit) | 1.5 MB | 3 MB |
+| Studio (WebAssembly, 32-bit) | 1.5 MB | 3 MB |
+
+The pool does not grow. Everything the app has — its objects, the compiler working on its
+source, the files it `require`s — comes out of it, and an allocation fails when no single
+free block is large enough, not only when the total runs out. The Linux builds are 64-bit,
+so the same script takes about one and a half times the room there; the larger pool makes
+them about as tight as Modern. Studio is 32-bit with the same larger pool, so it is looser
+than a board: an app that fits in Studio may not fit on a board.
 
 A separate pool is not just tidiness: memory fragmentation stays inside the app that caused
 it, and when an app dies its whole pool is reclaimed at once.
 
-There is only one large pool, so an app that does not need it should not sit on it. The
-first few slots are reserved when the system starts and the rest are taken from PSRAM the
-first time an app lands in them — reserving all five up front would put most of a Retro
-machine's spare PSRAM aside whether or not anyone ever ran five apps.
+On Modern and the Linux and browser builds each slot has its own ordinary pool: the first
+three are reserved when the system starts and the rest are taken from PSRAM the first time
+an app lands in them. There is only one `large_memory` pool there, so only one such app
+runs at a time, and an app that does not need it should not ask for it.
+
+The ESP32-S3 boards have three pools in all, reserved at boot: one ordinary and two large.
+An ordinary app takes the ordinary pool, or a free large one when that is taken; a
+`large_memory` app takes a large one. A fourth app is refused with "No free app slot".
+While Asterism is in use, its transfer app holds one of the large pools.
 
 Everything resident that would otherwise be an app of its own — the clock, the network
 watcher, the thing that reads a sentence out loud — shares a single VM instead, the
@@ -43,7 +62,10 @@ The apps you write still run on the PicoRuby VM. Only the system's own Ruby is c
 
 ## Two hardware shapes
 
-The same OS runs on two very different arrangements.
+The same OS runs on two very different arrangements. The headless boards (StickS3,
+AtomS3R) are the Retro arrangement's ESP32-S3 on its own, with a small LCD of their own and
+no desktop; the NARYA v4 board under development is the Modern arrangement on an
+ESP32-P4 module with HDMI out.
 
 ### Modern — one chip does everything
 
@@ -88,13 +110,15 @@ several VMs can use the same bus without fighting over it.
 
 ## Development targets
 
-Four builds come out of the same source tree:
+These builds come out of the same source tree:
 
 | Target | What it is |
 |---|---|
-| `esp32` / Modern | ESP32-P4 (M5Stack Tab5) |
+| `esp32` / Modern | ESP32-P4 (M5Stack Tab5; the NARYA v4 board, in development) |
 | `esp32` / Retro | ESP32-S3 + ESP32-WROVER (narya-board) |
+| `esp32` / Headless | ESP32-S3 on its own (M5Stack StickS3, AtomS3R), one app and no desktop |
 | `linux` | The whole system as a Linux process, with SDL2 for the screen. See [Simulator](getting_started/simulator.md) |
+| Linux program | The same system as one ordinary program on a Linux PC, without ESP-IDF underneath: its own window, or the whole session as the compositor. Shipped as a `.deb` with each release |
 | `wasm` | The same system compiled to WebAssembly, with a cooperative FreeRTOS port, running in a browser tab. See [Studio](getting_started/studio.md) |
 
 The Linux build is not a mock: it runs the real kernel, the real desktop and the real apps,

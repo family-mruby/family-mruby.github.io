@@ -1,6 +1,6 @@
 # Hardware
 
-Connectors and pin assignments for both machines. If you are choosing between them, start
+Connectors and pin assignments for both machines, and what the other boards are. If you are choosing between them, start
 at [Choose your hardware](getting_started/choose_hardware.md).
 
 ## Modern (M5Stack Tab5)
@@ -18,7 +18,7 @@ M5Stack's documentation.
 | Radio | ESP32-C6 coprocessor. Wi-Fi and BLE run at the same time |
 | Memory | 32 MB PSRAM, 16 MB flash |
 | Display | Built-in IPS panel, 1280 x 720, MIPI-DSI, with capacitive touch |
-| Framebuffer | 426 x 240 in RGB332, scaled 3x onto the panel by the P4's PPA hardware |
+| Framebuffer | 426 x 240 in RGB332, scaled 3x onto the panel by the P4's PPA hardware. 640 x 360 (2x) while an app with `fullscreen_hires = true` is fullscreen |
 | Audio | Built-in speaker and headphone jack. The speaker mutes when headphones are plugged in |
 | USB | USB-A host port (keyboard, mouse, hub) and USB-C for power and flashing |
 | Expansion | 1x GROVE |
@@ -72,8 +72,9 @@ matrix, so it takes no GPIO of its own.
 
 ### Storage (Modern)
 
-Internal flash only for now (16 MB, LittleFS). The Tab5's microSD slot is not wired up in
-the firmware yet.
+Internal flash (16 MB, LittleFS) and the microSD slot. The slot is on the P4's SDMMC host
+(4-bit, GPIO 39-44) and appears as `/mnt/sd` (also `/sd`), FAT with long file names. There
+is no card-detect line, so the system assumes a card is in.
 
 ## Retro (narya-board)
 
@@ -183,6 +184,32 @@ rtc.sync_system_clock
 ```
 
 See [RX8900 API](api/peripherals.md#real-time-clock-rx8900--rx8130) for details.
+
+## Headless boards (M5Stack StickS3, AtomS3R)
+
+Small stock boards with an ESP32-S3, flashed from the same
+[installer](https://family-mruby.github.io/family-mruby-installer/). They have no desktop:
+each runs one app on its own small screen and joins an
+[Asterism](api/network.md#asterism-objects-and-topics-across-machines) network over Wi-Fi.
+
+| | StickS3 | AtomS3R |
+|---|---|---|
+| Chip | ESP32-S3 | ESP32-S3 (8 MB flash, 8 MB PSRAM) |
+| Screen | 240 x 135 | 128 x 128 |
+| Firmware | `fmruby-core-sticks3` | `fmruby-core-atoms3r` |
+
+The app they start is Welcome: the version, the Wi-Fi state, the address and what to do
+next. Wi-Fi is set from the [Family mruby Console](getting_started/console.md) over BLE:
+hold the button while powering on to enter setup mode (a board with no Wi-Fi settings at all
+starts in it by itself). After that, apps are sent and started over Wi-Fi, the same
+file and app endpoints as on the other boards. Limits are in
+[Limitations](limitations.md#headless-boards-m5stack-sticks3-atoms3r).
+
+## NARYA v4 (in development)
+
+A board of our own with an ESP32-P4 module and HDMI out, running Modern. It is used for
+development and is not sold; the installer has no firmware for it, and `FmrbConst::BOARD`
+reads `"naryav4"` on it. When this page says Modern it means the Tab5.
 
 ## Related
 

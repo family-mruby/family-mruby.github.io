@@ -54,7 +54,7 @@ ESP32-P4 が 1 個で OS・描画・音・入力の全部を動かし、その�
 | WiFi / BLE | 両方同時に使える (ESP32-C6) | どちらか一方のみ (無線が 1 系統) |
 | 遠隔画面 | あり (WiFi 越しにブラウザから) | なし |
 | 拡張 | GROVE x1 | GROVE x2、電池で動く時計 |
-| ストレージ | 内蔵フラッシュ 16MB。microSD はまだ未対応 | 内蔵フラッシュ 16MB + microSD |
+| ストレージ | 内蔵フラッシュ 16MB + microSD | 内蔵フラッシュ 16MB + microSD |
 | 書き込むファームウェア | 1 つ (`fmruby-core-tab5`) | 2 つ (`fmruby-core` + `fmruby-graphics-audio`) |
 | 電源 | USB-C、内蔵電池 | USB-C |
 

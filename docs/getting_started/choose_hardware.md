@@ -56,7 +56,7 @@ battery-backed clock.
 | Wi-Fi / BLE | Both, at the same time (ESP32-C6) | Either one, not both (single radio) |
 | Remote desktop | Yes, over Wi-Fi in a browser | No |
 | Expansion | 1x GROVE | 2x GROVE, battery-backed RTC |
-| Storage | Internal flash (16 MB). The microSD slot is not wired up in the firmware yet | Internal flash (16 MB) + microSD |
+| Storage | Internal flash (16 MB) + microSD | Internal flash (16 MB) + microSD |
 | Firmware to flash | One (`fmruby-core-tab5`) | Two (`fmruby-core` + `fmruby-graphics-audio`) |
 | Power | USB-C, built-in battery | USB-C |
 

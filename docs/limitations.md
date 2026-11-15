@@ -12,8 +12,8 @@ welcome to use it.
 | **The file and app endpoints beside it** | Also unauthenticated, and in the released build. Anyone who can reach the remote desktop can also list, read, write and delete files, and start or stop apps |
 | **BLE console and debug service** | Starts at boot by default on Retro and on Modern (Tab5, NARYA v4); turn it off with the BLE Auto Start setting (`ble_auto_start`). The headless AtomS3R and StickS3 run it only in setup mode. While it runs it uses no pairing, no bonding and no encryption (deliberately, because pairing breaks Web Bluetooth on Windows): anyone in radio range can connect, look at running apps and their variables, start or stop them, read the log, and read and write ordinary files. It cannot be stopped without a reboot |
 | **Remote debugger over TCP** | No authentication. It listens on all interfaces |
-| **Wi-Fi credentials** | Stored in plain text in `/etc/wifi.toml` on the device |
-| **Service keys** | An API key given to the speech service sits in plain text in `services.toml`, and the development build serves `/home` over HTTP |
+| **Wi-Fi credentials** | Stored in plain text on the device, in `/home/wifi.toml` (what the Wi-Fi page writes) or `/etc/wifi.toml`. The remote file services do not serve them over HTTP, and over BLE only while BLE Setup is open on the machine |
+| **Service keys** | An API key for the speech service sits in plain text in `/home/secrets.toml`, kept like the Wi-Fi password. Everything else in `/home` the development build serves over HTTP |
 | **Apps** | An app you download runs with the same rights as any other. There is no sandbox between apps and the filesystem |
 
 Use these features only on a network you trust, and at your own risk. Do not forward a port
@@ -34,11 +34,18 @@ PicoRuby is based on mruby, so some methods that are standard in CRuby may not b
 
 Each Family mruby app runs as an independent Ruby VM, with its own heap and stack allocated on PSRAM.
 
-| Item | Retro | Modern | Studio |
-|---|---|---|---|
-| Standard app heap | 500 KB | 1024 KB | 1536 KB |
-| Heap with `large_memory = 1` | 1024 KB | 2048 KB | 3072 KB |
-| User app slots | 5, and how many fill depends on the memory the machine has. `max_apps` in [system_conf.toml](file_formats/system_conf.md) lowers it | | |
+| Item | Retro, StickS3, AtomS3R | Modern | Linux simulator, Linux program | Studio |
+|---|---|---|---|---|
+| Standard app heap | 500 KB | 1024 KB | 1536 KB | 1536 KB |
+| Heap with `large_memory = 1` | 1024 KB | 2048 KB | 3072 KB | 3072 KB |
+| User apps at a time | 3 | 5 | 5 | 5 |
+| `large_memory` apps at a time | 2 | 1 | 1 | 1 |
+
+`max_apps` in [system_conf.toml](file_formats/system_conf.md) lowers the number of user
+apps. The pool does not grow: an app runs out when no single free block is large enough,
+which can happen well before the total is used up. The Linux builds are 64-bit and need
+about 1.5 times the room for the same script, so they are about as tight as Modern; Studio
+is looser than any board, so check a large app on a board too.
 
 You can check heap usage in the Monitor app.
 
@@ -91,7 +98,7 @@ Most limits apply to both machines. These do not.
 
 | | |
 |---|---|
-| microSD | The slot is not wired up in the firmware yet. Internal flash only |
+| microSD | Read and written through the P4's SDMMC host, at `/mnt/sd` (also `/sd`). There is no card-detect line, so a card is assumed to be in |
 | Video out | The built-in panel is the only output. No composite video |
 | GROVE | One port, not two |
 | Battery-backed clock | Present (RX8130). The `timesync` [service](file_formats/services.md) sets it from the network once the machine is online; **Set Clock** is the manual way |
@@ -109,6 +116,14 @@ Most limits apply to both machines. These do not.
 | Resident services | Not carried in the Retro firmware. The clock, network and speech services are Modern only |
 | WAV playback | `play_wav` returns `false`. The audio is at the far end of a serial link, and shipping a clip across it before a note could sound is too slow to be worth it |
 | Mouse wheel | The same per-device rule as Modern |
+
+### Headless boards (M5Stack StickS3, AtomS3R)
+
+| | |
+|---|---|
+| Desktop | None. The board runs the one app named in `startup_app` (Welcome, as shipped) on its small screen (StickS3 240 x 135, AtomS3R 128 x 128) |
+| Setting up Wi-Fi | Over BLE from the [Family mruby Console](getting_started/console.md): power on with the button held to enter setup mode. With no Wi-Fi settings at all the board starts in setup mode by itself. BLE runs only in setup mode |
+| Apps at a time | Three, as on Retro (see [Heap Size](#heap-size)) |
 
 ### Studio (the browser build)
 

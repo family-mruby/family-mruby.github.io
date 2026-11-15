@@ -119,17 +119,26 @@ speaker = 1
 timeout_ms = 3000
 ```
 
+Or synthesise in the cloud, with no PC. The API key goes in a file of its own,
+`/home/secrets.toml`, not in the service list:
+
+```toml
+# /home/secrets.toml
+[openai]
+api_key = "sk-..."
+```
+
 ```toml
 [tts.config]
-api_key = "sk-..."                     # or synthesise in the cloud, with no PC
 cloud_model = "gpt-4o-mini-tts"
 cloud_voice = "alloy"
 cloud_timeout_ms = 10000
 ```
 
-The key sits there in plain text. This is a personal machine, and the development build
-serves `/home` over HTTP anyway — treat the machine as you would a notebook with your
-password taped inside it.
+The service list is an ordinary file that the remote file services hand to anyone who
+asks. `secrets.toml` is kept like the Wi-Fi password: never served over HTTP, and read over
+BLE only while **BLE Setup** is open on the machine. The key is still plain text on the
+flash, and only where it came from goes into the log, never the key itself.
 
 To run with no network, leave the `server` line where it is and simply let it be
 unreachable: a miss then costs one refused connection and a log line, and everything already

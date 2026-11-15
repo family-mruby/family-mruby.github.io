@@ -1,6 +1,6 @@
 # ハードウェア
 
-両機種の端子とピン配置です。どちらにするか迷っている場合は
+両機種の端子とピン配置と、そのほかのボードの紹介です。どちらにするか迷っている場合は
 [機種の選択](getting_started/choose_hardware.md) から読んでください。
 
 ## Modern (M5Stack Tab5)
@@ -17,7 +17,7 @@ Tab5 自体のハードウェアで、Family mruby はそのうち何を使い�
 | 無線 | ESP32-C6 を副チップとして搭載。WiFi と BLE を同時に使えます |
 | メモリ | PSRAM 32MB、フラッシュ 16MB |
 | 表示 | 本体内蔵 IPS 液晶、1280 x 720、MIPI-DSI、静電容量式タッチつき |
-| 表示バッファ | 426 x 240 の RGB332。P4 の PPA で 3 倍に拡大して液晶へ |
+| 表示バッファ | 426 x 240 の RGB332。P4 の PPA で 3 倍に拡大して液晶へ。`fullscreen_hires = true` のアプリが全画面の間は 640 x 360 (2 倍) |
 | 音声 | 内蔵スピーカーとヘッドホン端子。ヘッドホンを挿すとスピーカーは消音されます |
 | USB | USB-A ホスト端子 (キーボード・マウス・ハブ) と、電源・書き込み用の USB-C |
 | 拡張 | GROVE x1 |
@@ -71,8 +71,9 @@ USB-A ホスト端子は高速 OTG PHY 専用の端子に出ていて GPIO を�
 
 ### ストレージ (Modern)
 
-今のところ内蔵フラッシュのみです (16MB、LittleFS)。Tab5 の microSD 差込口は、まだ
-ファームウェアから使えるようになっていません。
+内蔵フラッシュ (16MB、LittleFS) と microSD 差込口です。差込口は P4 の SDMMC ホスト
+(4 ビット、GPIO 39〜44) につながり、`/mnt/sd` (`/sd` でも可) に長いファイル名の FAT として
+見えます。カード検出の線が無いので、カードは入っているものとして扱います。
 
 ## Retro (narya-board)
 
@@ -183,6 +184,32 @@ rtc.sync_system_clock
 ```
 
 詳細は [RX8900 API](api/peripherals.md#時計-rx8900--rx8130) を参照。
+
+## ヘッドレス機 (M5Stack StickS3・AtomS3R)
+
+ESP32-S3 を載せた市販の小型ボードで、同じ
+[インストーラ](https://family-mruby.github.io/family-mruby-installer/) から書き込みます。
+デスクトップは無く、それぞれ自分の小さな画面で 1 つのアプリを動かし、WiFi で
+[Asterism](api/network.md#asterism-端末をまたぐオブジェクトとトピック) のネットワークに加わります。
+
+| | StickS3 | AtomS3R |
+|---|---|---|
+| チップ | ESP32-S3 | ESP32-S3 (フラッシュ 8MB、PSRAM 8MB) |
+| 画面 | 240 x 135 | 128 x 128 |
+| ファームウェア | `fmruby-core-sticks3` | `fmruby-core-atoms3r` |
+
+起動するアプリは Welcome で、版、WiFi の状態、アドレス、次にすることを表示します。
+WiFi は [Family mruby コンソール](getting_started/console.md) から BLE で設定します。
+ボタンを押したまま電源を入れるとセットアップモードになります (WiFi の設定が何も無い
+ボードは自動でセットアップモードで起動します)。その後は、ほかのボードと同じファイルと
+アプリのエンドポイントを使って、WiFi でアプリを送って起動します。制約は
+[制約事項](limitations.md#画面の小さいヘッドレス機-m5stack-sticks3atoms3r) にあります。
+
+## NARYA v4 (開発中)
+
+ESP32-P4 モジュールと HDMI 出力を載せた自作のボードで、Modern が動きます。開発用で販売は
+しておらず、インストーラにもファームウェアはありません。`FmrbConst::BOARD` は
+`"naryav4"` になります。このページで Modern と言うときは Tab5 のことです。
 
 ## 関連
 
