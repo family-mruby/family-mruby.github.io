@@ -107,6 +107,23 @@ FmrbGfx.hsv_to_rgb(120, 255, 255) # → [r, g, b] (各 0..255)
 | `set_font(family, size = nil)` | フォント切替（後述） |
 | `current_font` / `current_text_size` | 現在のフォント / サイズ（読み取り専用） |
 
+### 幅に収める
+
+今のフォントでピクセル単位に測るので、ASCII でも日本語でも、どの画面でも同じ呼び方で
+使えます。状態は持ちません。
+
+| メソッド | 用途 |
+|---|---|
+| `fit_text(str, width [, mark, mark_width, font])` | 収まる文字列はそのまま返ります。収まらなければ `width` で切り、`mark` (`"…"`、`".."`) を渡していれば末尾に付けます |
+| `wrap_text(str, width)` | 1 行か 2 行の配列を返します。残りが 1 行に収まれば最後の空白で、そうでなければ幅で折り、2 行目がまだ長ければ `…` で詰めます |
+| `draw_text_lines(x, y, str, width, color, line_h)` | `wrap_text` の行を `line_h` 間隔で描き、最後の行の下の y を返します |
+| `draw_button(x, y, w, h, label, fill, fg [, radius])` | 角の丸いボタンの絵。`fill` で塗り、`label` を `fg` で中央に描きます。絵だけなので、クリックは [`FmrbUI::HitAreas`](ui.md#画面をまるごと描くときのクリック範囲-fmrbuihitareas) と組み合わせます |
+
+```ruby
+@gfx.draw_text(x, y, @gfx.fit_text(title, 100, "…"), theme_fg)
+@gfx.draw_button(x, y, 60, 16, "OK", theme_accent, theme_fg_light)
+```
+
 ## 日本語テキスト・フォント切替
 
 `set_font(family, size)` で日本語フォントに切り替えると、UTF-8 文字列をそのまま描画できます。

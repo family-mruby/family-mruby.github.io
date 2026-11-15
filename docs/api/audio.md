@@ -131,6 +131,16 @@ end
 
 Calling `play(path, track:)` with different track numbers simultaneously enables parallel playback on separate tracks (implementation dependent).
 
+### The music's own volume
+
+```ruby
+@audio.main_volume = 30   # percent, 100 to start with
+```
+
+Only the music changes — what `play` and `play_slot` play on the MAIN sound chip. Sound
+effects (SUB), WAVs and the machine's volume stay where they are, and it goes back to 100
+when the app closes. The mahjong table uses it for a BGM that sits under the effects.
+
 ## NSF File Playback
 
 NES Sound Format is supported.
@@ -140,6 +150,20 @@ NES Sound Format is supported.
 ```
 
 A playback GUI sample is available in `tool/nsf_player.app.rb`. For details, see [Audio File Formats](../file_formats/audio_formats.md#nsf-nes-sound-format).
+
+### When a song is over (`nsf_status`)
+
+An NSF has no length, so the audio side decides when a song is over — silence, its loop
+heard twice, or a time limit — and stops it. Ask about once a second and move on when it is
+over (development branch, after 3.0.0):
+
+```ruby
+st = @audio.nsf_status            # nil when there is no answer
+next_song if st && st[:state] == FmrbAudio::NSF_ENDED
+```
+
+`st[:state]` is `NSF_IDLE`, `NSF_PLAYING`, `NSF_FADING` or `NSF_ENDED`; `st[:reason]` says why
+it ended: `NSF_END_SILENCE`, `NSF_END_LOOP` or `NSF_END_LIMIT`.
 
 ## Cleanup
 

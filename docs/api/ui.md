@@ -124,6 +124,34 @@ Call `flush` after drawing your own picture, so `present` happens once.
 Wiping the user area is not on this list: [`clear_user_area`](fmrb_app.md#window-operations)
 redraws the window frame and marks the widgets itself.
 
+## Click targets for a screen drawn whole (`FmrbUI::HitAreas`)
+
+A game table or any screen that redraws everything each time does not need widgets — only
+to know what was clicked. `FmrbUI::HitAreas` keeps that list and draws nothing; the button
+picture is [`FmrbGfx#draw_button`](fmrb_gfx.md#fitting-text-into-a-width). Do not mix it with
+the widgets above.
+
+```ruby
+@hits = FmrbUI::HitAreas.new
+
+# while drawing
+@hits.clear
+@gfx.draw_button(x, y, 60, 16, "OK", theme_accent, theme_fg_light)
+@hits.add(:ok, x, y, 60, 16)
+
+# in on_event
+case @hits.id_at(ev[:x], ev[:y])
+when :ok then close_dialog
+end
+```
+
+| Method | |
+|---|---|
+| `clear` | Empty the list, before drawing |
+| `add(id, x, y, w, h [, data])` | Add a target. It lasts until the next `clear` |
+| `at(x, y)` | `[id, x, y, w, h, data]` of the target at the point, or `nil`. Where targets overlap, the one added first wins |
+| `id_at(x, y)` | Just the id, or `nil` |
+
 ## Related
 
 - [FmrbApp](fmrb_app.md) — the app the box is attached to

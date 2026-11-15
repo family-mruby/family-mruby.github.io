@@ -124,6 +124,33 @@ user area を消すことはこの一覧に入っていません。
 [`clear_user_area`](fmrb_app.md#ウィンドウ操作) がウィンドウ枠の描き直しと部品の再描画マークを
 やってくれます。
 
+## 画面をまるごと描くときのクリック範囲 (`FmrbUI::HitAreas`)
+
+ゲームの卓のように毎回全部を描き直す画面には部品は要らず、何が押されたかが分かれば
+足ります。`FmrbUI::HitAreas` はその一覧を持つだけで、何も描きません。ボタンの絵は
+[`FmrbGfx#draw_button`](fmrb_gfx.md#幅に収める) です。上の部品とは混ぜないでください。
+
+```ruby
+@hits = FmrbUI::HitAreas.new
+
+# 描くとき
+@hits.clear
+@gfx.draw_button(x, y, 60, 16, "OK", theme_accent, theme_fg_light)
+@hits.add(:ok, x, y, 60, 16)
+
+# on_event で
+case @hits.id_at(ev[:x], ev[:y])
+when :ok then close_dialog
+end
+```
+
+| メソッド | |
+|---|---|
+| `clear` | 一覧を空にする。描く前に呼ぶ |
+| `add(id, x, y, w, h [, data])` | クリック範囲を足す。次の `clear` まで有効 |
+| `at(x, y)` | その点にある範囲の `[id, x, y, w, h, data]`、無ければ `nil`。重なっているときは先に足した方 |
+| `id_at(x, y)` | id だけ。無ければ `nil` |
+
 ## 関連
 
 - [FmrbApp](fmrb_app.md) — 部品箱を付ける相手

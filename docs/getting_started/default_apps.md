@@ -9,7 +9,10 @@ Everything below ships on the device. Open the Launcher from the system menu (or
 
 !!! tip "The list is built at boot"
     The launcher scans for apps once, when the desktop starts. After you add a file,
-    right-click inside the launcher window to rescan.
+    press the **Reload** button in the launcher's title bar (or `F5`) to rescan.
+
+A few apps also sit on the desktop itself as icons — see
+[The Desktop](desktop.md#icons-on-the-desktop).
 
 Apps live under `/app`, grouped into directories. What follows is grouped the same way.
 The samples, sprites, sounds and slide decks they read live under `/usr/share`; anything
@@ -113,6 +116,7 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 | PicoRabbit+ | Presents a slide deck written in Markdown, fullscreen. It opens on a list of every deck it can find — yours under `/home/slides`, the samples under `/usr/share/samples/slides`, and the SD card — and can write a deck out as one picture per slide |
 | GPIO Viewer | Live pin status for every GPIO, colour-coded by what is using it |
 | Receiving | Whether this machine accepts files and apps sent from other machines over Asterism, and from whom |
+| Welcome | The startup app of the headless boards (StickS3, AtomS3R): the version, the Wi-Fi state and address, and how to go on. Not in the launcher; it opens on the desktop too if you start it by path |
 
 <div align="center">
   <img src="/images/picorabbit.png" width="620" alt="A slide presented fullscreen, with a rabbit and a turtle on a track along the bottom and the slide number at the right">
@@ -147,7 +151,6 @@ Most apps run on both machines. A few depend on hardware only one of them has:
 |---|---|
 | Mic Spectrum, IMU, VideoPlay | Modern only — the microphone, the six-axis sensor |
 | NTSC Test | Retro only — it adjusts the composite video output |
-| SD Test | Retro only — Modern's microSD is not wired up in the firmware yet |
 | Weather, Net Test | Need Wi-Fi configured. See [Network](../api/network.md) |
 | LED Matrix, I2C Kbd | Need something wired to the GROVE port |
 

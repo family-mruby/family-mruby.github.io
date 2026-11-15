@@ -254,6 +254,29 @@ the machine's theme and the user's [colour overrides](../file_formats/colors.md)
 | `theme_border` | Rules, boxes, muted text |
 | `theme_fg_light` | Ink on the accent or on a button |
 
+## Settings and remembered state
+
+Two small tables an app can keep without opening files itself. Both are TOML, take strings,
+integers and `true`/`false`, and read as `{}` when the file is missing or broken.
+
+| Method | Where | For |
+|---|---|---|
+| `app_settings` / `save_app_settings(hash)` | `/home/<app_handle_name>.toml` | The user's choices (a player name, a level). Saving rewrites only the keys given, so comments the user wrote stay |
+| `app_state` / `save_app_state(hash)` | `/tmp/<app_handle_name>.state.toml` | What to come back to next time, such as the last folder. Lasts until the machine restarts, and is written only when a value changed |
+
+```ruby
+def on_create
+  @dir = app_state["dir"] || "/home"
+end
+
+def on_destroy
+  save_app_state("dir" => @dir)
+end
+```
+
+`app_handle_name` comes from the app's metadata, or else from the file name. The File
+Manager uses `app_state` to reopen in the folder it was closed in.
+
 ## What the app can read
 
 | | Description |

@@ -130,6 +130,16 @@ end
 
 複数の `play(path, track:)` を異なる track で同時に呼ぶと、別トラックとして並行再生されます（実装依存）。
 
+### 曲だけの音量
+
+```ruby
+@audio.main_volume = 30   # パーセント。最初は 100
+```
+
+変わるのは曲だけ、つまり `play` と `play_slot` が MAIN の音源で鳴らすものです。効果音
+(SUB)、WAV、本体の音量はそのままで、アプリを閉じると 100 に戻ります。麻雀の卓は、効果音の
+下に BGM を置くのに使っています。
+
 ## NSF ファイル再生
 
 NES Sound Format に対応しています。
@@ -139,6 +149,19 @@ NES Sound Format に対応しています。
 ```
 
 `tool/nsf_player.app.rb` に再生 GUI のサンプルがあります。詳細は [音声ファイルフォーマット](../file_formats/audio_formats.md#nsf-nes-sound-format) を参照。
+
+### 曲の終わりを知る (`nsf_status`)
+
+NSF には長さが無いので、曲の終わりは音の側が決めて (無音、ループを 2 周、時間の上限)
+止めます。1 秒に 1 回ほど尋ね、終わっていたら次の曲へ進みます (開発版。3.0.0 の後):
+
+```ruby
+st = @audio.nsf_status            # 答えが無いときは nil
+next_song if st && st[:state] == FmrbAudio::NSF_ENDED
+```
+
+`st[:state]` は `NSF_IDLE`・`NSF_PLAYING`・`NSF_FADING`・`NSF_ENDED` のどれか、`st[:reason]` は
+終わった理由で `NSF_END_SILENCE`・`NSF_END_LOOP`・`NSF_END_LIMIT` のどれかです。
 
 ## クリーンアップ
 

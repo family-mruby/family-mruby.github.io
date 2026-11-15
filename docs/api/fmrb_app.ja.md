@@ -250,6 +250,29 @@ when :gamepad_axis
 | `theme_border` | 罫線、囲み、控えめな文字 |
 | `theme_fg_light` | 強調色やボタンの上に乗る文字の色 |
 
+## 設定と、覚えておく状態
+
+アプリが自分でファイルを開かずに持てる、小さな表が 2 つあります。どちらも TOML で、
+文字列・整数・`true`/`false` を入れられ、ファイルが無いか壊れているときは `{}` として読めます。
+
+| メソッド | 置き場所 | 用途 |
+|---|---|---|
+| `app_settings` / `save_app_settings(hash)` | `/home/<app_handle_name>.toml` | 利用者の選択 (名前やレベルなど)。保存は渡したキーの行だけを書き換えるので、利用者が書いたコメントは残ります |
+| `app_state` / `save_app_state(hash)` | `/tmp/<app_handle_name>.state.toml` | 次に開いたときに戻る所 (最後に開いたフォルダなど)。本体を再起動するまで残り、値が変わったときだけ書きます |
+
+```ruby
+def on_create
+  @dir = app_state["dir"] || "/home"
+end
+
+def on_destroy
+  save_app_state("dir" => @dir)
+end
+```
+
+`app_handle_name` はアプリのメタデータから、無ければファイル名から決まります。File Manager は
+`app_state` を使って、閉じたときのフォルダで開き直します。
+
 ## アプリから読めるもの
 
 | | 内容 |

@@ -1,7 +1,7 @@
 # The Desktop
 
-The desktop is the same on both machines: a menu bar across the top, the wallpaper below it,
-and windows on top of that.
+The desktop is the same on both machines: a menu bar across the top, the wallpaper below it
+with a column of app icons, and windows on top of that.
 
 <div align="center">
   <img src="/images/tab5_desktop.png" width="640" alt="The desktop">
@@ -13,14 +13,15 @@ Everything the system wants to tell you lives in this 13-pixel strip.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│ Family mruby  ▪▪          137KB  A  B  ▂▄▆   08/07 21:04:11         │
+│ Family mruby  ▪▪       137KB  A  B  ▂▄▆  ◁)  08/07 21:04:11   ⏻    │
 └─────────────────────────────────────────────────────────────────────┘
-  ↑             ↑           ↑      ↑  ↑  ↑     ↑
-  |             |           |      |  |  |     clock
-  |             |           |      |  |  Wi-Fi
-  |             |           |      |  BLE
-  |             |           |      kana
-  |             |           RAM
+  ↑             ↑        ↑      ↑  ↑  ↑    ↑    ↑               ↑
+  |             |        |      |  |  |    |    clock           power
+  |             |        |      |  |  |    speaker (mute)
+  |             |        |      |  |  Wi-Fi
+  |             |        |      |  BLE
+  |             |        |      kana
+  |             |        RAM
   |             taskbar
   system menu
 ```
@@ -114,10 +115,25 @@ Signal bars, just left of the clock.
 **Click the bars** to open the Network dialog, which shows the address the device was given.
 See [Connecting to Wi-Fi](wifi.md).
 
+### Sound
+
+A speaker just left of the clock. **Click it** to mute the whole machine, and again to
+bring the sound back; while muted the cell turns white and the waves become a cross. The
+apps keep playing underneath, so nothing is lost. The volume (0-10) is in **Config**, and
+both are remembered across a restart. An app reads them with `FmrbApp.audio_muted?` and
+`FmrbApp.audio_volume`.
+
 ### Clock
 
 Date and time. Set it from Set Clock; the timezone is a separate setting under
 **Config**.
+
+### Power
+
+The button at the right end. On a board it holds **Reset** (reboot). In the Linux program
+it holds what the PC offers: Lock, Suspend, Log Out (or Exit), Restart and Power off, each
+asking before it acts. It is not shown where there is nothing to offer (the simulator and
+Studio).
 
 ## The system menu
 
@@ -125,21 +141,24 @@ Date and time. Set it from Set Clock; the timezone is a separate setting under
   <img src="/images/tab5_menu.png" width="600" alt="The system menu">
 </div>
 
-  | Item | What it does |
-  |---|---|
-  | Launcher | The grid of installed apps |
-  | Editor | The editor. It is built into the firmware, and heads the launcher grid with the Shell and the App Store |
-  | File Manager | Browse the flash filesystem |
-  | Log Viewer | The system log |
-  | Monitor | Running tasks, memory and [services](../file_formats/services.md) |
-  | Set Clock | Date and time |
-  | Config | Language, keyboard layout, pointer speed, theme, wallpaper, timezone, Wi-Fi and BLE autostart, display margins |
-  | Storage | Clear cached files |
-  | Network | Wi-Fi state, address, hostname |
-  | BLE Start | Retro only, and only when BLE did not start at boot |
-  | Shortcuts | Every key that works here, in one list |
-  | About | Version and chip information |
-  | Reset | Reboot |
+| Item | What it does |
+|---|---|
+| Launcher | The grid of installed apps |
+| Editor | The editor. It is built into the firmware, and heads the launcher grid with the Shell and the App Store |
+| File Manager | Browse the flash filesystem |
+| Log Viewer | The system log |
+| Monitor | Running tasks, memory and [services](../file_formats/services.md) |
+| Set Clock | Date and time |
+| Config | Language, keyboard layout, pointer speed, theme, wallpaper, timezone, volume, Wi-Fi and BLE autostart, display margins |
+| Mute / Unmute | The same switch as the speaker in the menu bar |
+| Storage | Clear cached files |
+| Network | Wi-Fi state, address, hostname, and the [Wi-Fi page](wifi.md) |
+| BLE Start | Retro only, and only when BLE did not start at boot |
+| BLE Setup | Boards only. Opens a few minutes in which the [web console](console.md) may read and write the Wi-Fi and Asterism settings and the keys; it counts down, and choosing it again closes it |
+| Shortcuts | Every key that works here, in one list |
+| About | Version and chip information |
+
+Reboot is the power button at the right end of the menu bar.
 
 Whatever Config changes is written back into `/etc/system_conf.toml`, keeping your
 comments and other settings intact. On hardware the dialog offers Save & Reboot for the
@@ -158,6 +177,18 @@ path the launcher uses. Empty means the ordinary desktop. A fullscreen app named
 takes the screen without the desktop showing first. Neither setting is in the Config
 dialog: edit the file in the Editor.
 
+## Icons on the desktop
+
+The wallpaper carries a column of icons on the left: the Launcher, the Editor, the Shell,
+the File Manager and a few apps (Flappy Demo, the BASIC demo, Breakout, the NSF player) as
+shipped. Double-click one to start it; windows sit on top of them. An app that is not on
+this machine is skipped.
+
+To change the set, right-click an app in the launcher (or select it and press `D`) and pick
+**Add to desktop** or **Remove from desktop**. The choice is written to
+`/home/desktop.toml`; delete that file to go back to the default set. In the Linux program
+the PC's own applications (a terminal, a browser) can sit there too.
+
 ## The launcher
 
 <div align="center">
@@ -167,9 +198,13 @@ dialog: edit the file in the Editor.
 Double-click an icon to start an app. Arrow keys move the selection and `Enter` starts it.
 
 !!! tip "The list is built once, at boot"
-    The launcher scans the filesystem when the desktop starts. After you add an app,
-    **right-click inside the launcher window** to rescan — otherwise your new app will not
-    appear until the next reboot.
+    The launcher scans the filesystem when the desktop starts. After you add an app, press
+    the **Reload** button in its title bar (or `F5`) to rescan — otherwise your new app will
+    not appear until the next reboot. Right-clicking empty space in the launcher offers
+    Reload too.
+
+Right-click an icon (on a Tab5, a two-finger tap), or press `Tab` on the selected one, for
+its menu: Add to desktop / Remove from desktop.
 
 ## Windows
 
@@ -179,7 +214,7 @@ Double-click an icon to start an app. Arrow keys move the selection and `Enter` 
 | Focus | Click anywhere in the window, or click its taskbar square |
 | Close | The button in the title bar, or `Ctrl` + `Q` |
 | Window menu | Right-click the title bar: **Send to** (move a movable app to another machine), **Reload** (start an app again from its edited file) and **Close** |
-| Resize | Drag the corner — only for apps that declare `resizable` |
+| Resize | Drag the triangle in the bottom-right corner — only windows that declare `resizable` have it |
 
 A click is decided on release, with a small movement tolerance, so a slightly shaky press
 does not turn into a drag.

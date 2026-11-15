@@ -107,6 +107,23 @@ Angles for `draw_arc` / `fill_arc` are integers in degrees. `r0` is the inner ra
 | `set_font(family, size = nil)` | Switch font (see below) |
 | `current_font` / `current_text_size` | Current font / size (read-only) |
 
+### Fitting text into a width
+
+Measured in pixels with the current font, so the same call works for ASCII and Japanese and
+on every screen. They remember nothing.
+
+| Method | Purpose |
+|---|---|
+| `fit_text(str, width [, mark, mark_width, font])` | A text that fits comes back unchanged. Otherwise it is cut to `width`, with `mark` (`"…"`, `".."`) appended when given |
+| `wrap_text(str, width)` | An array of one or two lines: broken at the last space when the rest fits, else at the width; a second line still too long ends in `…` |
+| `draw_text_lines(x, y, str, width, color, line_h)` | Draws the lines of `wrap_text`, `line_h` apart, and returns the y below the last one |
+| `draw_button(x, y, w, h, label, fill, fg [, radius])` | The picture of a rounded button: `fill` behind, `label` centred in `fg`. Only the picture — pair it with [`FmrbUI::HitAreas`](ui.md#click-targets-for-a-screen-drawn-whole-fmrbuihitareas) for the click |
+
+```ruby
+@gfx.draw_text(x, y, @gfx.fit_text(title, 100, "…"), theme_fg)
+@gfx.draw_button(x, y, 60, 16, "OK", theme_accent, theme_fg_light)
+```
+
 ## Japanese Text and Font Switching
 
 By switching to a Japanese font with `set_font(family, size)`, you can draw UTF-8 strings directly.
