@@ -75,7 +75,7 @@ battery-backed clock.
 | | What it is |
 |---|---|
 | [Studio](studio.md) | The whole system in a browser tab, nothing to install. Modern's screen |
-| The Linux program | Family mruby as one program on a Linux PC (amd64 `.deb`, attached to each release on GitHub; Ubuntu 26.04 or newer). Pick **Family mruby** at the login screen and it is the desktop, with the PC's own apps in Family mruby windows. Modern's screen, scaled to the display |
+| [The Linux program](linux.md) | Family mruby as one program on a Linux PC (amd64 `.deb`, attached to each release on GitHub; Ubuntu 26.04 or newer). Pick **Family mruby** at the login screen and it is the desktop, with the PC's own apps in Family mruby windows. Modern's screen, scaled to the display |
 | M5Stack StickS3 / AtomS3R | Small boards that run a single app and join an [Asterism](../api/network.md#asterism-objects-and-topics-across-machines) network, with no desktop. Flashed from the same Web Installer |
 
 ## What is different in your code

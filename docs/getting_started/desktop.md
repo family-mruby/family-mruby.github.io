@@ -130,7 +130,7 @@ Date and time. Set it from Set Clock; the timezone is a separate setting under
 
 ### Power
 
-The button at the right end. On a board it holds **Reset** (reboot). In the Linux program
+The button at the right end. On a board it holds **Reset** (reboot). In the [Linux program](linux.md#the-power-menu)
 it holds what the PC offers: Lock, Suspend, Log Out (or Exit), Restart and Power off, each
 asking before it acts. It is not shown where there is nothing to offer (the simulator and
 Studio).

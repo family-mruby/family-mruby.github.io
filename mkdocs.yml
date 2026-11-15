@@ -60,6 +60,8 @@ plugins:
             Family mruby Console: Family mruby コンソール
             Family mruby Studio (Web): Family mruby スタジオ (Web)
             Default Apps: 標準アプリ
+            Shell Commands: Shell のコマンド
+            The Linux Program: Linux 版
             Firmware Update: ファームウェア更新
             API Reference: API リファレンス
             Overview: 一覧
@@ -110,7 +112,9 @@ nav:
       - Connecting to Wi-Fi: getting_started/wifi.md
       - Family mruby Console: getting_started/console.md
       - Family mruby Studio (Web): getting_started/studio.md
+      - The Linux Program: getting_started/linux.md
       - Default Apps: getting_started/default_apps.md
+      - Shell Commands: getting_started/shell.md
       - Firmware Update: getting_started/firmware_update.md
       - Simulator: getting_started/simulator.md
   - API Reference:

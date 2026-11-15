@@ -36,7 +36,7 @@ Modern は、より高解像度のデジタルディスプレイを前提とし�
 今はTab5で使うことができます。
 
 [機種の選択](getting_started/choose_hardware.md) に詳細を記載しています。どちらのボードが無くても、
-同じシステムがブラウザのタブ ([スタジオ](getting_started/studio.md)) と Linux のパソコンのプログラムとして
+同じシステムがブラウザのタブ ([スタジオ](getting_started/studio.md)) と [Linux のパソコンのプログラム](getting_started/linux.md) として
 動きます。画面の無い小型機 (M5Stack StickS3、AtomS3R) は、端末どうしが Ruby のオブジェクトを
 呼び合い、動いているアプリを受け渡すネットワーク [Asterism](api/network.md#asterism-端末をまたぐオブジェクトとトピック) で
 ほかの端末に加わります。

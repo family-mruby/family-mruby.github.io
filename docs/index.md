@@ -39,8 +39,8 @@ and is meant to be used more seriously as a development environment. Today it ru
 Tab5.
 
 [Choose your hardware](getting_started/choose_hardware.md) has the details. Without either board, the
-same system runs in a browser tab ([Studio](getting_started/studio.md)) and as a program on a
-Linux PC, and small headless boards (M5Stack StickS3, AtomS3R) join the others over
+same system runs in a browser tab ([Studio](getting_started/studio.md)) and as a [program on a
+Linux PC](getting_started/linux.md), and small headless boards (M5Stack StickS3, AtomS3R) join the others over
 [Asterism](api/network.md#asterism-objects-and-topics-across-machines), the network on which
 machines call each other's Ruby objects and pass running apps between them.
 

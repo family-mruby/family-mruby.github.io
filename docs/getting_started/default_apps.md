@@ -27,7 +27,7 @@ pressing a letter on the desktop.
 | App | Key | What it does |
 |---|---|---|
 | Launcher | `L` | The app grid |
-| Shell | `S` | A command line |
+| Shell | `S` | A command line ([its commands](shell.md)) |
 | Editor | `E` | Write, run (`F5`) and debug your code |
 | App Store | | Fetches published apps over Wi-Fi and installs them under `/app/usr` |
 | File Manager | | Browse the flash filesystem |

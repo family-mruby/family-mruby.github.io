@@ -48,7 +48,10 @@
   トピックは型を宣言し、特定のオーナーを持たないデータは共有スペース (shared place) に置きます。3.0.0 とは通信の互換が
   ありません。 → [ネットワーク](api/network.md#asterism-端末をまたぐオブジェクトとトピック)
 - **端末の間でファイルとアプリを送る** (Asterism)。受け取るかどうか、誰から受け取るかは
-  「受け取り」アプリで決めます。
+  「受け取り」アプリで決めます。Shell の `move` は `amove` になり、`asend`・`anodes`・`areceive` が
+  加わりました。 → [Shell のコマンド](getting_started/shell.md#端末の間でアプリとファイルを運ぶ)
+- **Linux 版**: 画面全体の CRT 風の表示、電源メニューのログアウト、タッチパッドのタップと
+  タッチパネル、TLS のルータへの接続、arm64 のパッケージ。 → [Linux 版](getting_started/linux.md)
 - `/app/test` は、リリースのイメージと公開しているブラウザ版から外しました。
 
 ## 3.0.0 — 2026-11-07
@@ -59,7 +62,7 @@ Modern、Retro、画面の無い小型機、Linux 版、Studio が対象です�
 
 - **Linux 版**。Linux のパソコンで 1 つのプログラムとして動く Family mruby です。GitHub の
   リリースに amd64 の `.deb` (Ubuntu 26.04 以降) があり、ログイン画面で選びます。
-  → [機種の選択](getting_started/choose_hardware.md#ほかの動かし方)
+  → [Linux 版](getting_started/linux.md)
 - **画面の無い小型機**。M5Stack StickS3 と AtomS3R が、Asterism のネットワーク上で 1 つのアプリを
   動かします。Web Installer から書き込めます。
 - **動いているアプリを運ぶ**。`movable = true` を宣言したアプリは、イメージに書いて、同じ端末でも

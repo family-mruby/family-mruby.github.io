@@ -338,7 +338,7 @@ Pass root-relative paths (e.g. `/home/foo.txt`) or SD card paths like `/mnt/sd/.
 | `FmrbApp.clipboard` / `FmrbApp.set_clipboard(text)` | The shared clipboard |
 | `FmrbApp.app_meta(path)` | The metadata of an app file (`.app.toml` and `#---fmrb` merged) as a Hash of Strings, or `nil` |
 | `FmrbApp.pid` / `FmrbApp.script_path` | This app's process id, and the file it was started from |
-| `FmrbApp.checkpoint(pid)` / `FmrbApp.move(pid, to)` | Ask for another app to be written to an image, or moved to another machine (the shell's `checkpoint` / `move`) |
+| `FmrbApp.checkpoint(pid)` / `FmrbApp.move(pid, to)` | Ask for another app to be written to an image, or moved to another machine (the shell's `checkpoint` / [`amove`](../getting_started/shell.md#moving-apps-and-files-between-machines)) |
 | `FmrbApp._get_last_error` | Last app error (returns `{name:, error:}` if present) |
 
 ### System settings (`FmrbSystem`)
@@ -362,7 +362,7 @@ Calling one of these as `FmrbApp.<name>` is a `NoMethodError`.
 
 An app whose `.app.toml` says `movable = true` (and runs on mruby) can be written to an image
 and carried on from it — on the same machine, or on another one over Asterism (the window
-menu's Send to, the shell's `checkpoint` / `move`).
+menu's Send to, the shell's `checkpoint` / [`amove`](../getting_started/shell.md#moving-apps-and-files-between-machines)).
 
 | Method | Purpose |
 |---|---|

@@ -52,7 +52,11 @@ Apps written for 3.0.0 need small changes:
   carry declared types, and a shared place holds data with no single owner. Not compatible
   with 3.0.0 on the wire. → [Network](api/network.md#asterism-objects-and-topics-across-machines)
 - **Sending files and apps between machines** over Asterism, with the Receiving app deciding
-  whether, and from whom, this machine takes them.
+  whether, and from whom, this machine takes them. In the Shell, `move` is now `amove`, beside
+  `asend`, `anodes` and `areceive`. → [Shell Commands](getting_started/shell.md#moving-apps-and-files-between-machines)
+- **The Linux program**: a CRT look for the whole screen, Log Out in the power menu, touchpad
+  taps and touch screens, routers with TLS, and an arm64 package.
+  → [The Linux Program](getting_started/linux.md)
 - `/app/test` is left out of the release images and the public browser build.
 
 ## 3.0.0 — 2026-11-07
@@ -63,7 +67,7 @@ Applies to Modern, Retro, the headless boards, the Linux program and Studio.
 
 - **The Linux program.** Family mruby as one program on a Linux PC: an amd64 `.deb` on the
   GitHub release (Ubuntu 26.04 or newer), chosen at the login screen.
-  → [Choose your hardware](getting_started/choose_hardware.md#other-ways-to-run-it)
+  → [The Linux Program](getting_started/linux.md)
 - **Headless boards.** M5Stack StickS3 and AtomS3R run a single app on an Asterism network,
   flashed from the Web Installer.
 - **Moving a running app.** An app that declares `movable = true` can be written to an image

@@ -333,7 +333,7 @@ end
 | `FmrbApp.clipboard` / `FmrbApp.set_clipboard(text)` | 共有のクリップボード |
 | `FmrbApp.app_meta(path)` | アプリファイルの記述 (`.app.toml` と `#---fmrb` を合わせたもの) を文字列の Hash で。アプリでなければ `nil` |
 | `FmrbApp.pid` / `FmrbApp.script_path` | 自分のプロセス id と、起動したファイル |
-| `FmrbApp.checkpoint(pid)` / `FmrbApp.move(pid, to)` | ほかのアプリをイメージに書く・別の端末へ移すよう頼む (Shell の `checkpoint` / `move`) |
+| `FmrbApp.checkpoint(pid)` / `FmrbApp.move(pid, to)` | ほかのアプリをイメージに書く・別の端末へ移すよう頼む (Shell の `checkpoint` / [`amove`](../getting_started/shell.md#端末の間でアプリとファイルを運ぶ)) |
 | `FmrbApp._get_last_error` | 最後のアプリエラー（あれば `{name:, error:}`） |
 
 ### 本体の設定 (`FmrbSystem`)
@@ -357,7 +357,7 @@ end
 
 `.app.toml` に `movable = true` と書いた (mruby で動く) アプリは、イメージに書いて、そこから
 続けられます。同じ端末でも、Asterism でつながった別の端末でもかまいません (ウィンドウの
-メニューの「送る」、Shell の `checkpoint` / `move`)。
+メニューの「送る」、Shell の `checkpoint` / [`amove`](../getting_started/shell.md#端末の間でアプリとファイルを運ぶ))。
 
 | メソッド | 用途 |
 |---|---|
