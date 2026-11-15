@@ -69,11 +69,42 @@ Modern、Retro、画面の無い小型機、Linux 版、Studio が対象です�
   → [標準アプリ](getting_started/default_apps.md#ゲーム--appgame)
 - **全画面の高解像度**。`fullscreen_hires = true` のアプリは、Modern とスタジオで全画面の間だけ
   640x360 で動きます。
+- **消音と音量**。メニューバーのスピーカーを押すと本体全体が消音になり、Config に 0〜10 の
+  音量があります。どちらも覚えておきます。全機種と Studio で同じです。
+  → [デスクトップ](getting_started/desktop.md#音)
+- **デスクトップのアイコン**。Launcher、Editor、Shell、File Manager といくつかのアプリが壁紙に
+  並びます。ランチャーの右クリックのメニューで置いたり外したりできます。
+  → [デスクトップ](getting_started/desktop.md#デスクトップのアイコン)
+- **電源ボタン**がメニューバーの右端に付きました。Reset はシステムメニューからここへ移りました。
+- **BLE設定受付**。本体で開く数分間だけ、Web コンソールが WiFi・Asterism の設定とキーを
+  読み書きできます。それ以外のときにリモートから読まれることはありません。読み上げサービスの
+  API キーは、サービスの一覧から `/home/secrets.toml` へ移りました。
+  → [システムサービス](file_formats/services.md#読み上げ)
+- **エディタのフォント**。View → Font で 8・12・16 ピクセルから選べ、`/home/editor.toml` に
+  残ります。
+- **クリップボードを 1 つに**。全アプリで共有し、Linux 版では PC の、Studio ではページの
+  クリップボードとつながります。`FmrbApp.clipboard` / `FmrbApp.set_clipboard`。
+- **アプリの画面向けの小さな道具**。`@gfx` の `fit_text`・`wrap_text`・`draw_text_lines`・
+  `draw_button` と、画面をまるごと描くときの `FmrbUI::HitAreas`。
+  → [描画](api/fmrb_gfx.md#幅に収める)、[UI 部品](api/ui.md#画面をまるごと描くときのクリック範囲-fmrbuihitareas)
+- **アプリの設定と状態**。`app_settings` (`/home`) と `app_state` (`/tmp`)。File Manager は閉じたときの
+  フォルダで開き直します。 → [アプリ](api/fmrb_app.md#設定と覚えておく状態)
+- `FmrbAudio#main_volume=` で曲だけの音量を変えられます。 → [音声](api/audio.md#曲だけの音量)
+- 大きさを変えられるウィンドウには、右下の角につかむための三角が出ます。File Manager は
+  削除の前に確認します。
+- ランチャーの探し直しは、タイトルバーの **再読込** ボタン (か `F5`) になりました。
+
+### 変わったこと
+
+- **ESP32-S3 の端末のアプリのメモリ**。プールは全部で 3 つ (通常 1 つと大きい方 2 つ) で、
+  同時に動くユーザアプリは 3 つまでです。 → [制約事項](limitations.md#ヒープのサイズ)
+- WiFi の設定は `/home/wifi.toml` を先に、無ければ `/etc/wifi.toml` を読みます。
+- 実機の HTTPS は、全部入りの証明書の束ではなく、絞ったルート証明書の組を信頼します。
 
 ### 更新するとき
 
 core と graphics-audio のファームウェアは同じ版でなければなりません。Retro では両方のチップに
-書き込んでください。
+書き込んでください。開発版の漢字変換で使う辞書は 3.0.0 には含まれていません。
 
 ## 2.1.0 — 2026-09-09
 

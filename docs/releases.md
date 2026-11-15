@@ -74,11 +74,44 @@ Applies to Modern, Retro, the headless boards, the Linux program and Studio.
   → [Default Apps](getting_started/default_apps.md#games--appgame)
 - **A high-resolution fullscreen.** An app with `fullscreen_hires = true` runs at 640x360 while
   it is fullscreen on Modern and in Studio.
+- **Mute and volume.** A speaker in the menu bar mutes the whole machine with one click, and
+  Config has a volume from 0 to 10. Both are remembered, on every machine and in Studio.
+  → [The Desktop](getting_started/desktop.md#sound)
+- **Icons on the desktop.** The Launcher, the Editor, the Shell, the File Manager and a few
+  apps sit on the wallpaper; the launcher's right-click menu adds and removes them.
+  → [The Desktop](getting_started/desktop.md#icons-on-the-desktop)
+- **A power button** at the right end of the menu bar. Reset moved there from the system
+  menu.
+- **BLE Setup.** A few minutes, opened on the machine, in which the web console may read and
+  write the Wi-Fi and Asterism settings and the keys; outside it they are never read
+  remotely. The speech service's API key moved from the service list to `/home/secrets.toml`.
+  → [System Services](file_formats/services.md#speech)
+- **The editor's font.** View → Font picks 8, 12 or 16 pixels, kept in `/home/editor.toml`.
+- **One clipboard** for every app, joined to the PC's in the Linux program and to the page's in
+  Studio. `FmrbApp.clipboard` / `FmrbApp.set_clipboard`.
+- **Small helpers for app screens.** `fit_text`, `wrap_text`, `draw_text_lines` and
+  `draw_button` on `@gfx`, and `FmrbUI::HitAreas` for a screen drawn whole.
+  → [Drawing](api/fmrb_gfx.md#fitting-text-into-a-width), [UI Widgets](api/ui.md#click-targets-for-a-screen-drawn-whole-fmrbuihitareas)
+- **Settings and state for apps.** `app_settings` (in `/home`) and `app_state` (in `/tmp`); the
+  File Manager reopens in the folder it was closed in.
+  → [Application](api/fmrb_app.md#settings-and-remembered-state)
+- `FmrbAudio#main_volume=` sets the volume of the music alone. → [Sound](api/audio.md#the-musics-own-volume)
+- Resizable windows show a triangle in the bottom-right corner to drag. The File Manager asks
+  before it deletes.
+- The launcher's rescan is a **Reload** button in its title bar (or `F5`).
+
+### Changed
+
+- **App memory on the ESP32-S3 boards.** Three pools in all — one ordinary and two large — so
+  three user apps run at a time. → [Limitations](limitations.md#heap-size)
+- The Wi-Fi settings are read from `/home/wifi.toml` first, then `/etc/wifi.toml`.
+- HTTPS on the boards trusts a trimmed set of root certificates instead of the full bundle.
 
 ### Updating
 
 The core and the graphics-audio firmware must be the same version: on Retro, flash both
-chips.
+chips. The kanji dictionary for the development branch's kanji conversion is not part of
+3.0.0.
 
 ## 2.1.0 — 2026-09-09
 
