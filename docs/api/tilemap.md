@@ -4,28 +4,29 @@ A library for easily writing tile-based map rendering. Suitable for RPG-style gr
 
 | Class | Role |
 |---|---|
-| `TileSheet` | Wraps a tile image (a single BMP with tiles arranged in a grid). Can `stamp` individual tiles |
+| `TileSheet` | Wraps a tile image (a single PNG or BMP with tiles arranged in a grid). Can `stamp` individual tiles |
 | `TileMap` | Loads an `fmrb_map` JSON file and draws tiles layer by layer using `TileSheet#stamp` |
 
 Both classes are built into `picoruby-fmrb-app` and require no additional `require`.
 
 ## TileSheet
 
-Handles BMP tile sheet images (images with consecutive tiles arranged in a grid).
+Handles tile sheet images (images with consecutive tiles arranged in a grid): a PNG or an 8-bit RGB332 BMP, as [`SpriteImage#load_bmp`](sprite.md#spriteimage) reads them.
 
 ### Constructor
 
 ```ruby
-TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16)
+TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16, source: nil)
 ```
 
 | Argument | Purpose |
 |---|---|
 | `gfx` | `FmrbGfx` instance |
-| `path` | Path to a BMP already transferred to the graphics side (use `@gfx.transfer_file` to send it) |
+| `path` | Path to the picture already transferred to the graphics side (use `@gfx.sync_file` or `transfer_file` to send it) |
 | `cols:` | Number of columns in the sheet (in tiles) |
-| `rows:` | Number of rows. If `nil`, automatically estimated from the BMP size (assumes 8-bit BMP) |
+| `rows:` | Number of rows. If `nil`, read from the picture's header in `source:`, or, without it, estimated from the file size on the graphics side (an 8-bit BMP only) |
 | `tile_size:` | Pixel width and height of a single tile (default: 16) |
+| `source:` | This side's copy of the picture, the one sent with `sync_file`; its header gives the height. Pass it for a PNG when `rows:` is `nil` **(development version)** |
 
 Internally creates a `SpriteImage` with transparent color `0` and calls `load_bmp`.
 
@@ -45,11 +46,10 @@ Internally creates a `SpriteImage` with transparent color `0` and calls `load_bm
 ### Example
 
 ```ruby
-@gfx.transfer_file("/usr/share/sprites/test/tilesheet.bmp",
-                   "/usr/share/sprites/test/tilesheet.bmp")
-sheet = TileSheet.new(@gfx,
-                       "/usr/share/sprites/test/tilesheet.bmp",
-                       cols: 4, tile_size: 16)
+src = "/usr/share/sprites/test/tilesheet.png"
+@gfx.sync_file(src, dest: "/cache/app/mymap/tilesheet.png")
+sheet = TileSheet.new(@gfx, "/cache/app/mymap/tilesheet.png",
+                      cols: 4, tile_size: 16, source: src)
 sheet.stamp(0, dst_x: 0,  dst_y: 0)   # Stamp tile 0 at the top-left
 sheet.stamp(5, dst_x: 16, dst_y: 0)   # Stamp tile 5 to the right
 ```
@@ -117,7 +117,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
   "width": 20,
   "height": 15,
   "tile_size": 16,
-  "tilesheet": "/usr/share/sprites/test/tilesheet.bmp",
+  "tilesheet": "/usr/share/sprites/test/tilesheet.png",
   "tilesheet_cols": 4,
   "layers": [
     { "name": "ground", "data": [[0, 0, 1, ...], [...], ...] },
@@ -155,9 +155,9 @@ A complete RPG demo is available in `/app/game/rpg_demo/`. In fullscreen:
 
 - Left 176x176 (11x11 tiles): Field drawn with `TileMap` + `TileSheet`
 - Right 128x240: Panel displaying player coordinates / last event
-- Player is a separate BMP (16x16) controlled via `SpriteInstance` with arrow keys / D-pad
+- Player is a separate picture (16x16) controlled via `SpriteInstance` with arrow keys / D-pad
 
-This directory includes `.app.rb` / `.app.toml` along with `world.bmp`, `world.map.json`, and `player.bmp`. The launcher performs a 3-level scan so it also picks up `/app/<category>/<bundle>/*.app.toml`, allowing you to keep assets alongside the app.
+This directory includes `.app.rb` / `.app.toml` along with `world.png`, `world.map.json` and the player's pictures (`player_<direction>_<n>.png`). The launcher performs a 3-level scan so it also picks up `/app/<category>/<bundle>/*.app.toml`, allowing you to keep assets alongside the app.
 
 ## Related
 

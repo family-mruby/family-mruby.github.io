@@ -4,12 +4,27 @@ Family mruby が対応する画像・アイコン形式と、その作成・変�
 
 | 形式 | 用途 | 関連 API |
 |---|---|---|
-| BMP (RGB332) | 一般的な画像表示・スプライト | [BMP332](../api/utilities.md#bmp332) / [SpriteImage](../api/sprite.md#spriteimage) |
+| PNG | 1 枚の絵の表示、スプライト、タイルシート、壁紙、ランチャーのアイコン | [`FmrbGfx#create_image`](../api/fmrb_gfx.md#画像) / [SpriteImage](../api/sprite.md#spriteimage) |
+| BMP (RGB332) | スプライトとタイルシート、Ruby で画素を編集するとき | [BMP332](../api/utilities.md#bmp332) / [SpriteImage](../api/sprite.md#spriteimage) |
 | `.icon` | アプリアイコン（テキスト形式） | – |
+
+## PNG
+
+`FmrbGfx#create_image` と `load_image` は PNG を受けます。開発中の版では `SpriteImage#load_bmp`
+(と、それを使う `TileSheet`) も PNG を読めます。BMP とは先頭のバイトで見分けます。色は赤・緑・青の
+上位 3/3/2 ビットを残して RGB332 になり、透明はスプライトの `transparent_color` で決まります
+(PNG のアルファではありません)。
+
+システムに同梱の素材 (スプライト、タイルシート、壁紙、ランチャーのアイコン) は、使う色だけの
+パレットを持つ PNG (1・2・4・8 ビット/画素) です。同じ絵の 8 ビットの BMP と比べて 1/10〜1/60 の
+大きさで、小さいものはファイルシステムの 1 つのエントリに収まります。パレットの色が RGB332 を
+8 ビットに広げた値なら、読み込んだ結果は元の RGB332 の値そのものになります。
+
+[スプライトエディタ](#関連) が開いて保存できるのは、今も BMP だけです。
 
 ## BMP (RGB332)
 
-Family mruby が標準で扱う画像形式は、RGB332 配列を使用した 8bit BMP です。
+Family mruby が読む BMP は、RGB332 配列を使用した 8bit BMP です。
 
 1 ピクセルは 1 バイトで、各ピクセル値そのものを RGB332 色値として扱います。
 
@@ -101,6 +116,18 @@ icon = "/usr/share/icon/myapp.icon"
 | `.rb` | `/usr/share/icon/ruby.icon` |
 | `.lua` | `/usr/share/icon/lua.icon` |
 | `.bas` | `/usr/share/icon/basic.icon` |
+| `.py` | `/usr/share/icon/python.icon` |
+| `.wasm` | `/usr/share/icon/wasm.icon` |
+
+[WebAssembly のアプリ](../wasm_apps.md) は、ふつうは言語のアイコン (`c.icon`・`tinygo.icon`・
+`rust.icon`・`zig.icon`) を指定します。
+
+### ランチャーが読むもの
+
+`.icon` のテキストは元のデータです。ランチャーが読むのはその隣の絵 (`<名前>.png`、PNG が無ければ
+`<名前>.bmp`) で、12x12 の格子を 2 倍の大きさで描いたものです。自分のアイコンを作るときは、
+fmruby-core の `tools/gen_icon_png.rb` (か `rake icons`) で `.icon` から PNG を作り、2 つを並べて
+置きます **(開発版)**。
 
 ## 関連
 

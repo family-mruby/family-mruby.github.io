@@ -31,7 +31,7 @@ Internally, it sends `MSG_TYPE_APP_AUDIO` messages to the kernel, which are proc
 ### Playing a recording (`play_wav`)
 
 ```ruby
-@audio.play_wav("/usr/share/sounds/sine440_16k.wav")
+@audio.play_wav("/home/voice.wav")
 ```
 
 | Method | Purpose |
@@ -39,7 +39,10 @@ Internally, it sends `MSG_TYPE_APP_AUDIO` messages to the kernel, which are proc
 | `play_wav(path)` | Play a WAV mixed on top of the sound chip. `true` if it started |
 | `stop_wav` | Stop it |
 
-PCM 16-bit, mono, 8-48 kHz, up to 2 MB. It rides over whatever the sound chip is playing,
+Mono, 8-48 kHz, up to 2 MB, either 16-bit PCM or 4-bit IMA-ADPCM (WAV format `0x11`, about a
+quarter of the size; in the development version). An ADPCM file is decoded as it plays, so
+it takes no more memory than the file itself. `ffmpeg -i in.wav -ac 1 -c:a adpcm_ima_wav
+out.wav` makes one; the voices that ship with the system are stored this way. It rides over whatever the sound chip is playing,
 so a spoken line or a recorded chime does not interrupt the music. One clip at a time for
 the whole machine: starting another replaces it.
 

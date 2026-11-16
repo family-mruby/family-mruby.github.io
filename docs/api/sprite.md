@@ -48,7 +48,7 @@ SpriteImage.new(gfx,
 | `set_target` | Subsequent `@gfx.fill_rect` etc. draw into this image |
 | `reset_target` | Restore the drawing target to the screen canvas |
 | `draw { |gfx| ... }` | Syntactic sugar that makes this image the drawing target only within the block |
-| `load_bmp(path)` | Load a BMP file into the image (decoded on the graphics side, fast) |
+| `load_bmp(path)` | Load a picture into the image: a PNG or an RGB332 BMP, told apart by its first bytes (decoded on the graphics side, fast). PNG is in the development version |
 | `destroy` | Release resources |
 
 | Attribute | Description |
@@ -79,16 +79,20 @@ CACHE = "/cache/app/flappy"
 
 img = SpriteImage.new(@gfx, width: 16, height: 16,
                       transparent_color: 0, use_transparent: true)
-@gfx.sync_file("#{SRC}/bird_body.bmp", dest: "#{CACHE}/bird_body.bmp")
-img.load_bmp("#{CACHE}/bird_body.bmp")
+@gfx.sync_file("#{SRC}/bird_body.png", dest: "#{CACHE}/bird_body.png")
+img.load_bmp("#{CACHE}/bird_body.png")
 ```
 
 The bundled artwork lives under `/usr/share/sprites/<app>/`, and an app with its own bundle
 directory (like `rpg_demo`) keeps it beside its code. Either way the copy goes under
 `/cache`, which the system rebuilds on its own.
 
-The file is an RGB332 BMP — its bytes are colour values, not palette indices. A PNG is a
-different door: [`FmrbGfx#create_image`](fmrb_gfx.md#images). See
+The file is a PNG or an 8-bit BMP. A PNG's colours become RGB332 by keeping the top
+3/3/2 bits of red, green and blue, and its alpha is not transparency — the image's
+`transparent_color` is. A BMP's bytes are RGB332 colour values, not palette indices. The
+bundled artwork is small palette PNGs (in the development version; 3.0.0 reads BMP only).
+A whole picture to draw once goes through the other door,
+[`FmrbGfx#create_image`](fmrb_gfx.md#images). See
 [Image & Icon Files](../file_formats/image_formats.md).
 
 ## How many there can be

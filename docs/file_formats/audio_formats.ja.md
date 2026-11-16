@@ -235,7 +235,10 @@ APU の状態を丸ごと運ぶレジスタ書き込みだけを出力するの�
 
 ## WAV / MP3
 
-未対応です。FMSQ に変換するか、MID か NSF を使ってください。
+内蔵音源では鳴らせません。FMSQ に変換するか、MID か NSF を使ってください。録音した音は、
+Modern (と Linux 版・Studio) で [`FmrbAudio#play_wav`](../api/audio.md#録音した音を鳴らす-play_wav) を使って
+音源の音に重ねて鳴らせます。モノラルの WAV で、16bit の PCM か 4bit の IMA-ADPCM (ADPCM は
+開発中の版から) です。MP3 には対応していません。
 
 ## 直接合成 (`note_on` / `note_off`)
 

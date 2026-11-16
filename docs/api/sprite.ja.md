@@ -49,7 +49,7 @@ SpriteImage.new(gfx,
 | `set_target` | 以降の `@gfx.fill_rect` などをこの画像に描画 |
 | `reset_target` | 描画先を画面キャンバスに戻す |
 | `draw { |gfx| ... }` | ブロック内のみこの画像を描画先にする糖衣 |
-| `load_bmp(path)` | BMP ファイルを画像へ読み込み（グラフィックス側でデコード、高速） |
+| `load_bmp(path)` | 絵を画像へ読み込み。PNG か RGB332 の BMP で、先頭のバイトで見分けます（グラフィックス側でデコード、高速）。PNG は開発中の版から |
 | `destroy` | リソース解放 |
 
 | 属性 | 内容 |
@@ -80,16 +80,19 @@ CACHE = "/cache/app/flappy"
 
 img = SpriteImage.new(@gfx, width: 16, height: 16,
                       transparent_color: 0, use_transparent: true)
-@gfx.sync_file("#{SRC}/bird_body.bmp", dest: "#{CACHE}/bird_body.bmp")
-img.load_bmp("#{CACHE}/bird_body.bmp")
+@gfx.sync_file("#{SRC}/bird_body.png", dest: "#{CACHE}/bird_body.png")
+img.load_bmp("#{CACHE}/bird_body.png")
 ```
 
 同梱の素材は `/usr/share/sprites/<アプリ名>/` にあります。`rpg_demo` のように自分の
 ディレクトリを持つアプリは、コードの隣に素材を置いています。どちらの場合も写す先は
 `/cache` で、ここはシステムが作り直します。
 
-ファイルは RGB332 の BMP です。並んでいるバイトはパレットの番号ではなく色そのものです。
-PNG は別の入口になります ([`FmrbGfx#create_image`](fmrb_gfx.md#画像))。
+ファイルは PNG か 8 ビットの BMP です。PNG の色は、赤・緑・青の上位 3/3/2 ビットを残して
+RGB332 になります。アルファは透明になりません。透明にするのは画像の `transparent_color` です。
+BMP の並んでいるバイトはパレットの番号ではなく RGB332 の色そのものです。同梱の素材は小さな
+パレットの PNG です (開発中の版。3.0.0 は BMP だけを読みます)。1 枚の絵として描くものは
+もう 1 つの入口 [`FmrbGfx#create_image`](fmrb_gfx.md#画像) を使います。
 [画像・アイコンファイル](../file_formats/image_formats.md) も参照してください。
 
 ## いくつまで置けるか

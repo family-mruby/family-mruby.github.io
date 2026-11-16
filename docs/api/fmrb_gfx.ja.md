@@ -209,8 +209,8 @@ PicoRuby デモ (`/app/demo/picoruby.app.rb`) の Fonts のページで、既定
 画面に出すまでは 3 段になります。読める場所にファイルを置き、そこから画像を作り、描きます。
 
 ```ruby
-@gfx.sync_file("/usr/share/backgrounds/BG_sample.png")
-img = @gfx.create_image("/usr/share/backgrounds/BG_sample.png")
+@gfx.sync_file("/usr/share/backgrounds/bg_426x240.png")
+img = @gfx.create_image("/usr/share/backgrounds/bg_426x240.png")
 @gfx.draw_image(img[:id], x: 10, y: 20)
 @gfx.delete_image(img[:id])
 ```
@@ -218,7 +218,7 @@ img = @gfx.create_image("/usr/share/backgrounds/BG_sample.png")
 まとめて 1 行で書くこともできます。
 
 ```ruby
-@gfx.load_image("/usr/share/backgrounds/BG_sample.png", coord: :center)
+@gfx.load_image("/usr/share/backgrounds/bg_426x240.png", coord: :center)
 ```
 
 | メソッド | 戻り値 / 用途 |
@@ -232,10 +232,11 @@ img = @gfx.create_image("/usr/share/backgrounds/BG_sample.png")
 | `delete_image(id)` | 解放 |
 | `load_image(path, coord: nil)` | 転送・作成・描画・present・解放を 1 回で。`coord:` は `[x, y]` か `:center` |
 
-!!! note "形式が 2 つ、入口も 2 つ"
-    `create_image` が受けるのは PNG です。スプライトの素材は別物で、RGB332 の BMP を
-    [`SpriteImage#load_bmp`](sprite.md#spriteimage) で読みます。BMP を `create_image` に
-    渡しても例外にはならず、画面と同じ大きさの空の画像ができて何も出ません。
+!!! note "入口が 2 つ"
+    `create_image` が受けるのは PNG で、1 枚の絵として描くためのものです。スプライトやタイルの
+    素材はもう 1 つの入口 [`SpriteImage#load_bmp`](sprite.md#spriteimage) で読みます。開発中の版では、
+    こちらは RGB332 の BMP に加えて PNG も読めます。BMP を `create_image` に渡しても例外にはならず、
+    画面と同じ大きさの空の画像ができて何も出ません。
     [画像・アイコンファイル](../file_formats/image_formats.md) を参照してください。
 
 ### `draw_tile` の使いどころ

@@ -72,9 +72,17 @@ matrix, so it takes no GPIO of its own.
 
 ### Storage (Modern)
 
-Internal flash (16 MB, LittleFS) and the microSD slot. The slot is on the P4's SDMMC host
+Internal flash (16 MB) and the microSD slot. The slot is on the P4's SDMMC host
 (4-bit, GPIO 39-44) and appears as `/mnt/sd` (also `/sd`), FAT with long file names. There
 is no card-detect line, so the system assumes a card is in.
+
+The 16 MB of flash holds the firmware and the LittleFS filesystem (`/app`, `/home`, `/usr`,
+`/etc` ...). In the development version the Japanese fonts (the efont faces at 12 px, 12 px bold and 16 px,
+about 1.3 MB) have moved out of the firmware into a partition of their own at the end of the
+flash, and the filesystem is about 6.7 MB instead of 8 MB. The fonts are read straight from
+flash, so they take no RAM; the small 8 px font stays in the firmware and stands in for all
+sizes if the font partition is missing. The [installer](getting_started/firmware_update.md)
+writes all of it at once.
 
 ## Retro (narya-board)
 

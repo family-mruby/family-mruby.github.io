@@ -4,30 +4,31 @@
 
 | クラス | 役割 |
 |---|---|
-| `TileSheet` | タイル画像（タイルが並んだ 1 枚の BMP）をラップ。1 タイル単位で `stamp` できる |
+| `TileSheet` | タイル画像（タイルが並んだ 1 枚の PNG か BMP）をラップ。1 タイル単位で `stamp` できる |
 | `TileMap` | `fmrb_map` JSON ファイルを読み込み、レイヤごとに `TileSheet#stamp` を呼んで描画 |
 
 両クラスとも `picoruby-fmrb-app` に組み込みで、追加の `require` は不要です。
 
 ## TileSheet
 
-BMP 形式のタイルシート画像（連続したタイルが格子状に並んだ画像）を扱います。
+タイルシート画像（連続したタイルが格子状に並んだ画像）を扱います。形式は [`SpriteImage#load_bmp`](sprite.md#spriteimage) が読むものと同じで、PNG か 8 ビットの RGB332 の BMP です。
 
 ### コンストラクタ
 
 ```ruby
-TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16)
+TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16, source: nil)
 ```
 
 | 引数 | 用途 |
 |---|---|
 | `gfx` | `FmrbGfx` インスタンス |
-| `path` | グラフィックス側にすでに転送された BMP のパス（`@gfx.transfer_file` で送る） |
+| `path` | グラフィックス側にすでに転送された絵のパス（`@gfx.sync_file` か `transfer_file` で送る） |
 | `cols:` | シートの列数（タイル単位） |
-| `rows:` | 行数。`nil` なら BMP のサイズから自動推定（8bit BMP 前提） |
+| `rows:` | 行数。`nil` なら `source:` の絵のヘッダから読み、`source:` が無ければグラフィックス側のファイルの大きさから推定（8 ビットの BMP のときだけ） |
 | `tile_size:` | 1 タイルのピクセル幅・高さ（既定: 16） |
+| `source:` | こちら側にある元の絵 (`sync_file` で送ったもの)。ヘッダから高さを読みます。PNG で `rows:` が `nil` のときに渡します **(開発版)** |
 
-内部で透過色 `0` の `SpriteImage` を作り、BMP を `load_bmp` します。
+内部で透過色 `0` の `SpriteImage` を作り、絵を `load_bmp` します。
 
 ### メソッド
 
@@ -45,11 +46,10 @@ TileSheet.new(gfx, path, cols:, rows: nil, tile_size: 16)
 ### サンプル
 
 ```ruby
-@gfx.transfer_file("/usr/share/sprites/test/tilesheet.bmp",
-                   "/usr/share/sprites/test/tilesheet.bmp")
-sheet = TileSheet.new(@gfx,
-                       "/usr/share/sprites/test/tilesheet.bmp",
-                       cols: 4, tile_size: 16)
+src = "/usr/share/sprites/test/tilesheet.png"
+@gfx.sync_file(src, dest: "/cache/app/mymap/tilesheet.png")
+sheet = TileSheet.new(@gfx, "/cache/app/mymap/tilesheet.png",
+                      cols: 4, tile_size: 16, source: src)
 sheet.stamp(0, dst_x: 0,  dst_y: 0)   # 0 番目のタイルを左上に
 sheet.stamp(5, dst_x: 16, dst_y: 0)   # 5 番目のタイルを右に
 ```
@@ -117,7 +117,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
   "width": 20,
   "height": 15,
   "tile_size": 16,
-  "tilesheet": "/usr/share/sprites/test/tilesheet.bmp",
+  "tilesheet": "/usr/share/sprites/test/tilesheet.png",
   "tilesheet_cols": 4,
   "layers": [
     { "name": "ground", "data": [[0, 0, 1, ...], [...], ...] },
@@ -155,9 +155,9 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 
 - 左 176x176（11x11 タイル）: `TileMap` + `TileSheet` で描画したフィールド
 - 右 128x240: プレイヤー座標 / 直前イベントの表示パネル
-- プレイヤーは別 BMP（16x16）を `SpriteInstance` で矢印キー / D-pad 操作
+- プレイヤーは別の絵（16x16）を `SpriteInstance` で矢印キー / D-pad 操作
 
-このディレクトリには `.app.rb` / `.app.toml` と一緒に `world.bmp`、`world.map.json`、`player.bmp` が同梱されています。ランチャーは 3 階層スキャン で `/app/<category>/<bundle>/*.app.toml` も拾うので、アプリと一緒にアセットを置けます。
+このディレクトリには `.app.rb` / `.app.toml` と一緒に `world.png`、`world.map.json`、プレイヤーの絵 (`player_<向き>_<n>.png`) が同梱されています。ランチャーは 3 階層スキャン で `/app/<category>/<bundle>/*.app.toml` も拾うので、アプリと一緒にアセットを置けます。
 
 ## 関連
 

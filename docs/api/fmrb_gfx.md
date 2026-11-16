@@ -210,8 +210,8 @@ one on screen is therefore three steps: put the file where that side can read it
 image from it, draw it.
 
 ```ruby
-@gfx.sync_file("/usr/share/backgrounds/BG_sample.png")
-img = @gfx.create_image("/usr/share/backgrounds/BG_sample.png")
+@gfx.sync_file("/usr/share/backgrounds/bg_426x240.png")
+img = @gfx.create_image("/usr/share/backgrounds/bg_426x240.png")
 @gfx.draw_image(img[:id], x: 10, y: 20)
 @gfx.delete_image(img[:id])
 ```
@@ -219,7 +219,7 @@ img = @gfx.create_image("/usr/share/backgrounds/BG_sample.png")
 Or all of it at once:
 
 ```ruby
-@gfx.load_image("/usr/share/backgrounds/BG_sample.png", coord: :center)
+@gfx.load_image("/usr/share/backgrounds/bg_426x240.png", coord: :center)
 ```
 
 | Method | Returns / does |
@@ -233,11 +233,12 @@ Or all of it at once:
 | `delete_image(id)` | Release it |
 | `load_image(path, coord: nil)` | Sync, create, draw, present and delete in one call. `coord:` takes `[x, y]` or `:center` |
 
-!!! note "Two formats, two doors"
-    `create_image` takes a PNG. A sprite sheet is a different thing: an RGB332 BMP loaded
-    with [`SpriteImage#load_bmp`](sprite.md#spriteimage). Handing a BMP to `create_image`
-    does not raise — you get an empty image the size of the screen and nothing appears. See
-    [Image & Icon Files](../file_formats/image_formats.md).
+!!! note "Two doors"
+    `create_image` takes a PNG, a whole picture to draw. A sprite or a tile sheet goes
+    through the other door, [`SpriteImage#load_bmp`](sprite.md#spriteimage), which in the
+    development version reads a PNG as well as an RGB332 BMP. Handing a BMP to
+    `create_image` does not raise — you get an empty image the size of the screen and
+    nothing appears. See [Image & Icon Files](../file_formats/image_formats.md).
 
 ### When to use `draw_tile`
 

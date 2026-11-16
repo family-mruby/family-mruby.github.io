@@ -31,7 +31,7 @@ end
 ### 録音した音を鳴らす (`play_wav`)
 
 ```ruby
-@audio.play_wav("/usr/share/sounds/sine440_16k.wav")
+@audio.play_wav("/home/voice.wav")
 ```
 
 | メソッド | 用途 |
@@ -39,7 +39,10 @@ end
 | `play_wav(path)` | WAV を音源の音に重ねて鳴らす。鳴り始めたら `true` |
 | `stop_wav` | 止める |
 
-PCM 16bit・モノラル・8000〜48000Hz・2MB まで。音源が鳴らしている音の上に重なるので、
+モノラル・8000〜48000Hz・2MB まで。16bit の PCM か、4bit の IMA-ADPCM (WAV の形式 `0x11`。
+大きさは約 1/4。開発中の版から) を鳴らせます。ADPCM は鳴らしながら復号するので、ファイル
+そのもの以上のメモリは使いません。`ffmpeg -i in.wav -ac 1 -c:a adpcm_ima_wav out.wav` で
+作れます。システムに同梱の声はこの形式です。音源が鳴らしている音の上に重なるので、
 喋りや録音したチャイムで曲が途切れません。同時に鳴らせるのはシステム全体で 1 本です。次を
 鳴らすと入れ替わります。
 

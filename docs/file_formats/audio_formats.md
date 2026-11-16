@@ -236,7 +236,10 @@ FMSQ players. The same four-voice reduction applies.
 
 ## WAV / MP3
 
-Not supported. Convert to FMSQ, or use MID or NSF.
+The sound chip does not play them: convert to FMSQ, or use MID or NSF. A recording is
+played on top of the sound chip with [`FmrbAudio#play_wav`](../api/audio.md#playing-a-recording-play_wav)
+on Modern (and the Linux builds and Studio): a mono WAV, 16-bit PCM or 4-bit IMA-ADPCM
+(the latter in the development version). MP3 is not supported.
 
 ## Direct Synthesis (`note_on` / `note_off`)
 
