@@ -12,8 +12,8 @@ welcome to use it.
 | **The file and app endpoints beside it** | Also unauthenticated, and in the released build. Anyone who can reach the remote desktop can also list, read, write and delete files, and start or stop apps |
 | **BLE console and debug service** | Starts at boot by default on Retro and on Modern (Tab5, NARYA v4); turn it off with the BLE Auto Start setting (`ble_auto_start`). The headless AtomS3R and StickS3 run it only in setup mode. While it runs it uses no pairing, no bonding and no encryption (deliberately, because pairing breaks Web Bluetooth on Windows): anyone in radio range can connect, look at running apps and their variables, start or stop them, read the log, and read and write ordinary files. It cannot be stopped without a reboot |
 | **Remote debugger over TCP** | No authentication. It listens on all interfaces |
-| **Wi-Fi credentials** | Stored in plain text on the device, in `/home/wifi.toml` (what the Wi-Fi page writes) or `/etc/wifi.toml`. The remote file services do not serve them over HTTP, and over BLE only while BLE Setup is open on the machine |
-| **Service keys** | An API key for the speech service sits in plain text in `/home/secrets.toml`, kept like the Wi-Fi password. Everything else in `/home` the development build serves over HTTP |
+| **Wi-Fi credentials** | Stored in plain text on the device, in `/home/wifi.toml` (what the Wi-Fi page writes) or `/etc/wifi.toml`. 3.0.0's remote file services do not serve them over HTTP. In the development version they do: the file endpoints reach every path, keys and passwords included, so that `/home` can be backed up and restored over Wi-Fi. Over BLE they are readable only while BLE Setup is open on the machine |
+| **Service keys** | An API key for the speech service sits in plain text in `/home/secrets.toml`, kept like the Wi-Fi password: in the development version the file endpoints serve it over HTTP too, as they serve the rest of `/home` |
 | **Apps** | An app you download runs with the same rights as any other. There is no sandbox between apps and the filesystem |
 
 Use these features only on a network you trust, and at your own risk. Do not forward a port
@@ -54,9 +54,10 @@ You can check heap usage in the Monitor app.
 | Language | Status |
 |---|---|
 | Ruby (PicoRuby) | The main language. Everything documented here |
-| MicroPython | Usable, with real limits: one Python app at a time, no writing files, strings that are bytes, and a smaller standard library. Drawing, sprites and sound are there. See [MicroPython and BASIC](other_languages.md) |
+| MicroPython | Usable, with real limits: one Python app at a time, files read and written only whole (`FmrbFile`), strings that are bytes, and a smaller standard library. Drawing, sprites and sound are there. See [MicroPython and BASIC](other_languages.md) |
 | BASIC | Feature-complete as of 2.0. Every known difference from Family BASIC V3 is catalogued. See [MicroPython and BASIC](other_languages.md) |
 | Lua | A concept implementation. Not suitable for building a substantial application |
+| C, TinyGo, Rust, Zig | As [WebAssembly apps](wasm_apps.md), experimental, in the development version. Not on the ESP32-S3 boards (Retro, StickS3, AtomS3R). The SDK's names and shapes may still change |
 
 ## Waiting inside an app
 

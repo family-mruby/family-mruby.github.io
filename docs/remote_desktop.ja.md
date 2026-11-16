@@ -111,9 +111,22 @@ ruby tools/fmrb_rd_fs.rb <ip> push  ./slides /home/slides
 カレントディレクトリがあります (`cd`、`lcd`、`ls`、`get`、`put`、`pull`、`push`、
 `cat`、`launch`、`ps`)。
 
-扱えるのはアプリが使うパス (`/app`、`/home`、`/usr/share`、`/mnt/sd`) だけで、それ以外は
-実機側が断ります。`pull` と `push` は、反対側に同じ大きさのファイルがあれば飛ばします。
+3.0.0 で扱えるのはアプリが使うパス (`/app`、`/home`、`/usr/share`、`/mnt/sd`) だけで、それ以外と
+WiFi のパスワードなどの鍵は端末が断ります。開発版では鍵も含めてすべてのパスを扱えます (`..` は
+今も断ります)。`pull` と `push` は、反対側に同じ大きさのファイルがあれば飛ばします。
 `--force` を付けると全部写します。
+
+これで、書き込み直しの前後で `/home` を残すのが楽になります **(開発版)**。
+
+```
+ruby tools/fmrb_rd_fs.rb <ip> backup ./home-backup     # /home を鍵ごと退避
+ruby tools/fmrb_rd_fs.rb <ip> restore ./home-backup    # 書き込んだあとに戻す
+```
+
+`backup` は各ファイルを端末側の MD5 と照合し、最後に `manifest.json` を書きます。途中で切れたら、
+同じディレクトリでもう一度流せば続きから取ります。`restore` は違うものだけを送り、届いたファイルを
+1 つずつ確認します。端末にあって退避に無いファイルは一覧に出すだけで、消しません。退避には WiFi の
+パスワードやサービスの鍵が入るので、自分だけが読める場所に置いてください。
 
 `fmrb_rd_launch.rb`、`fmrb_rd_ps.rb`、`fmrb_rd_kill.rb` と組み合わせると、書き込み直し
 なしで「送る・起動する・見る・止める」の繰り返しができます。
@@ -143,7 +156,9 @@ ruby tools/fmrb_rd_snap.rb  <ip> out.jpg
 デバイスは小さな HTTP サーバを動かしています。`GET /stream` が MJPEG、`/ws` が入力を
 運ぶ WebSocket、`/ws_video` が H.264、`/status` が状態を返します。アプリは
 `POST /app/launch?path=`、`POST /app/kill?pid=`、`GET /app/list`、ファイルは
-`/fs/list`、`/fs/get`、`/fs/put`、`/fs/del`、`/fs/mkdir` です。
+`/fs/list`、`/fs/get`、`/fs/put`、`/fs/del`、`/fs/mkdir` です。開発版には `GET /fs/md5?path=`
+(ファイルの MD5 と大きさ。端末側で計算します)、`GET /fs/df` (空き容量)、`POST /sys/reboot` も
+あります。
 
 ```
 $ curl -s http://fmruby.local/status

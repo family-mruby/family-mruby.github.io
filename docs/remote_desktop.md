@@ -113,9 +113,24 @@ Give it only the address and you get a prompt instead, like an FTP client, with 
 directory on the device and another on your PC (`cd`, `lcd`, `ls`, `get`, `put`, `pull`,
 `push`, `cat`, `launch`, `ps`).
 
-Paths are the ones apps use — `/app`, `/home`, `/usr/share`, `/mnt/sd` — and the device
-refuses anything else. `pull` and `push` skip a file whose size already matches on the
-other side; `--force` copies everything.
+In 3.0.0 the paths are the ones apps use — `/app`, `/home`, `/usr/share`, `/mnt/sd` — and
+the device refuses anything else, the Wi-Fi password and other keys included. The
+development version reaches every path, keys included (`..` is still refused). `pull` and
+`push` skip a file whose size already matches on the other side; `--force` copies
+everything.
+
+That is what makes `/home` easy to keep across a re-flash **(development version)**:
+
+```
+ruby tools/fmrb_rd_fs.rb <ip> backup ./home-backup     # /home, keys and all
+ruby tools/fmrb_rd_fs.rb <ip> restore ./home-backup    # after flashing
+```
+
+`backup` checks every file against the device's MD5 and writes a `manifest.json` last; run
+it again on the same directory to finish an interrupted one. `restore` sends only what
+differs, checks each file after it lands, and lists files the device has that the backup
+does not, without deleting them. The backup holds your Wi-Fi password and service keys:
+keep it somewhere only you can read.
 
 With `fmrb_rd_launch.rb`, `fmrb_rd_ps.rb` and `fmrb_rd_kill.rb` beside it, the development
 loop is put, launch, look, kill — no re-flashing:
@@ -147,7 +162,8 @@ The device runs a small HTTP server. `GET /stream` is the MJPEG stream, `/ws` is
 WebSocket carrying input events as binary messages, `/ws_video` carries H.264, and `/status`
 returns a JSON summary you can poll. `POST /app/launch?path=`, `POST /app/kill?pid=` and
 `GET /app/list` are the app endpoints, and `/fs/list`, `/fs/get`, `/fs/put`, `/fs/del` and
-`/fs/mkdir` the file ones:
+`/fs/mkdir` the file ones. The development version adds `GET /fs/md5?path=` (a file's MD5
+and size, computed on the device), `GET /fs/df` (the free space) and `POST /sys/reboot`:
 
 ```
 $ curl -s http://fmruby.local/status
