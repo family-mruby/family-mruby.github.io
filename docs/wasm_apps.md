@@ -64,16 +64,18 @@ failing half-way.
 
 | Directory | In the launcher |
 |---|---|
-| `/app/tinygo` | TinyGo tour, TinyGo bounce (a small animation) |
+| `/app/tinygo` | TinyGo tour |
 | `/app/rust` | Rust tour |
 | `/app/zig` | Zig tour |
 | `/app/c` | C tour |
 
-Each **tour** is the same app in its language, with the same screens: hello, then the main
-functions page by page — shapes, text and Japanese text, a picture, sound, files, the log,
-the clocks, the app's information, and key and pointer input. Open two side by side to
-compare how each language writes the same thing; the sources are the SDK's
-`<language>/examples/tour`.
+Each **tour** is the same app in its language, with the same screens, down to the pixel. Its
+ten pages: hello; shapes; text and Japanese text; a picture; sprites and tiles; sound, an
+FMSQ tune and a WAV voice; files; lines drawn with the pointer and the keys typed; the app's
+information and the clocks; the clipboard and the app's own wasm numbers. Keys 1-9 and 0 go
+to a page. Open two side by side to compare how each language writes the same thing; the
+sources are the SDK's `<language>/examples/tour` (the C one uses the SDK's helper header
+`c/fmrb.h`).
 
 Every directory also has `hello`, the smallest app (the one the SDK guide builds). It is
 hidden from the launcher; start it from the [Shell](getting_started/shell.md), for example

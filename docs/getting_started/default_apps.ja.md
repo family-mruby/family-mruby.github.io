@@ -88,8 +88,7 @@ Modern では、常駐する[サービス](../file_formats/services.md)を抱え
 
 | アプリ | |
 |---|---|
-| TinyGo tour・Rust tour・Zig tour・C tour | 4 つの言語で書いた同じアプリ。hello のあと、主な機能を 1 ページずつ見せます。図形、日本語、画像、音、ファイル、時計、入力 |
-| TinyGo バウンド | 小さなアニメーション |
+| TinyGo tour・Rust tour・Zig tour・C tour | 4 つの言語で書いた同じアプリで、10 ページあります。hello のあと、主な機能を 1 ページずつ見せます。図形、日本語、画像、スプライトとタイル、音と曲、ファイル、入力、時計、クリップボード |
 
 どのディレクトリにも、いちばん小さいアプリ `hello` が入っています。ランチャーには出さないので、
 Shell から起動します (`run /app/rust/hello.app.wasm`)。

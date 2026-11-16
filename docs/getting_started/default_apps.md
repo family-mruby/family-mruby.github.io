@@ -88,8 +88,7 @@ and Studio **(development version)**:
 
 | App | |
 |---|---|
-| TinyGo tour, Rust tour, Zig tour, C tour | The same app in four languages: hello, then the main functions page by page — shapes, Japanese text, a picture, sound, files, the clocks, input |
-| TinyGo bounce | A small animation |
+| TinyGo tour, Rust tour, Zig tour, C tour | The same app in four languages, ten pages: hello, then the main functions page by page — shapes, Japanese text, a picture, sprites and tiles, sound and a tune, files, input, the clocks, the clipboard |
 
 Each directory also holds `hello`, the smallest app, kept out of the launcher: run it from
 the Shell (`run /app/rust/hello.app.wasm`).
