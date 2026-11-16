@@ -9,7 +9,7 @@ same pixels. Nothing to install, no board required.
 
 Open the following URL and click the screen — the click is the power switch,
 and it is also what lets the browser make sound, so you will hear the boot
-jingle.
+chord.
 
 [https://family-mruby.github.io/studio/](/studio/)
 
@@ -37,6 +37,9 @@ normal.
 - Play the bundled apps and hear the internal sound chip
 - Install more from the App Store, which works here as it does on a board
 - Play a video: MJPEG runs in the page like it does on Modern
+- Run [WebAssembly apps](../wasm_apps.md) written in C, TinyGo, Rust or Zig, including
+  your own: drop a folder holding `<name>.app.wasm` and `<name>.app.toml` on the page
+  **(development version)**
 - Pick a screen size up to 852x480 and a zoom — a larger screen means more
   room, not bigger pixels
 - Go full screen. Where the browser allows it the machine keeps `Esc` for

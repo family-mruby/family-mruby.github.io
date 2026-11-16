@@ -35,6 +35,7 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 | Lua | `.app.lua` |
 | BASIC | `.app.bas` |
 | MicroPython | `.app.py` |
+| WebAssembly (C, TinyGo, Rust, Zig) | `.app.wasm` — see [WebAssembly Apps](../wasm_apps.md) **(development version)** |
 
 ## Key Reference
 
@@ -175,7 +176,7 @@ icon = "usr/share/icon/blockgame.icon"
 
 - Place the file under `/usr/share/icon/`
 - The format is a text-based format. See [Image and Icon Files](image_formats.md#icon-files-icon) for details
-- If `icon` is omitted, a default icon based on the main file extension is used (`.rb` -> ruby, `.lua` -> lua, `.bas` -> basic)
+- If `icon` is omitted, a default icon based on the main file extension is used (`.rb` -> ruby, `.lua` -> lua, `.bas` -> basic, `.py` -> python, `.wasm` -> wasm)
 
 ## Hiding from the Launcher
 

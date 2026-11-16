@@ -48,7 +48,7 @@ an argument ends at a space.
 
 | Command | What it does | Example |
 |---|---|---|
-| `ps` | Lists the running tasks (PID, type, state, name), background jobs and services | `ps` |
+| `ps` | Lists the running tasks (PID, type, engine, state, name), background jobs and services. The ENGINE column says what runs each app: `mruby`, `lua`, `basic`, `python`, `wasm` or `native` (ENGINE is in the development version) | `ps` |
 | `kill <pid>` | Ends a user app, by its PID from `ps` | `kill 12` |
 | `kill <service>` | Stops a [service](../file_formats/services.md) for this session | `kill hourly_chime` |
 | `kill_job <id>` | Stops a background job, by its JOB id from `ps` | `kill_job 1` |

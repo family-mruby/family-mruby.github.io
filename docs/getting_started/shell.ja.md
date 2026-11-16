@@ -48,7 +48,7 @@ Shell は Family mruby のコマンドラインです。ランチャー、デス
 
 | コマンド | 内容 | 例 |
 |---|---|---|
-| `ps` | 動いているタスク (PID、種類、状態、名前)、バックグラウンドのジョブ、サービスを一覧します | `ps` |
+| `ps` | 動いているタスク (PID、種類、エンジン、状態、名前)、バックグラウンドのジョブ、サービスを一覧します。ENGINE の欄は各アプリを動かしているもの (`mruby`・`lua`・`basic`・`python`・`wasm`・`native`) です (ENGINE は開発版から) | `ps` |
 | `kill <pid>` | ユーザのアプリを終了させます (PID は `ps` で) | `kill 12` |
 | `kill <service>` | [サービス](../file_formats/services.md) をこのセッションの間だけ止めます | `kill hourly_chime` |
 | `kill_job <id>` | バックグラウンドのジョブを止めます (`ps` の JOB の番号) | `kill_job 1` |

@@ -32,7 +32,7 @@ pressing a letter on the desktop.
 | App Store | | Fetches published apps over Wi-Fi and installs them under `/app/usr` |
 | File Manager | | Browse the flash filesystem |
 | Log Viewer | | The system log |
-| Monitor | | Running tasks, memory and services |
+| Monitor | | Running tasks, memory and services, and the WebAssembly runtime on its WASM page |
 | HID Inspector | `I` | Works out the report layout of a misbehaving USB mouse and writes it to [`/etc/hid_devices.toml`](../file_formats/hid_devices.md) |
 | NSF Player | `N` | The music player, close enough to hand to want a key of its own |
 
@@ -55,7 +55,7 @@ On Modern a service host also runs in the background, holding the resident
 | LED Matrix | Drives a WS2812B matrix from the GROVE port |
 | I2C Kbd | Reads an I2C keyboard |
 | Avatar | Moku, a small mascot in a [frameless window](../file_formats/app_toml.md#frameless-windows) that lives on the desktop. Drag it anywhere; clicks on its see-through parts go to what is behind |
-| Walk Scroller | A walker that takes a step each time a step counter on the [Asterism](../api/network.md#asterism-objects-and-topics-across-machines) network reports one. Not in Retro images |
+| Walk Scroller | A walker that takes a step each time a step counter on the [Asterism](../api/network.md#asterism-objects-and-topics-across-machines) network reports one. Not in the board images or the public browser build any more; the Linux program and the simulator have it, and a board gets it over Wi-Fi with `ruby tools/fmrb_rd_fs.rb <ip> extra walk_scroller` from the repository **(development version)** |
 
 ## Python — `/app/python`
 
@@ -80,6 +80,19 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 | App | |
 |---|---|
 | Lua app demo | The app framework from Lua |
+
+## WebAssembly — `/app/tinygo`, `/app/rust`, `/app/zig`, `/app/c`
+
+[WebAssembly apps](../wasm_apps.md), on the ESP32-P4 boards, the Linux program, the simulator
+and Studio **(development version)**:
+
+| App | |
+|---|---|
+| TinyGo tour, Rust tour, Zig tour, C tour | The same app in four languages: hello, then the main functions page by page — shapes, Japanese text, a picture, sound, files, the clocks, input |
+| TinyGo bounce | A small animation |
+
+Each directory also holds `hello`, the smallest app, kept out of the launcher: run it from
+the Shell (`run /app/rust/hello.app.wasm`).
 
 ## Games — `/app/game`
 
@@ -140,8 +153,10 @@ Retro.
 — an app that raises, one that fails to compile, one that saturates the input queue, MIDI
 timing benchmarks, an NTSC colour chart, a network check, SD card and tile-map checks. They
 are hidden from the launcher on every machine, but the files are there: run one from the
-editor or the shell when a device misbehaves. `/app/test` is in development builds only; the
-release images and the public browser build leave it out.
+editor or the shell when a device misbehaves. `/app/test` is in the simulator, the
+development browser build and a checkout of the repository only: no board image carries it any
+more, and the release images and the public browser build leave it out. The regression
+tools send the test apps they need to a board over Wi-Fi and take them away afterwards.
 
 ## Machine-specific apps
 
@@ -151,6 +166,7 @@ Most apps run on both machines. A few depend on hardware only one of them has:
 |---|---|
 | Mic Spectrum, IMU, VideoPlay | Modern only — the microphone, the six-axis sensor |
 | NTSC Test | Retro only — it adjusts the composite video output |
+| The WebAssembly apps | Not on Retro (ESP32-S3) |
 | Weather, Net Test | Need Wi-Fi configured. See [Network](../api/network.md) |
 | LED Matrix, I2C Kbd | Need something wired to the GROVE port |
 

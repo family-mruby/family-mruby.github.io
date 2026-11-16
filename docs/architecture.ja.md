@@ -17,7 +17,7 @@ Family mruby は、FreeRTOS の上に載った小さな多 VM オペレーティ
 |---|---|
 | ユーザアプリの枠 | Modern・Linux 版・Studio は 5 つ (`max_apps` で下げられます)。ESP32-S3 の端末 (Retro・StickS3・AtomS3R) は同時に 3 つまで |
 | アプリ 1 つあたりのヒープ | 機種によります。下の表を参照 |
-| 言語 | Ruby (PicoRuby)、MicroPython、BASIC、Lua |
+| 言語 | Ruby (PicoRuby)、MicroPython、BASIC、Lua。[WebAssembly のアプリ](wasm_apps.md) として WAMR の上で C・TinyGo・Rust・Zig (ESP32-S3 の基板を除く。開発版) |
 
 | 機種 | 通常のプール | `large_memory = 1` |
 |---|---|---|

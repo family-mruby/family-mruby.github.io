@@ -33,6 +33,16 @@
 | `python.app.py` | `picoruby.app.rb` の双子。ページも同じで、MicroPython で書かれています |
 | `pybench.app.py` | Python のアプリが 1 フレームで何をこなせるか。ゲームの書き方を決める 3 つのコスト |
 
+## WebAssembly — `/app/tinygo`・`/app/rust`・`/app/zig`・`/app/c`
+
+| アプリ | 見どころ |
+|---|---|
+| `tour.app.wasm` (言語ごとに 1 つ) | C・TinyGo・Rust・Zig で書いた同じアプリ。ページも同じなので、2 つを並べて読めば同じ呼び出しを言語ごとにどう書くかが分かります。ソースは [SDK](https://github.com/family-mruby/family-mruby-sdk) の `<言語>/examples/tour` |
+| `hello.app.wasm` (言語ごとに 1 つ) | いちばん小さいアプリ。SDK の手順書で作るもの |
+| `tinygo/bounce.app.wasm` | TinyGo の小さなアニメーション |
+
+[WebAssembly のアプリ](wasm_apps.md) を参照してください **(開発版)**。
+
 ## ゲーム — `/app/game`
 
 | アプリ | 見どころ | API |
@@ -63,7 +73,7 @@
 | `video_play.app.rb` | Motion JPEG をウィンドウの中で再生します | [`FmrbGfx#video_open`](api/fmrb_gfx.md#動画-modern-のみ) |
 | `imu.app.rb` | 6 軸センサを水準器として表示します | [`I2C`](api/peripherals.md#i2c) |
 
-`/app/debug` (開発用のビルドでは `/app/test` も) が入っていますが、わざと壊すためのもので、
+`/app/debug` (シミュレータでは `/app/test` も) が入っていますが、わざと壊すためのもので、
 ランチャーにも出ません。写して使うサンプルではありません。
 
 ## 関連

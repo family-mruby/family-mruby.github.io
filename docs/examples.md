@@ -34,6 +34,16 @@ A full list of what ships, in every language, is in
 | `python.app.py` | The twin of `picoruby.app.rb`, page for page, in MicroPython |
 | `pybench.app.py` | What fits in one frame of a Python app — the three costs that decide how a game is written |
 
+## WebAssembly — `/app/tinygo`, `/app/rust`, `/app/zig`, `/app/c`
+
+| App | What it shows |
+|---|---|
+| `tour.app.wasm` (one per language) | The same app in C, TinyGo, Rust and Zig, page for page: read two side by side to see how each language writes the same call. The sources are in the [SDK](https://github.com/family-mruby/family-mruby-sdk) (`<language>/examples/tour`) |
+| `hello.app.wasm` (one per language) | The smallest app, the one the SDK's guide builds |
+| `tinygo/bounce.app.wasm` | A small animation in TinyGo |
+
+See [WebAssembly Apps](wasm_apps.md) **(development version)**.
+
 ## Games — `/app/game`
 
 | App | What it shows | API |
@@ -64,7 +74,7 @@ A full list of what ships, in every language, is in
 | `video_play.app.rb` | A Motion JPEG file playing inside a window | [`FmrbGfx#video_open`](api/fmrb_gfx.md#video-modern-only) |
 | `imu.app.rb` | The six-axis sensor as a bubble level | [`I2C`](api/peripherals.md#i2c) |
 
-`/app/debug` (and, in development builds, `/app/test`) also exist, but they are there to break
+`/app/debug` (and, in the simulator, `/app/test`) also exist, but they are there to break
 things on purpose and are hidden from the launcher. They are not examples to copy.
 
 ## Related

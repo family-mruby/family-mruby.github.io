@@ -55,6 +55,7 @@ battery-backed clock.
 | USB host | USB-A port | USB-A port |
 | Wi-Fi / BLE | Both, at the same time (ESP32-C6) | Either one, not both (single radio) |
 | Remote desktop | Yes, over Wi-Fi in a browser | No |
+| [WebAssembly apps](../wasm_apps.md) (C, TinyGo, Rust, Zig) | Yes (development version) | No |
 | Expansion | 1x GROVE | 2x GROVE, battery-backed RTC |
 | Storage | Internal flash (16 MB) + microSD | Internal flash (16 MB) + microSD |
 | Firmware to flash | One (`fmruby-core-tab5`) | Two (`fmruby-core` + `fmruby-graphics-audio`) |

@@ -34,6 +34,7 @@ my_clock.app.toml
 | Lua | `.app.lua` |
 | BASIC | `.app.bas` |
 | MicroPython | `.app.py` |
+| WebAssembly (C・TinyGo・Rust・Zig) | `.app.wasm`。[WebAssembly のアプリ](../wasm_apps.md) を参照 **(開発版)** |
 
 ## キー一覧
 
@@ -173,7 +174,7 @@ icon = "usr/share/icon/blockgame.icon"
 
 - ファイルは `/usr/share/icon/` 以下に置きます
 - 形式は テキスト形式。詳細は [画像・アイコンファイル](image_formats.md#アイコンファイル-icon) を参照
-- `icon` を省略すると、本体ファイルの拡張子に応じた既定アイコンが使われます (`.rb` → ruby、`.lua` → lua、`.bas` → basic)
+- `icon` を省略すると、本体ファイルの拡張子に応じた既定アイコンが使われます (`.rb` → ruby、`.lua` → lua、`.bas` → basic、`.py` → python、`.wasm` → wasm)
 
 ## ランチャーから隠す
 
