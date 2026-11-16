@@ -37,6 +37,11 @@ Apps written for 3.0.0 need small changes:
   → [App Config](file_formats/app_toml.md#metadata-in-the-rb-file)
 - **Lua apps** run on a shell the system provides: define `on_create` / `on_update` /
   `on_event` and draw with the global `gfx`. → [Other languages](other_languages.md#lua)
+- **Lua and MicroPython follow Ruby's argument order.** Lua's `gfx:draw_text` is
+  `(x, y, text, color)`, and the sizes are functions: `FmrbApp.user_area_width()`,
+  `user_area_height()`, `window_width()`, `window_height()`. In MicroPython,
+  `_fmrb.read_file` and `_fmrb.file_size` gave way to `FmrbFile`, and `gfx.clear()` needs its
+  colour. → [Other languages](other_languages.md)
 
 ### New
 
@@ -57,7 +62,36 @@ Apps written for 3.0.0 need small changes:
 - **The Linux program**: a CRT look for the whole screen, Log Out in the power menu, touchpad
   taps and touch screens, routers with TLS, and an arm64 package.
   → [The Linux Program](getting_started/linux.md)
-- `/app/test` is left out of the release images and the public browser build.
+- **WebAssembly apps.** Apps written in C, TinyGo, Rust or Zig and compiled to WebAssembly
+  run on WAMR on the ESP32-P4 boards, the Linux program, the simulator and Studio (not on
+  the ESP32-S3 boards), with the same functions Ruby apps have. The SDK is
+  [family-mruby-sdk](https://github.com/family-mruby/family-mruby-sdk); the same tour app in
+  each language ships under `/app/tinygo`, `/app/rust`, `/app/zig` and `/app/c`, and an app
+  dropped on the Studio page runs there. → [WebAssembly Apps](wasm_apps.md)
+- **One definition for every language.** The functions apps call are generated from the
+  firmware's type definitions for Ruby, Lua, MicroPython and WebAssembly alike. Lua gained
+  sound, the log, the clipboard, the clocks, the window's state and files; MicroPython gained
+  the rest of `FmrbGfx` (arcs, `get_pixel`, masks, `blend_rect` ...), `FmrbApp.uptime_ms()`
+  and 64-bit integers. → [Other languages](other_languages.md)
+- **`FmrbFile`**: read, write, append, list and delete whole files by path, the same in every
+  language. → [Files & I/O](api/filesystem.md#whole-files-by-path-fmrbfile)
+- **A new boot.** The logo comes on like a CRT television, over a chord that rises a fifth,
+  and the desktop is up in about 1.2 seconds instead of 2.7.
+  → [The Desktop](getting_started/desktop.md#what-happens-before-the-desktop)
+- The error window closes with `Return` or `Esc` as well as a click. The Monitor has a page
+  for the WebAssembly runtime, `ps` in the Shell has an ENGINE column, and the launcher has an
+  icon per language.
+- **Smaller storage.** Sprites, tile sheets, wallpapers and icons are palette PNGs
+  (`SpriteImage#load_bmp` and `TileSheet` read PNG as well as BMP), and the voices are
+  IMA-ADPCM WAVs, which `play_wav` plays. On the ESP32-P4 boards the Japanese fonts moved to a
+  partition of their own. → [Image & Icon Files](file_formats/image_formats.md),
+  [Sound](api/audio.md#playing-a-recording-play_wav), [Hardware](hardware.md#storage-modern)
+- **`/home` over Wi-Fi.** The file endpoints reach every path, keys included, so `/home` can
+  be backed up before flashing and put back after.
+  → [Remote Desktop](remote_desktop.md#files-and-apps-over-wi-fi),
+  [Security](limitations.md#security)
+- `/app/test` and Walk Scroller are left out of every board's image and the public browser
+  build; they can be sent to a board over Wi-Fi.
 
 ## 3.0.0 — 2026-11-07
 

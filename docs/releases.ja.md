@@ -34,6 +34,10 @@
   両方あるときは `.app.toml` のキーが勝ちます。 → [アプリ設定](file_formats/app_toml.md#rb-ファイルの中の記述)
 - **Lua のアプリ**は本体が用意するアプリシェルの上で動きます。`on_create` / `on_update` / `on_event` を
   定義し、グローバルの `gfx` で描きます。 → [ほかの言語](other_languages.md#lua)
+- **Lua と MicroPython も Ruby の引数の順に。** Lua の `gfx:draw_text` は `(x, y, text, color)` に
+  なり、大きさは関数 (`FmrbApp.user_area_width()`・`user_area_height()`・`window_width()`・
+  `window_height()`) になりました。MicroPython の `_fmrb.read_file` と `_fmrb.file_size` は
+  `FmrbFile` に替わり、`gfx.clear()` には色が要ります。 → [ほかの言語](other_languages.md)
 
 ### 新しいこと
 
@@ -52,7 +56,33 @@
   加わりました。 → [Shell のコマンド](getting_started/shell.md#端末の間でアプリとファイルを運ぶ)
 - **Linux 版**: 画面全体の CRT 風の表示、電源メニューのログアウト、タッチパッドのタップと
   タッチパネル、TLS のルータへの接続、arm64 のパッケージ。 → [Linux 版](getting_started/linux.md)
-- `/app/test` は、リリースのイメージと公開しているブラウザ版から外しました。
+- **WebAssembly のアプリ**。C・TinyGo・Rust・Zig で書いて WebAssembly にコンパイルしたアプリが、
+  ESP32-P4 の基板、Linux 版、シミュレータ、Studio の WAMR の上で、Ruby のアプリと同じ関数を使って
+  動きます (ESP32-S3 の基板では動きません)。SDK は
+  [family-mruby-sdk](https://github.com/family-mruby/family-mruby-sdk) です。各言語の同じ tour の
+  アプリが `/app/tinygo`・`/app/rust`・`/app/zig`・`/app/c` に入り、Studio のページに投げ込んだ
+  アプリもそこで動きます。 → [WebAssembly のアプリ](wasm_apps.md)
+- **全部の言語に 1 つの定義**。アプリが呼ぶ関数は、ファームウェアの型定義から Ruby・Lua・MicroPython・
+  WebAssembly のどれにも生成します。Lua には音、ログ、クリップボード、時計、ウィンドウの状態、
+  ファイルが加わり、MicroPython には `FmrbGfx` の残り (円弧、`get_pixel`、マスク、`blend_rect` など)、
+  `FmrbApp.uptime_ms()`、64 ビットの整数が加わりました。 → [ほかの言語](other_languages.md)
+- **`FmrbFile`**。パスでファイルを丸ごと読む・書く・追記する・一覧する・消す。どの言語でも同じです。
+  → [ファイル・I/O](api/filesystem.md#パスで丸ごと読み書きする-fmrbfile)
+- **起動の演出を一新**。ブラウン管のテレビのようにロゴが出て、5 度上がる和音が鳴り、2.7 秒
+  かかっていたデスクトップまでが約 1.2 秒になりました。
+  → [デスクトップ](getting_started/desktop.md#デスクトップが出るまで)
+- エラーウィンドウはクリックのほか `Return`・`Esc` でも閉じます。Monitor に WebAssembly の
+  ランタイムのページ、Shell の `ps` に ENGINE の欄、ランチャーに言語ごとのアイコンが加わりました。
+- **ストレージを小さく**。スプライト、タイルシート、壁紙、アイコンはパレットの PNG になり
+  (`SpriteImage#load_bmp` と `TileSheet` は BMP に加えて PNG も読みます)、声は IMA-ADPCM の WAV に
+  なりました (`play_wav` で鳴ります)。ESP32-P4 の基板では、日本語フォントを専用のパーティションに
+  移しました。 → [画像・アイコンファイル](file_formats/image_formats.md)、
+  [音声](api/audio.md#録音した音を鳴らす-play_wav)、[ハードウェア](hardware.md#ストレージ-modern)
+- **`/home` を WiFi で**。ファイルのエンドポイントが鍵も含めてすべてのパスを扱うので、書き込みの前に
+  `/home` を退避し、あとで戻せます。 → [遠隔画面](remote_desktop.md#wifi-でファイルとアプリを扱う)、
+  [セキュリティ](limitations.md#セキュリティ)
+- `/app/test` と「歩いて進む」は、どの基板のイメージにも公開のブラウザ版にも入れないようにしました。
+  WiFi で基板に送れます。
 
 ## 3.0.0 — 2026-11-07
 
