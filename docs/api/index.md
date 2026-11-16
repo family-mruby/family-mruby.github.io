@@ -36,6 +36,7 @@ Lists all public Ruby APIs provided by Family mruby. Click each API name to jump
 | Class / Module | Role | Details |
 |---|---|---|
 | `IO` / `File` / `Dir` | File and directory operations | [Files & I/O](filesystem.md) |
+| `FmrbFile` | A whole file read or written by its path, the same in every app language | [Files & I/O](filesystem.md#whole-files-by-path-fmrbfile) |
 | `Log` | Logging | [Logging](log.md) |
 | `Net::HTTP` / WebSocket / TLS | Talking to the network | [Network](network.md) |
 | `FmrbAsterism::Link` / `Asterism::Connection` | Objects and topics shared with other machines over Asterism | [Network](network.md#asterism-objects-and-topics-across-machines) |
@@ -138,6 +139,8 @@ Messages are received via `_handle_system_control(msg)` through `on_control(msg)
 ### `IO` / `File` / `Dir`
 
 `File.open(path, mode, &block)`, `File.exist?` / `file?` / `directory?` / `size` / `delete`, `Dir.open(path)` / `Dir.read` / `Dir.mkdir`, etc.
+
+`FmrbFile.read(path)` / `write(path, data)` / `append` / `exist?` / `size` / `delete` / `mkdir` / `list(dir)` read and write whole files by path.
 
 ### `Log`
 

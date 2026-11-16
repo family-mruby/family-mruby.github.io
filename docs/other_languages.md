@@ -17,6 +17,13 @@ to the Ruby apps, start the same way, and run at the same time as each other.
 | `.py` | MicroPython | The same app framework as Ruby: windows, drawing, sprites, sound. One Python app at a time |
 | `.bas` | FMRuby BASIC | Family BASIC compatible. Its own text screen and sprites |
 | `.lua` | Lua 5.4 | Functions `on_create` / `on_update` / `on_event` and a global `gfx`; the system draws the window and runs the loop |
+| `.wasm` | WAMR | Apps written in C, TinyGo, Rust or Zig and compiled to WebAssembly on a PC. Not on the ESP32-S3 boards. See [WebAssembly Apps](wasm_apps.md) **(development version)** |
+
+The functions an app can call are defined once, in the firmware's type definitions, and each
+language's side is generated from there. Ruby, Lua, MicroPython and the WebAssembly languages
+therefore see the same names in the same argument order — `draw_text(x, y, text, color)`
+everywhere — with each language's own spelling for what Ruby writes as a Symbol, a keyword
+argument or a method ending in `?` (BASIC keeps its own statements).
 
 ---
 
@@ -44,9 +51,9 @@ PythonDemoApp().start()
 ```
 
 Windows, events and drawing are reachable through the built-in `_fmrb` module, wrapped in
-the framework classes an app subclasses. `FmrbApp`, `FmrbGfx`, `FmrbAudio`, `SpriteImage`,
-`SpriteInstance` and `Log` are already in the app's namespace — there is nothing to import
-for them.
+the framework classes an app subclasses. `FmrbApp`, `FmrbGfx`, `FmrbAudio`, `FmrbFile`,
+`SpriteImage`, `SpriteInstance` and `Log` are already in the app's namespace — there is
+nothing to import for them.
 
 The demos are `/app/python/python.app.py` (the twin of the PicoRuby demo, page by page) and
 `/app/game/breakout/breakout.app.py`, a whole game: sprites for the things that move, tiles
@@ -57,7 +64,8 @@ the other. Robo Explorer has a Python pilot as well.
 
 | | Ruby | Python |
 |---|---|---|
-| Time | `Machine.board_millis` | `ticks_ms()` |
+| Time | `Machine.board_millis` | `ticks_ms()`, or `FmrbApp.uptime_ms()` |
+| A query method | `FmrbFile.exist?(path)` | `FmrbFile.exist(path)` — the `?` is dropped |
 | String length | `String#length` counts characters | `len()` counts **bytes** |
 | Another file | `require "/app/..."` | `import mymodule` — beside the app, or `/usr/lib/python` |
 | The framework, from that file | Visible | **Not visible**. Pass what it needs as arguments |
@@ -93,6 +101,28 @@ audio.note_on(FmrbAudio.CH_PULSE2, 988, 12, 2, 0)       # an effect, on the othe
 Time an effect's end by `ticks_ms()`, not by counting frames: a heavy frame stretches the
 sound.
 
+The rest of Ruby's `FmrbAudio` is there too: `stop`, `pause`, `resume`, `nsf_status()` (a
+dict or `None`), `set_main_volume(percent)` (Ruby's `main_volume =`), `play_wav(path)`,
+`stop_wav()` and `load_fmsq(slot, data)`. `Log.info` and its siblings put the app's name at
+the head of the line, as they do in Ruby.
+
+## Drawing
+
+`FmrbGfx` has every drawing method Ruby's has, with the same names and argument order:
+the shapes including arcs, ellipses and triangles, `get_pixel`, `blend_rect`, images and
+masks, the viewport and sprite clipping, `file_status`, `FmrbGfx.rgb_to_332` and the rest.
+The ones with optional arguments (`present`, `draw_text`, `set_font`, `draw_image`,
+`draw_tile`, `sync_file`, ...) take them as Python defaults:
+
+```python
+self.gfx.set_font(FmrbGfx.FONT_JA, 12)
+self.gfx.draw_text(4, 4, "こんにちは", FmrbGfx.BLACK)
+self.gfx.draw_text(4, 20, "mixed 日本語", FmrbGfx.BLACK, mixed=True)
+```
+
+`clear` has no default: pass the colour (`self.gfx.clear(FmrbGfx.BLACK)`). `canvas_id`,
+`origin_x`, `origin_y`, `area_width` and `area_height` are read-only properties.
+
 ## Limitations
 
 MicroPython's design pushes back in a few places, and these are worth knowing before you
@@ -110,10 +140,15 @@ build does not carry. For waiting, return a delay from `on_update` rather than s
 (`random` is seeded from the clock, so a run differs from the last; call `random.seed(n)`
 to repeat one.)
 
-Files can be read, not written. `open()` exists but raises `OSError` — failing out loud
-beats being silently absent. `_fmrb.read_file(path)` returns the whole file as `bytes` (up
-to 64 KB) and `_fmrb.file_size(path)` its size. `io.StringIO` and the rest of the in-memory
-objects work.
+Files are read and written whole, through `FmrbFile`, the same module Ruby apps have.
+`FmrbFile.read(path)` returns the whole file as `bytes` (or `None`), and `write`, `append`,
+`exist`, `size`, `delete`, `mkdir` and `list(dir)` take a path — see
+[Files & I/O](api/filesystem.md#whole-files-by-path-fmrbfile). There is no reading a file a
+piece at a time: `open()` exists but raises `OSError`, because failing out loud beats being
+silently absent. `io.StringIO` and the rest of the in-memory objects work.
+
+Integers go up to 64 bits, so `FmrbApp.uptime_us()` keeps counting past the 18 minutes a
+small integer holds on the ESP32; anything wider raises `OverflowError`.
 
 Strings are bytes. This build has no Unicode strings, so `len("日本語")` is 9 and indexing
 is by byte. For a width in pixels use `FmrbGfx.text_width`, which walks the UTF-8.
@@ -129,9 +164,9 @@ the bytecode, so neither `destroy` nor `on_destroy` runs. Resources are reclaime
 side either way, but an app cannot rely on `on_destroy` to save anything — do that at a
 boundary in `on_update`. Lua behaves the same way.
 
-Not provided: tile map classes (`draw_tile` is there — lay them out yourself), image masks,
-`GfxBlock` and the other drawing optimisations, arcs, `get_pixel`, extra canvases, the p5
-layer, the microphone and MIDI out.
+Not provided: tile map classes (`draw_tile` is there — lay them out yourself), `load_image`
+(write it as `sync_file`, `create_image` and `draw_image`), video, `GfxBlock`, extra
+canvases, the p5 layer, the microphone and MIDI out.
 
 ---
 
@@ -145,7 +180,7 @@ local seconds = 0
 
 function on_create()            -- once, after the window is made
   FmrbApp.clear_user_area()     -- the area in the theme colour, frame redrawn
-  gfx:draw_text("Hello", 2, 2, FmrbApp.THEME_TEXT)
+  gfx:draw_text(2, 2, "Hello", FmrbApp.THEME_TEXT)
   gfx:present()
 end
 
@@ -169,11 +204,22 @@ end
 - An error in a function shows an error window with the message and traceback, and the app
   ends. Do not wait long inside a function: return the wait from `on_update`. A function that
   does not return for a second is cut off by the close button and by kill.
-- `gfx` draws with (0, 0) at the top-left inside the frame, as a Ruby app's `@gfx` does:
-  `fill_rect`, `draw_rect`, `fill_round_rect`, `draw_round_rect`, `draw_line`, `fill_circle`,
-  `draw_text(text, x, y, c [, bg])` and `present()`. `gfx:clear(c)` wipes the whole canvas,
-  frame included; `FmrbApp.clear_user_area([c])` wipes the area and redraws the frame. The
-  area's size is `FmrbApp.user_area_width` / `user_area_height`.
+- `gfx` draws with (0, 0) at the top-left inside the frame, as a Ruby app's `@gfx` does, and
+  has the methods of Ruby's `FmrbGfx` with the same names and argument order:
+  `fill_rect(x, y, w, h, c)`, `draw_line`, `fill_circle`, `draw_ellipse`, `draw_arc` and the
+  rest, `draw_text(x, y, text, c [, bg [, mixed]])`, `set_font(family [, size])`,
+  `present()`. Ruby's Symbols are strings (`gfx:set_font("ja", 12)`) and records are tables.
+  `gfx:clear(c)` wipes the whole canvas, frame included; `FmrbApp.clear_user_area([c])` wipes
+  the area and redraws the frame.
+- Sizes are functions, read when called: `FmrbApp.user_area_width()` /
+  `user_area_height()` for the area, `FmrbApp.window_width()` / `window_height()` for the
+  window.
+- Beside drawing, Lua has what Ruby apps have: `FmrbAudio.new()` and `audio:note_on(...)`,
+  `audio:play_wav(path)` and the rest; `Log.info(msg)`; `FmrbApp.clipboard()`,
+  `FmrbApp.uptime_ms()`, `FmrbApp.wallclock()`; the window's state and requests
+  (`FmrbApp.fullscreen()`, `FmrbApp.request_fullscreen(on)` ...); and whole files through
+  `FmrbFile` (`FmrbFile.read(path)`, `FmrbFile.exist(path)` ...). A Ruby method ending in `?`
+  drops it in Lua.
 - `ev` has the same keys as in Ruby, with `ev.type` a string: `"key_down"`, `"key_up"`,
   `"mouse_down"`, `"mouse_up"`, `"mouse_move"`, `"mouse_wheel"`, `"gamepad_down"`,
   `"gamepad_up"`, `"gamepad_axis"`, `"kana_mode"`. Mouse events carry `x` / `y` (the area)
@@ -276,9 +322,12 @@ string from one to the other and expect it to play.
 - **BASIC** if you want the Family BASIC experience, or you are following a listing from a
   magazine of the era
 - **Lua** for a small, fast script
+- **C, TinyGo, Rust or Zig** if you would rather write in one of those and compile it on a
+  PC — see [WebAssembly Apps](wasm_apps.md). Not on the ESP32-S3 boards
 
 ## Related
 
 - [Default Apps](getting_started/default_apps.md) — the samples in each language
+- [WebAssembly Apps](wasm_apps.md) — C, TinyGo, Rust and Zig
 - [App Config (.app.toml)](file_formats/app_toml.md)
 - [API Reference](api/index.md) — the Ruby API the other languages mirror

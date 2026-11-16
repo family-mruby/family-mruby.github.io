@@ -1,6 +1,7 @@
 # Files & I/O (File / Dir / IO)
 
-API for file and directory operations. Provides the `File` / `Dir` / `IO` classes.
+API for file and directory operations. Provides the `File` / `Dir` / `IO` classes, and
+`FmrbFile` for reading and writing a whole file by its path.
 
 ## File Namespace
 
@@ -8,7 +9,7 @@ Paths visible to users follow a Unix-style single namespace. Apps can pass root-
 
 | Path | Device | Purpose |
 |---|---|---|
-| `/...` (`/app`, `/home`, `/usr`, etc.) | Internal LittleFS (16MB) | System files, user apps, persistent data |
+| `/...` (`/app`, `/home`, `/usr`, etc.) | Internal flash (LittleFS) | System files, user apps, persistent data |
 | `/mnt/sd/...` | SD card (FAT32) | Large data, music, images |
 
 ## `/home` is yours
@@ -129,6 +130,37 @@ list_files("/usr/share/sounds/nsf")
 
 !!! note
     `Dir#seek` / `Dir#tell` return `ENOSYS` because the ESP32 VFS does not support them.
+
+## Whole files by path (`FmrbFile`)
+
+**(development version)** A module of functions that take a path and read or write the whole
+file at once, with nothing to open or close. It is the same in every language an app can be
+written in — Ruby, Lua, MicroPython and [WebAssembly](../wasm_apps.md) — which makes it the
+way to handle files in an app meant to be read across languages. `File` stays as it is.
+
+| Method | Returns |
+|---|---|
+| `FmrbFile.read(path)` | The whole file as a String (bytes), or `nil` when it is not there or cannot be read |
+| `FmrbFile.write(path, data)` | `true` when it was written. Replaces the file |
+| `FmrbFile.append(path, data)` | `true` when it was written. Makes the file when it is not there |
+| `FmrbFile.exist?(path)` | Whether it is there |
+| `FmrbFile.size(path)` | The size in bytes, or `nil` when it is not there |
+| `FmrbFile.delete(path)` | `true` when it was deleted. A file, or an empty directory |
+| `FmrbFile.mkdir(path)` | `true` when it was made, or is there already |
+| `FmrbFile.list(dir)` | The names in a directory, a directory's name ending in `/`; `nil` when it cannot be read |
+| `FmrbFile.free_bytes(path)` | The free space of the filesystem under `path` (for `/tmp`, what is left of the RAM filesystem), or `nil` when it cannot be known |
+| `FmrbFile.path_read_only?(path)` | `true` only for the Linux program's read-only trees; always `false` on the boards, the simulator and Studio |
+
+```ruby
+FmrbFile.write("/home/memo.txt", "hello\n")
+FmrbFile.append("/home/memo.txt", "one more\n")
+text = FmrbFile.read("/home/memo.txt")
+FmrbFile.list("/home").each { |name| Log.info(name) }
+```
+
+The paths are the ones `File` takes, with the same places readable and writable. In Lua
+and MicroPython the `?` is dropped (`FmrbFile.exist(path)`), and "nothing" is `nil` /
+`None`.
 
 ## IO Class
 

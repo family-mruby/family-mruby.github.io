@@ -164,7 +164,8 @@ success, and is a good starting point to copy.
 
 The Net Test app (`/app/test/net_test.app.rb`) exercises the API piece by piece and is
 useful when something does not work. It is hidden from the launcher with the rest of
-`/app/test`, which only development builds include, so start it from the editor or the shell.
+`/app/test`, which the simulator carries (a board gets it over Wi-Fi from the repository's
+`tools/fmrb_rd_fs.rb`), so start it from the editor or the shell.
 
 ## Asterism: objects and topics across machines
 

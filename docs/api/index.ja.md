@@ -35,6 +35,7 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 | クラス / モジュール | 役割 | 詳細 |
 |---|---|---|
 | `IO` / `File` / `Dir` | ファイル・ディレクトリ操作 | [ファイル・I/O](filesystem.md) |
+| `FmrbFile` | パスでファイルを丸ごと読み書き。アプリを書くどの言語でも同じ | [ファイル・I/O](filesystem.md#パスで丸ごと読み書きする-fmrbfile) |
 | `Log` | ロギング | [ログ](log.md) |
 | `Net::HTTP` / WebSocket / TLS | ネットワーク通信 | [ネットワーク](network.md) |
 | `FmrbAsterism::Link` / `Asterism::Connection` | Asterism でほかの端末とオブジェクトやトピックを共有 | [ネットワーク](network.md#asterism-端末をまたぐオブジェクトとトピック) |
@@ -137,6 +138,8 @@ Family mruby が提供する Ruby 公開 API をすべて一覧します。各 A
 ### `IO` / `File` / `Dir`
 
 `File.open(path, mode, &block)`、`File.exist?` / `file?` / `directory?` / `size` / `delete`、`Dir.open(path)` / `Dir.read` / `Dir.mkdir` 等。
+
+`FmrbFile.read(path)` / `write(path, data)` / `append` / `exist?` / `size` / `delete` / `mkdir` / `list(dir)` は、パスでファイルを丸ごと読み書きします。
 
 ### `Log`
 

@@ -324,12 +324,13 @@ Pass root-relative paths (e.g. `/home/foo.txt`) or SD card paths like `/mnt/sd/.
 | `FmrbApp.config(section)` | Read a specified section from the app's `.toml` |
 | `FmrbApp.wallclock` | Current time (`{year, month, day, hour, minute, second}`) |
 | `FmrbApp.gfx_stats` | Drawing statistics `{cmds:, presents:}` |
+| `FmrbApp.wasm_stats` / `FmrbApp.wasm_app_stats(pid)` | The WebAssembly runtime (`running`, `apps`, `pool_used`, `pool_total`, `traps` ...; all 0 where there is none) and one [WebAssembly app](../wasm_apps.md) (`pages`, `max_pages`, `binary_size`, `hook_us`, `hook_max_us`, `calls`; `nil` when `pid` is not one) **(development version)** |
 | `FmrbApp.sys_pool_info` | System memory pool information |
 | `FmrbApp.pool_used` | How many bytes of its own pool this app has used, or `-1`. Subtract it across a piece of work to see the garbage that work made |
 | `FmrbApp.heap_info` | ESP-IDF heap info (`free`, `total`, `min_free`, `largest_block`, etc.) |
 | `FmrbApp.enable_cursor` | Show mouse cursor (delayed until the first mouse movement) |
 | `FmrbApp.set_cursor_visible(visible)` | Immediately show/hide cursor. Useful for hiding in fullscreen games and restoring on exit |
-| `FmrbApp.uptime_us` | Microseconds since boot |
+| `FmrbApp.uptime_us` / `FmrbApp.uptime_ms` | Microseconds / milliseconds since boot (`uptime_ms` is in the development version) |
 | `FmrbApp.wifi_info` / `FmrbApp.wifi_connected?` | The network the machine is on, and whether it is on one |
 | `FmrbApp.usb_devices` | What is plugged into the USB host port |
 | `FmrbApp.set_kana_mode(mode)` | Switch kana input: 0 ASCII, 1 hiragana, 2 katakana. The change comes back as a `kana_mode` event |

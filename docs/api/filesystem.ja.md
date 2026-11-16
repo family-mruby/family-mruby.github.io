@@ -1,6 +1,7 @@
 # ファイル・I/O (File / Dir / IO)
 
-ファイル・ディレクトリ操作 API です。`File` / `Dir` / `IO` クラスを提供します。
+ファイル・ディレクトリ操作 API です。`File` / `Dir` / `IO` クラスと、パスを指定してファイルを丸ごと
+読み書きする `FmrbFile` を提供します。
 
 ## ファイル名前空間
 
@@ -8,7 +9,7 @@
 
 | パス | デバイス | 用途 |
 |---|---|---|
-| `/...`（`/app`, `/home`, `/usr` 等） | 内蔵 LittleFS（16MB） | システムファイル、ユーザーアプリ、永続データ |
+| `/...`（`/app`, `/home`, `/usr` 等） | 内蔵 flash（LittleFS） | システムファイル、ユーザーアプリ、永続データ |
 | `/mnt/sd/...` | SD カード（FAT32） | 大容量データ、音楽、画像 |
 
 ## `/home` はあなたのもの
@@ -129,6 +130,35 @@ list_files("/usr/share/sounds/nsf")
 
 !!! note
     `Dir#seek` / `Dir#tell` は ESP32 VFS が対応しないため `ENOSYS` を返します。
+
+## パスで丸ごと読み書きする (`FmrbFile`)
+
+**(開発版)** パスを渡してファイル全体を一度に読み書きする関数のモジュールです。開く・閉じるは
+ありません。アプリを書けるどの言語 (Ruby、Lua、MicroPython、[WebAssembly](../wasm_apps.md)) でも
+同じなので、言語をまたいで読まれるアプリのファイルの扱いに向いています。`File` は今までどおりです。
+
+| メソッド | 返り値 |
+|---|---|
+| `FmrbFile.read(path)` | ファイル全体を String (バイト列) で。無い・読めないときは `nil` |
+| `FmrbFile.write(path, data)` | 書けたら `true`。ファイルを置き換えます |
+| `FmrbFile.append(path, data)` | 書けたら `true`。無ければ作ります |
+| `FmrbFile.exist?(path)` | あるかどうか |
+| `FmrbFile.size(path)` | 大きさ (バイト)。無ければ `nil` |
+| `FmrbFile.delete(path)` | 消せたら `true`。ファイルか空のディレクトリ |
+| `FmrbFile.mkdir(path)` | 作れたか、既にあれば `true` |
+| `FmrbFile.list(dir)` | ディレクトリの中の名前の配列。ディレクトリの名前は `/` で終わります。読めなければ `nil` |
+| `FmrbFile.free_bytes(path)` | `path` があるファイルシステムの空き (`/tmp` なら RAM のファイルシステムの残り)。分からなければ `nil` |
+| `FmrbFile.path_read_only?(path)` | Linux 版の読み取り専用の場所だけ `true`。基板・シミュレータ・Studio では常に `false` |
+
+```ruby
+FmrbFile.write("/home/memo.txt", "hello\n")
+FmrbFile.append("/home/memo.txt", "one more\n")
+text = FmrbFile.read("/home/memo.txt")
+FmrbFile.list("/home").each { |name| Log.info(name) }
+```
+
+パスは `File` と同じで、読み書きできる場所も同じです。Lua と MicroPython では `?` を落とした名前
+(`FmrbFile.exist(path)`) になり、「無い」は `nil` / `None` です。
 
 ## IO クラス
 

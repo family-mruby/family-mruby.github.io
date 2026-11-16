@@ -319,12 +319,13 @@ end
 | `FmrbApp.config(section)` | アプリの `.toml` から指定セクションを読み出し |
 | `FmrbApp.wallclock` | 現在時刻 (`{year, month, day, hour, minute, second}`) |
 | `FmrbApp.gfx_stats` | 描画統計 `{cmds:, presents:}` |
+| `FmrbApp.wasm_stats` / `FmrbApp.wasm_app_stats(pid)` | WebAssembly のランタイムの様子 (`running`、`apps`、`pool_used`、`pool_total`、`traps` など。ランタイムの無い端末では全部 0) と、1 つの [WebAssembly のアプリ](../wasm_apps.md) の様子 (`pages`、`max_pages`、`binary_size`、`hook_us`、`hook_max_us`、`calls`。`pid` が WebAssembly のアプリでなければ `nil`) **(開発版)** |
 | `FmrbApp.sys_pool_info` | システムメモリプール情報 |
 | `FmrbApp.pool_used` | 自分のプールを何バイト使ったか。読めないときは `-1`。処理の前後で引き算すると、その処理が出したごみの量が分かります |
 | `FmrbApp.heap_info` | ESP-IDF ヒープ情報（`free`, `total`, `min_free`, `largest_block` ほか） |
 | `FmrbApp.enable_cursor` | マウスカーソルを表示（最初のマウス移動まで遅延あり） |
 | `FmrbApp.set_cursor_visible(visible)` | カーソルの即時表示／非表示。フルスクリーンゲームで非表示にし、終了時に戻す用途 |
-| `FmrbApp.uptime_us` | 起動からのマイクロ秒 |
+| `FmrbApp.uptime_us` / `FmrbApp.uptime_ms` | 起動からのマイクロ秒 / ミリ秒 (`uptime_ms` は開発中の版) |
 | `FmrbApp.wifi_info` / `FmrbApp.wifi_connected?` | つながっているネットワークの情報と、つながっているかどうか |
 | `FmrbApp.usb_devices` | USB ホスト端子につながっているもの |
 | `FmrbApp.set_kana_mode(mode)` | かな入力の切替。0 ASCII、1 ひらがな、2 カタカナ。結果は `kana_mode` イベントで返ります |
