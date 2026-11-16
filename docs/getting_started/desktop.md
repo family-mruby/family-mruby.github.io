@@ -147,7 +147,7 @@ Studio).
 | Editor | The editor. It is built into the firmware, and heads the launcher grid with the Shell and the App Store |
 | File Manager | Browse the flash filesystem |
 | Log Viewer | The system log |
-| Monitor | Running tasks, memory and [services](../file_formats/services.md) |
+| Monitor | Running tasks, memory and [services](../file_formats/services.md); a WASM page for [WebAssembly apps](../wasm_apps.md) |
 | Set Clock | Date and time |
 | Config | Language, keyboard layout, pointer speed, theme, wallpaper, timezone, volume, Wi-Fi and BLE autostart, display margins |
 | Mute / Unmute | The same switch as the speaker in the menu bar |
@@ -166,9 +166,12 @@ settings that only take effect at startup.
 
 ### What happens before the desktop
 
-Power-on shows the logo and plays a short jingle, and then the desktop comes up. That
-ceremony is `boot_splash` in [`/etc/system_conf.toml`](../file_formats/system_conf.md);
-setting it to `false` skips both and saves about 2.7 seconds, which is worth having on a
+Power-on shows the logo the way an old CRT television comes on — a thin line of light in
+the middle of the black that stretches sideways and opens up and down into the picture —
+over a short chord that rises a fifth and rings, and then the desktop comes up. The whole of
+it takes about 1.2 seconds (it took 2.7 in 3.0.0). That ceremony is `boot_splash` in
+[`/etc/system_conf.toml`](../file_formats/system_conf.md); setting it to `false` skips both
+and saves that time, which is worth having on a
 machine built to run one thing. Nothing else changes — the cursor, the status LED and the
 startup app all happen either way.
 

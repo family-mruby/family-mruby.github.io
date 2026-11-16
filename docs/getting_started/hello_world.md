@@ -216,4 +216,5 @@ Editing these files directly lets you customize the output of subsequent `create
 ### An error window says the app could not start
 
 - The file must define a subclass of `FmrbApp`. With more than one, name the one to start with `class = "..."` in the `.app.toml`
+- The error window closes with a click, or with `Return` or `Esc`; while it is up it holds the keyboard, so the keys do not reach the app behind it **(development version)**
 

@@ -61,7 +61,7 @@ take effect at startup.
 | `ble_auto_start` | bool | `true` | Start BLE at boot. It means different things on the two machines -- see below |
 | `wifi_auto_start` | bool | `false` | Start Wi-Fi at boot |
 | `app_spawn_margin_kb` | int | `30` | Internal RAM, in KB, a starting app has to leave for the rest of the machine. A start that would eat into it is refused. Boards only |
-| `boot_splash` | bool | `true` | The logo and the jingle at power-on. `false` skips both and saves about 2.7 seconds |
+| `boot_splash` | bool | `true` | The logo and the chord at power-on. `false` skips both and saves about 1.2 seconds (2.7 in 3.0.0) |
 | `startup_app` | string | `""` | One app to open as soon as the desktop is up, by path (`/app/game/blockgame.app.rb`). Empty means the ordinary desktop |
 | `wallpaper` | string | `""` | Desktop picture. Empty means whatever the theme says, `"none"` leaves a plain colour, and a path wins over both. Any `.png` in `/home/backgrounds` shows up in Config's list |
 

@@ -60,7 +60,7 @@ Config ダイアログから。システムメニューの Config には、実�
 | `ble_auto_start` | bool | `true` | 起動時に BLE を立ち上げる。機種によって意味が違います (下記) |
 | `wifi_auto_start` | bool | `false` | 起動時に WiFi を立ち上げる |
 | `app_spawn_margin_kb` | int | `30` | アプリを起動するときにシステム側へ残す内蔵 RAM (KB)。ここを食う起動は断られます。実機のみ |
-| `boot_splash` | bool | `true` | 電源投入時のロゴと音。`false` で両方とばし、約 2.7 秒短くなります |
+| `boot_splash` | bool | `true` | 電源投入時のロゴと和音。`false` で両方とばし、約 1.2 秒短くなります (3.0.0 では 2.7 秒) |
 | `startup_app` | string | `""` | デスクトップが出たらすぐ開くアプリをパスで指定 (`/app/game/blockgame.app.rb`)。空なら通常のデスクトップ |
 | `wallpaper` | string | `""` | デスクトップの絵。空ならテーマ任せ、`"none"` なら単色、パスを書くとそれが優先されます。`/home/backgrounds` に置いた `.png` は Config の一覧に出ます |
 
