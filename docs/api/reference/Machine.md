@@ -9,13 +9,13 @@ Time, waiting, and telling the platforms apart. Time is `board_millis` (ms) and
 t0 = Machine.board_millis
 ```
 
+How to use it: [Tasks & Timing](../system.md).
+
 ## Class methods
 
 ### Machine.board_millis
 
-```ruby
-board_millis() -> Integer
-```
+<pre class="fmrb-sig"><code>board_millis() -&gt; <a href="../Integer/">Integer</a></code></pre>
 
 Milliseconds since boot
 
@@ -37,9 +37,7 @@ elapsed = Machine.board_millis - t0
 
 ### Machine.uptime_us
 
-```ruby
-uptime_us() -> Integer
-```
+<pre class="fmrb-sig"><code>uptime_us() -&gt; <a href="../Integer/">Integer</a></code></pre>
 
 Microseconds since boot
 
@@ -55,9 +53,7 @@ dt = Machine.uptime_us - t
 
 ### Machine.uptime_formatted
 
-```ruby
-uptime_formatted() -> String
-```
+<pre class="fmrb-sig"><code>uptime_formatted() -&gt; <a href="../String/">String</a></code></pre>
 
 Uptime as a string
 
@@ -67,9 +63,7 @@ Machine.uptime_formatted  #=> "0d 00:12:34.56"
 
 ### Machine.delay_ms
 
-```ruby
-delay_ms(Integer ms) -> Integer
-```
+<pre class="fmrb-sig"><code>delay_ms(<a href="../Integer/">Integer</a> ms) -&gt; <a href="../Integer/">Integer</a></code></pre>
 
 Block this app for ms milliseconds
 
@@ -91,9 +85,7 @@ Machine.delay_ms(100)
 
 ### Machine.busy_wait_ms
 
-```ruby
-busy_wait_ms(Integer ms) -> Integer
-```
+<pre class="fmrb-sig"><code>busy_wait_ms(<a href="../Integer/">Integer</a> ms) -&gt; <a href="../Integer/">Integer</a></code></pre>
 
 Busy-wait for ms milliseconds
 
@@ -108,9 +100,7 @@ Machine.busy_wait_ms(2)
 
 ### Machine.sleep
 
-```ruby
-sleep(Integer sec) -> Integer
-```
+<pre class="fmrb-sig"><code>sleep(<a href="../Integer/">Integer</a> sec) -&gt; <a href="../Integer/">Integer</a></code></pre>
 
 Light-sleep for whole seconds
 
@@ -128,9 +118,7 @@ Machine.sleep(5)
 
 ### Machine.deep_sleep
 
-```ruby
-deep_sleep(Integer gpio_pin, bool edge, bool high) -> bot
-```
+<pre class="fmrb-sig"><code>deep_sleep(<a href="../Integer/">Integer</a> gpio_pin, bool edge, bool high) -&gt; bot</code></pre>
 
 Deep sleep (not implemented)
 
@@ -145,9 +133,7 @@ end
 
 ### Machine.unique_id
 
-```ruby
-unique_id() -> (String | nil)
-```
+<pre class="fmrb-sig"><code>unique_id() -&gt; (<a href="../String/">String</a> | nil)</code></pre>
 
 Return the machine's unique ID
 
@@ -160,9 +146,7 @@ id = Machine.unique_id
 
 ### Machine.read_memory
 
-```ruby
-read_memory(Integer address, Integer size) -> String
-```
+<pre class="fmrb-sig"><code>read_memory(<a href="../Integer/">Integer</a> address, <a href="../Integer/">Integer</a> size) -&gt; <a href="../String/">String</a></code></pre>
 
 Read raw bytes from an address
 
@@ -175,9 +159,7 @@ s = Machine.read_memory(addr, 16)
 
 ### Machine.stack_usage
 
-```ruby
-stack_usage() -> (Integer | nil)
-```
+<pre class="fmrb-sig"><code>stack_usage() -&gt; (<a href="../Integer/">Integer</a> | nil)</code></pre>
 
 Stack usage (not supported)
 
@@ -189,9 +171,7 @@ Machine.stack_usage  #=> nil
 
 ### Machine.set_hwclock
 
-```ruby
-set_hwclock(Integer tv_sec) -> true
-```
+<pre class="fmrb-sig"><code>set_hwclock(<a href="../Integer/">Integer</a> tv_sec) -&gt; true</code></pre>
 
 Set the system clock
 
@@ -205,9 +185,7 @@ Machine.set_hwclock(epoch) unless Machine.posix?
 
 ### Machine.get_hwclock
 
-```ruby
-get_hwclock() -> Array[Integer]
-```
+<pre class="fmrb-sig"><code>get_hwclock() -&gt; <a href="../Array/">Array</a>[<a href="../Integer/">Integer</a>]</code></pre>
 
 Read the system clock
 
@@ -220,9 +198,7 @@ sec, nsec = Machine.get_hwclock
 
 ### Machine.exit
 
-```ruby
-exit(?Integer status) -> nil
-```
+<pre class="fmrb-sig"><code>exit(?<a href="../Integer/">Integer</a> status) -&gt; nil</code></pre>
 
 Exit the program
 
@@ -237,9 +213,7 @@ Machine.exit(0)
 
 ### Machine.reboot
 
-```ruby
-reboot(?Integer wait_ms) -> nil
-```
+<pre class="fmrb-sig"><code>reboot(?<a href="../Integer/">Integer</a> wait_ms) -&gt; nil</code></pre>
 
 Reboot (not usable in this build)
 
@@ -255,9 +229,7 @@ Machine.reboot(1000)
 
 ### Machine.posix?
 
-```ruby
-posix?() -> bool
-```
+<pre class="fmrb-sig"><code>posix?() -&gt; bool</code></pre>
 
 Whether this is a POSIX build
 
@@ -272,9 +244,7 @@ end
 
 ### Machine.wifi_available?
 
-```ruby
-wifi_available?() -> bool
-```
+<pre class="fmrb-sig"><code>wifi_available?() -&gt; bool</code></pre>
 
 Whether Wi-Fi is available
 
@@ -287,9 +257,7 @@ Machine.wifi_available?  #=> false
 
 ### Machine.tud_task
 
-```ruby
-tud_task() -> nil
-```
+<pre class="fmrb-sig"><code>tud_task() -&gt; nil</code></pre>
 
 Run one USB device task step
 
@@ -300,9 +268,7 @@ Machine.tud_task  #=> nil
 
 ### Machine.tud_mounted?
 
-```ruby
-tud_mounted?() -> bool
-```
+<pre class="fmrb-sig"><code>tud_mounted?() -&gt; bool</code></pre>
 
 Whether USB is mounted
 
@@ -315,9 +281,7 @@ Machine.tud_mounted?
 
 ### Machine.bootsel_pressed?
 
-```ruby
-bootsel_pressed?() -> bool
-```
+<pre class="fmrb-sig"><code>bootsel_pressed?() -&gt; bool</code></pre>
 
 Whether BOOTSEL is pressed (unavailable)
 
@@ -331,9 +295,7 @@ end
 
 ### Machine.check_signal
 
-```ruby
-check_signal() -> nil
-```
+<pre class="fmrb-sig"><code>check_signal() -&gt; nil</code></pre>
 
 Raise a pending Ctrl-C as an exception
 
@@ -351,9 +313,7 @@ end
 
 ### Machine.poll_signal
 
-```ruby
-poll_signal() -> (Symbol | nil)
-```
+<pre class="fmrb-sig"><code>poll_signal() -&gt; (<a href="../Symbol/">Symbol</a> | nil)</code></pre>
 
 Return a pending Ctrl-C as a Symbol
 
@@ -367,9 +327,7 @@ end
 
 ### Machine.signal_self_manage
 
-```ruby
-signal_self_manage() -> true
-```
+<pre class="fmrb-sig"><code>signal_self_manage() -&gt; true</code></pre>
 
 Mark that this program handles signals
 
@@ -380,9 +338,7 @@ Machine.signal_self_manage  #=> true
 
 ### Machine.pop_signal_self_manage
 
-```ruby
-pop_signal_self_manage() -> bool
-```
+<pre class="fmrb-sig"><code>pop_signal_self_manage() -&gt; bool</code></pre>
 
 Read and clear the signal flag
 
@@ -394,9 +350,7 @@ Machine.pop_signal_self_manage #=> true
 
 ### Machine.debug_puts
 
-```ruby
-debug_puts(*untyped messages) -> nil
-```
+<pre class="fmrb-sig"><code>debug_puts(*untyped messages) -&gt; nil</code></pre>
 
 Write a diagnostic line to stderr
 
@@ -408,4 +362,4 @@ Machine.debug_puts("x=#{x}")
 
 ---
 
-*This page is generated from the API signatures of Family mruby (`sig/`) (fmruby-core api-site 45b8559c).*
+*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*

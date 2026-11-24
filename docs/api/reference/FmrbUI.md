@@ -2,13 +2,18 @@
 
 Widget container
 
+How to use it: [UI Widgets](../ui.md).
+
 ## Class methods
 
 ### FmrbUI.new
 
-```ruby
-new(FmrbApp app) -> FmrbUI
-```
+<pre class="fmrb-sig"><code>new(
+  <a href="../FmrbApp/">FmrbApp</a> app,
+  ?bg: <a href="../Integer/">Integer</a>,
+  ?text_size: <a href="../Integer/">Integer</a>,
+  ?bg_painter: untyped
+) -&gt; FmrbUI</code></pre>
 
 Create the widget box
 
@@ -38,9 +43,16 @@ app happens to be in, and flush hands the app's size back afterwards.
 
 ### FmrbUI#label
 
-```ruby
-label(Symbol id, Integer x, Integer y, Integer w, Integer h, String text, ?align: Symbol, ?text_size: Integer) -> FmrbUI::Label
-```
+<pre class="fmrb-sig"><code>label(
+  <a href="../Symbol/">Symbol</a> id,
+  <a href="../Integer/">Integer</a> x,
+  <a href="../Integer/">Integer</a> y,
+  <a href="../Integer/">Integer</a> w,
+  <a href="../Integer/">Integer</a> h,
+  <a href="../String/">String</a> text,
+  ?align: <a href="../Symbol/">Symbol</a>,
+  ?text_size: <a href="../Integer/">Integer</a>
+) -&gt; <a href="../FmrbUI__Label/">FmrbUI::Label</a></code></pre>
 
 Place a text label
 
@@ -53,9 +65,16 @@ text_size: enlarges this one widget's text (1-4); useful for a heading.
 
 ### FmrbUI#button
 
-```ruby
-button(Symbol id, Integer x, Integer y, Integer w, Integer h, String text, ?text_size: Integer, ?accent: Integer) -> FmrbUI::Button
-```
+<pre class="fmrb-sig"><code>button(
+  <a href="../Symbol/">Symbol</a> id,
+  <a href="../Integer/">Integer</a> x,
+  <a href="../Integer/">Integer</a> y,
+  <a href="../Integer/">Integer</a> w,
+  <a href="../Integer/">Integer</a> h,
+  <a href="../String/">String</a> text,
+  ?text_size: <a href="../Integer/">Integer</a>,
+  ?accent: <a href="../Integer/">Integer</a>
+) -&gt; <a href="../FmrbUI__Button/">FmrbUI::Button</a></code></pre>
 
 Place a push button
 
@@ -73,9 +92,19 @@ dialog's Yes, a transport's Stop. On a Toggle it is the on colour.
 
 ### FmrbUI#toggle
 
-```ruby
-toggle(Symbol id, Integer x, Integer y, Integer w, Integer h, String text, ?group: Symbol, ?on: bool, ?on_text: String, ?text_size: Integer, ?accent: Integer) -> FmrbUI::Toggle
-```
+<pre class="fmrb-sig"><code>toggle(
+  <a href="../Symbol/">Symbol</a> id,
+  <a href="../Integer/">Integer</a> x,
+  <a href="../Integer/">Integer</a> y,
+  <a href="../Integer/">Integer</a> w,
+  <a href="../Integer/">Integer</a> h,
+  <a href="../String/">String</a> text,
+  ?group: <a href="../Symbol/">Symbol</a>,
+  ?on: bool,
+  ?on_text: <a href="../String/">String</a>,
+  ?text_size: <a href="../Integer/">Integer</a>,
+  ?accent: <a href="../Integer/">Integer</a>
+) -&gt; <a href="../FmrbUI__Toggle/">FmrbUI::Toggle</a></code></pre>
 
 Place an on/off toggle
 
@@ -84,9 +113,18 @@ on: true starts it on; on_text: gives it a different label when on.
 
 ### FmrbUI#stepper
 
-```ruby
-stepper(Symbol id, Integer x, Integer y, Integer w, Integer h, Integer value, Integer min, Integer max, ?Integer step, ?text_size: Integer) -> FmrbUI::Stepper
-```
+<pre class="fmrb-sig"><code>stepper(
+  <a href="../Symbol/">Symbol</a> id,
+  <a href="../Integer/">Integer</a> x,
+  <a href="../Integer/">Integer</a> y,
+  <a href="../Integer/">Integer</a> w,
+  <a href="../Integer/">Integer</a> h,
+  <a href="../Integer/">Integer</a> value,
+  <a href="../Integer/">Integer</a> min,
+  <a href="../Integer/">Integer</a> max,
+  ?<a href="../Integer/">Integer</a> step,
+  ?text_size: <a href="../Integer/">Integer</a>
+) -&gt; <a href="../FmrbUI__Stepper/">FmrbUI::Stepper</a></code></pre>
 
 Place a value stepper
 
@@ -96,21 +134,66 @@ last argument sets the step (default 1).
 
 ### FmrbUI#enum
 
-```ruby
-enum(Symbol id, Integer x, Integer y, Integer w, Integer h, Array[String] options) -> FmrbUI::Enum
-```
+<pre class="fmrb-sig"><code>enum(
+  <a href="../Symbol/">Symbol</a> id,
+  <a href="../Integer/">Integer</a> x,
+  <a href="../Integer/">Integer</a> y,
+  <a href="../Integer/">Integer</a> w,
+  <a href="../Integer/">Integer</a> h,
+  <a href="../Array/">Array</a>[<a href="../String/">String</a>] options,
+  ?index: <a href="../Integer/">Integer</a>,
+  ?text_size: <a href="../Integer/">Integer</a>
+) -&gt; <a href="../FmrbUI__Enum/">FmrbUI::Enum</a></code></pre>
 
 Place a choice picker
 
 A "< choice >" control over options. value is the chosen index and
 option_text the string. It stops at the ends rather than wrapping, and
 builds no string when moved, which makes it lighter than a Stepper.
+`index:` (0 when left out) is the choice shown first, `text_size:` the
+text scale of this widget alone. options is read, never written.
+
+### FmrbUI#scrollbar
+
+<pre class="fmrb-sig"><code>scrollbar(
+  <a href="../Symbol/">Symbol</a> id,
+  <a href="../Integer/">Integer</a> x,
+  <a href="../Integer/">Integer</a> y,
+  <a href="../Integer/">Integer</a> w,
+  <a href="../Integer/">Integer</a> h,
+  <a href="../Integer/">Integer</a> total,
+  <a href="../Integer/">Integer</a> visible,
+  ?<a href="../Integer/">Integer</a> scroll
+) -&gt; <a href="../FmrbUI__Scrollbar/">FmrbUI::Scrollbar</a></code></pre>
+
+Place a vertical scrollbar
+
+x, y, w, h are the bar itself, not the list it scrolls (10 wide is the
+usual). total (how many there are), visible (how many fit) and scroll
+(the position; 0 when left out) are all it needs.
+**The app owns the position.** Push it in with `set_value` when keys move
+it, call `set_range` when the count changes, and read it back with
+`value` after the bar is pressed. The wheel is not answered here (use
+`wheel_rows`).
+
+**handle returns the id on the press** (not the release), once for a
+held press. One press moves one step, and a press at an end returns
+nothing. `direction` says which way a held bar goes; the app does the
+repeating. While everything fits (total at most visible) it draws
+nothing and **clicks pass through to the list behind**. It is meant to
+be made in on_create (making allocates; an app whose window resizes
+builds it again in on_resize).
+```ruby
+@ui.scrollbar(:sb, w - 10, y, 10, h,
+              0, rows, 0)
+# ...
+@ui.set_range(:sb, @files.size, rows)
+@ui.set_value(:sb, @scroll)
+```
 
 ### FmrbUI#option_text
 
-```ruby
-option_text(Symbol id) -> String?
-```
+<pre class="fmrb-sig"><code>option_text(<a href="../Symbol/">Symbol</a> id) -&gt; <a href="../String/">String</a>?</code></pre>
 
 The chosen string
 
@@ -121,9 +204,16 @@ name = @ui.option_text(:mode)
 
 ### FmrbUI#text_field
 
-```ruby
-text_field(Symbol id, Integer x, Integer y, Integer w, Integer h, ?String text, ?max: Integer, ?text_size: Integer) -> FmrbUI::TextField
-```
+<pre class="fmrb-sig"><code>text_field(
+  <a href="../Symbol/">Symbol</a> id,
+  <a href="../Integer/">Integer</a> x,
+  <a href="../Integer/">Integer</a> y,
+  <a href="../Integer/">Integer</a> w,
+  <a href="../Integer/">Integer</a> h,
+  ?<a href="../String/">String</a> text,
+  ?max: <a href="../Integer/">Integer</a>,
+  ?text_size: <a href="../Integer/">Integer</a>
+) -&gt; <a href="../FmrbUI__TextField/">FmrbUI::TextField</a></code></pre>
 
 Place a one-line text field
 
@@ -134,9 +224,7 @@ characters go on the end and backspace takes from the end.
 
 ### FmrbUI#field_text
 
-```ruby
-field_text(Symbol id) -> String?
-```
+<pre class="fmrb-sig"><code>field_text(<a href="../Symbol/">Symbol</a> id) -&gt; <a href="../String/">String</a>?</code></pre>
 
 What has been typed
 
@@ -146,9 +234,7 @@ name = @ui.field_text(:name)
 
 ### FmrbUI#set_field_text
 
-```ruby
-set_field_text(Symbol id, String text) -> void
-```
+<pre class="fmrb-sig"><code>set_field_text(<a href="../Symbol/">Symbol</a> id, <a href="../String/">String</a> text) -&gt; void</code></pre>
 
 Replace what is in the field
 
@@ -158,9 +244,7 @@ Replace what is in the field
 
 ### FmrbUI#focus
 
-```ruby
-focus(Symbol id) -> void
-```
+<pre class="fmrb-sig"><code>focus(<a href="../Symbol/">Symbol</a> id) -&gt; void</code></pre>
 
 Give a widget the focus
 
@@ -172,9 +256,7 @@ nil takes the focus away, and so does anything that is not a text field.
 
 ### FmrbUI#focused
 
-```ruby
-focused() -> Symbol?
-```
+<pre class="fmrb-sig"><code>focused() -&gt; <a href="../Symbol/">Symbol</a>?</code></pre>
 
 Which widget has the focus
 
@@ -184,9 +266,7 @@ return if @ui.focused == :name
 
 ### FmrbUI#handle
 
-```ruby
-handle(Hash[Symbol, untyped] ev) -> Symbol?
-```
+<pre class="fmrb-sig"><code>handle(<a href="../Hash/">Hash</a>[<a href="../Symbol/">Symbol</a>, untyped] ev) -&gt; <a href="../Symbol/">Symbol</a>?</code></pre>
 
 Feed one event
 
@@ -201,9 +281,7 @@ end
 
 ### FmrbUI#flush
 
-```ruby
-flush() -> bool
-```
+<pre class="fmrb-sig"><code>flush() -&gt; bool</code></pre>
 
 Draw the changed widgets
 
@@ -217,9 +295,7 @@ draw_picture
 
 ### FmrbUI#invalidate_all
 
-```ruby
-invalidate_all() -> void
-```
+<pre class="fmrb-sig"><code>invalidate_all() -&gt; void</code></pre>
 
 Mark every widget for redraw
 
@@ -232,9 +308,7 @@ clear_user_area
 
 ### FmrbUI#find
 
-```ruby
-find(Symbol id) -> FmrbUI::Widget?
-```
+<pre class="fmrb-sig"><code>find(<a href="../Symbol/">Symbol</a> id) -&gt; <a href="../FmrbUI__Widget/">FmrbUI::Widget</a>?</code></pre>
 
 Find a widget by id
 
@@ -246,9 +320,7 @@ w.place(x, y, 60, 20) if w
 
 ### FmrbUI#move
 
-```ruby
-move(Symbol id, Integer x, Integer y, Integer w, Integer h) -> void
-```
+<pre class="fmrb-sig"><code>move(<a href="../Symbol/">Symbol</a> id, <a href="../Integer/">Integer</a> x, <a href="../Integer/">Integer</a> y, <a href="../Integer/">Integer</a> w, <a href="../Integer/">Integer</a> h) -&gt; void</code></pre>
 
 Move and resize a widget
 
@@ -259,9 +331,7 @@ Coordinates are user-area relative, as at creation time.
 
 ### FmrbUI#on?
 
-```ruby
-on?(Symbol id) -> bool
-```
+<pre class="fmrb-sig"><code>on?(<a href="../Symbol/">Symbol</a> id) -&gt; bool</code></pre>
 
 Whether the toggle is on
 
@@ -271,9 +341,7 @@ save_backup if @ui.on?(:backup)
 
 ### FmrbUI#set_on
 
-```ruby
-set_on(Symbol id, bool on) -> void
-```
+<pre class="fmrb-sig"><code>set_on(<a href="../Symbol/">Symbol</a> id, bool on) -&gt; void</code></pre>
 
 Set a toggle from the app
 
@@ -284,9 +352,7 @@ For a grouped toggle, switching it on switches the rest of the group off.
 
 ### FmrbUI#set_text
 
-```ruby
-set_text(Symbol id, String text) -> void
-```
+<pre class="fmrb-sig"><code>set_text(<a href="../Symbol/">Symbol</a> id, <a href="../String/">String</a> text) -&gt; void</code></pre>
 
 Change a widget's text
 
@@ -298,9 +364,7 @@ when it actually changed.
 
 ### FmrbUI#set_value
 
-```ruby
-set_value(Symbol id, Integer value) -> bool
-```
+<pre class="fmrb-sig"><code>set_value(<a href="../Symbol/">Symbol</a> id, <a href="../Integer/">Integer</a> value) -&gt; bool</code></pre>
 
 Set a stepper value from the app
 
@@ -311,9 +375,7 @@ Clamped to min / max. Returns true only when the value actually changed.
 
 ### FmrbUI#value
 
-```ruby
-value(Symbol id) -> Integer
-```
+<pre class="fmrb-sig"><code>value(<a href="../Symbol/">Symbol</a> id) -&gt; <a href="../Integer/">Integer</a></code></pre>
 
 Read the current stepper value
 
@@ -323,9 +385,7 @@ n = @ui.value(:speed)
 
 ### FmrbUI#set_enabled
 
-```ruby
-set_enabled(Symbol id, bool flag) -> void
-```
+<pre class="fmrb-sig"><code>set_enabled(<a href="../Symbol/">Symbol</a> id, bool flag) -&gt; void</code></pre>
 
 Enable or disable a widget
 
@@ -336,9 +396,7 @@ A disabled widget ignores clicks and draws its text dimmed.
 
 ### FmrbUI#set_visible
 
-```ruby
-set_visible(Symbol id, bool flag) -> void
-```
+<pre class="fmrb-sig"><code>set_visible(<a href="../Symbol/">Symbol</a> id, bool flag) -&gt; void</code></pre>
 
 Show or hide a widget
 
@@ -347,11 +405,65 @@ The area of a hidden widget is repainted with the background color.
 @ui.set_visible(:inst, false)
 ```
 
-### FmrbUI#widgets
+### FmrbUI#set_range
+
+<pre class="fmrb-sig"><code>set_range(<a href="../Symbol/">Symbol</a> id, <a href="../Integer/">Integer</a> min, <a href="../Integer/">Integer</a> max) -&gt; void</code></pre>
+
+Change a widget's range
+
+**The two numbers mean different things.** A Stepper (and Enum) takes
+`(min, max)`, a Scrollbar `(total, visible)`. The value is pulled inside
+the new range. The same range does nothing, an unknown id does nothing
+(it always returns nil), and other widgets ignore it.
+```ruby
+@ui.set_range(:track, 1, total)    # Stepper
+@ui.set_range(:sb, @files.size, 8) # Scrollbar
+```
+
+### FmrbUI#direction
+
+<pre class="fmrb-sig"><code>direction(<a href="../Symbol/">Symbol</a> id) -&gt; <a href="../Integer/">Integer</a></code></pre>
+
+Which way a scrollbar is held
+
+-1 while held up, 1 held down, 0 when not held (and for an unknown id).
+Read it after handle returns the id to drive the repeat.
+```ruby
+if @ui.handle(ev) == :sb
+  d = @ui.direction(:sb)
+  @scroll_hold = d
+end
+```
+
+### FmrbUI#bg
+
+<pre class="fmrb-sig"><code>bg() -&gt; <a href="../Integer/">Integer</a></code></pre>
+
+The colour behind the widgets
 
 ```ruby
-widgets() -> Array[FmrbUI::Widget]
+c = @ui.bg
 ```
+
+### FmrbUI#bg=
+
+<pre class="fmrb-sig"><code>bg=(<a href="../Integer/">Integer</a> c) -&gt; void</code></pre>
+
+Change the colour behind the widgets
+
+Changes what **widgets made afterwards, and the hole left by a hidden one**,
+are painted with. **Widgets that already exist keep their own colour**:
+each copies it when made, so use the widget's `bg=`. The colour
+counts as the app's own and does not turn back into the theme's after a
+move to another machine. Repaint with `invalidate_all` and a flush.
+```ruby
+@ui.bg = @bg_col
+@ui.invalidate_all
+```
+
+### FmrbUI#widgets
+
+<pre class="fmrb-sig"><code>widgets() -&gt; <a href="../Array/">Array</a>[<a href="../FmrbUI__Widget/">FmrbUI::Widget</a>]</code></pre>
 
 The widgets placed so far
 
@@ -361,4 +473,4 @@ The widgets placed so far
 
 ---
 
-*This page is generated from the API signatures of Family mruby (`sig/`) (fmruby-core api-site 45b8559c).*
+*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*

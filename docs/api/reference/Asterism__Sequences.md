@@ -1,0 +1,80 @@
+# Asterism::Sequences
+
+A reader's memory of the sequence numbers
+
+How to use it: [Network](../network.md).
+
+送り手ごと・道ごとに、最後の接続の番号と値の番号を覚えて、取りこぼし
+(lost) と送り手のやり直し (restarted) を数える。Subscription が 1 つずつ持っていて、SampleInfo の lost・restarted はこれが決める。自分で値を受けるときに使う (普通のアプリは subscribe だけでよい)。
+
+## Class methods
+
+### Asterism::Sequences.new
+
+<pre class="fmrb-sig"><code>new(?<a href="../Integer/">Integer</a>? max) -&gt; Asterism::Sequences</code></pre>
+
+Make one remembering up to max lanes
+
+`max` (64 on a machine, 4096 on a PC when left out). Past it the lane
+seen longest ago is forgotten (its next value counts as a first one).
+```ruby
+seqs = Asterism::Sequences.new(16)
+```
+
+## Instance methods
+
+### Asterism::Sequences#see
+
+<pre class="fmrb-sig"><code>see(
+  <a href="../String/">String</a> lane,
+  <a href="../Integer/">Integer</a>? run,
+  <a href="../Integer/">Integer</a> seq,
+  ?<a href="../String/">String</a>? app
+) -&gt; <a href="../Array/">Array</a>[untyped]</code></pre>
+
+See one value: [lost, restarted]
+
+lane is the key (for a shared key, with the sender), run the sender's
+run id (nil: none), seq the value's number, app the sender's
+"node/app" (nil when unknown). Returns `[values missed, whether the
+sender restarted]`; the first sight of a lane is [0, false].
+```ruby
+lost, again =
+  seqs.see("k", 7, 1, "n/a")
+```
+
+### Asterism::Sequences#forget
+
+<pre class="fmrb-sig"><code>forget(<a href="../String/">String</a> app) -&gt; <a href="../Integer/">Integer</a></code></pre>
+
+Forget the lanes of an app that left
+
+Returns how many lanes it forgot.
+```ruby
+n = seqs.forget("n/app")
+```
+
+### Asterism::Sequences#size
+
+<pre class="fmrb-sig"><code>size() -&gt; <a href="../Integer/">Integer</a></code></pre>
+
+How many lanes are remembered now
+
+```ruby
+n = seqs.size
+```
+
+### Asterism::Sequences#clear
+
+<pre class="fmrb-sig"><code>clear() -&gt; Asterism::Sequences</code></pre>
+
+Forget everything
+
+Returns itself.
+```ruby
+seqs.clear
+```
+
+---
+
+*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
