@@ -1,6 +1,12 @@
 # FmrbMidi
 
+MIDI の入り口。音を出す口・曲・MML
+
 使い方は [MIDI](../midi.md) のページにあります。
+
+`FmrbMidi.device(self)` で内蔵音源 (APU) につながった口 (MIDI::Device) をもらい、
+`note_on` などで音符を送る。標準 MIDI ファイルは `FmrbMidi::SmfPlayer`、MML は
+`FmrbMidi::MmlPlayer` が鳴らす。外の音源へは `sam2695_device`・`serial_device` が口を作り、`register` で出し先を足す。曲の時間は `now_us` で測る。
 
 ## 定数
 
@@ -161,4 +167,4 @@ end
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

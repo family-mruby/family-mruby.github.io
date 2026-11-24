@@ -1,8 +1,10 @@
 # Asterism::Connection
 
-ネットワークの上のアプリ 1 つ分のつながり (link.conn)
+One app's connection to the network
 
 How to use it: [Network](../network.md).
+
+Got with link.conn.
 
 ## Instance methods
 
@@ -643,4 +645,4 @@ t = conn.type_of(info)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

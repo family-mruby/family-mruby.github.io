@@ -1,6 +1,6 @@
 # FmrbConst
 
-端末・ビルド・キー・テーマの値をまとめた定数の入れもの。
+端末・ビルド・キー・テーマの定数の入れもの
 
 使い方は [定数・システム情報](../const.md) のページにあります。
 
@@ -106,7 +106,7 @@ end
 | <span class="fmrb-name">`KEY_RSHIFT`</span> | [`Integer`](Integer.md) | 右 Shift (HID 0xE5) |
 | <span class="fmrb-name">`KEY_RALT`</span> | [`Integer`](Integer.md) | 右 Alt (HID 0xE6) |
 | <span class="fmrb-name">`KEY_RMETA`</span> | [`Integer`](Integer.md) | 右 Meta (HID 0xE7) |
-| <span class="fmrb-name">`MOD_LSHIFT`</span> | [`Integer`](Integer.md) | ---- 修飾キーのマスク (ev[:modifier] と & で比べる) ---- |
+| <span class="fmrb-name">`MOD_LSHIFT`</span> | [`Integer`](Integer.md) | 左 Shift のマスク (0x01) |
 | <span class="fmrb-name">`MOD_RSHIFT`</span> | [`Integer`](Integer.md) | 右 Shift のマスク (0x02) |
 | <span class="fmrb-name">`MOD_LCTRL`</span> | [`Integer`](Integer.md) | 左 Ctrl のマスク (0x04) |
 | <span class="fmrb-name">`MOD_RCTRL`</span> | [`Integer`](Integer.md) | 右 Ctrl のマスク (0x08) |
@@ -115,7 +115,7 @@ end
 | <span class="fmrb-name">`MOD_SHIFT`</span> | [`Integer`](Integer.md) | 左右どちらかの Shift のマスク (0x03) |
 | <span class="fmrb-name">`MOD_CTRL`</span> | [`Integer`](Integer.md) | 左右どちらかの Ctrl のマスク (0x0C) |
 | <span class="fmrb-name">`MOD_ALT`</span> | [`Integer`](Integer.md) | 左右どちらかの Alt のマスク (0x30) |
-| <span class="fmrb-name">`GP_SQUARE`</span> | [`Integer`](Integer.md) | ---- ゲームパッド (ボタンの番号と軸の番号) ---- |
+| <span class="fmrb-name">`GP_SQUARE`</span> | [`Integer`](Integer.md) | ボタン番号 0: 四角 |
 | <span class="fmrb-name">`GP_CROSS`</span> | [`Integer`](Integer.md) | ボタン番号 1: バツ |
 | <span class="fmrb-name">`GP_CIRCLE`</span> | [`Integer`](Integer.md) | ボタン番号 2: 丸 |
 | <span class="fmrb-name">`GP_TRIANGLE`</span> | [`Integer`](Integer.md) | ボタン番号 3: 三角 |
@@ -135,7 +135,7 @@ end
 | <span class="fmrb-name">`GP_AXIS_LY`</span> | [`Integer`](Integer.md) | 軸番号 1: 左スティックの縦 (ev[:axis]) |
 | <span class="fmrb-name">`GP_AXIS_RX`</span> | [`Integer`](Integer.md) | 軸番号 2: 右スティックの横 (ev[:axis]) |
 | <span class="fmrb-name">`GP_AXIS_RY`</span> | [`Integer`](Integer.md) | 軸番号 3: 右スティックの縦 (ev[:axis]) |
-| <span class="fmrb-name">`THEME_DESKTOP_BG`</span> | [`Integer`](Integer.md) | ---- テーマの色 (RGB332) ---- |
+| <span class="fmrb-name">`THEME_DESKTOP_BG`</span> | [`Integer`](Integer.md) | デスクトップの背景 (RGB332。[theme] で設定) |
 | <span class="fmrb-name">`THEME_MENU_BG`</span> | [`Integer`](Integer.md) | メニューの背景 (RGB332。[theme] で設定) |
 | <span class="fmrb-name">`THEME_WINDOW_BG`</span> | [`Integer`](Integer.md) | Window の背景 (RGB332。[theme] で設定) |
 | <span class="fmrb-name">`THEME_TEXT`</span> | [`Integer`](Integer.md) | 文字の色 (RGB332。[theme] で設定) |
@@ -145,7 +145,7 @@ end
 | <span class="fmrb-name">`THEME_BUTTON`</span> | [`Integer`](Integer.md) | ボタンの色 (RGB332。[theme] で設定) |
 | <span class="fmrb-name">`THEME_DIR_COLOR`</span> | [`Integer`](Integer.md) | 一覧のディレクトリ色 (RGB332。[theme] で設定) |
 | <span class="fmrb-name">`WHEEL_LINES`</span> | [`Integer`](Integer.md) | ホイール 1 目盛りで進む行数 (既定 3) |
-| <span class="fmrb-name">`PLATFORM`</span> | [`String`](String.md) | ---- 機種・ビルド ---- |
+| <span class="fmrb-name">`PLATFORM`</span> | [`String`](String.md) | "esp32" か "linux" (sim 等は linux) |
 | <span class="fmrb-name">`BOARD`</span> | [`String`](String.md) | 端末の名前 (機種ごとに違う) |
 | <span class="fmrb-name">`NATIVE`</span> | `bool` | ネイティブ版 (Linux の 1 プロセス) なら true |
 | <span class="fmrb-name">`HW_FAMILY`</span> | [`String`](String.md) | "modern"・"mini"・"retro" (sim は模した機種) |
@@ -164,7 +164,7 @@ end
 | <span class="fmrb-name">`FLASH_SIZE_MB`</span> | [`Integer`](Integer.md) | フラッシュの大きさ MB (linux では 0) |
 | <span class="fmrb-name">`PSRAM_SIZE_MB`</span> | [`Integer`](Integer.md) | PSRAM の大きさ MB (無ければ 0。linux では 0) |
 | <span class="fmrb-name">`RESET_REASON`</span> | [`String`](String.md) | 直前のリセットの理由 (linux では "-") |
-| <span class="fmrb-name">`PROC_ID_KERNEL`</span> | [`Integer`](Integer.md) | ---- アプリの番号・状態・メッセージの種類 ---- |
+| <span class="fmrb-name">`PROC_ID_KERNEL`</span> | [`Integer`](Integer.md) | Kernel のプロセス番号 (0) |
 | <span class="fmrb-name">`PROC_ID_HOST`</span> | [`Integer`](Integer.md) | Host のプロセス番号 (1) |
 | <span class="fmrb-name">`PROC_ID_SYSTEM_APP`</span> | [`Integer`](Integer.md) | システムアプリのプロセス番号 (2) |
 | <span class="fmrb-name">`PROC_ID_USER_APP0`</span> | [`Integer`](Integer.md) | ユーザアプリの枠 0 のプロセス番号 (4) |
@@ -197,4 +197,4 @@ FmrbConst.bt_mac   #=> "AA:BB:CC:DD:EE:FF"
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

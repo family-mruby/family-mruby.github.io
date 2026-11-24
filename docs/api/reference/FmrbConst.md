@@ -1,6 +1,6 @@
 # FmrbConst
 
-Constants for the machine, the build, keys and the theme.
+Constants: machine, build, keys, theme
 
 How to use it: [Constants & System Info](../const.md).
 
@@ -108,7 +108,7 @@ end
 | <span class="fmrb-name">`KEY_RSHIFT`</span> | [`Integer`](Integer.md) | Right Shift (HID 0xE5) |
 | <span class="fmrb-name">`KEY_RALT`</span> | [`Integer`](Integer.md) | Right Alt (HID 0xE6) |
 | <span class="fmrb-name">`KEY_RMETA`</span> | [`Integer`](Integer.md) | Right Meta (HID 0xE7) |
-| <span class="fmrb-name">`MOD_LSHIFT`</span> | [`Integer`](Integer.md) | ---- 修飾キーのマスク (ev[:modifier] と & で比べる) ---- |
+| <span class="fmrb-name">`MOD_LSHIFT`</span> | [`Integer`](Integer.md) | Modifier mask: Left Shift (0x01) |
 | <span class="fmrb-name">`MOD_RSHIFT`</span> | [`Integer`](Integer.md) | Modifier mask: Right Shift (0x02) |
 | <span class="fmrb-name">`MOD_LCTRL`</span> | [`Integer`](Integer.md) | Modifier mask: Left Ctrl (0x04) |
 | <span class="fmrb-name">`MOD_RCTRL`</span> | [`Integer`](Integer.md) | Modifier mask: Right Ctrl (0x08) |
@@ -117,7 +117,7 @@ end
 | <span class="fmrb-name">`MOD_SHIFT`</span> | [`Integer`](Integer.md) | Modifier mask: either Shift (0x03) |
 | <span class="fmrb-name">`MOD_CTRL`</span> | [`Integer`](Integer.md) | Modifier mask: either Ctrl (0x0C) |
 | <span class="fmrb-name">`MOD_ALT`</span> | [`Integer`](Integer.md) | Modifier mask: either Alt (0x30) |
-| <span class="fmrb-name">`GP_SQUARE`</span> | [`Integer`](Integer.md) | ---- ゲームパッド (ボタンの番号と軸の番号) ---- |
+| <span class="fmrb-name">`GP_SQUARE`</span> | [`Integer`](Integer.md) | Button index 0: Square |
 | <span class="fmrb-name">`GP_CROSS`</span> | [`Integer`](Integer.md) | Button index 1: Cross |
 | <span class="fmrb-name">`GP_CIRCLE`</span> | [`Integer`](Integer.md) | Button index 2: Circle |
 | <span class="fmrb-name">`GP_TRIANGLE`</span> | [`Integer`](Integer.md) | Button index 3: Triangle |
@@ -137,7 +137,7 @@ end
 | <span class="fmrb-name">`GP_AXIS_LY`</span> | [`Integer`](Integer.md) | Axis index 1: Left stick Y (ev[:axis]) |
 | <span class="fmrb-name">`GP_AXIS_RX`</span> | [`Integer`](Integer.md) | Axis index 2: Right stick X (ev[:axis]) |
 | <span class="fmrb-name">`GP_AXIS_RY`</span> | [`Integer`](Integer.md) | Axis index 3: Right stick Y (ev[:axis]) |
-| <span class="fmrb-name">`THEME_DESKTOP_BG`</span> | [`Integer`](Integer.md) | ---- テーマの色 (RGB332) ---- |
+| <span class="fmrb-name">`THEME_DESKTOP_BG`</span> | [`Integer`](Integer.md) | Desktop background (RGB332; set in [theme]) |
 | <span class="fmrb-name">`THEME_MENU_BG`</span> | [`Integer`](Integer.md) | Menu background (RGB332; set in [theme]) |
 | <span class="fmrb-name">`THEME_WINDOW_BG`</span> | [`Integer`](Integer.md) | Window background (RGB332; set in [theme]) |
 | <span class="fmrb-name">`THEME_TEXT`</span> | [`Integer`](Integer.md) | Text colour (RGB332; set in [theme]) |
@@ -147,7 +147,7 @@ end
 | <span class="fmrb-name">`THEME_BUTTON`</span> | [`Integer`](Integer.md) | Button colour (RGB332; set in [theme]) |
 | <span class="fmrb-name">`THEME_DIR_COLOR`</span> | [`Integer`](Integer.md) | Directory colour (RGB332; set in [theme]) |
 | <span class="fmrb-name">`WHEEL_LINES`</span> | [`Integer`](Integer.md) | Rows one wheel notch scrolls (3 by default) |
-| <span class="fmrb-name">`PLATFORM`</span> | [`String`](String.md) | ---- 機種・ビルド ---- |
+| <span class="fmrb-name">`PLATFORM`</span> | [`String`](String.md) | "esp32" or "linux" (sim etc. are linux) |
 | <span class="fmrb-name">`BOARD`</span> | [`String`](String.md) | Board name; differs per machine |
 | <span class="fmrb-name">`NATIVE`</span> | `bool` | true on the native Linux program |
 | <span class="fmrb-name">`HW_FAMILY`</span> | [`String`](String.md) | "modern"/"mini"/"retro" (sim: the one imitated) |
@@ -166,7 +166,7 @@ end
 | <span class="fmrb-name">`FLASH_SIZE_MB`</span> | [`Integer`](Integer.md) | Flash size in MB (0 on linux) |
 | <span class="fmrb-name">`PSRAM_SIZE_MB`</span> | [`Integer`](Integer.md) | PSRAM size in MB (0 when none, and on linux) |
 | <span class="fmrb-name">`RESET_REASON`</span> | [`String`](String.md) | Last reset reason ("-" on linux) |
-| <span class="fmrb-name">`PROC_ID_KERNEL`</span> | [`Integer`](Integer.md) | ---- アプリの番号・状態・メッセージの種類 ---- |
+| <span class="fmrb-name">`PROC_ID_KERNEL`</span> | [`Integer`](Integer.md) | Process ID of the Kernel (0) |
 | <span class="fmrb-name">`PROC_ID_HOST`</span> | [`Integer`](Integer.md) | Process ID of the Host (1) |
 | <span class="fmrb-name">`PROC_ID_SYSTEM_APP`</span> | [`Integer`](Integer.md) | Process ID of the system app (2) |
 | <span class="fmrb-name">`PROC_ID_USER_APP0`</span> | [`Integer`](Integer.md) | Process ID of user app slot 0 (4) |
@@ -200,4 +200,4 @@ FmrbConst.bt_mac   #=> "AA:BB:CC:DD:EE:FF"
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

@@ -1,6 +1,6 @@
 # FmrbI18n
 
-日本語と英語で表示を切りかえる。
+日本語と英語で表示を切りかえる
 
 ## クラスメソッド
 
@@ -106,4 +106,4 @@ FmrbI18n.half_kana?(s, 0, s.bytesize)
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

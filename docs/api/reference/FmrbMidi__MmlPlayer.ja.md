@@ -1,8 +1,10 @@
 # FmrbMidi::MmlPlayer
 
-MML で書いた曲を鳴らす係。tick を毎回呼んで進める。
+MML で書いた曲を鳴らす係
 
 使い方は [MIDI](../midi.md) のページにあります。
+
+tick を毎回呼んで進める。
 
 ## クラスメソッド
 
@@ -335,4 +337,4 @@ msg = @mml.error
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

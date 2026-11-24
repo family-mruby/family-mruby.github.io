@@ -1,6 +1,20 @@
 # FmrbApp
 
+The base of every app; inherit from it
+
 How to use it: [Application](../fmrb_app.md), [Inter-App Messaging](../pubsub.md).
+
+An app is written as `class MyApp < FmrbApp`, overriding the methods that
+get called (`on_create`, `on_update`, `on_event` and so on). The file only
+defines the class; once it has been read, the class is made and `start`ed.
+
+Draw on `gfx` (`@gfx`). `@gfx` is an FmrbGfx that FmrbApp prepares, with
+its origin at the top-left of the area the app owns; call `gfx.present`
+to show what was drawn. The window's size is read with `window_width`
+and `window_height`, colours with `theme_fg` and the like.
+
+Methods to read first: `on_create`, `on_update`, `on_event`, `gfx`,
+`set_timer`, `publish`.
 
 ## Types
 
@@ -1876,4 +1890,4 @@ idle_gc   #=> false (not asked for yet)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

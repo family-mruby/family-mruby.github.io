@@ -1,6 +1,10 @@
 # Fmrb::Fft
 
-Computes the spectrum of a sound. Pass **a byte String of 16-bit integers** (little-endian)
+Compute the spectrum of a sound
+
+How to use it: [Utilities](../utilities.md).
+
+Pass **a byte String of 16-bit integers** (little-endian)
 and get **a byte String of magnitudes in the same form**. The methods (`backend:`) are
 `:ruby`, `:c`, `:dsp`, `:spinel`, `:c64`, and the integer-only `:ruby_q15`, `:c_q15`,
 `:spinel_q15`. **They all take and give the same thing**; they differ in speed and in
@@ -10,8 +14,6 @@ fft = Fmrb::Fft.new(size: 512, backend: :c)
 mag = fft.forward(pcm)
 Fmrb::Fft.bin(mag, 8)
 ```
-
-How to use it: [Utilities](../utilities.md).
 
 ## Constants
 
@@ -208,4 +210,4 @@ fft.close
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

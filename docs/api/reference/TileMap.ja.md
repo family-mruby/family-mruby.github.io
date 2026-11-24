@@ -1,8 +1,10 @@
 # TileMap
 
-地図そのもの。web の地図エディタが書き出した JSON を読む。
+地図そのもの
 
 使い方は [タイルマップ](../tilemap.md) のページにあります。
+
+web の地図エディタが書き出した JSON を読む。
 
 ## クラスメソッド
 
@@ -208,4 +210,4 @@ map.render_view(sheet,
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

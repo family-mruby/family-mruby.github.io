@@ -1,8 +1,10 @@
 # SpriteImage
 
-うごく絵の中身。ここに描いた絵を SpriteInstance で画面に置く。
+The picture data of a sprite
 
 How to use it: [Sprites](../sprite.md).
+
+What is drawn here is put on the screen with a SpriteInstance.
 
 ## Class methods
 
@@ -134,4 +136,4 @@ img.destroy
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

@@ -1,6 +1,10 @@
 # Machine
 
-Time, waiting, and telling the platforms apart. Time is `board_millis` (ms) and
+Time, waiting, and telling platforms apart
+
+How to use it: [Tasks & Timing](../system.md).
+
+Time is `board_millis` (ms) and
 `uptime_us` (microseconds), waiting is `delay_ms` and `busy_wait_ms`, and
 `posix?` tells the platform.
 **Some methods behave differently on an ESP32 board and on Linux or the browser build**
@@ -8,8 +12,6 @@ Time, waiting, and telling the platforms apart. Time is `board_millis` (ms) and
 ```ruby
 t0 = Machine.board_millis
 ```
-
-How to use it: [Tasks & Timing](../system.md).
 
 ## Class methods
 
@@ -362,4 +364,4 @@ Machine.debug_puts("x=#{x}")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

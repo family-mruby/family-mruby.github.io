@@ -1,11 +1,13 @@
 # Asterism::EncodeError
 
-送れない値を送ろうとした (送る前に止まる)
+A value that cannot be sent was sent
 
 How to use it: [Network](../network.md).
 
 Inherits from: [`Asterism::Error`](Asterism__Error.md)
 
+It stops before anything is sent.
+
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

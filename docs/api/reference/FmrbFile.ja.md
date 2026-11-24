@@ -1,6 +1,11 @@
 # FmrbFile
 
+ファイルを丸ごと読み書きする
+
 使い方は [ファイル・I/O](../filesystem.md) のページにあります。
+
+パスで呼ぶ関数だけで、開いたままの状態は持たない。`read`・`write`・`append`・`exist?`・
+`size`・`delete`・`mkdir`・`list` がある。1 回でファイル全体を読み書きするので、大きなファイルは丸ごとメモリに載る。読む位置を持って少しずつ読むなら `File`。
 
 ## クラスメソッド
 
@@ -127,4 +132,4 @@ FmrbFile.free_bytes("/tmp")
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

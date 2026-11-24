@@ -1,6 +1,6 @@
 # MIDI::Device
 
-音を出す口。音符や音色をここへ送る。
+A sender for sound; send notes and tones to it
 
 How to use it: [MIDI](../midi.md).
 
@@ -297,4 +297,4 @@ dev.info[:name]
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

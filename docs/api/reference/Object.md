@@ -1,6 +1,10 @@
 # Object
 
-Object 自身が受け手になる呼び方 (`Object.const_defined?(:X)`) のための写し。中身は Module#const_defined? と同じ (Object は Module の一種)。
+A copy for calls with Object as the receiver
+
+A copy for calls with Object itself as the receiver, as in
+`Object.const_defined?(:X)`. It does the same as Module#const_defined?
+(Object is a kind of Module).
 
 ## Class methods
 
@@ -347,4 +351,4 @@ obj.to_s
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

@@ -1,6 +1,6 @@
 # FmrbColors
 
-色の名前の表と、/home/colors.toml の読み書き。
+色の名前の表と、/home/colors.toml の読み書き
 
 色は **RGB332 の 0〜255 の整数**。名前は web の色名を 256 色に写したもの (101 個の一覧と、同じ色へ行く別名)。`/home/colors.toml` にはアプリごとの上書きだけを書き、ファイルも節もキーも無ければ「テーマのまま」になる。
 ```ruby
@@ -141,4 +141,4 @@ FmrbColors.clear("shell")
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

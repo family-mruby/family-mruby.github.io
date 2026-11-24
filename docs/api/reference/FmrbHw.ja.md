@@ -1,6 +1,6 @@
 # FmrbHw
 
-ピンの台帳を読む。
+ピンの台帳を読む
 
 使い方は [ハードウェア制御](../peripherals.md)、[定数・システム情報](../const.md) のページにあります。
 
@@ -17,7 +17,7 @@ end
 | 名前 | 型 | 中身 |
 |---|---|---|
 | <span class="fmrb-name">`PIN_UNUSED`</span> | [`Integer`](Integer.md) | 使われていないピン |
-| <span class="fmrb-name">`PIN_SYSTEM_EXCLUSIVE`</span> | [`Integer`](Integer.md) | システム専用のピン (USB・PSRAM・SD・画面・ボタンなど。アプリは使えない) |
+| <span class="fmrb-name">`PIN_SYSTEM_EXCLUSIVE`</span> | [`Integer`](Integer.md) | システム専用のピン |
 | <span class="fmrb-name">`PIN_USER_GPIO`</span> | [`Integer`](Integer.md) | アプリが GPIO として取っているピン |
 | <span class="fmrb-name">`PIN_USER_I2C`</span> | [`Integer`](Integer.md) | I2C が取っているピン |
 | <span class="fmrb-name">`PIN_USER_RMT`</span> | [`Integer`](Integer.md) | RMT が取っているピン |
@@ -78,4 +78,4 @@ FmrbHw.pin_count   #=> 55 か 49
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

@@ -1,6 +1,17 @@
 # FmrbGfx
 
+A canvas: shapes, text, images, sprites
+
 How to use it: [Drawing](../fmrb_gfx.md).
+
+An app does not make one; it uses the `gfx` (`@gfx`) that `FmrbApp`
+prepares. The origin (0, 0) is the top-left of the area the app owns, and
+colours are RGB332 numbers (`FmrbGfx::RED` and so on). The drawing
+methods return the canvas itself, so calls chain. **Drawing alone shows nothing**:
+call `present` once at the end of a frame.
+
+Methods to read first: `clear`, `fill_rect`, `draw_text`, `draw_image`,
+`present`.
 
 ## Constants
 
@@ -15,15 +26,15 @@ How to use it: [Drawing](../fmrb_gfx.md).
 | <span class="fmrb-name">`CYAN`</span> | [`Integer`](Integer.md) | cyan (RGB332) |
 | <span class="fmrb-name">`MAGENTA`</span> | [`Integer`](Integer.md) | magenta (RGB332) |
 | <span class="fmrb-name">`GRAY`</span> | [`Integer`](Integer.md) | gray (RGB332) |
-| <span class="fmrb-name">`COLOR_BLACK`</span> | [`Integer`](Integer.md) | 黒 (RGB332) |
-| <span class="fmrb-name">`COLOR_WHITE`</span> | [`Integer`](Integer.md) | 白 (RGB332) |
-| <span class="fmrb-name">`COLOR_RED`</span> | [`Integer`](Integer.md) | 赤 (RGB332) |
-| <span class="fmrb-name">`COLOR_GREEN`</span> | [`Integer`](Integer.md) | 緑 (RGB332) |
-| <span class="fmrb-name">`COLOR_BLUE`</span> | [`Integer`](Integer.md) | 青 (RGB332) |
-| <span class="fmrb-name">`COLOR_YELLOW`</span> | [`Integer`](Integer.md) | 黄 (RGB332) |
-| <span class="fmrb-name">`COLOR_CYAN`</span> | [`Integer`](Integer.md) | 水色 (RGB332) |
-| <span class="fmrb-name">`COLOR_MAGENTA`</span> | [`Integer`](Integer.md) | 紫 (RGB332) |
-| <span class="fmrb-name">`COLOR_GRAY`</span> | [`Integer`](Integer.md) | 灰色 (RGB332) |
+| <span class="fmrb-name">`COLOR_BLACK`</span> | [`Integer`](Integer.md) | black (RGB332) |
+| <span class="fmrb-name">`COLOR_WHITE`</span> | [`Integer`](Integer.md) | white (RGB332) |
+| <span class="fmrb-name">`COLOR_RED`</span> | [`Integer`](Integer.md) | red (RGB332) |
+| <span class="fmrb-name">`COLOR_GREEN`</span> | [`Integer`](Integer.md) | green (RGB332) |
+| <span class="fmrb-name">`COLOR_BLUE`</span> | [`Integer`](Integer.md) | blue (RGB332) |
+| <span class="fmrb-name">`COLOR_YELLOW`</span> | [`Integer`](Integer.md) | yellow (RGB332) |
+| <span class="fmrb-name">`COLOR_CYAN`</span> | [`Integer`](Integer.md) | cyan (RGB332) |
+| <span class="fmrb-name">`COLOR_MAGENTA`</span> | [`Integer`](Integer.md) | magenta (RGB332) |
+| <span class="fmrb-name">`COLOR_GRAY`</span> | [`Integer`](Integer.md) | gray (RGB332) |
 | <span class="fmrb-name">`BLEND_ADD`</span> | [`Integer`](Integer.md) | additive blend (for blend_rect) |
 | <span class="fmrb-name">`BLEND_XOR`</span> | [`Integer`](Integer.md) | XOR blend (for blend_rect) |
 
@@ -1577,4 +1588,4 @@ st[:size]
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

@@ -1,12 +1,14 @@
 # Dir
 
-Directory listing and operations. `Dir.children` is the easy way to list (an array of
+List and operate on directories
+
+How to use it: [Files & I/O](../filesystem.md).
+
+`Dir.children` is the easy way to list (an array of
 names); to go one by one, `Dir.open` and loop on `read`.
 ```ruby
 Dir.children("/home").each { |n| p n }
 ```
-
-How to use it: [Files & I/O](../filesystem.md).
 
 ## Class methods
 
@@ -311,4 +313,4 @@ d.pos = saved
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

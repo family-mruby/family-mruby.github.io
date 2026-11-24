@@ -1,8 +1,10 @@
 # FmrbAsterism::Settings
 
-つなぎ方の設定 (FmrbAsterism.settings の答え)
+Connection settings
 
 How to use it: [Network](../network.md).
+
+What FmrbAsterism.settings answers.
 
 ## Instance methods
 
@@ -71,4 +73,4 @@ cfg = FmrbAsterism.settings
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

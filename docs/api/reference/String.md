@@ -1,5 +1,12 @@
 # String
 
+A string (UTF-8)
+
+Positions in `length` and `[]` count **characters**, not bytes; use
+`bytesize`, `getbyte` and `byteslice` for binary data. `+` makes a new
+string each time, so build in a loop with `<<`.
+**There is no Regexp** here.
+
 ## Instance methods
 
 ### String#!
@@ -676,4 +683,4 @@ s.upcase!
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

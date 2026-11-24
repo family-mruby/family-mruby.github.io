@@ -1,5 +1,12 @@
 # Array
 
+An ordered list of elements
+
+Includes `Enumerable`. Here `a[i], a[j] = a[j], a[i]` does not work (swap
+through a temporary). A block call costs about 0.4ms, so in a per-frame
+loop write `while` instead. The methods listed are the ones apps use,
+such as `push`, `each` and `include?`.
+
 ## Class methods
 
 ### Array.new
@@ -427,4 +434,4 @@ Joins the two and drops the duplicates.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

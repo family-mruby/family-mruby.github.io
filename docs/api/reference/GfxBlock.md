@@ -1,8 +1,10 @@
 # GfxBlock
 
-同じ形をくり返し描くときの下書き。数だけ差しかえて何度も描ける。
+A draft for drawing the same shape over and over
 
 How to use it: [Sprites](../sprite.md).
+
+Swap only the numbers and draw it as many times as you like.
 
 ## Class methods
 
@@ -58,4 +60,4 @@ return if @blk.destroyed?
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

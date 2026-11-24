@@ -1,5 +1,12 @@
 # Integer
 
+An integer
+
+Integer division truncates (make one side a `Float` for a fraction).
+`times` and `downto` call a block, about 0.4ms each, so in a loop that
+runs many times write `while`. `chr` returns a one-byte string for 0
+to 255.
+
 ## Instance methods
 
 ### Integer#%
@@ -321,4 +328,4 @@ flags = flags & ~0x04
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

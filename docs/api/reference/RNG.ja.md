@@ -1,6 +1,6 @@
 # RNG
 
-乱数の元。
+乱数の元
 
 ESP32 は `esp_random()` (ハードウェアの乱数)、Linux・ネイティブ版は `/dev/urandom` から読む
 (1 バイトごとにファイルを開くので、数を大量に作るときは遅い)。
@@ -46,4 +46,4 @@ id = RNG.uuid
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

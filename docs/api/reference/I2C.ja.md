@@ -1,6 +1,6 @@
 # I2C
 
-I2C の機器と話す。
+I2C の機器と話す
 
 使い方は [ハードウェア制御](../peripherals.md) のページにあります。
 
@@ -113,4 +113,4 @@ i2c.close
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

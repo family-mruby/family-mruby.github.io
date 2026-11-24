@@ -1,15 +1,17 @@
 # File
 
-ファイルの読み書き (File)。IO の子クラスで、write・puts・print・flush・close・closed? は IO のもの。実装は Family mruby の gem picoruby-fmrb-filesystem (lib/gems/picoruby-fmrb-filesystem/:
+ファイルの読み書き (File)
+
+使い方は [ファイル・I/O](../filesystem.md) のページにあります。
+
+継承元: [`IO`](IO.md)
+
+IO の子クラスで、write・puts・print・flush・close・closed? は IO のもの。実装は Family mruby の gem picoruby-fmrb-filesystem (lib/gems/picoruby-fmrb-filesystem/:
 mrblib/file.rb、ports/esp32/fmrb_filesystem.c) と picoruby-fmrb-io。
 **CRuby の File にあって無いもの**:
 gets・each_line・readlines・seek・eof?・File.read・File.write・File.binread・
 File.foreach・File.stat・File.mtime ほか。読むのは `read`、全体を一度に書く・読むなら FmrbFile。
 **失敗は RuntimeError** (Errno::ENOENT などは無く、ファイルが無い・書けない・数が多すぎる、はメッセージだけで区別する)。書いてよい場所は /home と /tmp (/tmp は RAM の上の小さな一時置き場)。
-
-使い方は [ファイル・I/O](../filesystem.md) のページにあります。
-
-継承元: [`IO`](IO.md)
 
 ## 定数
 
@@ -264,4 +266,4 @@ f.close
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

@@ -21,12 +21,12 @@ that reads it again (there is no reload).
 
 | Name | Type | What it is |
 |---|---|---|
-| <span class="fmrb-name">`RUN`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`EDIT`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`DEFAULT`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`SYS_PATH`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`USR_PATH`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`MAX_EXT_LEN`</span> | [`Integer`](Integer.md) |  |
+| <span class="fmrb-name">`RUN`</span> | [`String`](String.md) | Answer: run the file itself as an app |
+| <span class="fmrb-name">`EDIT`</span> | [`String`](String.md) | Answer: open it in the editor |
+| <span class="fmrb-name">`DEFAULT`</span> | [`String`](String.md) | Answer for an extension with no entry (same as EDIT) |
+| <span class="fmrb-name">`SYS_PATH`</span> | [`String`](String.md) | Path of the table that ships with the firmware |
+| <span class="fmrb-name">`USR_PATH`</span> | [`String`](String.md) | Path of the user's table |
+| <span class="fmrb-name">`MAX_EXT_LEN`</span> | [`Integer`](Integer.md) | Longest extension looked at (8) |
 
 ## Class methods
 
@@ -105,4 +105,4 @@ FmrbAssoc.merge_file(t, "/home/a.toml")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

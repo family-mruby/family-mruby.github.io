@@ -1,13 +1,15 @@
 # MessagePack
 
-Turns values into bytes with MessagePack and back. `pack` makes a String of bytes from a
+Turn values into bytes with MessagePack, and back
+
+How to use it: [Utilities](../utilities.md).
+
+`pack` makes a String of bytes from a
 Ruby value, `unpack` returns the value. `dump` and `load` are aliases.
 ```ruby
 bin = MessagePack.pack({ "a" => [1, 2] })
 MessagePack.unpack(bin)   #=> {"a"=>[1, 2]}
 ```
-
-How to use it: [Utilities](../utilities.md).
 
 ## Class methods
 
@@ -62,4 +64,4 @@ v = MessagePack.load(bin)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

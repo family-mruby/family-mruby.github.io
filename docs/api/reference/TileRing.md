@@ -1,8 +1,10 @@
 # TileRing
 
-見えている周りだけを描き直して、広い地図を軽く動かす仕組み。
+Redraws only what is in view
 
 How to use it: [Tile Maps](../tilemap.md).
+
+A mechanism for moving a wide map lightly.
 
 ## Class methods
 
@@ -69,4 +71,4 @@ ring.ensure_view(@cam_x, @cam_y,
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

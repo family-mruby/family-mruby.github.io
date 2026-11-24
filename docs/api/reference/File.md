@@ -1,15 +1,23 @@
 # File
 
-ファイルの読み書き (File)。IO の子クラスで、write・puts・print・flush・close・closed? は IO のもの。実装は Family mruby の gem picoruby-fmrb-filesystem (lib/gems/picoruby-fmrb-filesystem/:
-mrblib/file.rb、ports/esp32/fmrb_filesystem.c) と picoruby-fmrb-io。
-**CRuby の File にあって無いもの**:
-gets・each_line・readlines・seek・eof?・File.read・File.write・File.binread・
-File.foreach・File.stat・File.mtime ほか。読むのは `read`、全体を一度に書く・読むなら FmrbFile。
-**失敗は RuntimeError** (Errno::ENOENT などは無く、ファイルが無い・書けない・数が多すぎる、はメッセージだけで区別する)。書いてよい場所は /home と /tmp (/tmp は RAM の上の小さな一時置き場)。
+Reading and writing files (File)
 
 How to use it: [Files & I/O](../filesystem.md).
 
 Inherits from: [`IO`](IO.md)
+
+A subclass of IO; write, puts, print, flush, close and closed? are IO's.
+Implemented in the Family mruby gems picoruby-fmrb-filesystem
+(lib/gems/picoruby-fmrb-filesystem/: mrblib/file.rb,
+ports/esp32/fmrb_filesystem.c) and picoruby-fmrb-io.
+**What CRuby's File has and this one lacks**: gets, each_line, readlines,
+seek, eof?, File.read, File.write, File.binread, File.foreach, File.stat,
+File.mtime and more. Read with `read`; to write or read a whole file at
+once use FmrbFile.
+**A failure is a RuntimeError** (no Errno::ENOENT and the like; a missing
+file, a file that cannot be written and too many open files are told apart
+by the message only). Writable places are /home and /tmp (/tmp is a small
+temporary space in RAM).
 
 ## Constants
 
@@ -283,4 +291,4 @@ f.close
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

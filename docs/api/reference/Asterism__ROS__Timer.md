@@ -14,7 +14,7 @@ How to use it: [Network](../network.md).
 
 Stop the timer
 
-nil を返す。
+Returns nil.
 ```ruby
 t.cancel
 ```
@@ -51,4 +51,4 @@ n = t.fired
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

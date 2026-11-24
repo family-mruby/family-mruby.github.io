@@ -1,6 +1,8 @@
 # FmrbReceiveConf
 
-Reads and writes whether this machine receives files and apps, and from whom. The settings
+Read and write the receive settings
+
+The settings
 are in `/home/asterism/receive.toml` (else the shipped `/etc/asterism/receive.toml`).
 **Receiving is on only with an `enabled = true` line**; a missing file or line means "not
 receiving". There is a part written by hand and a "managed" part the console writes; `set_*`,
@@ -223,4 +225,4 @@ FmrbReceiveConf.lines.each { |l| puts l }
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

@@ -1,5 +1,11 @@
 # Class
 
+A class itself; read its name
+
+Only `name` is listed here (`obj.class.name`). `const_defined?` and
+`remove_method`, which take a class as the receiver, are on `Module`;
+the copy for `Object` is on `Object`.
+
 ## Instance methods
 
 ### Class#name
@@ -14,4 +20,4 @@ obj.class.name
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

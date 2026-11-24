@@ -1,8 +1,10 @@
 # Asterism::CurrentCall
 
-今答えている呼び出し (conn.current_call の答え)
+今答えている呼び出し
 
 使い方は [ネットワーク](../network.md) のページにあります。
+
+conn.current_call の答え。
 
 ## インスタンスメソッド
 
@@ -49,4 +51,4 @@ trust = conn.current_call.verified
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

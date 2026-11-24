@@ -1,14 +1,16 @@
 # JSON
 
-Reading and writing JSON. `JSON.parse` reads, `JSON.generate` writes; to take a part out
+Reading and writing JSON
+
+How to use it: [Utilities](../utilities.md).
+
+`JSON.parse` reads, `JSON.generate` writes; to take a part out
 of a big JSON use `JSON::Digger`. **All of it is a small implementation in Ruby**, built
 for size rather than speed.
 ```ruby
 h = JSON.parse('{"a": [1, 2]}')
 s = JSON.generate(h)   #=> "{\"a\":[1,2]}"
 ```
-
-How to use it: [Utilities](../utilities.md).
 
 ## Class methods
 
@@ -51,4 +53,4 @@ JSON.generate({ "a" => [1, nil] })
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

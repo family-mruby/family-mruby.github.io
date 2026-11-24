@@ -1,5 +1,10 @@
 # Symbol
 
+名前を表す Symbol (:name)
+
+同じ名前は同じ物なので、比べるのは速い。ここに載せているのは `<=>`・`==`・
+`===`・`inspect`・`to_sym`。Hash の印には String と別物として扱われる。
+
 ## インスタンスメソッド
 
 ### Symbol#<=>
@@ -58,4 +63,4 @@ p :name  #=> :name
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

@@ -1,7 +1,9 @@
 # Digest
 
-ハッシュの入れもの。
+ハッシュの入れもの (SHA-256)
+
+入るのはブラウザ版 (wasm) だけ。実機・Linux sim・ネイティブ版では `Digest` が無く、先に `Object.const_defined?(:Digest)` で調べる。
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

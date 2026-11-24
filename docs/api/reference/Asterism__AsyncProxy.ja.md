@@ -1,8 +1,10 @@
 # Asterism::AsyncProxy
 
-待たずに呼ぶ形 (Proxy#async の答え)。メソッドを呼ぶと Future が返る。
+待たずに呼ぶ形
 
 使い方は [ネットワーク](../network.md) のページにあります。
+
+Proxy#async の答え。メソッドを呼ぶと Future が返る。
 
 ## インスタンスメソッド
 
@@ -23,4 +25,4 @@ f = board.async.asterism_call(
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

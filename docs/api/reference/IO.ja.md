@@ -1,6 +1,6 @@
 # IO
 
-入出力のストリーム。
+入出力のストリーム
 
 使い方は [ファイル・I/O](../filesystem.md) のページにあります。
 
@@ -98,4 +98,4 @@ f.closed?
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

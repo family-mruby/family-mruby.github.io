@@ -1,8 +1,10 @@
 # Asterism::SampleInfo
 
-受けた値に付いてくる情報 (subscribe のブロックの 2 つ目)
+受けた値に付いてくる情報
 
 使い方は [ネットワーク](../network.md) のページにあります。
+
+subscribe のブロックの 2 つ目。
 
 ## インスタンスメソッド
 
@@ -168,4 +170,4 @@ puts info.to_h
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

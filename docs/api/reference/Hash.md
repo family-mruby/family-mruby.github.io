@@ -1,5 +1,11 @@
 # Hash
 
+A table that maps keys to values
+
+Includes `Enumerable`. A missing key gives nil, not an exception, and a
+default value cannot be given. A String key and a Symbol key are
+different. `each_key` needs a block (this build has no Enumerator).
+
 ## Class methods
 
 ### Hash.new
@@ -123,7 +129,7 @@ if h.has_key?(:name)
 
 Whether the key is present
 
-`has_key?` と同じ。
+The same as `has_key?`.
 ```ruby
 @titles.key?(room)
 ```
@@ -227,4 +233,4 @@ h.values.each { |v| p v }
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

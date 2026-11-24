@@ -1,8 +1,10 @@
 # TileSheet
 
-タイルの絵をならべた一枚の絵。番号でタイルを取り出して描く。
+One picture with tiles laid side by side
 
 How to use it: [Tile Maps](../tilemap.md).
+
+Tiles are taken out by number and drawn.
 
 ## Class methods
 
@@ -119,4 +121,4 @@ sheet.destroy
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

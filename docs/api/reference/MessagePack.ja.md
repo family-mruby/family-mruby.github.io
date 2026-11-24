@@ -1,6 +1,6 @@
 # MessagePack
 
-MessagePack で値をバイト列にし、戻す。
+MessagePack で値をバイト列にし、戻す
 
 使い方は [ユーティリティ](../utilities.md) のページにあります。
 
@@ -62,4 +62,4 @@ v = MessagePack.load(bin)
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

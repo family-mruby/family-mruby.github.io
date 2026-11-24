@@ -1,5 +1,11 @@
 # Float
 
+A floating-point number
+
+Arithmetic and comparison with `Integer` work. **Do not compare floats with `==`**;
+compare the size of the difference. Dividing by 0.0 does not
+raise; it gives Infinity. `to_i` truncates and `round` rounds.
+
 ## Instance methods
 
 ### Float#%
@@ -217,4 +223,4 @@ x.to_s
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

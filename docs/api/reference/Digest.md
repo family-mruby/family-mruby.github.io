@@ -1,7 +1,10 @@
 # Digest
 
-ハッシュの入れもの。
+Container for hashes (SHA-256)
+
+Only the browser build (wasm) has it. On a device, the Linux sim and the
+native build there is no `Digest`; check `Object.const_defined?(:Digest)` first.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

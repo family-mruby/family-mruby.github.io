@@ -1,8 +1,10 @@
 # Asterism::Error
 
-やり取りの失敗の元 (rescue ::Asterism::Error で全部受かる)
+Parent of every Asterism failure
 
 How to use it: [Network](../network.md).
+
+`rescue ::Asterism::Error` catches them all.
 
 ## Instance methods
 
@@ -19,4 +21,4 @@ rescue ::Asterism::Error => e
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

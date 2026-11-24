@@ -1,6 +1,8 @@
 # Time
 
-Date and time. Make one with `Time.now`, `Time.at` (from UNIX seconds), or
+Date and time
+
+Make one with `Time.now`, `Time.at` (from UNIX seconds), or
 `Time.local` / `Time.gm` (from a date). `t2 - t1` is a Float of seconds.
 ```ruby
 t = Time.now
@@ -609,4 +611,4 @@ t.ctime
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

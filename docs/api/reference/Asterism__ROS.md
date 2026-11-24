@@ -1,14 +1,15 @@
 # Asterism::ROS
 
-Be a ROS 2 node: topics and services
+Act as a ROS 2 node
 
 How to use it: [Network](../network.md).
 
 A bridge to ROS 2 (Jazzy, rmw_zenoh): make a node that publishes and
 subscribes to topics and calls and serves services. It assumes the ROS 2
 side shares the Zenoh router (zenohd) and uses rmw_zenoh.
-**Build it on a Link's conn.session** (`Asterism::ROS::Node.new(conn.session, "name")`). Like Asterism::Connection **nothing runs behind your back**:
-call Node#poll in every update.
+**Build it on a Link's conn.session**
+(`Asterism::ROS::Node.new(conn.session, "name")`). Like Asterism::Connection,
+**nothing runs behind your back**: call Node#poll in every update.
 
 Message types are files made from ROS 2 .msg / .srv files (the output
 of tools/asterism_msggen.rb); /usr/share/asterism/msgs on the machine
@@ -28,7 +29,7 @@ pub << { data: "hi" }
 
 | Name | Type | What it is |
 |---|---|---|
-| <span class="fmrb-name">`DEFAULT_QOS`</span> | [`String`](String.md) | The QoS chunk of the default profile (reliable, volatile, keep last 10) |
+| <span class="fmrb-name">`DEFAULT_QOS`</span> | [`String`](String.md) | The default QoS |
 | <span class="fmrb-name">`TYPE_PATH`</span> | `Array[String]` | Where require_type looks for generated types |
 
 ## Class methods
@@ -92,4 +93,4 @@ Asterism::ROS.resolve("chatter", "/a")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

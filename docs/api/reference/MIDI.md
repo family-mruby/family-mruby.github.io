@@ -1,5 +1,10 @@
 # MIDI
 
+The MIDI namespace; the sender is MIDI::Device
+
+It holds `MIDI::Device` only. An app does not make one itself; it gets it
+from `FmrbMidi.device(self)`.
+
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

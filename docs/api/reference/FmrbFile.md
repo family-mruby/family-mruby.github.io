@@ -1,6 +1,13 @@
 # FmrbFile
 
+Read and write whole files by path
+
 How to use it: [Files & I/O](../filesystem.md).
+
+Functions called by path; nothing stays open. There are `read`, `write`,
+`append`, `exist?`, `size`, `delete`, `mkdir` and `list`. A call reads or
+writes the whole file, so a big file is held in memory entirely. To read
+a little at a time from a position, use `File`.
 
 ## Class methods
 
@@ -134,4 +141,4 @@ FmrbFile.free_bytes("/tmp")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

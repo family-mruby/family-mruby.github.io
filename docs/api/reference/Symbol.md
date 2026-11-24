@@ -1,5 +1,11 @@
 # Symbol
 
+A Symbol such as :name
+
+The same name is the same object, so comparing is fast. Listed here are
+`<=>`, `==`, `===`, `inspect` and `to_sym`. As a Hash key it is a
+different key from a String.
+
 ## Instance methods
 
 ### Symbol#<=>
@@ -58,4 +64,4 @@ Returns itself.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

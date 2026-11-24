@@ -1,5 +1,10 @@
 # NilClass
 
+nil の型。「値が無い」を表す
+
+偽として扱われる。`nil?` で調べる。`to_i` は 0、`to_f` は 0.0、`to_s` は空文字列、
+`to_h` は空の Hash になるので、読めなかった値をそのまま足せる。
+
 ## インスタンスメソッド
 
 ### NilClass#!
@@ -120,4 +125,4 @@ nil | true  #=> true
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

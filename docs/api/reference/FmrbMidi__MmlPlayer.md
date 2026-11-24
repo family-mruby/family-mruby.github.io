@@ -1,8 +1,10 @@
 # FmrbMidi::MmlPlayer
 
-MML で書いた曲を鳴らす係。tick を毎回呼んで進める。
+Plays a song written in MML
 
 How to use it: [MIDI](../midi.md).
+
+Call tick on every update to move it along.
 
 ## Class methods
 
@@ -345,4 +347,4 @@ msg = @mml.error
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

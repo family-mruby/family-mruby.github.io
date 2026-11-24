@@ -1,6 +1,6 @@
 # FmrbToml
 
-TOML の設定ファイルを読む・行ごとに書き換える。
+TOML の設定を読む・行ごとに書き換える
 
 `load` でファイル、`parse` で文字列を Hash にする。**読めなかったときは例外でなく nil** で、理由は `FmrbToml.error`。書くのは `update` だけで、**指したキーの行だけを書き換える**ので、人が手で書いたコメント・順序・知らないキーが残る。
 ```ruby
@@ -103,4 +103,4 @@ FmrbToml.dump_key("a b")  #=> "\"a b\""
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

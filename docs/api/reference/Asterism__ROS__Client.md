@@ -56,7 +56,7 @@ puts r.sum
 
 Withdraw the client
 
-nil を返す。
+Returns nil.
 ```ruby
 cli.close
 ```
@@ -133,4 +133,4 @@ k = cli.token_key
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

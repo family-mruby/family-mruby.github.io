@@ -1,18 +1,27 @@
 # FmrbAudio
 
+Play sound: songs, effects, WAV, microphone
+
 How to use it: [Sound](../audio.md).
+
+An app makes one with `@audio = FmrbAudio.new(self)`. A song in NSF is
+played with `play` (`stop` ends it; `pause` and `resume` hold it), a WAV
+with `play_wav`, single notes with `note_on` and `note_off`, and FMSQ data is
+loaded with `load_fmsq` and played with `play_slot`. For
+the microphone, check `mic_available?` and read with `mic_enable` and
+`mic_read`. To send MIDI notes, use FmrbMidi.
 
 ## Constants
 
 | Name | Type | What it is |
 |---|---|---|
-| <span class="fmrb-name">`NSF_IDLE`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_PLAYING`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_FADING`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_ENDED`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_END_SILENCE`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_END_LOOP`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_END_LIMIT`</span> | [`Integer`](Integer.md) |  |
+| <span class="fmrb-name">`NSF_IDLE`</span> | [`Integer`](Integer.md) | state 0: no song, or stopped |
+| <span class="fmrb-name">`NSF_PLAYING`</span> | [`Integer`](Integer.md) | state 1: playing |
+| <span class="fmrb-name">`NSF_FADING`</span> | [`Integer`](Integer.md) | state 2: end found, fading out |
+| <span class="fmrb-name">`NSF_ENDED`</span> | [`Integer`](Integer.md) | state 3: over by itself |
+| <span class="fmrb-name">`NSF_END_SILENCE`</span> | [`Integer`](Integer.md) | reason 1: ended on silence |
+| <span class="fmrb-name">`NSF_END_LOOP`</span> | [`Integer`](Integer.md) | reason 2: ended after the loop was heard |
+| <span class="fmrb-name">`NSF_END_LIMIT`</span> | [`Integer`](Integer.md) | reason 3: ended at the time limit |
 | <span class="fmrb-name">`MAIN`</span> | [`Integer`](Integer.md) | The APU for long music (0) |
 | <span class="fmrb-name">`SUB`</span> | [`Integer`](Integer.md) | The APU for short effects (1) |
 | <span class="fmrb-name">`CH_PULSE1`</span> | [`Integer`](Integer.md) | The first pulse channel (0) |
@@ -300,4 +309,4 @@ Stop a note
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

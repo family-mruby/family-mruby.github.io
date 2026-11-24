@@ -1,8 +1,10 @@
 # FmrbVideo
 
-FmrbGfx#video_open が返す、流している動画の取っ手。流せる動画は 1 つなので、どの取っ手も同じ再生機を操作する。中身は FmrbGfx.video_control を呼ぶ Ruby。
+流している動画の取っ手
 
 使い方は [描画](../fmrb_gfx.md) のページにあります。
+
+FmrbGfx#video_open が返す。流せる動画は 1 つなので、どの取っ手も同じ再生機を操作する。中身は FmrbGfx.video_control を呼ぶ Ruby。
 
 ## インスタンスメソッド
 
@@ -102,4 +104,4 @@ v.rewind if v.finished?
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

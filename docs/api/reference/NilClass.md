@@ -1,5 +1,11 @@
 # NilClass
 
+The type of nil, meaning no value
+
+It counts as false. Test for it with `nil?`. `to_i` gives 0, `to_s`
+gives an empty string, and `to_h` gives an empty Hash, so a value that
+failed to read can still be added.
+
 ## Instance methods
 
 ### NilClass#!
@@ -120,4 +126,4 @@ nil | true  #=> true
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

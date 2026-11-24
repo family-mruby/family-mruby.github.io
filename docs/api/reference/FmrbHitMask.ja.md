@@ -1,8 +1,10 @@
 # FmrbHitMask
 
-枠なしの Window の当たりの形 (画素単位)。FmrbApp#hit_mask_from_art で作る。
+枠なし Window の当たりの形 (画素単位)
 
 使い方は [スプライト](../sprite.md) のページにあります。
+
+FmrbApp#hit_mask_from_art で作る。
 
 ## クラスメソッド
 
@@ -92,4 +94,4 @@ same = m.bits == old.bits
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

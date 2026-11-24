@@ -1,11 +1,13 @@
 # Log
 
-ログ (シリアルと sim の端末に出る)。
+The log (goes to the serial port and the sim's terminal)
 
 How to use it: [Logging](../log.md).
 
-Log はクラスごと本体との境界に載る (%a{fmrb.boundary}、doc/app_boundary)。
-info などは包みで、隣に省略なしの _raw の形がある (mruby の包みは C で、前に書いたタグを 1 つめに受ける形 `Log.info("TAG", msg)` も読む)。
+Log as a whole class is on the boundary to the system (%a{fmrb.boundary},
+doc/app_boundary). info and the like are wrappers, each with a _raw form
+next to it that leaves nothing out (the mruby wrapper is in C and also
+reads the older form that takes the tag first, `Log.info("TAG", msg)`).
 
 ## Class methods
 
@@ -99,4 +101,4 @@ Log.error_raw("ready")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

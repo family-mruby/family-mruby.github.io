@@ -1,8 +1,10 @@
 # FmrbMic
 
-マイクの C 側の窓口。アプリは ふつう FmrbAudio の mic_* を使う。
+The C-side entry to the microphone
 
 How to use it: [Sound](../audio.md).
+
+Apps normally use the mic_* methods of FmrbAudio.
 
 ## Class methods
 
@@ -22,4 +24,4 @@ end
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

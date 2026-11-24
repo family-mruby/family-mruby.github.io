@@ -1,8 +1,10 @@
 # Asterism::SampleInfo
 
-受けた値に付いてくる情報 (subscribe のブロックの 2 つ目)
+Information that comes with a received value
 
 How to use it: [Network](../network.md).
+
+The second argument of the subscribe block.
 
 ## Instance methods
 
@@ -171,4 +173,4 @@ puts info.to_h
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

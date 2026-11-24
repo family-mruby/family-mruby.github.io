@@ -1,6 +1,15 @@
 # FmrbMidi
 
+MIDI entry point: devices, songs, MML
+
 How to use it: [MIDI](../midi.md).
+
+`FmrbMidi.device(self)` gives a device (MIDI::Device) wired to the built-in
+sound chip (the APU); send notes to it with `note_on` and the like. A
+standard MIDI file is played by `FmrbMidi::SmfPlayer`, MML by
+`FmrbMidi::MmlPlayer`. For an outside instrument, `sam2695_device` and
+`serial_device` make the device and `register` adds a transport. Measure a
+song's time with `now_us`.
 
 ## Constants
 
@@ -174,4 +183,4 @@ end
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

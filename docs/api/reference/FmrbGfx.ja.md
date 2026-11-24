@@ -1,6 +1,13 @@
 # FmrbGfx
 
+絵を描く画面。図形・文字・画像・スプライト
+
 使い方は [描画](../fmrb_gfx.md) のページにあります。
+
+アプリは自分で作らない。`FmrbApp` が用意する `gfx` (`@gfx`) を使う。原点 (0, 0) はアプリが描いてよい区画の左上で、色は RGB332 の数 (`FmrbGfx::RED` など)。描くメソッドは自分自身を返すので続けて書ける。**描いただけでは出ない**。フレームの終わりに `present` を 1 回呼ぶ。
+
+最初に読むとよいメソッド: `clear`、`fill_rect`、`draw_text`、`draw_image`、
+`present`。
 
 ## 定数
 
@@ -1451,4 +1458,4 @@ st[:size]
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

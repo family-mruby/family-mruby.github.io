@@ -1,8 +1,10 @@
 # SpriteImage
 
-うごく絵の中身。ここに描いた絵を SpriteInstance で画面に置く。
+うごく絵の中身
 
 使い方は [スプライト](../sprite.md) のページにあります。
+
+ここに描いた絵を SpriteInstance で画面に置く。
 
 ## クラスメソッド
 
@@ -128,4 +130,4 @@ img.destroy
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

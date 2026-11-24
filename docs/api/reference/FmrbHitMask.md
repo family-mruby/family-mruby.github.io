@@ -1,8 +1,10 @@
 # FmrbHitMask
 
-枠なしの Window の当たりの形 (画素単位)。FmrbApp#hit_mask_from_art で作る。
+The hit shape of a frameless window, per pixel
 
 How to use it: [Sprites](../sprite.md).
+
+Made with FmrbApp#hit_mask_from_art.
 
 ## Class methods
 
@@ -93,4 +95,4 @@ same = m.bits == old.bits
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

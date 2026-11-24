@@ -1,6 +1,8 @@
 # Fmrb::Raycast
 
-Looks at a grid map by the distance to walls (Wolfenstein 3D style). **Every value is an**
+Ray casting over a grid map
+
+(Wolfenstein 3D style.) **Every value is an**
 **integer**: one cell is 256 in fixed point, **angles are whole degrees**, and one cast fires
 **40 rays** across a 60-degree field of view. The result is a distance, a wall value and a
 face per ray. The backends are `:ruby` and `:spinel` (the same calculation as native code).
@@ -189,4 +191,4 @@ rc.close
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

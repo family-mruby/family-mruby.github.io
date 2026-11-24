@@ -1,14 +1,16 @@
 # IO
 
-An input/output stream, the parent of File. `$stdout` and a file are the same kind
+An input/output stream
+
+How to use it: [Files & I/O](../filesystem.md).
+
+The parent of File. `$stdout` and a file are the same kind
 of IO. **`read` and `write` on a closed stream raise RuntimeError** ("closed
 stream"), not IOError. Every failure is a RuntimeError; the reason (errno) is not
 told apart.
 ```ruby
 $stdout.puts "hello"
 ```
-
-How to use it: [Files & I/O](../filesystem.md).
 
 ## Instance methods
 
@@ -106,4 +108,4 @@ f.closed?
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

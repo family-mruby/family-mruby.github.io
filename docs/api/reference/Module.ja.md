@@ -1,5 +1,7 @@
 # Module
 
+クラスとモジュールの操作
+
 クラスとモジュール (Module) の操作。`Object.const_defined?(:X)` のようにクラスが受け手になる。実装は mruby 本体の src/class.c (const_defined?) と mruby-metaprog (remove_method)。
 
 ## インスタンスメソッド
@@ -36,4 +38,4 @@ self.class.remove_method(:draw_title)
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

@@ -1,11 +1,11 @@
 # Asterism::Proxy
 
-ほかの端末のオブジェクトの代わり (conn[path] の答え)
+Stand-in for an object on another machine
 
 How to use it: [Network](../network.md).
 
-公開されたメソッドを、そのまま普通のメソッドのように呼ぶ
-(`board.post("hi")`)。呼ぶと答えを待つ。
+What conn[path] answers. Call the published methods like ordinary
+methods (`board.post("hi")`). A call waits for the answer.
 
 ## Instance methods
 
@@ -100,4 +100,4 @@ board.asterism_refresh
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

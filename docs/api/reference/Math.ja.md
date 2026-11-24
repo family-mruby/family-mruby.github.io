@@ -1,6 +1,6 @@
 # Math
 
-三角関数・指数・対数などの数学関数。
+三角関数・指数・対数などの数学関数
 
 引数は Integer でも Float でもよく、結果は必ず Float。数でないもの (nil や文字列) を渡すと TypeError。**定義域の外の値は `Math::DomainError`** が出る
 (関数ごとに長文に書いた)。
@@ -293,4 +293,4 @@ Math.erfc(1)
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

@@ -1,6 +1,6 @@
 # FmrbColors
 
-A table of colour names, and the per-app overrides in /home/colors.toml.
+The colour-name table, and /home/colors.toml
 
 A colour is **an RGB332 integer, 0..255**. The names are the web's, mapped onto the 256
 colours (a list of 101, plus aliases that land on the same colour). /home/colors.toml holds
@@ -150,4 +150,4 @@ FmrbColors.clear("shell")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

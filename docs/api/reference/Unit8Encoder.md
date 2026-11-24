@@ -1,6 +1,8 @@
 # Unit8Encoder
 
-A device with 8 rotary encoders, 8 buttons, 1 switch and 9 RGB LEDs. Pass an open `I2C` to
+8 encoders, 8 buttons, 9 LEDs
+
+Pass an open `I2C` to
 `Unit8Encoder.new`. **A communication failure is the `I2C` IOError as it is** (without the
 device the app fails here). `index` is 0..7 for encoders and buttons and 0..8 for LEDs.
 **There is no range check**: an index out of range reads or writes another register.
@@ -154,4 +156,4 @@ enc.set_i2c_address(0x42)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

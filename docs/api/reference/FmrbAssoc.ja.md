@@ -17,12 +17,12 @@
 
 | 名前 | 型 | 中身 |
 |---|---|---|
-| <span class="fmrb-name">`RUN`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`EDIT`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`DEFAULT`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`SYS_PATH`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`USR_PATH`</span> | [`String`](String.md) |  |
-| <span class="fmrb-name">`MAX_EXT_LEN`</span> | [`Integer`](Integer.md) |  |
+| <span class="fmrb-name">`RUN`</span> | [`String`](String.md) | 答え: そのファイル自身をアプリとして動かす |
+| <span class="fmrb-name">`EDIT`</span> | [`String`](String.md) | 答え: エディタで開く |
+| <span class="fmrb-name">`DEFAULT`</span> | [`String`](String.md) | 表に無い拡張子の答え (EDIT と同じ) |
+| <span class="fmrb-name">`SYS_PATH`</span> | [`String`](String.md) | ファームウェア付きの表のパス |
+| <span class="fmrb-name">`USR_PATH`</span> | [`String`](String.md) | ユーザの表のパス |
+| <span class="fmrb-name">`MAX_EXT_LEN`</span> | [`Integer`](Integer.md) | 調べる拡張子の最大の長さ (8) |
 
 ## クラスメソッド
 
@@ -93,4 +93,4 @@ FmrbAssoc.merge_file(t, "/home/a.toml")
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

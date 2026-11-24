@@ -1,5 +1,12 @@
 # Kernel
 
+Output, random numbers, Proc helpers
+
+The line `puts` writes goes to the log, not the screen. `print` adds no newline.
+`rand` with max left out or 0 returns an integer from 0 to 4294967295
+(not a Float as in CRuby). `proc`, `lambda` and `->` turn a block into a
+Proc.
+
 ## Class methods
 
 ### Kernel.message_queue_exists?
@@ -116,4 +123,4 @@ f.call(3)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

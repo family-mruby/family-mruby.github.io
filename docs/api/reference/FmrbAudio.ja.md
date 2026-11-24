@@ -1,18 +1,24 @@
 # FmrbAudio
 
+音を鳴らす。曲・効果音・WAV・マイク
+
 使い方は [音声](../audio.md) のページにあります。
+
+アプリは `@audio = FmrbAudio.new(self)` で作る。NSF の曲は `play` (止めるのは `stop`、一時停止は `pause`・`resume`)、WAV は `play_wav`、音を 1 つずつなら `note_on`・`note_off`、
+FMSQ のデータは `load_fmsq` で読んで `play_slot`。マイクは `mic_available?` で調べて
+`mic_enable`・`mic_read` で読む。MIDI の音符を送るなら FmrbMidi。
 
 ## 定数
 
 | 名前 | 型 | 中身 |
 |---|---|---|
-| <span class="fmrb-name">`NSF_IDLE`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_PLAYING`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_FADING`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_ENDED`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_END_SILENCE`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_END_LOOP`</span> | [`Integer`](Integer.md) |  |
-| <span class="fmrb-name">`NSF_END_LIMIT`</span> | [`Integer`](Integer.md) |  |
+| <span class="fmrb-name">`NSF_IDLE`</span> | [`Integer`](Integer.md) | state 0: 曲が無い・命令で止めた |
+| <span class="fmrb-name">`NSF_PLAYING`</span> | [`Integer`](Integer.md) | state 1: 鳴っている |
+| <span class="fmrb-name">`NSF_FADING`</span> | [`Integer`](Integer.md) | state 2: 終わりを見つけて小さくしている |
+| <span class="fmrb-name">`NSF_ENDED`</span> | [`Integer`](Integer.md) | state 3: 曲が自分で終わった |
+| <span class="fmrb-name">`NSF_END_SILENCE`</span> | [`Integer`](Integer.md) | reason 1: 無音で終わった |
+| <span class="fmrb-name">`NSF_END_LOOP`</span> | [`Integer`](Integer.md) | reason 2: ループを聞き終えて終わった |
+| <span class="fmrb-name">`NSF_END_LIMIT`</span> | [`Integer`](Integer.md) | reason 3: 時間の上限で終わった |
 | <span class="fmrb-name">`MAIN`</span> | [`Integer`](Integer.md) | 長い曲を置く APU (0) |
 | <span class="fmrb-name">`SUB`</span> | [`Integer`](Integer.md) | 効果音の APU (1) |
 | <span class="fmrb-name">`CH_PULSE1`</span> | [`Integer`](Integer.md) | 矩形波 1 の channel (0) |
@@ -282,4 +288,4 @@ sweep は 0 (包みと同じ)。包みは note_on。
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

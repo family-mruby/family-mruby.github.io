@@ -1,8 +1,11 @@
 # FmrbVideo
 
-FmrbGfx#video_open が返す、流している動画の取っ手。流せる動画は 1 つなので、どの取っ手も同じ再生機を操作する。中身は FmrbGfx.video_control を呼ぶ Ruby。
+A handle on the video being played
 
 How to use it: [Drawing](../fmrb_gfx.md).
+
+Returned by FmrbGfx#video_open. Only one video can play at a time, so every
+handle operates the same player. It is Ruby that calls FmrbGfx.video_control.
 
 ## Instance methods
 
@@ -102,4 +105,4 @@ v.rewind if v.finished?
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

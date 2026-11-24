@@ -1,5 +1,10 @@
 # Class
 
+クラス自身を表す。名前を読む
+
+このファイルでは `name` だけを載せている (`obj.class.name`)。クラスを受け手にする
+`const_defined?` と `remove_method` は `Module` に、`Object` 向けの写しは `Object` にある。
+
 ## インスタンスメソッド
 
 ### Class#name
@@ -14,4 +19,4 @@ obj.class.name
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

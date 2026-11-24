@@ -1,5 +1,11 @@
 # String
 
+文字列 (UTF-8)
+
+`length` と `[]` の位置は**文字数**で、バイトではない。バイナリは `bytesize`・`getbyte`・
+`byteslice` で扱う。足すたびに新しい文字列ができるので、ループで組み立てるなら `<<`。
+**Regexp が無い**。
+
 ## インスタンスメソッド
 
 ### String#!
@@ -666,4 +672,4 @@ s.upcase!
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

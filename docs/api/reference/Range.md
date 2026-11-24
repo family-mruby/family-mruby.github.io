@@ -1,6 +1,12 @@
 # Range
 
+A range such as 1..3 or 1...3
+
 Inherits from: [`Enumerable`](Enumerable.md)
+
+Walk it with `each`. Even for `...`, `last` returns the end as written
+(not the last element). `===` is what `case ... when` uses. A block
+call costs about 0.4ms, so in a hot loop rewrite it as `while`.
 
 ## Class methods
 
@@ -107,4 +113,4 @@ end
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

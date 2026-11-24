@@ -89,7 +89,7 @@ FmrbAsterism.write_config(c)
 
 The saved display name ("" when none)
 
-config.toml の name。無いか読めなければ ""。
+The name in config.toml. "" when there is none or it cannot be read.
 ```ruby
 n = FmrbAsterism.saved_name
 ```
@@ -174,4 +174,4 @@ c = FmrbAsterism.credentials_for(
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

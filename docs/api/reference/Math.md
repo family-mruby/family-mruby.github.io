@@ -1,5 +1,7 @@
 # Math
 
+Trigonometric, exponential and logarithmic functions
+
 Takes an Integer or a Float and always returns a Float. A non-number (nil, a
 String) raises TypeError.
 **A value outside the domain raises `Math::DomainError`** (noted per function).
@@ -292,4 +294,4 @@ Math.erfc(1)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

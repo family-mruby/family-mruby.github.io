@@ -49,7 +49,7 @@ n = srv.errors
 
 Withdraw the service
 
-nil を返す。
+Returns nil.
 ```ruby
 srv.close
 ```
@@ -86,4 +86,4 @@ k = srv.token_key
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

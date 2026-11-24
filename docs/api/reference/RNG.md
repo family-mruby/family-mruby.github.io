@@ -1,6 +1,8 @@
 # RNG
 
-The source of random numbers. An ESP32 uses `esp_random()` (the hardware RNG);
+The source of random numbers
+
+An ESP32 uses `esp_random()` (the hardware RNG);
 Linux and the native build read `/dev/urandom` (opening the file once per byte, so
 producing many numbers is slow).
 ```ruby
@@ -46,4 +48,4 @@ id = RNG.uuid
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

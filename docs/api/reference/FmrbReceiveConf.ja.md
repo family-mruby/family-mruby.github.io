@@ -1,6 +1,6 @@
 # FmrbReceiveConf
 
-このマシンがファイルや app を受け取るか、だれから受け取るかを読み書きする。
+ファイルや app の受け取りの設定を読み書きする
 
 設定は `/home/asterism/receive.toml` (無ければ出荷時の `/etc/asterism/receive.toml`)。
 **受け取りは `enabled = true` の行があるときだけ**で、ファイルが無い・行が無いと「受け取らない」。手で書く部分と、console が書く「managed」の部分があり、`set_*`・`allow`・`deny` が書き換えるのは
@@ -207,4 +207,4 @@ FmrbReceiveConf.lines.each { |l| puts l }
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

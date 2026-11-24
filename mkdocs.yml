@@ -265,22 +265,39 @@ nav:
               - "Math::DomainError": api/reference/Math__DomainError.md
               - "RNG": api/reference/RNG.md
           - Ruby core:
+              - "ArgumentError": api/reference/ArgumentError.md
               - "Array": api/reference/Array.md
               - "Class": api/reference/Class.md
               - "Enumerable": api/reference/Enumerable.md
+              - "Exception": api/reference/Exception.md
               - "FalseClass": api/reference/FalseClass.md
               - "Float": api/reference/Float.md
+              - "FrozenError": api/reference/FrozenError.md
               - "Hash": api/reference/Hash.md
+              - "IndexError": api/reference/IndexError.md
               - "Integer": api/reference/Integer.md
               - "Kernel": api/reference/Kernel.md
+              - "KeyError": api/reference/KeyError.md
               - "Module": api/reference/Module.md
+              - "NameError": api/reference/NameError.md
               - "NilClass": api/reference/NilClass.md
+              - "NoMemoryError": api/reference/NoMemoryError.md
+              - "NoMethodError": api/reference/NoMethodError.md
+              - "NotImplementedError": api/reference/NotImplementedError.md
               - "Object": api/reference/Object.md
               - "Proc": api/reference/Proc.md
               - "Range": api/reference/Range.md
+              - "RangeError": api/reference/RangeError.md
+              - "RuntimeError": api/reference/RuntimeError.md
+              - "ScriptError": api/reference/ScriptError.md
+              - "StandardError": api/reference/StandardError.md
+              - "StopIteration": api/reference/StopIteration.md
               - "String": api/reference/String.md
               - "Symbol": api/reference/Symbol.md
+              - "SystemStackError": api/reference/SystemStackError.md
               - "TrueClass": api/reference/TrueClass.md
+              - "TypeError": api/reference/TypeError.md
+              - "ZeroDivisionError": api/reference/ZeroDivisionError.md
       # END class reference
   - File Formats:
       - System Config (system_conf.toml / wifi.toml): file_formats/system_conf.md

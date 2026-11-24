@@ -1,8 +1,10 @@
 # FmrbMidi::SmfPlayer
 
-曲のファイル (SMF) を鳴らす係。tick を毎回呼んで進める。
+Plays a song file (SMF)
 
 How to use it: [MIDI](../midi.md).
+
+Call tick on every update to move it along.
 
 ## Constants
 
@@ -457,4 +459,4 @@ Log.info(@smf.timing_stats)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

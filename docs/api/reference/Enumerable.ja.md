@@ -1,5 +1,10 @@
 # Enumerable
 
+each を持つものに混ぜる繰り返しの道具
+
+`Array`・`Hash` が取り込み、`Range` が継承している。ここに載せているのは `each`・
+`each_with_index`・`map`・`to_a`。`map` は新しい配列を作る (自分を書き換えるのは `collect!`)。
+
 ## インスタンスメソッド
 
 ### Enumerable#each
@@ -48,4 +53,4 @@ a = obj.to_a
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

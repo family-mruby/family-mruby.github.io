@@ -1,8 +1,10 @@
 # Asterism::CurrentCall
 
-今答えている呼び出し (conn.current_call の答え)
+The call being answered now
 
 How to use it: [Network](../network.md).
+
+What conn.current_call answers.
 
 ## Instance methods
 
@@ -51,4 +53,4 @@ trust = conn.current_call.verified
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

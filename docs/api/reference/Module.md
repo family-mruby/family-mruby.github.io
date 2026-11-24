@@ -1,6 +1,10 @@
 # Module
 
-クラスとモジュール (Module) の操作。`Object.const_defined?(:X)` のようにクラスが受け手になる。実装は mruby 本体の src/class.c (const_defined?) と mruby-metaprog (remove_method)。
+Operations on classes and modules
+
+Operations on classes and modules (Module), with a class as the receiver, as in
+`Object.const_defined?(:X)`. Implemented in mruby's own src/class.c
+(const_defined?) and mruby-metaprog (remove_method).
 
 ## Instance methods
 
@@ -40,4 +44,4 @@ self.class.remove_method(:draw_title)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

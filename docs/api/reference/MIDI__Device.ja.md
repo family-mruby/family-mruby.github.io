@@ -1,6 +1,6 @@
 # MIDI::Device
 
-音を出す口。音符や音色をここへ送る。
+音を出す口。音符や音色をここへ送る
 
 使い方は [MIDI](../midi.md) のページにあります。
 
@@ -290,4 +290,4 @@ dev.info[:name]
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

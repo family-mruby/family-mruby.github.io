@@ -1,8 +1,10 @@
 # Asterism::Subscription
 
-受けているトピック (conn.subscribe の答え)
+A topic being subscribed to
 
 How to use it: [Network](../network.md).
+
+What conn.subscribe answers.
 
 ## Instance methods
 
@@ -80,4 +82,4 @@ bad = @sub.malformed
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

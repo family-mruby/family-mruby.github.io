@@ -1,5 +1,11 @@
 # Kernel
 
+どこからでも呼べる出力・乱数・Proc の道具
+
+`puts` の行は**ログに出る** (画面ではない)。`print` は改行しない。`rand` は max を省くか 0 で
+0 以上 4294967295 以下の整数を返す (CRuby のような小数ではない)。`proc`・`lambda`・
+`->` でブロックを Proc にする。
+
 ## クラスメソッド
 
 ### Kernel.message_queue_exists?
@@ -109,4 +115,4 @@ f.call(3)
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

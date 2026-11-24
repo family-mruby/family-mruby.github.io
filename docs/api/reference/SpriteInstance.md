@@ -1,8 +1,10 @@
 # SpriteInstance
 
-画面に置いた一つのうごく絵。位置と、何枚目を見せるかを持つ。
+One sprite placed on the screen
 
 How to use it: [Sprites](../sprite.md).
+
+It holds a position and which frame to show.
 
 ## Class methods
 
@@ -129,4 +131,4 @@ bottom = sp.y + sp.height
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

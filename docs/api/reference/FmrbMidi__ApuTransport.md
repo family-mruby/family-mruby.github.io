@@ -1,12 +1,18 @@
 # FmrbMidi::ApuTransport
 
-内蔵音源 (APU) へ MIDI を送る口。`FmrbMidi.device(self)` が作る。
+Sends MIDI to the built-in sound chip (APU)
 
 How to use it: [MIDI](../midi.md).
 
-APU の声は 4 つ (矩形波 2・三角波・ノイズ) で、1 つの声は 1 度に
-1 つの音しか出せない。channel 0・1・2・9 が順に矩形波 1・2・三角波・ノイズに当たり、**ほかの channel は鳴らない** (`map_channel`・`auto_map`
-で変える)。楽器の指定・ピッチベンド・SysEx は受けて捨てる。声は SUB 側の APU を使うので、`play_slot` の SUB の効果音とぶつかる。
+Made by `FmrbMidi.device(self)`.
+
+The APU has 4 voices (2 square, a triangle and noise), and one voice
+sounds only one note at a time. Channels 0, 1, 2 and 9 map to square 1,
+square 2, the triangle and the noise in that order, and
+**other channels stay silent** (change this with `map_channel` and `auto_map`). Program
+changes, pitch bends and SysEx are received and dropped. The voices use
+the APU on the SUB side, so they clash with the SUB sound effects of
+`play_slot`.
 
 ## Class methods
 
@@ -120,4 +126,4 @@ happens and nil comes back. What was sounding on the channel stops.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

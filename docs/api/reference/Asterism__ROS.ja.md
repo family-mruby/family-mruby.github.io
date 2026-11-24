@@ -1,6 +1,6 @@
 # Asterism::ROS
 
-ROS 2 のノードのふりをして、トピックとサービスをやり取りする
+ROS 2 のノードのふりをする
 
 使い方は [ネットワーク](../network.md) のページにあります。
 
@@ -83,4 +83,4 @@ Asterism::ROS.resolve("chatter", "/a")
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

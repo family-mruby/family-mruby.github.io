@@ -1,6 +1,10 @@
 # FmrbNet
 
-Reads the network state, and fetches without waiting. The machine owns the WiFi connection,
+Read the network state; fetch
+
+How to use it: [Network](../network.md).
+
+The machine owns the WiFi connection,
 so an app **only looks at the state** (`connected?`, `ip_address`, `hostname`, `ssid`).
 Fetching is `FmrbNet.request`, written the same way **in the browser build too**.
 **The Linux sim, the native build and the browser build always answer "connected"**
@@ -8,8 +12,6 @@ Fetching is `FmrbNet.request`, written the same way **in the browser build too**
 ```ruby
 up = FmrbNet.connected?
 ```
-
-How to use it: [Network](../network.md).
 
 ## Class methods
 
@@ -92,4 +94,4 @@ into `error`, not an exception.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

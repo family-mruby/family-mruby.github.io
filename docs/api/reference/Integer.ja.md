@@ -1,5 +1,10 @@
 # Integer
 
+整数
+
+整数どうしの割り算は切り捨て (小数がほしければどちらかを `Float` に)。`times`・`downto` はブロック呼び出しが 1 回約 0.4ms なので、回数の多い所では `while` に書く。
+`chr` は 0 から 255 の 1 バイト文字を返す。
+
 ## インスタンスメソッド
 
 ### Integer#%
@@ -320,4 +325,4 @@ flags = flags & ~0x04
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

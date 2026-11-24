@@ -1,6 +1,10 @@
 # I2C
 
-Talks to I2C devices. `I2C.new` opens the bus, and `write` and `read` send and receive bytes
+Talk to I2C devices
+
+How to use it: [Hardware Control](../peripherals.md).
+
+`I2C.new` opens the bus, and `write` and `read` send and receive bytes
 with a 7-bit address. **The only units are `:ESP32_I2C0` and `:ESP32_I2C1`.** Use
 `FmrbHw::PIN_I2C1_SDA` and `PIN_I2C1_SCL` for the pins. **Every failure is an IOError.**
 ```ruby
@@ -8,8 +12,6 @@ i2c = I2C.new(unit: :ESP32_I2C1,
   sda_pin: FmrbHw::PIN_I2C1_SDA,
   scl_pin: FmrbHw::PIN_I2C1_SCL)
 ```
-
-How to use it: [Hardware Control](../peripherals.md).
 
 ## Constants
 
@@ -119,4 +121,4 @@ i2c.close
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

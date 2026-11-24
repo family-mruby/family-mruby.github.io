@@ -1,8 +1,10 @@
 # Asterism::AsyncProxy
 
-待たずに呼ぶ形 (Proxy#async の答え)。メソッドを呼ぶと Future が返る。
+The no-wait form of a proxy
 
 How to use it: [Network](../network.md).
+
+What Proxy#async answers. Calling a method gives back a Future.
 
 ## Instance methods
 
@@ -23,4 +25,4 @@ f = board.async.asterism_call(
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

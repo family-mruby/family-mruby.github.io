@@ -1,6 +1,8 @@
 # GC
 
-Control and statistics of the garbage collector. An ordinary app does not need
+Control and statistics of the garbage collector
+
+An ordinary app does not need
 it; an app that must keep a rhythm (playing, animating) uses it to avoid the
 pause of a collection. To switch it all at once use `FmrbApp#idle_gc=` (it sets
 `scheduler_driven`, `debt_limit`, `step_limit` and `malloc_threshold` together).
@@ -268,4 +270,4 @@ GC.step
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

@@ -1,6 +1,6 @@
 # Time
 
-日付と時刻。
+日付と時刻
 
 作るのは `Time.now` (今)、`Time.at` (UNIX 秒から)、`Time.local` / `Time.gm` (年月日から)。引き算 (`t2 - t1`) は秒の Float。
 ```ruby
@@ -604,4 +604,4 @@ t.ctime
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

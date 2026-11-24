@@ -1,6 +1,6 @@
 # NsfHeader
 
-NSF (ファミコンの曲) のファイルの題名などを読む。
+Read the title of an NSF song file
 
 How to use it: [Sound](../audio.md).
 
@@ -72,4 +72,4 @@ i = h.starting_song
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

@@ -1,9 +1,10 @@
 # Asterism
 
-Asterism の gem (vendor/asterism)。アプリは FmrbAsterism::Link の conn
-から使う。
+The Asterism gem; apps use it through conn
 
 How to use it: [Network](../network.md).
+
+The gem in vendor/asterism. An app uses it through the conn of an FmrbAsterism::Link.
 
 ## Constants
 
@@ -12,7 +13,7 @@ How to use it: [Network](../network.md).
 | <span class="fmrb-name">`PROTOCOL`</span> | [`Integer`](Integer.md) | The wire protocol version this implementation speaks |
 | <span class="fmrb-name">`DEFAULT_TIMEOUT`</span> | [`Float`](Float.md) | Default time limit of a call (seconds) |
 | <span class="fmrb-name">`DEFAULT_TIMEOUT_MS`</span> | [`Integer`](Integer.md) | Default time limit of a call (milliseconds) |
-| <span class="fmrb-name">`CHECK_TIMEOUT`</span> | [`Float`](Float.md) | How long connect looks for another copy of the same node/app (seconds) |
+| <span class="fmrb-name">`CHECK_TIMEOUT`</span> | [`Float`](Float.md) | How long connect looks for a same-name peer (s) |
 | <span class="fmrb-name">`ROOT`</span> | [`String`](String.md) | The first chunk of every key ("asterism") |
 
 ## Class methods
@@ -132,4 +133,4 @@ seq, run, ms, from =
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

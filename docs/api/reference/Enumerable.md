@@ -1,5 +1,11 @@
 # Enumerable
 
+Iteration helpers for anything with each
+
+Included by `Array` and `Hash`, and the parent of `Range`. Listed here are `each`,
+`each_with_index`, `map` and `to_a`. `map` builds a new array (`collect!`
+changes the receiver).
+
 ## Instance methods
 
 ### Enumerable#each
@@ -48,4 +54,4 @@ a = obj.to_a
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

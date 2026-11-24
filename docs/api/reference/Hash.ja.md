@@ -1,5 +1,10 @@
 # Hash
 
+印 (キー) で値を引く表
+
+`Enumerable` を取り込む。無い印は nil で、例外にならず、既定値は渡せない。
+String の印と Symbol の印は別物。`each_key` はブロックが要る (この版は Enumerator を持たない)。
+
 ## クラスメソッド
 
 ### Hash.new
@@ -224,4 +229,4 @@ h.values.each { |v| p v }
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

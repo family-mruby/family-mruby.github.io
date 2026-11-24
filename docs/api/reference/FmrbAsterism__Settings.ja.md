@@ -1,8 +1,10 @@
 # FmrbAsterism::Settings
 
-つなぎ方の設定 (FmrbAsterism.settings の答え)
+つなぎ方の設定
 
 使い方は [ネットワーク](../network.md) のページにあります。
+
+FmrbAsterism.settings の答え。
 
 ## インスタンスメソッド
 
@@ -71,4 +73,4 @@ cfg = FmrbAsterism.settings
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

@@ -1,6 +1,8 @@
 # FmrbToml
 
-Read a TOML settings file, or rewrite it line by line. `load` reads a file and `parse` a
+Read TOML; rewrite it by line
+
+`load` reads a file and `parse` a
 string into a Hash. **A failure is nil, not an exception**; `FmrbToml.error` says why. The
 only writer is `update`, which **changes only the lines of the keys you name**, so comments,
 order and keys nobody here knows stay as a person wrote them.
@@ -114,4 +116,4 @@ FmrbToml.dump_key("a b")  #=> "\"a b\""
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

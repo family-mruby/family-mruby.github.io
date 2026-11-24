@@ -1,6 +1,6 @@
 # Log
 
-ログ (シリアルと sim の端末に出る)。
+ログ (シリアルと sim の端末に出る)
 
 使い方は [ログ](../log.md) のページにあります。
 
@@ -99,4 +99,4 @@ Log.error_raw("ready")
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

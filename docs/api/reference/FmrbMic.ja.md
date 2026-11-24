@@ -1,8 +1,10 @@
 # FmrbMic
 
-マイクの C 側の窓口。アプリは ふつう FmrbAudio の mic_* を使う。
+マイクの C 側の窓口
 
 使い方は [音声](../audio.md) のページにあります。
+
+アプリは ふつう FmrbAudio の mic_* を使う。
 
 ## クラスメソッド
 
@@ -21,4 +23,4 @@ end
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

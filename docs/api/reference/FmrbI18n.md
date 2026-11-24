@@ -1,6 +1,6 @@
 # FmrbI18n
 
-日本語と英語で表示を切りかえる。
+Switch the display between Japanese and English
 
 ## Class methods
 
@@ -113,4 +113,4 @@ FmrbI18n.half_kana?(s, 0, s.bytesize)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

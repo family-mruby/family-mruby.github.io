@@ -1,6 +1,16 @@
 # FmrbApp
 
+アプリの土台。これを継承して書く
+
 使い方は [アプリ](../fmrb_app.md)、[アプリ間通信](../pubsub.md) のページにあります。
+
+アプリは `class MyApp < FmrbApp` と書き、`on_create`・`on_update`・`on_event` など呼ばれるところを書きかえる。ファイルにはクラスを書くだけでよく、読み終えるとそのクラスが作られて `start` される。
+
+絵は `gfx` (`@gfx`) に描く。`@gfx` は FmrbApp が用意する FmrbGfx で、原点はアプリが描いてよい区画の左上。描いたら `gfx.present` で出す。
+Window の大きさは `window_width`・`window_height`、色は `theme_fg` などで読む。
+
+最初に読むとよいメソッド: `on_create`、`on_update`、`on_event`、`gfx`、
+`set_timer`、`publish`。
 
 ## 型
 
@@ -1728,4 +1738,4 @@ idle_gc   #=> false (まだ頼んでいない)
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

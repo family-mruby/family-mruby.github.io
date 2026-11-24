@@ -1,6 +1,10 @@
 # FmrbHw
 
-Reads the table of how pins are used. Which pins are system-only, and which an app's `GPIO`,
+Read the table of how pins are used
+
+How to use it: [Hardware Control](../peripherals.md), [Constants & System Info](../const.md).
+
+Which pins are system-only, and which an app's `GPIO`,
 `I2C` or RMT holds. **Only a real board marks the table.** The Linux sim, the native build
 and the browser build have no pins, so every entry stays `PIN_UNUSED` (49 pins).
 ```ruby
@@ -9,14 +13,12 @@ if FmrbHw.pin_available?(5)
 end
 ```
 
-How to use it: [Hardware Control](../peripherals.md), [Constants & System Info](../const.md).
-
 ## Constants
 
 | Name | Type | What it is |
 |---|---|---|
 | <span class="fmrb-name">`PIN_UNUSED`</span> | [`Integer`](Integer.md) | A pin nobody uses |
-| <span class="fmrb-name">`PIN_SYSTEM_EXCLUSIVE`</span> | [`Integer`](Integer.md) | System-only pin (USB, PSRAM, SD, display, buttons; apps cannot use it) |
+| <span class="fmrb-name">`PIN_SYSTEM_EXCLUSIVE`</span> | [`Integer`](Integer.md) | System-only pin; apps cannot use it |
 | <span class="fmrb-name">`PIN_USER_GPIO`</span> | [`Integer`](Integer.md) | Held by an app as GPIO |
 | <span class="fmrb-name">`PIN_USER_I2C`</span> | [`Integer`](Integer.md) | Held by I2C |
 | <span class="fmrb-name">`PIN_USER_RMT`</span> | [`Integer`](Integer.md) | Held by RMT |
@@ -59,7 +61,7 @@ FmrbHw.pin_available?(5)   #=> true or false
 
 How every pin is used
 
-添字がピン番号、値が `PIN_*`。長さは `pin_count`。
+The index is the pin number and the value is a `PIN_*`. The length is `pin_count`.
 ```ruby
 FmrbHw.pin_status_all[5]
 ```
@@ -77,4 +79,4 @@ FmrbHw.pin_count   #=> 55 or 49
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

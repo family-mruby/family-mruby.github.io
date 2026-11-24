@@ -1,8 +1,10 @@
 # Asterism::Future
 
-待たずに呼んだ呼び出しの答え (これから届く)
+The answer of a no-wait call
 
 How to use it: [Network](../network.md).
+
+It arrives later.
 
 ## Instance methods
 
@@ -92,4 +94,4 @@ raw = @call.raw_value
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

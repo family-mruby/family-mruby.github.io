@@ -1,6 +1,6 @@
 # GPIO
 
-1 本のピンを入れ出力に使う。
+1 本のピンを入れ出力に使う
 
 使い方は [ハードウェア制御](../peripherals.md) のページにあります。
 
@@ -17,7 +17,7 @@ led.write(1)
 |---|---|---|
 | <span class="fmrb-name">`IN`</span> | [`Integer`](Integer.md) | 入力 |
 | <span class="fmrb-name">`OUT`</span> | [`Integer`](Integer.md) | 出力 |
-| <span class="fmrb-name">`HIGH_Z`</span> | [`Integer`](Integer.md) | ハイインピーダンス (この端末では入力と同じに設定される) |
+| <span class="fmrb-name">`HIGH_Z`</span> | [`Integer`](Integer.md) | ハイインピーダンス |
 | <span class="fmrb-name">`PULL_UP`</span> | [`Integer`](Integer.md) | プルアップ |
 | <span class="fmrb-name">`PULL_DOWN`</span> | [`Integer`](Integer.md) | プルダウン |
 | <span class="fmrb-name">`OPEN_DRAIN`</span> | [`Integer`](Integer.md) | オープンドレイン (この端末では何もしない) |
@@ -212,4 +212,4 @@ pressed = sw.low?
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

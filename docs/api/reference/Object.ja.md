@@ -1,6 +1,8 @@
 # Object
 
-Object 自身が受け手になる呼び方 (`Object.const_defined?(:X)`) のための写し。中身は Module#const_defined? と同じ (Object は Module の一種)。
+Object を受け手にする呼び方の写し
+
+`Object.const_defined?(:X)` のように Object 自身が受け手になる呼び方のための写し。中身は Module#const_defined? と同じ (Object は Module の一種)。
 
 ## クラスメソッド
 
@@ -340,4 +342,4 @@ obj.to_s
 
 ---
 
-*このページは fmruby-core の sig-s7@ea56c9e9 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*

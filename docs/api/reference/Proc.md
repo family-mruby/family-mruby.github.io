@@ -1,5 +1,11 @@
 # Proc
 
+A block held as a value
+
+Normally made with `proc` or `->` and run with `call` (or `.()`). Under
+Spinel it **cannot capture an outer local**, so pass what a stored Proc
+needs as arguments.
+
 ## Class methods
 
 ### Proc.new
@@ -28,4 +34,4 @@ f.call(3)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*

@@ -1,6 +1,10 @@
 # GPIO
 
-Uses one pin as input or output. `GPIO.new(pin, flags)` makes it, then `read` and `write`.
+Use one pin as input or output
+
+How to use it: [Hardware Control](../peripherals.md).
+
+`GPIO.new(pin, flags)` makes it, then `read` and `write`.
 Join flags with `|`, as in `GPIO::IN | GPIO::PULL_UP`. **A pin is an integer only.** Check
 with `FmrbHw.pin_available?` which pins you may use.
 ```ruby
@@ -8,15 +12,13 @@ led = GPIO.new(5, GPIO::OUT)
 led.write(1)
 ```
 
-How to use it: [Hardware Control](../peripherals.md).
-
 ## Constants
 
 | Name | Type | What it is |
 |---|---|---|
 | <span class="fmrb-name">`IN`</span> | [`Integer`](Integer.md) | Input |
 | <span class="fmrb-name">`OUT`</span> | [`Integer`](Integer.md) | Output |
-| <span class="fmrb-name">`HIGH_Z`</span> | [`Integer`](Integer.md) | High impedance (set up as an input here) |
+| <span class="fmrb-name">`HIGH_Z`</span> | [`Integer`](Integer.md) | High impedance |
 | <span class="fmrb-name">`PULL_UP`</span> | [`Integer`](Integer.md) | Pull-up |
 | <span class="fmrb-name">`PULL_DOWN`</span> | [`Integer`](Integer.md) | Pull-down |
 | <span class="fmrb-name">`OPEN_DRAIN`</span> | [`Integer`](Integer.md) | Open drain (does nothing here) |
@@ -128,7 +130,7 @@ GPIO.write_at(5, 1)
 
 Whether a pin is high, by number
 
-読んだ値が 0 でなければ true。
+True when the value read is not 0.
 ```ruby
 GPIO.high_at?(7)
 ```
@@ -139,7 +141,7 @@ GPIO.high_at?(7)
 
 Whether a pin is low, by number
 
-読んだ値が 0 なら true。
+True when the value read is 0.
 ```ruby
 GPIO.low_at?(7)
 ```
@@ -215,4 +217,4 @@ pressed = sw.low?
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core sig-s7@ea56c9e9.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*
