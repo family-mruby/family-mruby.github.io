@@ -24169,7 +24169,7 @@ class AiHelperApp < FmrbApp
   # its first run). The editor cuts a long name to RUN_NAME_MAX bytes, so the
   # error's name is cut the same way before the two are compared.
   def run_error
-    e = FmrbApp._get_last_error
+    e = FmrbApp.last_error
     return nil unless e && @doc
     rn = @doc["rn"].to_s
     return nil if rn.empty?
@@ -28605,8 +28605,6 @@ main.roundomain.rowpmain.twoqmain.loadSpriter(*main.tour).tiles(*main.tour)
 # Displays all GPIO pins with color-coded usage status.
 
 GRID_COLS = 13
-GRID_ROWS = 4 
-PIN_COUNT = 49  # GPIO 0-48
 
 # Usage type -> color (RGB332)
 USAGE_COLORS = {
@@ -28635,13 +28633,17 @@ class GpioViewerApp < FmrbApp
   def initialize
     super()
     @prev_status = nil
+    # How many GPIOs this chip has (49 on the S3, 55 on the P4), and the
+    # rows of the grid they take.
+    @pin_count = FmrbHw.pin_count
+    @grid_rows = (@pin_count + GRID_COLS - 1) / GRID_COLS
   end
 
   def on_create
     # Grid layout (reserve 24px at bottom for legend)
     @legend_h = 24
     @cell_w = (@user_area_width - 2) / GRID_COLS
-    @cell_h = (@user_area_height - 14 - @legend_h) / GRID_ROWS
+    @cell_h = (@user_area_height - 14 - @legend_h) / @grid_rows
     @grid_x = 1
     @grid_y = 14
 
@@ -28670,7 +28672,7 @@ class GpioViewerApp < FmrbApp
     status = @prev_status || FmrbHw.pin_status_all
 
     pin = 0
-    while pin < PIN_COUNT
+    while pin < @pin_count
       col = pin % GRID_COLS
       row = pin / GRID_COLS
 
@@ -28697,7 +28699,7 @@ class GpioViewerApp < FmrbApp
     end
 
     # Legend (2 rows)
-    ly1 = @grid_y + GRID_ROWS * @cell_h + 2
+    ly1 = @grid_y + @grid_rows * @cell_h + 2
     ly2 = ly1 + 10
     items = [
       [0x6D, "SYS"], [0x1C, "GPIO"], [0x03, "I2C"], [0xE3, "RMT"],
@@ -41721,11 +41723,10 @@ Open a file (new)
 
 mode: `"r"` (default; read), `"w"` (truncate and write; created when missing), `"a"`
 (append; created when missing), `"r+"` (read and write; fails when missing),
-`"w+"` (truncate, read and write). **The `+` must be the second character** (the
-`b` of `"rb"` is the second one, so `"rb+"` opens read-only).
+`"w+"` (truncate, read and write) and `"a+"` (read, and every write goes to the
+end; created when missing). A `b` may be added (`"rb+"` is `"r+"`).
 **A mode starting with any other letter opens read-only**
-(no error). **`a+` does not append**: like
-`r+` it overwrites from the start. `perm` is accepted and ignored.
+(no error). `perm` is accepted and ignored.
 
 **RuntimeError ("failed to open file: path") when it cannot open**; the reason
 (missing, no room, too many open) is not told apart. Only 10 files can be open on
@@ -41975,9 +41976,9 @@ new(String path, ?String mode, ?Integer perm) -> File
 ファイルを開く (new)
 
 mode は `"r"` (省略時・読む)・`"w"` (空にして書く。無ければ作る)・`"a"` (末尾に足す。無ければ作る)
-と、`"r+"` (読み書き。無いと失敗)・`"w+"` (空にして読み書き)。**`+` は 2 文字目に置く**
-(`"rb"` の `b` は 2 文字目なので `"rb+"` は読み取り専用になる)。
-**ほかの文字で始まる mode は読み取り専用として開く** (エラーにならない)。**`a+` は追記にならない** (`r+` と同じで、先頭から上書きする)。
+と、`"r+"` (読み書き。無いと失敗)・`"w+"` (空にして読み書き)・`"a+"` (読めて、書くと
+必ず末尾に足す。無ければ作る)。`b` は付けてもよく (`"rb+"` は `"r+"` と同じ)、
+**ほかの文字で始まる mode は読み取り専用として開く** (エラーにならない)。
 `perm` は受け取るだけで使わない。
 
 **開けないと RuntimeError ("failed to open file: パス")**。理由 (無い・場所が無い・
@@ -43146,6 +43147,26 @@ The language now, "ja" or "en"
 
 ```ruby
 if FmrbApp.language == "ja"
+```
+
+# FmrbApp.last_error
+
+last_error() -> Hash?
+
+The error of the app that failed last
+
+The name and the error text of the last app that failed, as a Hash
+`{name:, error:}`. It is filled when a Ruby app ends on an exception,
+does not compile, is refused at start or cannot be restored from an
+image, and when a second Python app is started.
+**There is one for all apps**: the next app that fails replaces it. It is never cleared, and is
+nil until some app has failed since boot. `name` is the app's name (up to
+31 bytes); `error` is the exception's text followed by the backtrace, one
+line each, if there is one (1023 bytes in all at most). Tell whether it is
+your own by `name`.
+```ruby
+e = FmrbApp.last_error
+Log.info("#{e[:name]}: #{e[:error]}") if e
 ```
 
 # FmrbApp.linux_available?
@@ -44974,6 +44995,25 @@ language() -> String
 
 ```ruby
 if FmrbApp.language == "ja"
+```
+
+# FmrbApp.last_error
+
+last_error() -> Hash?
+
+直前に落ちたアプリのエラー
+
+最後に失敗したアプリの名前とエラーの文を `{name:, error:}` の Hash で返す。
+値が入るのは、Ruby のアプリが例外で終わったとき・コンパイルできなかったとき・
+起動を断られたとき・イメージから戻せなかったときと、Python のアプリを 2 つ目に
+起動したとき。**どのアプリのものでも 1 つだけ**で、次に失敗したアプリが上書きする。
+消えることはなく、起動してからまだどのアプリも失敗していなければ nil。
+`name` はアプリの名前 (31 バイトまで)、`error` は例外の文と、あればその後に
+1 行ずつバックトレース (合わせて 1023 バイトまで)。自分のエラーかどうかは
+`name` で見分ける。
+```ruby
+e = FmrbApp.last_error
+Log.info("#{e[:name]}: #{e[:error]}") if e
 ```
 
 # FmrbApp.linux_available?
@@ -49458,14 +49498,16 @@ sp = gfx.create_sprite_instance(
 
 # FmrbGfx#current_font
 
-current_font() -> Symbol
+current_font() -> Array[untyped]
 
 The font in use now
 
+The `[family, size]` array `set_font` actually chose (`[:default]` for
+`:default`). It is the key of `FmrbGfx::FONT_METRICS`.
 ```ruby
 saved = gfx.current_font
 gfx.set_font(:ja)
-gfx.set_font(saved)
+gfx.set_font(*saved)
 ```
 
 # FmrbGfx#current_text_size
@@ -50798,14 +50840,16 @@ sp = gfx.create_sprite_instance(
 
 # FmrbGfx#current_font
 
-current_font() -> Symbol
+current_font() -> Array[untyped]
 
 今えらんでいる字の種類
 
+`set_font` が実際に選んだ `[family, size]` の配列 (`:default` は
+`[:default]`)。`FmrbGfx::FONT_METRICS` の鍵になる。
 ```ruby
 saved = gfx.current_font
 gfx.set_font(:ja)
-gfx.set_font(saved)
+gfx.set_font(*saved)
 ```
 
 # FmrbGfx#current_text_size
@@ -52187,8 +52231,9 @@ add(Hash table) -> void
 
 Add a table of words
 
-Each app adds its own table. Existing keys are left alone, so this table
-and the desktop's live side by side.
+Each app adds its own table. **Keys it does not name are kept**,
+so this table and the desktop's live side by side.
+**A key named again for the same language is replaced** by the later value.
 ```ruby
 FmrbI18n.add(
   "en" => { save: "Save" },
@@ -52293,8 +52338,8 @@ add(Hash table) -> void
 
 言葉の表を足す
 
-アプリごとに自分の表を足す。**すでにある印を消さない**ので、
-デスクトップの表と並んで残る。
+アプリごとに自分の表を足す。**表にない印は消さない**ので、デスクトップの
+表と並んで残る。**同じ言葉の同じ印は、後から足した方に置きかわる**。
 ```ruby
 FmrbI18n.add(
   "en" => { save: "Save" },
@@ -52775,7 +52820,7 @@ usage = @smf.channel_usage
 
 # FmrbMidi::ApuTransport#defer_voices
 
-defer_voices(?Integer due_us) -> void
+defer_voices(?Integer due_us, ?Integer owner) -> void
 
 Begin a group of notes of one instant
 
@@ -52785,7 +52830,9 @@ changes, and `flush_voices` sends each voice's final state once (so the
 inner notes of a chord are not played in turn). `due_us` (now when left
 out) is a time on the `FmrbMidi.now_us` clock to send at. A group left
 open swallows every later note; `FmrbMidi.tick` closes it each time.
-Nothing happens when one is already open.
+Nothing happens when one is already open. `owner` (0 when left out) is
+stamped on what goes to the queue so that a player can drop only its
+own (the players pass it themselves).
 ```ruby
 apu.defer_voices
 apu.note_on(0, 60, 100)
@@ -52890,7 +52937,7 @@ usage = @smf.channel_usage
 
 # FmrbMidi::ApuTransport#defer_voices
 
-defer_voices(?Integer due_us) -> void
+defer_voices(?Integer due_us, ?Integer owner) -> void
 
 同じ瞬間の音をひとまとめにし始める
 
@@ -52899,7 +52946,9 @@ defer_voices(?Integer due_us) -> void
 状態を 1 度だけ送る (和音の内側の音が順に鳴るのを防ぐ)。
 `due_us` (省略すると今) は `FmrbMidi.now_us` の時計の時刻で、その
 時刻に送る。**閉じ忘れると以後の音が鳴らない**ので、`FmrbMidi.tick` が
-毎回閉じる。すでに開いていれば何もしない。
+毎回閉じる。すでに開いていれば何もしない。`owner` (省略すると 0) は
+待ち行列に入れる分に付ける持ち主の番号で、プレーヤーが自分の分だけを
+捨てるのに使う (プレーヤーが自分で渡す)。
 ```ruby
 apu.defer_voices
 apu.note_on(0, 60, 100)
@@ -53231,6 +53280,9 @@ stop() -> void
 
 Stop
 
+Drops what this player queued and stops the notes that are sounding.
+Another player of the same app keeps its own queue (pause and
+`device=` too).
 ```ruby
 @mml.stop
 ```
@@ -53567,6 +53619,9 @@ stop() -> void
 
 止める
 
+このプレーヤーが待ち行列に入れた分を捨て、鳴っている音を止める。
+1 つのアプリでプレーヤーを 2 つ鳴らしていても、もう片方の分は残る
+(pause・`device=` も同じ)。
 ```ruby
 @mml.stop
 ```
@@ -53981,7 +54036,9 @@ stop() -> void
 
 Stop the song
 
-Drops what was queued and stops the notes that are sounding.
+Drops what this player queued and stops the notes that are sounding.
+Another player of the same app keeps its own queue (pause and
+`device=` too).
 ```ruby
 @smf.stop
 ```
@@ -54055,9 +54112,9 @@ transpose() -> Integer
 Semitones added to every melodic note
 
 0 leaves the notes as written. **Channel 9 (drums) is not moved**, and
-a note that would leave 0-127 keeps its pitch. Changing it without
-stopping can mis-stop sounding notes (the note-off uses the current
-value too). `load` puts it back to 0.
+a note that would leave 0-127 keeps its pitch. It can change while the
+song plays and takes effect from the next note (a sounding note is
+stopped at the pitch it started at). `load` puts it back to 0.
 ```ruby
 @smf.transpose = 2
 ```
@@ -54420,7 +54477,9 @@ stop() -> void
 
 曲を止める
 
-待ち行列に入れた分を捨て、鳴っている音を止める。
+このプレーヤーが待ち行列に入れた分を捨て、鳴っている音を止める。
+1 つのアプリでプレーヤーを 2 つ鳴らしていても、もう片方の分は残る
+(pause・`device=` も同じ)。
 ```ruby
 @smf.stop
 ```
@@ -54494,8 +54553,8 @@ transpose() -> Integer
 全部の音に足す半音の数
 
 0 が元のまま。**channel 9 (ドラム) は動かさない**。0〜127 を出る音も
-元の高さのまま。音を止めずに変えると、鳴っている音の止め方がずれる
-ことがある (止めるときも今の値で計算する)。`load` で 0 に戻る。
+元の高さのまま。鳴らしている途中でも変えられ、次の音から効く
+(鳴っている音は始めた高さで止める)。`load` で 0 に戻る。
 ```ruby
 @smf.transpose = 2
 ```
@@ -56635,13 +56694,15 @@ bg=(Integer c) -> void
 Change the colour behind the widgets
 
 Changes what **widgets made afterwards, and the hole left by a hidden one**,
-are painted with. **Widgets that already exist keep their own colour**:
-each copies it when made, so use the widget's `bg=`. The colour
-counts as the app's own and does not turn back into the theme's after a
-move to another machine. Repaint with `invalidate_all` and a flush.
+are painted with, and **the widgets that already exist too**: each one whose
+colour was copied from here when it was made takes the new one and is
+redrawn at the next flush. A widget given its own colour with its `bg=`
+keeps it. The colour counts as the app's own and does not turn back into
+the theme's after a move to another machine. The ground outside the
+widgets is the app's to repaint.
 ```ruby
 @ui.bg = @bg_col
-@ui.invalidate_all
+@ui.flush
 ```
 
 # FmrbUI#button
@@ -57023,14 +57084,14 @@ bg=(Integer c) -> void
 
 部品の地の色を変える
 
-**あとから作る部品と、隠した部品の跡を塗る色**が変わります。
-**すでにある部品の中の色は変わりません**。部品は作るときに色を写して
-持つので、変えるなら部品の `bg=` です。渡した色は自前の色として扱われ、
-アプリを別の端末へ移してもテーマの色には戻りません。描き直しは
-`invalidate_all` のあとの flush で。
+**あとから作る部品と、隠した部品の跡を塗る色**が変わり、
+**すでにある部品の中の色も**、作るときにここから写した色のものは新しい色に
+なって、次の flush で描き直されます。部品の `bg=` で自分の色を渡した部品はその色のままです。
+渡した色は自前の色として扱われ、アプリを別の端末へ移してもテーマの色には
+戻りません。部品の外の地 (アプリが塗る所) は、アプリが塗り直します。
 ```ruby
 @ui.bg = @bg_col
-@ui.invalidate_all
+@ui.flush
 ```
 
 # FmrbUI#button
@@ -58158,7 +58219,7 @@ bg=(Integer c) -> void
 Change the colour a widget paints inside
 
 The colour counts as the app's own and does not turn back into the
-theme's after a move to another machine.
+theme's after a move to another machine, nor follow a later `@ui.bg =`.
 **It does not mark the widget for redraw**: call `@ui.invalidate_all`,
 or wait until the widget changes.
 ```ruby
@@ -58299,7 +58360,8 @@ bg=(Integer c) -> void
 部品の中の色を変える
 
 **自前の色として扱われ**、アプリを別の端末へ移してもテーマの色には戻り
-ません。**描き直しの印は付かない**ので、`@ui.invalidate_all` か、その部品が
+ません。あとで `@ui.bg =` で入れ物の色を変えても、この色のままです。
+**描き直しの印は付かない**ので、`@ui.invalidate_all` か、その部品が
 変わるときに描かれます。
 ```ruby
 @ui.find(:title).bg = FmrbGfx::BLACK
@@ -61102,11 +61164,13 @@ puts(*untyped objects) -> nil
 Write with a newline
 
 Writes each argument after to_s and adds "\n" unless it already ends with one;
-with no arguments it writes just "\n". **Arrays are not flattened** (`puts [1, 2]`
-writes the one line "[1, 2]"; CRuby writes one line per element). nil is an empty
-line. Always returns nil.
+with no arguments it writes just "\n". **An Array is one line per element**,
+nested ones too (`puts [1, [2]]` writes "1" and "2"; an empty Array is an
+empty line). An Array nested deeper than 16 (one that contains itself) prints
+"[...]" there. nil is an empty line. Always returns nil. As in mruby.
 ```ruby
 f.puts "line"
+f.puts ["a", "b"]   # two lines
 ```
 
 # IO#read
@@ -61200,10 +61264,12 @@ puts(*untyped objects) -> nil
 改行つきで書く
 
 引数を 1 つずつ to_s して書き、末尾が "\n" でなければ "\n" を足す。引数が無いときは
-"\n" だけ。**配列は展開しない** (`puts [1, 2]` は "[1, 2]" の 1 行。CRuby は 1 要素 1 行)。
-nil は空行。いつも nil を返す。
+"\n" だけ。**配列は 1 要素 1 行** (入れ子も展開する。`puts [1, [2]]` は "1" と "2" の
+2 行、空の配列は空行)。16 段より深い配列 (自分自身を含む配列) はそこで "[...]"。
+nil は空行。いつも nil を返す。mruby と同じ。
 ```ruby
 f.puts "line"
+f.puts ["a", "b"]   # 2 行
 ```
 
 # IO#read
@@ -61916,8 +61982,8 @@ string raise `JSON::ParserError`; a broken structure (a missing `:` or `,`) rais
 `JSON::JSONError` (the parent). **Trailing junk after the JSON is dropped silently**
 (`"[1,2] xyz"` is `[1, 2]`).
 
-**Do not trust `\uXXXX`.** It is packed into one byte, so Japanese is not read right. Pass
-JSON with the text as UTF-8 instead. Floats are built by hand, so the last digits can
+`\uXXXX` becomes the UTF-8 character (Japanese too, and a pair such as
+`\ud83d\ude00`). Floats are built by hand, so the last digits can
 differ from CRuby. It is all Ruby, so reading a big JSON whole is heavy.
 ```ruby
 h = JSON.parse('{"temp": 21.5}')
@@ -61962,8 +62028,8 @@ JSON 文字列を Ruby の値にする
 `:` や `,` が無いなど構造の崩れは `JSON::JSONError` (親)。**後ろのごみは黙って捨てる**
 (JSON の後ろに付いた字) (`"[1,2] xyz"` は `[1, 2]`)。
 
-**`\uXXXX` の読みは当てにならない**。1 バイトに詰める実装で、日本語は正しく読めない。
-日本語は `\u` にせず UTF-8 のまま書いた JSON を渡す。小数は自前の計算で組み立てるので、
+`\uXXXX` は UTF-8 の文字になる (日本語も、`\ud83d\ude00` のような 2 つ組も)。
+小数は自前の計算で組み立てるので、
 末尾の桁が CRuby とずれることがある。全部 Ruby の実装で、大きな JSON を丸ごと読むのは重い。
 ```ruby
 h = JSON.parse('{"temp": 21.5}')
@@ -61992,8 +62058,8 @@ A String is a Hash key, an Integer an Array position (from 0; **a negative numbe
 A missing key raises `JSON::DiggerError` ("Key not found: name"). A shape that does not
 fit (a position on a Hash, a key on an Array) raises `JSON::JSONError`. Anything but a
 String or an Integer is an ArgumentError.
-**A position past the end does not raise**: the later `parse` returns nil
-or some other element (index 5 of `[1]` gives 1). Check the index yourself.
+An Array position past the end (an empty Array included) raises
+`JSON::DiggerError` ("Array index out of range").
 ```ruby
 d = JSON::Digger.new('{"a": [10, 20]}')
 d.dig("a", 1).parse   #=> 20
@@ -62042,8 +62108,8 @@ String は Hash のキー、Integer は Array の位置 (0 から。**負の数�
 
 キーが無いと `JSON::DiggerError` ("Key not found: name")。Hash に位置、Array にキーを
 使うなど形が合わないと `JSON::JSONError`。String と Integer 以外は ArgumentError。
-**範囲を超えた Array の位置は例外にならない**。後の `parse` は nil か、別の
-要素を返す (`[1]` の 5 番目で 1 が返る)。位置は自分で確かめてから渡す。
+Array の位置が範囲の外 (空の Array を含む) なら `JSON::DiggerError`
+("Array index out of range")。
 ```ruby
 d = JSON::Digger.new('{"a": [10, 20]}')
 d.dig("a", 1).parse   #=> 20
@@ -62071,10 +62137,12 @@ JSON::Digger.new('[1, 2]').dig(1).parse
 ```
 # JSON::DiggerError
 
-The key to dig to is not there ("Key not found: name").
+The key to dig to is not there ("Key not found: name"), or an Array
+position is past the end ("Array index out of range").
 # JSON::DiggerError
 
-掘る先のキーが無いとき ("Key not found: name")。
+掘る先のキーが無いとき ("Key not found: name") と、Array の位置が
+範囲の外のとき ("Array index out of range")。
 # JSON::GeneratorError
 
 The name exists but `JSON.generate` never raises it: a value it cannot write is written as a string.
@@ -62102,6 +62170,19 @@ The line `puts` writes goes to the log, not the screen. `print` adds no newline.
 (not a Float as in CRuby). `proc`, `lambda` and `->` turn a block into a
 Proc.
 
+# Kernel.broadcast_message
+
+broadcast_message(Integer msg_type, String data, ?Integer timeout_ms) -> Integer
+
+Put a raw string on every queue
+
+Puts the same message on **every registered queue** and returns how many
+took it. A full queue is waited for up to `timeout_ms` (10 when left
+out) each. data is at most 64 bytes (more raises ArgumentError).
+```ruby
+n = Kernel.broadcast_message(99, "bye")
+```
+
 # Kernel#lambda
 
 lambda() { (untyped argument) -> untyped } -> Proc
@@ -62119,8 +62200,8 @@ message_queue_exists?(Integer task_id) -> bool
 
 Whether a task has a queue
 
-task_id outside 0-15 raises ArgumentError. **9 and above is always**
-**false.**
+task_id outside 0 to below the limit (9 on the devices) raises
+ArgumentError.
 ```ruby
 ready = Kernel.message_queue_exists?(0)
 ```
@@ -62180,7 +62261,9 @@ puts(*untyped objects) -> nil
 Output object with newline
 
 **The line goes to the log**, not the screen: `docker logs fmruby_core` in
-the simulation, the serial port on a device.
+the simulation, the serial port on a device. It calls `$stdout.puts`, so
+it writes as `IO#puts` does (an Array one line per element). A script run
+from the shell prints on the shell's screen.
 ```ruby
 puts "started"
 ```
@@ -62200,6 +62283,39 @@ x = rand(10)    #=> 0..9
 t = 2000 + rand(4000)
 ```
 
+# Kernel.receive_message
+
+receive_message(Integer task_id, ?Integer timeout_ms) -> Array[untyped]?
+
+Take one message off a task's queue
+
+Returns a `[type, string]` array, or **nil** when nothing came within
+timeout_ms (1000 when left out). task_id outside 0 to below the limit
+(9 on the devices) raises ArgumentError, and a task with no queue raises
+**RuntimeError**, not nil.
+**Passing the app's own number reads the very queue `_spin` reads.**
+```ruby
+msg = Kernel.receive_message(2, 5000)
+type, data = msg if msg
+```
+
+# Kernel.send_message
+
+send_message(Integer task_id, Integer msg_type, String data, ?Integer timeout_ms) -> bool
+
+Put a raw string on a task's queue
+
+task_id is from 0 to below the limit (9 on the devices) (**outside it**
+**raises ArgumentError**). data is at most 64 bytes (**more raises**
+**ArgumentError**). `timeout_ms` (100 when left out) is how long to wait
+while the queue is full.
+
+**It returns true when sent.** It returns **false** when the task has no
+queue or the queue stays full for timeout_ms; no exception is raised.
+```ruby
+Kernel.send_message(0, 1, "key_down:13")
+```
+
 # Kernel#yield
 
 yield(*untyped arguments) -> untyped
@@ -62216,6 +62332,19 @@ yield(v) if block_given?
 `puts` の行は**ログに出る** (画面ではない)。`print` は改行しない。`rand` は max を省くか 0 で
 0 以上 4294967295 以下の整数を返す (CRuby のような小数ではない)。`proc`・`lambda`・
 `->` でブロックを Proc にする。
+
+# Kernel.broadcast_message
+
+broadcast_message(Integer msg_type, String data, ?Integer timeout_ms) -> Integer
+
+全部の待ち行列に送る
+
+登録されている**全部の行列**に同じ伝言を入れ、入った数を返す。行列が
+満杯なら 1 つにつき `timeout_ms` (省略すると 10) まで待つ。data は
+64 バイトまで (超えると ArgumentError)。
+```ruby
+n = Kernel.broadcast_message(99, "bye")
+```
 
 # Kernel#lambda
 
@@ -62234,7 +62363,7 @@ message_queue_exists?(Integer task_id) -> bool
 
 その task に待ち行列があるか
 
-task_id が 0-15 の外なら ArgumentError。**9 以上は常に false**。
+task_id が 0 から上限 (端末で 9) 未満の外なら ArgumentError。
 ```ruby
 ready = Kernel.message_queue_exists?(0)
 ```
@@ -62294,7 +62423,8 @@ puts(*untyped objects) -> nil
 改行をつけて出力する
 
 **行はログに出る** (画面ではない)。sim なら `docker logs fmruby_core`、
-実機ならシリアル。
+実機ならシリアル。`$stdout.puts` を呼ぶので書き方は `IO#puts` と同じ
+(配列は 1 要素 1 行)。シェルで動かしたスクリプトではシェルの画面に出る。
 ```ruby
 puts "started"
 ```
@@ -62311,6 +62441,37 @@ Float ではない)。max があれば、**0 以上 max 未満**の整数 (`RNG.
 ```ruby
 x = rand(10)    #=> 0..9
 t = 2000 + rand(4000)
+```
+
+# Kernel.receive_message
+
+receive_message(Integer task_id, ?Integer timeout_ms) -> Array[untyped]?
+
+待ち行列から 1 通取り出す
+
+`[種類, 文字列]` の配列を返す。待っても来なければ **nil** (timeout_ms は
+省略すると 1000)。task_id が 0 から上限 (端末で 9) 未満の外なら
+ArgumentError、行列が無いときは **RuntimeError** で、nil ではない。
+**アプリ自身の番号を渡すと、`_spin` が読んでいるのと同じ行列を取り合う**。
+```ruby
+msg = Kernel.receive_message(2, 5000)
+type, data = msg if msg
+```
+
+# Kernel.send_message
+
+send_message(Integer task_id, Integer msg_type, String data, ?Integer timeout_ms) -> bool
+
+待ち行列に生の文字列を送る
+
+task_id は 0 から上限 (端末で 9) 未満 (**範囲の外は ArgumentError**)。
+data は 64 バイトまで (**超えると ArgumentError**)。`timeout_ms`
+(省略すると 100) は、行列が満杯のときに待つ長さ。
+
+**送れたら true** で、行列が無い・満杯のまま timeout_ms が過ぎたときは
+**false** (例外は出ない)。
+```ruby
+Kernel.send_message(0, 1, "key_down:13")
 ```
 
 # Kernel#yield
@@ -63198,11 +63359,10 @@ instance).
 
 A negative ms raises ArgumentError. It returns the ms you passed.
 
-**How long it waits differs by platform.** The ESP32 code is FreeRTOS
-`vTaskDelay(ms / 10)`, which assumes a 10 ms tick (under 10 ms it only yields).
-This build's tick is 1 ms (`CONFIG_FREERTOS_HZ=1000`), so it may wait only about
-a tenth of what you asked for. Linux and the native build watch the real clock
-in 10 ms steps, so they wait up to about 10 ms longer.
+**The resolution differs by platform.** ESP32 waits in 1 ms steps (the FreeRTOS
+tick). Linux and the native build watch the real clock in 10 ms steps, so they
+wait up to about 10 ms longer. (ESP32 firmware from before 2026-11-25 waited
+only about a tenth of what was asked.)
 ```ruby
 Machine.delay_ms(100)
 ```
@@ -63546,10 +63706,9 @@ delay_ms(Integer ms) -> Integer
 
 ms が負だと ArgumentError。戻り値は渡した ms。
 
-**待つ長さは機種で違う**。ESP32 の実装は FreeRTOS の `vTaskDelay(ms / 10)` で、tick を
-10 ms と決め打ちしている (10 ms 未満は待たずに譲るだけ)。今のビルドの tick は 1 ms
-(`CONFIG_FREERTOS_HZ=1000`) なので、指定の約 1/10 しか待たない可能性がある。Linux・
-ネイティブ版は 10 ms 刻みで実時間を見て待つので、指定より最大で約 10 ms 長くなる。
+**待つ長さの細かさは機種で違う**。ESP32 は 1 ms 刻み (FreeRTOS の tick) で待つ。
+Linux・ネイティブ版は 10 ms 刻みで実時間を見て待つので、指定より最大で約 10 ms 長くなる。
+(2026-11-25 より前のファームの ESP32 は、指定の約 1/10 しか待たなかった。)
 ```ruby
 Machine.delay_ms(100)
 ```
@@ -71360,6 +71519,7 @@ ps_gen	FmrbApp
 checkpoint	FmrbApp
 move	FmrbApp
 heap_info	FmrbApp
+last_error	FmrbApp
 pool_usage	FmrbApp
 pool_used	FmrbApp
 sys_pool_info	FmrbApp
@@ -72405,6 +72565,9 @@ yield	Kernel
 proc	Kernel
 lambda	Kernel
 ->	Kernel
+send_message	Kernel
+receive_message	Kernel
+broadcast_message	Kernel
 message_queue_exists?	Kernel
 Machine	Machine
 board_millis	Machine
