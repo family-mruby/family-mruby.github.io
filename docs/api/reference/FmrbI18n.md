@@ -10,8 +10,9 @@ Switch the display between Japanese and English
 
 Add a table of words
 
-Each app adds its own table. Existing keys are left alone, so this table
-and the desktop's live side by side.
+Each app adds its own table. **Keys it does not name are kept**,
+so this table and the desktop's live side by side.
+**A key named again for the same language is replaced** by the later value.
 ```ruby
 FmrbI18n.add(
   "en" => { save: "Save" },
@@ -113,4 +114,4 @@ FmrbI18n.half_kana?(s, 0, s.bytesize)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

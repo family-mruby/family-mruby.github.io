@@ -57,7 +57,7 @@ apu.note_off(0, 60)
 
 ### FmrbMidi::ApuTransport#defer_voices
 
-<pre class="fmrb-sig"><code>defer_voices(?<a href="../Integer/">Integer</a> due_us) -&gt; void</code></pre>
+<pre class="fmrb-sig"><code>defer_voices(?<a href="../Integer/">Integer</a> due_us, ?<a href="../Integer/">Integer</a> owner) -&gt; void</code></pre>
 
 Begin a group of notes of one instant
 
@@ -67,7 +67,9 @@ changes, and `flush_voices` sends each voice's final state once (so the
 inner notes of a chord are not played in turn). `due_us` (now when left
 out) is a time on the `FmrbMidi.now_us` clock to send at. A group left
 open swallows every later note; `FmrbMidi.tick` closes it each time.
-Nothing happens when one is already open.
+Nothing happens when one is already open. `owner` (0 when left out) is
+stamped on what goes to the queue so that a player can drop only its
+own (the players pass it themselves).
 ```ruby
 apu.defer_voices
 apu.note_on(0, 60, 100)
@@ -126,4 +128,4 @@ happens and nil comes back. What was sounding on the channel stops.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

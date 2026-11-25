@@ -17,6 +17,7 @@ Methods to read first: `clear`, `fill_rect`, `draw_text`, `draw_image`,
 
 | Name | Type | What it is |
 |---|---|---|
+| <span class="fmrb-name">`FONT_METRICS`</span> | `Hash[Array[untyped], font_metrics]` | Character widths and line height of each font |
 | <span class="fmrb-name">`BLACK`</span> | [`Integer`](Integer.md) | black (RGB332) |
 | <span class="fmrb-name">`WHITE`</span> | [`Integer`](Integer.md) | white (RGB332) |
 | <span class="fmrb-name">`RED`</span> | [`Integer`](Integer.md) | red (RGB332) |
@@ -48,6 +49,7 @@ Methods to read first: `clear`, `fill_rect`, `draw_text`, `draw_image`,
 | <span class="fmrb-name">`video_info`</span> | `{ width: uint16, height: uint16 }` | A video's size, from video_open_raw |
 | <span class="fmrb-name">`video_status`</span> | `{ state: uint8, shown: uint32, dropped: uint32 }` | The video player's state |
 | <span class="fmrb-name">`picture_info`</span> | `{ width: uint16, height: uint16, format: uint8, bytes: uint32, mtime: uint32 }` | A picture file's size and kind, from picture_info |
+| <span class="fmrb-name">`font_metrics`</span> | `{ char_w: Integer, half_w: Integer, kana_w: Integer, line_h: Integer }` | One font's sizes in pixels, in FONT_METRICS |
 
 ## Class methods
 
@@ -197,14 +199,16 @@ h = gfx.canvas_height
 
 ### FmrbGfx#current_font
 
-<pre class="fmrb-sig"><code>current_font() -&gt; <a href="../Symbol/">Symbol</a></code></pre>
+<pre class="fmrb-sig"><code>current_font() -&gt; <a href="../Array/">Array</a>[untyped]</code></pre>
 
 The font in use now
 
+The `[family, size]` array `set_font` actually chose (`[:default]` for
+`:default`). It is the key of `FmrbGfx::FONT_METRICS`.
 ```ruby
 saved = gfx.current_font
 gfx.set_font(:ja)
-gfx.set_font(saved)
+gfx.set_font(*saved)
 ```
 
 ### FmrbGfx#current_text_size
@@ -1588,4 +1592,4 @@ st[:size]
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

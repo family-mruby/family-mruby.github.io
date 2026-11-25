@@ -7,7 +7,70 @@ The line `puts` writes goes to the log, not the screen. `print` adds no newline.
 (not a Float as in CRuby). `proc`, `lambda` and `->` turn a block into a
 Proc.
 
+## Constants
+
+| Name | Type | What it is |
+|---|---|---|
+| <span class="fmrb-name">`MSG_TASK_KERNEL`</span> | [`Integer`](Integer.md) | The kernel's task id (0) |
+| <span class="fmrb-name">`MSG_TASK_HOST`</span> | [`Integer`](Integer.md) | The host task's id (1) |
+| <span class="fmrb-name">`MSG_TASK_SYSTEM`</span> | [`Integer`](Integer.md) | The system app's task id (2) |
+
 ## Class methods
+
+### Kernel.send_message
+
+<pre class="fmrb-sig"><code>send_message(
+  <a href="../Integer/">Integer</a> task_id,
+  <a href="../Integer/">Integer</a> msg_type,
+  <a href="../String/">String</a> data,
+  ?<a href="../Integer/">Integer</a> timeout_ms
+) -&gt; bool</code></pre>
+
+Put a raw string on a task's queue
+
+task_id is from 0 to below the limit (9 on the devices) (**outside it**
+**raises ArgumentError**). data is at most 64 bytes (**more raises**
+**ArgumentError**). `timeout_ms` (100 when left out) is how long to wait
+while the queue is full.
+
+**It returns true when sent.** It returns **false** when the task has no
+queue or the queue stays full for timeout_ms; no exception is raised.
+```ruby
+Kernel.send_message(0, 1, "key_down:13")
+```
+
+### Kernel.receive_message
+
+<pre class="fmrb-sig"><code>receive_message(<a href="../Integer/">Integer</a> task_id, ?<a href="../Integer/">Integer</a> timeout_ms) -&gt; <a href="../Array/">Array</a>[untyped]?</code></pre>
+
+Take one message off a task's queue
+
+Returns a `[type, string]` array, or **nil** when nothing came within
+timeout_ms (1000 when left out). task_id outside 0 to below the limit
+(9 on the devices) raises ArgumentError, and a task with no queue raises
+**RuntimeError**, not nil.
+**Passing the app's own number reads the very queue `_spin` reads.**
+```ruby
+msg = Kernel.receive_message(2, 5000)
+type, data = msg if msg
+```
+
+### Kernel.broadcast_message
+
+<pre class="fmrb-sig"><code>broadcast_message(
+  <a href="../Integer/">Integer</a> msg_type,
+  <a href="../String/">String</a> data,
+  ?<a href="../Integer/">Integer</a> timeout_ms
+) -&gt; <a href="../Integer/">Integer</a></code></pre>
+
+Put a raw string on every queue
+
+Puts the same message on **every registered queue** and returns how many
+took it. A full queue is waited for up to `timeout_ms` (10 when left
+out) each. data is at most 64 bytes (more raises ArgumentError).
+```ruby
+n = Kernel.broadcast_message(99, "bye")
+```
 
 ### Kernel.message_queue_exists?
 
@@ -15,8 +78,8 @@ Proc.
 
 Whether a task has a queue
 
-task_id outside 0-15 raises ArgumentError. **9 and above is always**
-**false.**
+task_id outside 0 to below the limit (9 on the devices) raises
+ArgumentError.
 ```ruby
 ready = Kernel.message_queue_exists?(0)
 ```
@@ -54,7 +117,9 @@ print "loading"
 Output object with newline
 
 **The line goes to the log**, not the screen: `docker logs fmruby_core` in
-the simulation, the serial port on a device.
+the simulation, the serial port on a device. It calls `$stdout.puts`, so
+it writes as `IO#puts` does (an Array one line per element). A script run
+from the shell prints on the shell's screen.
 ```ruby
 puts "started"
 ```
@@ -123,4 +188,4 @@ f.call(3)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

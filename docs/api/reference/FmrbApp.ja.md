@@ -12,6 +12,12 @@ Window の大きさは `window_width`・`window_height`、色は `theme_fg` な�
 最初に読むとよいメソッド: `on_create`、`on_update`、`on_event`、`gfx`、
 `set_timer`、`publish`。
 
+## 定数
+
+| 名前 | 型 | 中身 |
+|---|---|---|
+| <span class="fmrb-name">`TRANSPARENT_COLOR`</span> | [`Integer`](Integer.md) | 透ける色 (RGB332 の 0x01) |
+
 ## 型
 
 | 名前 | 型 | 中身 |
@@ -167,6 +173,21 @@ FmrbApp.move(5, "fmruby-abcdef")
 ```ruby
 h = FmrbApp.heap_info
 Log.info("#{h[:free]} free")
+```
+
+### FmrbApp.last_error
+
+<pre class="fmrb-sig"><code>last_error() -&gt; <a href="../Hash/">Hash</a>?</code></pre>
+
+直前に落ちたアプリのエラー
+
+最後に失敗したアプリの名前とエラーの文を `{name:, error:}` の Hash で返す。値が入るのは、Ruby のアプリが例外で終わったとき・コンパイルできなかったとき・起動を断られたとき・イメージから戻せなかったときと、Python のアプリを 2 つ目に起動したとき。**どのアプリのものでも 1 つだけ**で、次に失敗したアプリが上書きする。消えることはなく、起動してからまだどのアプリも失敗していなければ nil。
+`name` はアプリの名前 (31 バイトまで)、`error` は例外の文と、あればその後に
+1 行ずつバックトレース (合わせて 1023 バイトまで)。自分のエラーかどうかは
+`name` で見分ける。
+```ruby
+e = FmrbApp.last_error
+Log.info("#{e[:name]}: #{e[:error]}") if e
 ```
 
 ### FmrbApp.pool_usage
@@ -1738,4 +1759,4 @@ idle_gc   #=> false (まだ頼んでいない)
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*

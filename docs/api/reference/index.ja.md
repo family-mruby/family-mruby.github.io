@@ -6,7 +6,7 @@
 
 | クラス / モジュール | 中身 | メソッド数 |
 |---|---|---|
-| <span class="fmrb-name">[`FmrbApp`](FmrbApp.md)</span> | アプリの土台。 | 138 |
+| <span class="fmrb-name">[`FmrbApp`](FmrbApp.md)</span> | アプリの土台。 | 139 |
 | <span class="fmrb-name">[`FmrbAssoc`](FmrbAssoc.md)</span> | 拡張子から、そのファイルを開く先を引く | 5 |
 | <span class="fmrb-name">[`FmrbColors`](FmrbColors.md)</span> | 色の名前の表と、/home/colors.toml の読み書き | 11 |
 | <span class="fmrb-name">[`FmrbConst`](FmrbConst.md)</span> | 端末・ビルド・キー・テーマの定数の入れもの | 1 |
@@ -160,7 +160,7 @@
 | <span class="fmrb-name">[`Hash`](Hash.md)</span> | 印 (キー) で値を引く表 | 20 |
 | <span class="fmrb-name">[`IndexError`](IndexError.md)</span> | 範囲の外の位置 | 0 |
 | <span class="fmrb-name">[`Integer`](Integer.md)</span> | 整数 | 29 |
-| <span class="fmrb-name">[`Kernel`](Kernel.md)</span> | どこからでも呼べる出力・乱数・Proc の道具 | 9 |
+| <span class="fmrb-name">[`Kernel`](Kernel.md)</span> | どこからでも呼べる出力・乱数・Proc の道具 | 12 |
 | <span class="fmrb-name">[`KeyError`](KeyError.md)</span> | 無いキー (Hash#fetch) | 0 |
 | <span class="fmrb-name">[`Module`](Module.md)</span> | クラスとモジュールの操作 | 2 |
 | <span class="fmrb-name">[`NameError`](NameError.md)</span> | 無い名前の定数・変数 | 0 |
@@ -185,4 +185,4 @@
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*

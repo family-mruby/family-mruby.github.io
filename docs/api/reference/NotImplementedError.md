@@ -8,4 +8,4 @@ Not caught by a bare `rescue => e` (it is not under StandardError).
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

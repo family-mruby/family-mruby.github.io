@@ -121,6 +121,9 @@ ms = @mml.total_clocks * 2500 / @mml.bpm
 
 止める
 
+このプレーヤーが待ち行列に入れた分を捨て、鳴っている音を止める。
+1 つのアプリでプレーヤーを 2 つ鳴らしていても、もう片方の分は残る
+(pause・`device=` も同じ)。
 ```ruby
 @mml.stop
 ```
@@ -337,4 +340,4 @@ msg = @mml.error
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*

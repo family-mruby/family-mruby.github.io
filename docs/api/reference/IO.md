@@ -50,11 +50,13 @@ n = f.write("hello\n")   #=> 6
 Write with a newline
 
 Writes each argument after to_s and adds "\n" unless it already ends with one;
-with no arguments it writes just "\n". **Arrays are not flattened** (`puts [1, 2]`
-writes the one line "[1, 2]"; CRuby writes one line per element). nil is an empty
-line. Always returns nil.
+with no arguments it writes just "\n". **An Array is one line per element**,
+nested ones too (`puts [1, [2]]` writes "1" and "2"; an empty Array is an
+empty line). An Array nested deeper than 16 (one that contains itself) prints
+"[...]" there. nil is an empty line. Always returns nil. As in mruby.
 ```ruby
 f.puts "line"
+f.puts ["a", "b"]   # two lines
 ```
 
 ### IO#print
@@ -108,4 +110,4 @@ f.closed?
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

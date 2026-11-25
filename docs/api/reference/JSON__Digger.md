@@ -39,8 +39,8 @@ A String is a Hash key, an Integer an Array position (from 0; **a negative numbe
 A missing key raises `JSON::DiggerError` ("Key not found: name"). A shape that does not
 fit (a position on a Hash, a key on an Array) raises `JSON::JSONError`. Anything but a
 String or an Integer is an ArgumentError.
-**A position past the end does not raise**: the later `parse` returns nil
-or some other element (index 5 of `[1]` gives 1). Check the index yourself.
+An Array position past the end (an empty Array included) raises
+`JSON::DiggerError` ("Array index out of range").
 ```ruby
 d = JSON::Digger.new('{"a": [10, 20]}')
 d.dig("a", 1).parse   #=> 20
@@ -59,4 +59,4 @@ JSON::Digger.new('[1, 2]').dig(1).parse
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

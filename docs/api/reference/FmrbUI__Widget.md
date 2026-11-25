@@ -141,7 +141,7 @@ c = w.bg
 Change the colour a widget paints inside
 
 The colour counts as the app's own and does not turn back into the
-theme's after a move to another machine.
+theme's after a move to another machine, nor follow a later `@ui.bg =`.
 **It does not mark the widget for redraw**: call `@ui.invalidate_all`,
 or wait until the widget changes.
 ```ruby
@@ -151,4 +151,4 @@ or wait until the widget changes.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

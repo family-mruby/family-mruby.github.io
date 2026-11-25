@@ -51,13 +51,13 @@ apu.note_off(0, 60)
 
 ### FmrbMidi::ApuTransport#defer_voices
 
-<pre class="fmrb-sig"><code>defer_voices(?<a href="../Integer/">Integer</a> due_us) -&gt; void</code></pre>
+<pre class="fmrb-sig"><code>defer_voices(?<a href="../Integer/">Integer</a> due_us, ?<a href="../Integer/">Integer</a> owner) -&gt; void</code></pre>
 
 同じ瞬間の音をひとまとめにし始める
 
 和音のように**同じ瞬間の複数のメッセージ**を送る前に呼び、送り終えたら
 `flush_voices`。間は声の状態だけが変わり、`flush_voices` が各声の最後の状態を 1 度だけ送る (和音の内側の音が順に鳴るのを防ぐ)。
-`due_us` (省略すると今) は `FmrbMidi.now_us` の時計の時刻で、その時刻に送る。**閉じ忘れると以後の音が鳴らない**ので、`FmrbMidi.tick` が毎回閉じる。すでに開いていれば何もしない。
+`due_us` (省略すると今) は `FmrbMidi.now_us` の時計の時刻で、その時刻に送る。**閉じ忘れると以後の音が鳴らない**ので、`FmrbMidi.tick` が毎回閉じる。すでに開いていれば何もしない。`owner` (省略すると 0) は待ち行列に入れる分に付ける持ち主の番号で、プレーヤーが自分の分だけを捨てるのに使う (プレーヤーが自分で渡す)。
 ```ruby
 apu.defer_voices
 apu.note_on(0, 60, 100)
@@ -112,4 +112,4 @@ voice は `:pulse1` `:pulse2` `:triangle` `:noise` か 0〜3、nil ならその 
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*

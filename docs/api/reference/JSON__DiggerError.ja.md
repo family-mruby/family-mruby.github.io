@@ -4,10 +4,10 @@ JSON::Digger の例外
 
 使い方は [ユーティリティ](../utilities.md) のページにあります。
 
-継承元: [`JSONError`](JSON__JSONError.md)
+継承元: [`JSON::JSONError`](JSON__JSONError.md)
 
-掘る先のキーが無いとき ("Key not found: name")。
+掘る先のキーが無いとき ("Key not found: name") と、Array の位置が範囲の外のとき ("Array index out of range")。
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*

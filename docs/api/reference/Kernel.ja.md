@@ -6,7 +6,66 @@
 0 以上 4294967295 以下の整数を返す (CRuby のような小数ではない)。`proc`・`lambda`・
 `->` でブロックを Proc にする。
 
+## 定数
+
+| 名前 | 型 | 中身 |
+|---|---|---|
+| <span class="fmrb-name">`MSG_TASK_KERNEL`</span> | [`Integer`](Integer.md) | カーネルの task 番号 (0) |
+| <span class="fmrb-name">`MSG_TASK_HOST`</span> | [`Integer`](Integer.md) | ホストの task 番号 (1) |
+| <span class="fmrb-name">`MSG_TASK_SYSTEM`</span> | [`Integer`](Integer.md) | デスクトップ (システムのアプリ) の task 番号 (2) |
+
 ## クラスメソッド
+
+### Kernel.send_message
+
+<pre class="fmrb-sig"><code>send_message(
+  <a href="../Integer/">Integer</a> task_id,
+  <a href="../Integer/">Integer</a> msg_type,
+  <a href="../String/">String</a> data,
+  ?<a href="../Integer/">Integer</a> timeout_ms
+) -&gt; bool</code></pre>
+
+待ち行列に生の文字列を送る
+
+task_id は 0 から上限 (端末で 9) 未満 (**範囲の外は ArgumentError**)。
+data は 64 バイトまで (**超えると ArgumentError**)。`timeout_ms`
+(省略すると 100) は、行列が満杯のときに待つ長さ。
+
+**送れたら true** で、行列が無い・満杯のまま timeout_ms が過ぎたときは
+**false** (例外は出ない)。
+```ruby
+Kernel.send_message(0, 1, "key_down:13")
+```
+
+### Kernel.receive_message
+
+<pre class="fmrb-sig"><code>receive_message(<a href="../Integer/">Integer</a> task_id, ?<a href="../Integer/">Integer</a> timeout_ms) -&gt; <a href="../Array/">Array</a>[untyped]?</code></pre>
+
+待ち行列から 1 通取り出す
+
+`[種類, 文字列]` の配列を返す。待っても来なければ **nil** (timeout_ms は省略すると 1000)。task_id が 0 から上限 (端末で 9) 未満の外なら
+ArgumentError、行列が無いときは **RuntimeError** で、nil ではない。
+**アプリ自身の番号を渡すと、`_spin` が読んでいるのと同じ行列を取り合う**。
+```ruby
+msg = Kernel.receive_message(2, 5000)
+type, data = msg if msg
+```
+
+### Kernel.broadcast_message
+
+<pre class="fmrb-sig"><code>broadcast_message(
+  <a href="../Integer/">Integer</a> msg_type,
+  <a href="../String/">String</a> data,
+  ?<a href="../Integer/">Integer</a> timeout_ms
+) -&gt; <a href="../Integer/">Integer</a></code></pre>
+
+全部の待ち行列に送る
+
+登録されている**全部の行列**に同じ伝言を入れ、入った数を返す。行列が満杯なら 1 つにつき `timeout_ms` (省略すると 10) まで待つ。data は
+64 バイトまで (超えると ArgumentError)。
+```ruby
+n = Kernel.broadcast_message(99, "bye")
+```
 
 ### Kernel.message_queue_exists?
 
@@ -14,7 +73,7 @@
 
 その task に待ち行列があるか
 
-task_id が 0-15 の外なら ArgumentError。**9 以上は常に false**。
+task_id が 0 から上限 (端末で 9) 未満の外なら ArgumentError。
 ```ruby
 ready = Kernel.message_queue_exists?(0)
 ```
@@ -50,7 +109,8 @@ print "loading"
 
 改行をつけて出力する
 
-**行はログに出る** (画面ではない)。sim なら `docker logs fmruby_core`、実機ならシリアル。
+**行はログに出る** (画面ではない)。sim なら `docker logs fmruby_core`、実機ならシリアル。`$stdout.puts` を呼ぶので書き方は `IO#puts` と同じ
+(配列は 1 要素 1 行)。シェルで動かしたスクリプトではシェルの画面に出る。
 ```ruby
 puts "started"
 ```
@@ -115,4 +175,4 @@ f.call(3)
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*

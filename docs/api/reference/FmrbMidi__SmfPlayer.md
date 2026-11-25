@@ -86,7 +86,9 @@ it from `on_update`.
 
 Stop the song
 
-Drops what was queued and stops the notes that are sounding.
+Drops what this player queued and stops the notes that are sounding.
+Another player of the same app keeps its own queue (pause and
+`device=` too).
 ```ruby
 @smf.stop
 ```
@@ -289,9 +291,9 @@ do it before playing.
 Semitones added to every melodic note
 
 0 leaves the notes as written. **Channel 9 (drums) is not moved**, and
-a note that would leave 0-127 keeps its pitch. Changing it without
-stopping can mis-stop sounding notes (the note-off uses the current
-value too). `load` puts it back to 0.
+a note that would leave 0-127 keeps its pitch. It can change while the
+song plays and takes effect from the next note (a sounding note is
+stopped at the pitch it started at). `load` puts it back to 0.
 ```ruby
 @smf.transpose = 2
 ```
@@ -459,4 +461,4 @@ Log.info(@smf.timing_stats)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

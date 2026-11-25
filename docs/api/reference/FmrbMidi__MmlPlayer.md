@@ -128,6 +128,9 @@ was loaded. Sound starts once `tick` runs.
 
 Stop
 
+Drops what this player queued and stops the notes that are sounding.
+Another player of the same app keeps its own queue (pause and
+`device=` too).
 ```ruby
 @mml.stop
 ```
@@ -347,4 +350,4 @@ msg = @mml.error
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

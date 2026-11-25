@@ -28,8 +28,8 @@ string raise `JSON::ParserError`; a broken structure (a missing `:` or `,`) rais
 `JSON::JSONError` (the parent). **Trailing junk after the JSON is dropped silently**
 (`"[1,2] xyz"` is `[1, 2]`).
 
-**Do not trust `\uXXXX`.** It is packed into one byte, so Japanese is not read right. Pass
-JSON with the text as UTF-8 instead. Floats are built by hand, so the last digits can
+`\uXXXX` becomes the UTF-8 character (Japanese too, and a pair such as
+`\ud83d\ude00`). Floats are built by hand, so the last digits can
 differ from CRuby. It is all Ruby, so reading a big JSON whole is heavy.
 ```ruby
 h = JSON.parse('{"temp": 21.5}')
@@ -53,4 +53,4 @@ JSON.generate({ "a" => [1, nil] })
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

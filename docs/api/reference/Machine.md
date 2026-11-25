@@ -76,11 +76,10 @@ instance).
 
 A negative ms raises ArgumentError. It returns the ms you passed.
 
-**How long it waits differs by platform.** The ESP32 code is FreeRTOS
-`vTaskDelay(ms / 10)`, which assumes a 10 ms tick (under 10 ms it only yields).
-This build's tick is 1 ms (`CONFIG_FREERTOS_HZ=1000`), so it may wait only about
-a tenth of what you asked for. Linux and the native build watch the real clock
-in 10 ms steps, so they wait up to about 10 ms longer.
+**The resolution differs by platform.** ESP32 waits in 1 ms steps (the FreeRTOS
+tick). Linux and the native build watch the real clock in 10 ms steps, so they
+wait up to about 10 ms longer. (ESP32 firmware from before 2026-11-25 waited
+only about a tenth of what was asked.)
 ```ruby
 Machine.delay_ms(100)
 ```
@@ -364,4 +363,4 @@ Machine.debug_puts("x=#{x}")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

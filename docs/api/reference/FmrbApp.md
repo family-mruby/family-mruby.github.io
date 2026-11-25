@@ -16,6 +16,12 @@ and `window_height`, colours with `theme_fg` and the like.
 Methods to read first: `on_create`, `on_update`, `on_event`, `gfx`,
 `set_timer`, `publish`.
 
+## Constants
+
+| Name | Type | What it is |
+|---|---|---|
+| <span class="fmrb-name">`TRANSPARENT_COLOR`</span> | [`Integer`](Integer.md) | The see-through colour (RGB332 0x01) |
+
 ## Types
 
 | Name | Type | What it is |
@@ -180,6 +186,26 @@ How much memory is free
 ```ruby
 h = FmrbApp.heap_info
 Log.info("#{h[:free]} free")
+```
+
+### FmrbApp.last_error
+
+<pre class="fmrb-sig"><code>last_error() -&gt; <a href="../Hash/">Hash</a>?</code></pre>
+
+The error of the app that failed last
+
+The name and the error text of the last app that failed, as a Hash
+`{name:, error:}`. It is filled when a Ruby app ends on an exception,
+does not compile, is refused at start or cannot be restored from an
+image, and when a second Python app is started.
+**There is one for all apps**: the next app that fails replaces it. It is never cleared, and is
+nil until some app has failed since boot. `name` is the app's name (up to
+31 bytes); `error` is the exception's text followed by the backtrace, one
+line each, if there is one (1023 bytes in all at most). Tell whether it is
+your own by `name`.
+```ruby
+e = FmrbApp.last_error
+Log.info("#{e[:name]}: #{e[:error]}") if e
 ```
 
 ### FmrbApp.pool_usage
@@ -1890,4 +1916,4 @@ idle_gc   #=> false (not asked for yet)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

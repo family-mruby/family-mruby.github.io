@@ -67,9 +67,9 @@ Machine.uptime_formatted  #=> "0d 00:12:34.56"
 
 ms が負だと ArgumentError。戻り値は渡した ms。
 
-**待つ長さは機種で違う**。ESP32 の実装は FreeRTOS の `vTaskDelay(ms / 10)` で、tick を
-10 ms と決め打ちしている (10 ms 未満は待たずに譲るだけ)。今のビルドの tick は 1 ms
-(`CONFIG_FREERTOS_HZ=1000`) なので、指定の約 1/10 しか待たない可能性がある。Linux・ネイティブ版は 10 ms 刻みで実時間を見て待つので、指定より最大で約 10 ms 長くなる。
+**待つ長さの細かさは機種で違う**。ESP32 は 1 ms 刻み (FreeRTOS の tick) で待つ。
+Linux・ネイティブ版は 10 ms 刻みで実時間を見て待つので、指定より最大で約 10 ms 長くなる。
+(2026-11-25 より前のファームの ESP32 は、指定の約 1/10 しか待たなかった。)
 ```ruby
 Machine.delay_ms(100)
 ```
@@ -329,4 +329,4 @@ Machine.debug_puts("x=#{x}")
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*

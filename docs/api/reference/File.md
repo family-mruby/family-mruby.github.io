@@ -35,11 +35,10 @@ Open a file (new)
 
 mode: `"r"` (default; read), `"w"` (truncate and write; created when missing), `"a"`
 (append; created when missing), `"r+"` (read and write; fails when missing),
-`"w+"` (truncate, read and write). **The `+` must be the second character** (the
-`b` of `"rb"` is the second one, so `"rb+"` opens read-only).
+`"w+"` (truncate, read and write) and `"a+"` (read, and every write goes to the
+end; created when missing). A `b` may be added (`"rb+"` is `"r+"`).
 **A mode starting with any other letter opens read-only**
-(no error). **`a+` does not append**: like
-`r+` it overwrites from the start. `perm` is accepted and ignored.
+(no error). `perm` is accepted and ignored.
 
 **RuntimeError ("failed to open file: path") when it cannot open**; the reason
 (missing, no room, too many open) is not told apart. Only 10 files can be open on
@@ -291,4 +290,4 @@ f.close
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

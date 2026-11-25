@@ -13,6 +13,7 @@
 
 | 名前 | 型 | 中身 |
 |---|---|---|
+| <span class="fmrb-name">`FONT_METRICS`</span> | `Hash[Array[untyped], font_metrics]` | 字の種類ごとの字の幅と行の高さ |
 | <span class="fmrb-name">`BLACK`</span> | [`Integer`](Integer.md) | 黒 (RGB332) |
 | <span class="fmrb-name">`WHITE`</span> | [`Integer`](Integer.md) | 白 (RGB332) |
 | <span class="fmrb-name">`RED`</span> | [`Integer`](Integer.md) | 赤 (RGB332) |
@@ -44,6 +45,7 @@
 | <span class="fmrb-name">`video_info`</span> | `{ width: uint16, height: uint16 }` | video_open_raw が返す動画の大きさ |
 | <span class="fmrb-name">`video_status`</span> | `{ state: uint8, shown: uint32, dropped: uint32 }` | 動画の再生のようす |
 | <span class="fmrb-name">`picture_info`</span> | `{ width: uint16, height: uint16, format: uint8, bytes: uint32, mtime: uint32 }` | picture_info が返す絵の大きさと形 |
+| <span class="fmrb-name">`font_metrics`</span> | `{ char_w: Integer, half_w: Integer, kana_w: Integer, line_h: Integer }` | FONT_METRICS の 1 つの字の種類の寸法 (ドット) |
 
 ## クラスメソッド
 
@@ -184,14 +186,16 @@ h = gfx.canvas_height
 
 ### FmrbGfx#current_font
 
-<pre class="fmrb-sig"><code>current_font() -&gt; <a href="../Symbol/">Symbol</a></code></pre>
+<pre class="fmrb-sig"><code>current_font() -&gt; <a href="../Array/">Array</a>[untyped]</code></pre>
 
 今えらんでいる字の種類
 
+`set_font` が実際に選んだ `[family, size]` の配列 (`:default` は
+`[:default]`)。`FmrbGfx::FONT_METRICS` の鍵になる。
 ```ruby
 saved = gfx.current_font
 gfx.set_font(:ja)
-gfx.set_font(saved)
+gfx.set_font(*saved)
 ```
 
 ### FmrbGfx#current_text_size
@@ -1458,4 +1462,4 @@ st[:size]
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*

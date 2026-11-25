@@ -452,13 +452,15 @@ c = @ui.bg
 Change the colour behind the widgets
 
 Changes what **widgets made afterwards, and the hole left by a hidden one**,
-are painted with. **Widgets that already exist keep their own colour**:
-each copies it when made, so use the widget's `bg=`. The colour
-counts as the app's own and does not turn back into the theme's after a
-move to another machine. Repaint with `invalidate_all` and a flush.
+are painted with, and **the widgets that already exist too**: each one whose
+colour was copied from here when it was made takes the new one and is
+redrawn at the next flush. A widget given its own colour with its `bg=`
+keeps it. The colour counts as the app's own and does not turn back into
+the theme's after a move to another machine. The ground outside the
+widgets is the app's to repaint.
 ```ruby
 @ui.bg = @bg_col
-@ui.invalidate_all
+@ui.flush
 ```
 
 ### FmrbUI#widgets
@@ -473,4 +475,4 @@ The widgets placed so far
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

@@ -6,7 +6,7 @@ Every class an app can use, with every method, constant and example the API sign
 
 | Class / module | What it is | Methods |
 |---|---|---|
-| <span class="fmrb-name">[`FmrbApp`](FmrbApp.md)</span> | The base of every app; inherit from it | 138 |
+| <span class="fmrb-name">[`FmrbApp`](FmrbApp.md)</span> | The base of every app; inherit from it | 139 |
 | <span class="fmrb-name">[`FmrbAssoc`](FmrbAssoc.md)</span> | Which app opens which file | 5 |
 | <span class="fmrb-name">[`FmrbColors`](FmrbColors.md)</span> | The colour-name table, and /home/colors.toml | 11 |
 | <span class="fmrb-name">[`FmrbConst`](FmrbConst.md)</span> | Constants: machine, build, keys, theme | 1 |
@@ -160,7 +160,7 @@ Every class an app can use, with every method, constant and example the API sign
 | <span class="fmrb-name">[`Hash`](Hash.md)</span> | A table that maps keys to values | 20 |
 | <span class="fmrb-name">[`IndexError`](IndexError.md)</span> | An index out of range | 0 |
 | <span class="fmrb-name">[`Integer`](Integer.md)</span> | An integer | 29 |
-| <span class="fmrb-name">[`Kernel`](Kernel.md)</span> | Output, random numbers, Proc helpers | 9 |
+| <span class="fmrb-name">[`Kernel`](Kernel.md)</span> | Output, random numbers, Proc helpers | 12 |
 | <span class="fmrb-name">[`KeyError`](KeyError.md)</span> | A missing key (Hash#fetch) | 0 |
 | <span class="fmrb-name">[`Module`](Module.md)</span> | Operations on classes and modules | 2 |
 | <span class="fmrb-name">[`NameError`](NameError.md)</span> | An unknown constant or variable | 0 |
@@ -185,4 +185,4 @@ Every class an app can use, with every method, constant and example the API sign
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*

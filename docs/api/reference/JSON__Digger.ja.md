@@ -35,7 +35,8 @@ String は Hash のキー、Integer は Array の位置 (0 から。**負の数�
 **掘ると、この Digger は切り出した部分だけを持つ**。元には戻れず、続きはその中を掘る。同じ元から別の所を取るなら、新しい Digger を作る。
 
 キーが無いと `JSON::DiggerError` ("Key not found: name")。Hash に位置、Array にキーを使うなど形が合わないと `JSON::JSONError`。String と Integer 以外は ArgumentError。
-**範囲を超えた Array の位置は例外にならない**。後の `parse` は nil か、別の要素を返す (`[1]` の 5 番目で 1 が返る)。位置は自分で確かめてから渡す。
+Array の位置が範囲の外 (空の Array を含む) なら `JSON::DiggerError`
+("Array index out of range")。
 ```ruby
 d = JSON::Digger.new('{"a": [10, 20]}')
 d.dig("a", 1).parse   #=> 20
@@ -54,4 +55,4 @@ JSON::Digger.new('[1, 2]').dig(1).parse
 
 ---
 
-*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
