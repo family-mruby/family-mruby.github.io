@@ -27,4 +27,4 @@ GPIO::Error.peripheral_error(-1, "uart")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*

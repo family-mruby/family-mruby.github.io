@@ -293,4 +293,4 @@ Math.erfc(1)
 
 ---
 
-*このページは fmruby-core の develop@1ff55c21 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@32b44bcd の API の型定義 (`sig/`) から自動で作っています。*

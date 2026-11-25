@@ -1,8 +1,5 @@
 # Class reference
 
-!!! note "Made from the development version"
-    These pages are generated from the API signatures on the development branch of fmruby-core (develop@1ff55c21), not from a release. A method listed here may be missing from, or work differently on, the firmware you have installed; the [release notes](../../releases.md) say what each release contains.
-
 Every class an app can use, with every method, constant and example the API signatures carry. The pages are generated; the guides by topic are under [API Reference](../index.md).
 
 ## Application
@@ -188,4 +185,4 @@ Every class an app can use, with every method, constant and example the API sign
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*

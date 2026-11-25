@@ -511,4 +511,4 @@ FmrbSystem.crt_set(true, 55, 30,
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@1ff55c21.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
