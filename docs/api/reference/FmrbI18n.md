@@ -113,4 +113,4 @@ FmrbI18n.half_kana?(s, 0, s.bytesize)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

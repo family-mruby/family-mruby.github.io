@@ -4,7 +4,8 @@ Extended onto each connection's session
 
 How to use it: [Network](../network.md).
 
-connection.session に付いて、接続以外からの close を無視させる。アプリが直接使うことはない。
+Attached to connection.session so that a close from anything but the connection
+is ignored. Apps do not use it directly.
 
 ## Instance methods
 
@@ -21,4 +22,4 @@ conn.session.close  # does nothing
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

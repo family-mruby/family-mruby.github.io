@@ -8,4 +8,4 @@ Most often a call on nil (`nil.size`).
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

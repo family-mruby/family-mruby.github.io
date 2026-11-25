@@ -4,8 +4,8 @@ A topic's publisher (from node.publisher)
 
 How to use it: [Network](../network.md).
 
-出すのは `publish` か `<<`。メッセージは型のメッセージか、欄の Hash
-(書かなかった欄は既定の値)。
+Send with `publish` or `<<`. A message is a message of the type, or a Hash of
+its fields (a field left out takes its default).
 
 ## Instance methods
 
@@ -85,4 +85,4 @@ k = pub.token_key
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

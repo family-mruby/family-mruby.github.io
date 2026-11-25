@@ -4,7 +4,9 @@ The base of the generated message types
 
 How to use it: [Network](../network.md).
 
-型ごとに ROS_NAME・欄ごとの読み書きができる。欄は Hash か型の `new(欄: 値)` で渡せる (書かない欄は既定の値、知らない欄は ArgumentError)。パターンマッチでも読める (`case m in { x: }`)。
+Each type has ROS_NAME and a reader and writer per field. Fields are given as a
+Hash or as `new(field: value)` (a field left out takes its default, an unknown
+one is an ArgumentError). Pattern matching reads it too (`case m in { x: }`).
 
 ## Class methods
 
@@ -81,4 +83,4 @@ same = m1 == m2
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

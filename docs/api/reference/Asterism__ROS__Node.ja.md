@@ -59,7 +59,7 @@ end
   ?qos: <a href="../String/">String</a>
 ) -&gt; <a href="../Asterism__ROS__Publisher/">Asterism::ROS::Publisher</a></code></pre>
 
-トピックを出す口を作る
+トピックの Publisher を作る
 
 topic はトピック名 ("/chatter"。相対ならノードの namespace の下)、
 type は型そのものか ROS の名前 ("std_msgs/msg/String")。`qos:`
@@ -79,7 +79,7 @@ pub = node.publisher("/chatter",
   ?depth: <a href="../Integer/">Integer</a>
 ) -&gt; <a href="../Asterism__ROS__Subscription/">Asterism::ROS::Subscription</a></code></pre>
 
-トピックを受ける口を作る (自分で取り出す)
+Subscription を作る (自分で取り出す)
 
 届いたメッセージは溜まり、`each_pending` で取り出す。`depth:` (省略すると
 16) は溜めておける数、`qos:` (省略すると DEFAULT_QOS)。ブロックで受けたいときは subscribe。
@@ -146,10 +146,10 @@ end
   ?qos: <a href="../String/">String</a>
 ) -&gt; <a href="../Asterism__ROS__Client/">Asterism::ROS::Client</a></code></pre>
 
-サービスを呼ぶ口を作る
+サービスの Client を作る
 
 呼ぶのは Client#call (待つ) か call_async (待たない)。`qos:` (省略すると
-DEFAULT_QOS)。1 回だけ呼ぶなら Node#call が口を作って覚える。
+DEFAULT_QOS)。1 回だけ呼ぶなら Node#call が Client を作って覚える。
 ```ruby
 cli = node.client("/add", add)
 ```
@@ -170,7 +170,7 @@ cli = node.client("/add", add)
 
 `node.call("/add", add, a: 2, b: 3)`。要求は欄をキーワードで渡すか、
 Hash かメッセージを位置引数か `request:` で渡す。待ち時間は `timeout:`
-(秒) か `timeout_ms:` (省略すると 2 秒)。口はサービスの名前ごとに
+(秒) か `timeout_ms:` (省略すると 2 秒)。Client はサービスの名前ごとに
 1 つ作って覚える。**答えが来るまでアプリは止まる**が、その間もこのノードのサービスには答える (subscribe と every のブロックは動かない)。時間内に答えが無ければ Asterism::ROS::TimeoutError、セッションが閉じていれば
 Asterism::Zenoh::ClosedError。要求の欄が timeout や timeout_ms という名前なら
 `request: { ... }` で渡す。
@@ -205,7 +205,7 @@ end
 
 ノードを閉じる
 
-出す口・受ける口・サービス・クライアント・タイマーも終わる。何度呼んでもよい。nil を返す。
+Publisher・Subscription・サービス・クライアント・タイマーも終わる。何度呼んでもよい。nil を返す。
 ```ruby
 node.close
 ```
@@ -293,4 +293,4 @@ node.cancel_timer(t)
 
 ---
 
-*このページは fmruby-core の develop@32b44bcd の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*

@@ -4,7 +4,8 @@ A topic's subscription
 
 How to use it: [Network](../network.md).
 
-届いたメッセージは溜まり、each_pending で取り出す。node.subscribe で作ると、取り出しは Node#poll がブロックに渡す。
+Messages that arrive are queued; take them with each_pending. When made with
+node.subscribe, Node#poll takes them out and hands them to the block.
 
 ## Instance methods
 
@@ -131,4 +132,4 @@ k = sub.token_key
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

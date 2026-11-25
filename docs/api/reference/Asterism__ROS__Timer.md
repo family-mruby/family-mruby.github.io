@@ -4,7 +4,7 @@ A repeating timer (from node.every)
 
 How to use it: [Network](../network.md).
 
-ブロックは Node#poll の中で呼ばれる。cancel で止める。
+The block runs inside Node#poll. Stop it with cancel.
 
 ## Instance methods
 
@@ -51,4 +51,4 @@ n = t.fired
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

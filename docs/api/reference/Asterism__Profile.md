@@ -4,7 +4,9 @@ A node's profile: kind, name, host, icon
 
 How to use it: [Network](../network.md).
 
-端末が自分で言う種類・名前・場所・アイコンの決まりと、PNG のアイコンを調べる関数。名乗りを変えるのは Connection#profile と Asterism.profile_defaults。
+The rules for the kind, name, place and icon a node tells about itself, and the
+functions that inspect a PNG icon. Change the profile with Connection#profile and
+Asterism.profile_defaults.
 
 ## Class methods
 
@@ -37,4 +39,4 @@ p = Asterism::Profile.check(raw)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

@@ -4,8 +4,8 @@ The attachment of a sample: sequence, time, publisher GID
 
 How to use it: [Network](../network.md).
 
-rmw_zenoh の受け手はこれが無い値を捨てる。受け取ったメッセージの
-info として subscribe のブロックに渡る。
+A reader on rmw_zenoh drops a sample without one. For a received message it is
+handed to the subscribe block as info.
 
 ## Class methods
 
@@ -91,4 +91,4 @@ case a in { sequence: n } then n end
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

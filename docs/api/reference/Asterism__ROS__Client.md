@@ -4,7 +4,7 @@ A service client (from node.client)
 
 How to use it: [Network](../network.md).
 
-呼ぶのは call (答えを待つ) か call_async (すぐ Call が返る)。
+Call with call (waits for the answer) or call_async (returns a Call at once).
 
 ## Instance methods
 
@@ -133,4 +133,4 @@ k = cli.token_key
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

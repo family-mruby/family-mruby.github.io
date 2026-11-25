@@ -4,7 +4,9 @@ Rules for the topic declarations (@pubs)
 
 How to use it: [Network](../network.md).
 
-出しているトピックの宣言を ({"名前" => {"t", "e", "u", "d", "ts"}}) 送るときの決まりと、符号化の番号表。pubs_of や publishers_of の答えの形を知るときに読む。
+The rules for sending the declarations of the topics being published
+({"name" => {"t", "e", "u", "d", "ts"}}), and the table of encoding numbers.
+Read it for the shape of what pubs_of and publishers_of answer.
 
 ## Class methods
 
@@ -101,4 +103,4 @@ n, a, d = Asterism::Pubs.parse(k, b)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

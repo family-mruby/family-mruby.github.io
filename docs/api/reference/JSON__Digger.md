@@ -59,4 +59,4 @@ JSON::Digger.new('[1, 2]').dig(1).parse
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

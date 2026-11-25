@@ -4,7 +4,7 @@ A service call on its way
 
 How to use it: [Network](../network.md).
 
-done? は待たない (Node#poll が進める)。value は答えが来るまで待つ。
+done? does not wait (Node#poll moves it on). value waits until the answer comes.
 
 ## Instance methods
 
@@ -73,4 +73,4 @@ s = c.took
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

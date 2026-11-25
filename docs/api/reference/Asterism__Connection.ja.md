@@ -117,7 +117,7 @@ me = @link.conn.path
   ?shared: (<a href="../Symbol/">Symbol</a> | <a href="../String/">String</a>)?
 ) -&gt; <a href="../Asterism__Topic/">Asterism::Topic</a></code></pre>
 
-トピックを出す (値を流す口を作る)
+トピックを出す (値を流せるように宣言する)
 
 name は "said" や "game/score" (区切りは /)。ほかの端末からは
 "<この端末>/<アプリ>/<name>" で受ける。返った Topic の put で値を流す。キーワード (type:・unit:・desc:・ts:) は省ける。残らない (後から受け始めた側には前の値は届かない)。つながっていないと Asterism::Disconnected。link_up の中で呼ぶ。
@@ -598,4 +598,4 @@ t = conn.type_of(info)
 
 ---
 
-*このページは fmruby-core の develop@32b44bcd の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*

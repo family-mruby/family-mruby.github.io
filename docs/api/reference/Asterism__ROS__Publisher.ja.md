@@ -1,6 +1,6 @@
 # Asterism::ROS::Publisher
 
-トピックに出す口 (node.publisher の答え)
+トピックの Publisher (node.publisher の答え)
 
 使い方は [ネットワーク](../network.md) のページにあります。
 
@@ -45,7 +45,7 @@ pub.close
 
 <pre class="fmrb-sig"><code>gid() -&gt; <a href="../String/">String</a></code></pre>
 
-この口の GID
+この Publisher の GID
 
 ```ruby
 g = pub.gid
@@ -83,4 +83,4 @@ k = pub.token_key
 
 ---
 
-*このページは fmruby-core の develop@32b44bcd の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*

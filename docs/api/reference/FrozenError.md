@@ -8,4 +8,4 @@ String literals may be frozen. Start from `"".dup` for a string you will change.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

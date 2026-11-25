@@ -4,7 +4,8 @@ Names and numbers of the built-in value types
 
 How to use it: [Network](../network.md).
 
-publish の `type:` に渡す組み込みの型。番号か Symbol (:vector3) で書く。自分の型は文字列で、Connection#define_type で決める。
+The built-in types given to publish's `type:`, written as a number or a Symbol
+(:vector3). A type of your own is a String, defined with Connection#define_type.
 
 ## Constants
 
@@ -45,4 +46,4 @@ t = Asterism::Types.check(raw)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

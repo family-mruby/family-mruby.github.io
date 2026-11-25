@@ -4,8 +4,10 @@ A reader's memory of the sequence numbers
 
 How to use it: [Network](../network.md).
 
-送り手ごと・道ごとに、最後の接続の番号と値の番号を覚えて、取りこぼし
-(lost) と送り手のやり直し (restarted) を数える。Subscription が 1 つずつ持っていて、SampleInfo の lost・restarted はこれが決める。自分で値を受けるときに使う (普通のアプリは subscribe だけでよい)。
+Per sender and per path it remembers the last connection number and value
+number, and counts what was missed (lost) and the sender's restarts (restarted).
+Each Subscription holds one, and it decides SampleInfo's lost and restarted.
+For code that receives values itself (an ordinary app only needs subscribe).
 
 ## Class methods
 
@@ -77,4 +79,4 @@ seqs.clear
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

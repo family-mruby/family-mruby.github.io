@@ -4,7 +4,8 @@ A served service (from node.service)
 
 How to use it: [Network](../network.md).
 
-要求への答えは Node#poll が handle_pending を呼んで行う。node を使わずに自分で handle_pending を呼んでもよい。
+Node#poll answers the requests by calling handle_pending. Without a node you
+may call handle_pending yourself.
 
 ## Instance methods
 
@@ -86,4 +87,4 @@ k = srv.token_key
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

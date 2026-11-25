@@ -106,12 +106,12 @@
 | <span class="fmrb-name">[`Asterism::ROS`](Asterism__ROS.md)</span> | ROS 2 のノードのふりをする | 4 |
 | <span class="fmrb-name">[`Asterism::ROS::Attachment`](Asterism__ROS__Attachment.md)</span> | 送り手が付ける添え物 | 7 |
 | <span class="fmrb-name">[`Asterism::ROS::Call`](Asterism__ROS__Call.md)</span> | 出したサービスの呼び出し (client.call_async の答え) | 6 |
-| <span class="fmrb-name">[`Asterism::ROS::Client`](Asterism__ROS__Client.md)</span> | サービスを呼ぶ口 (node.client の答え) | 10 |
+| <span class="fmrb-name">[`Asterism::ROS::Client`](Asterism__ROS__Client.md)</span> | サービスの Client (node.client の答え) | 10 |
 | <span class="fmrb-name">[`Asterism::ROS::Message`](Asterism__ROS__Message.md)</span> | メッセージの土台 (生成した型の親) | 6 |
 | <span class="fmrb-name">[`Asterism::ROS::Node`](Asterism__ROS__Node.md)</span> | ROS 2 のノード | 18 |
-| <span class="fmrb-name">[`Asterism::ROS::Publisher`](Asterism__ROS__Publisher.md)</span> | トピックに出す口 (node.publisher の答え) | 7 |
-| <span class="fmrb-name">[`Asterism::ROS::Service`](Asterism__ROS__Service.md)</span> | サービスを提供する口 (node.service の答え) | 7 |
-| <span class="fmrb-name">[`Asterism::ROS::Subscription`](Asterism__ROS__Subscription.md)</span> | トピックを受ける口 (node.subscription・node.subscribe の答え) | 11 |
+| <span class="fmrb-name">[`Asterism::ROS::Publisher`](Asterism__ROS__Publisher.md)</span> | トピックの Publisher (node.publisher の答え) | 7 |
+| <span class="fmrb-name">[`Asterism::ROS::Service`](Asterism__ROS__Service.md)</span> | 提供しているサービス (node.service の答え) | 7 |
+| <span class="fmrb-name">[`Asterism::ROS::Subscription`](Asterism__ROS__Subscription.md)</span> | トピックの Subscription (node.subscription・node.subscribe の答え) | 11 |
 | <span class="fmrb-name">[`Asterism::ROS::TimeoutError`](Asterism__ROS__TimeoutError.md)</span> | サービスが時間内に答えなかった | 0 |
 | <span class="fmrb-name">[`Asterism::ROS::Timer`](Asterism__ROS__Timer.md)</span> | 一定間隔のブロック (node.every の答え) | 4 |
 | <span class="fmrb-name">[`Asterism::ROS::UnknownType`](Asterism__ROS__UnknownType.md)</span> | 型のファイルが見つからない | 0 |
@@ -185,4 +185,4 @@
 
 ---
 
-*このページは fmruby-core の develop@32b44bcd の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*

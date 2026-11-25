@@ -2,7 +2,7 @@
 
 Holds a value to write unquoted
 
-普通は `FmrbToml.raw` で作る。
+Usually made with `FmrbToml.raw`.
 ```ruby
 r = FmrbToml::Raw.new("black")
 r.text   #=> "black"
@@ -34,4 +34,4 @@ r.text   #=> "black"
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@32b44bcd.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*

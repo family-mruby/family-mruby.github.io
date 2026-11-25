@@ -130,4 +130,4 @@ bottom = sp.y + sp.height
 
 ---
 
-*このページは fmruby-core の develop@32b44bcd の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*
