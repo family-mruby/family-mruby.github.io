@@ -163,6 +163,8 @@ What was already queued when you paused (up to 0.3 s) is dropped. false when not
 
 Whether it is playing
 
+Turns false once the song is read to the end and **what this player queued** has all played.
+Another player (of this app or another) still playing does not keep it true.
 ```ruby
 draw_bar if @mml.playing?
 ```
@@ -350,4 +352,4 @@ msg = @mml.error
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

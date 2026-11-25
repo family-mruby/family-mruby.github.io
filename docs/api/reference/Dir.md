@@ -173,11 +173,12 @@ Dir.foreach("/home") { |n| p n }
 
 The working directory
 
-`pwd` is the same method.
-**Relative paths given to File.open, Dir.open and the like are resolved from the root**
-**(an ESP32's flash root), not from this, so write paths from "/".**
+`pwd` is the same method. **Each app has its own**, "/" when it starts. `Dir.chdir`
+changes it, and relative paths in file operations (File.open, Dir.open, ...) and in
+`File.expand_path` are taken from it. It is apart from other apps' and from the
+shell's `cd` (an app started from the shell starts at "/" too).
 ```ruby
-Dir.getwd
+Dir.getwd   #=> "/"
 ```
 
 ### Dir.pwd
@@ -197,12 +198,15 @@ chdir(<a href="../String/">String</a> path) { (<a href="../String/">String</a> p
 
 Change the working directory
 
-Returns 0. With a block it changes only for the block, restores, and returns the
-block's value. RuntimeError when it is missing.
-**It does not change what relative paths in file operations are based on**
-(see `Dir.getwd`); apps use absolute paths.
+Returns 0. Only this app's place changes (see `Dir.getwd`). A relative path is taken
+from the current place; "." and ".." are folded and it never goes above "/". Missing,
+not a directory or too long (127 bytes at most) raises RuntimeError and leaves the
+place as it was. With a block it changes only for the block, restores (also on an
+exception), and returns the block's value. It is gone when the app ends.
 ```ruby
-Dir.chdir("/home")
+Dir.chdir("/tmp")
+File.open("a.txt", "w") { |f| f.write("x") }   # /tmp/a.txt
+Dir.chdir("/home") { Dir.getwd }               #=> "/home"
 ```
 
 ## Instance methods
@@ -313,4 +317,4 @@ d.pos = saved
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

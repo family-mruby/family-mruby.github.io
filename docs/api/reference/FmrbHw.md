@@ -5,7 +5,8 @@ Read the table of how pins are used
 How to use it: [Hardware Control](../peripherals.md), [Constants & System Info](../const.md).
 
 Which pins are system-only, and which an app's `GPIO`,
-`I2C` or RMT holds. **Only a real board marks the table.** The Linux sim, the native build
+`I2C` or RMT holds. Check with `FmrbHw.pin_available?` which pins an app may use on this board.
+**Only a real board marks the table.** The Linux sim, the native build
 and the browser build have no pins, so every entry stays `PIN_UNUSED` (49 pins).
 ```ruby
 if FmrbHw.pin_available?(5)
@@ -38,7 +39,8 @@ end
 
 How a pin is used (a PIN_* value)
 
-A pin number out of range does not raise: it is `PIN_UNUSED` (0).
+A pin the system uses is `PIN_SYSTEM_EXCLUSIVE` even when the table does not hold it (the
+same pins `GPIO` refuses). A pin number out of range does not raise: it is `PIN_UNUSED` (0).
 ```ruby
 FmrbHw.pin_status(25) == FmrbHw::PIN_SYSTEM_EXCLUSIVE
 ```
@@ -50,7 +52,7 @@ FmrbHw.pin_status(25) == FmrbHw::PIN_SYSTEM_EXCLUSIVE
 Whether an app can take the pin
 
 true only for a `PIN_UNUSED` pin. **A number out of range is false**, and so is a
-system-only pin or one somebody already holds.
+system-only pin (one `GPIO` refuses) or one somebody already holds.
 ```ruby
 FmrbHw.pin_available?(5)   #=> true or false
 ```
@@ -61,7 +63,8 @@ FmrbHw.pin_available?(5)   #=> true or false
 
 How every pin is used
 
-The index is the pin number and the value is a `PIN_*`. The length is `pin_count`.
+The index is the pin number and the value is a `PIN_*` (as `pin_status` gives it). The
+length is `pin_count`.
 ```ruby
 FmrbHw.pin_status_all[5]
 ```
@@ -79,4 +82,4 @@ FmrbHw.pin_count   #=> 55 or 49
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

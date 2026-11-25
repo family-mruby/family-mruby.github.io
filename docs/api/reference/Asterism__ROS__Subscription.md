@@ -70,7 +70,7 @@ n = sub.errors
 
 <pre class="fmrb-sig"><code>handler() -&gt; <a href="../Proc/">Proc</a>?</code></pre>
 
-The block of node.subscribe (nil for node.subscription)
+The block Node#poll hands messages to (or nil)
 
 ```ruby
 b = sub.handler
@@ -82,9 +82,10 @@ b = sub.handler
 
 Set the block that gets the messages
 
-Changes where Node#poll hands the messages.
-**Only a subscription made by node.subscribe** is served by Node#poll (take from one made by
-node.subscription with each_pending).
+Node#poll hands each message and its Attachment to this block from then
+on, also for a subscription made with node.subscription. nil stops it,
+and the messages wait for each_pending again. The block runs on the
+update loop: do not wait in it (no service call).
 ```ruby
 sub.handler = proc { |m, i| got(m) }
 ```
@@ -132,4 +133,4 @@ k = sub.token_key
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

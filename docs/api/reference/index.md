@@ -81,7 +81,7 @@ Every class an app can use, with every method, constant and example the API sign
 | <span class="fmrb-name">[`JSON`](JSON.md)</span> | Reading and writing JSON | 2 |
 | <span class="fmrb-name">[`JSON::Digger`](JSON__Digger.md)</span> | Take a part out of a big JSON | 3 |
 | <span class="fmrb-name">[`JSON::DiggerError`](JSON__DiggerError.md)</span> | Raised by JSON::Digger | 0 |
-| <span class="fmrb-name">[`JSON::GeneratorError`](JSON__GeneratorError.md)</span> | JSON.generate error (never raised) | 0 |
+| <span class="fmrb-name">[`JSON::GeneratorError`](JSON__GeneratorError.md)</span> | JSON.generate error (NaN, infinity) | 0 |
 | <span class="fmrb-name">[`JSON::JSONError`](JSON__JSONError.md)</span> | Parent of the JSON errors | 0 |
 | <span class="fmrb-name">[`JSON::ParserError`](JSON__ParserError.md)</span> | Raised when JSON.parse cannot read | 0 |
 | <span class="fmrb-name">[`MessagePack`](MessagePack.md)</span> | Turn values into bytes with MessagePack, and back | 4 |
@@ -185,4 +185,4 @@ Every class an app can use, with every method, constant and example the API sign
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

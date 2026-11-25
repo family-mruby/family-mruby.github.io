@@ -41,7 +41,8 @@ Ruby の値を JSON 文字列にする
 Hash・Array・String・Integer・Float・true・false・nil を書く。**Symbol は文字列**になり、
 Hash のキーは `to_s` した文字列になる。**それ以外のオブジェクトも `to_s` した文字列**で書く (エラーにならない)。
 
-空白も改行も入れず 1 行で返す。日本語はそのまま (エスケープしない)。`NaN` や無限大も例外にならず、JSON として正しくない `NaN` などの字がそのまま入る。
+空白も改行も入れず 1 行で返す。日本語はそのまま (エスケープしない)。Float の `NaN`・無限大は
+JSON に書けないので `JSON::GeneratorError` (入れ子の中も)。
 ```ruby
 JSON.generate({ "a" => [1, nil] })
 #=> "{\"a\":[1,null]}"
@@ -49,4 +50,4 @@ JSON.generate({ "a" => [1, nil] })
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*

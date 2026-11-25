@@ -114,6 +114,8 @@ return unless @smf.loaded?
 
 鳴っている最中かどうか
 
+曲を最後まで読み、**このプレーヤーが予約した音**が全部鳴ったら false になる。ほかのプレーヤー
+(同じアプリでも別のアプリでも) が鳴らしている間も、自分の分が終われば false。
 ```ruby
 draw_bar if @smf.playing?
 ```
@@ -434,4 +436,4 @@ Log.info(@smf.timing_stats)
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*

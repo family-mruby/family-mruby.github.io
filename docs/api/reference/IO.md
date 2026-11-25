@@ -6,8 +6,9 @@ How to use it: [Files & I/O](../filesystem.md).
 
 The parent of File. `$stdout` and a file are the same kind
 of IO. **`read` and `write` on a closed stream raise RuntimeError** ("closed
-stream"), not IOError. Every failure is a RuntimeError; the reason (errno) is not
-told apart.
+stream"), not IOError. Going the other way to how it was opened (`read` on a
+write-only `"w"` or `"a"`, `write`, `puts` or `print` on a read-only `"r"`) raises
+IOError. Every other failure is a RuntimeError; the reason (errno) is not told apart.
 ```ruby
 $stdout.puts "hello"
 ```
@@ -22,9 +23,10 @@ Read bytes (File overrides it as File#read)
 
 Reads up to length bytes and returns them. **length defaults to 1024** (for
 streams such as stdin; a file goes through File#read, which reads everything
-when it is left out). length of 0 or less returns "". RuntimeError when the
-read fails ("failed to read from stream") or the stream is closed
-("closed stream").
+when it is left out). length of 0 or less returns "".
+**A stream opened for writing only (`"w"`, `"a"`, stdout) raises IOError ("not opened for reading")**.
+RuntimeError when the read fails ("failed to read from stream")
+or the stream is closed ("closed stream").
 ```ruby
 s = $stdin.read(16)
 ```
@@ -37,8 +39,9 @@ Write a string
 
 Writes str and returns **the number of bytes written**. Only a String is
 accepted (a number raises TypeError; `puts` and `print` call to_s first).
-RuntimeError when the write fails ("write failed") or the stream is closed
-("closed stream").
+**A stream opened for reading only (`"r"`, stdin) raises IOError ("not opened for writing")**,
+through `puts` and `print` too. RuntimeError when the write
+fails ("write failed") or the stream is closed ("closed stream").
 ```ruby
 n = f.write("hello\n")   #=> 6
 ```
@@ -110,4 +113,4 @@ f.closed?
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

@@ -6,7 +6,8 @@
 
 標準出力 (`$stdout`) もファイルも同じ IO。
 **ストリームが閉じた後の `read`・`write` は IOError でなく RuntimeError**
-("closed stream")。エラーはどれも RuntimeError で、理由 (errno) は区別できない。
+("closed stream")。開いた向きと逆の操作 (書くだけの `"w"`・`"a"` で `read`、読むだけの
+`"r"` で `write`・`puts`・`print`) は IOError。それ以外のエラーは RuntimeError で、理由 (errno) は区別できない。
 ```ruby
 $stdout.puts "hello"
 ```
@@ -21,7 +22,8 @@ $stdout.puts "hello"
 
 length バイトまでを読んで文字列で返す。**length を省くと 1024 バイト**
 (標準入力などのストリーム用。ファイルは File#read で、省くと全部読む)。
-length が 0 以下なら "" を返す。読めなかったときは RuntimeError
+length が 0 以下なら "" を返す。
+**書くだけで開いたもの (`"w"`・`"a"`、標準出力) は IOError ("not opened for reading")**。読めなかったときは RuntimeError
 ("failed to read from stream")、閉じたストリームなら RuntimeError ("closed stream")。
 ```ruby
 s = $stdin.read(16)
@@ -34,7 +36,8 @@ s = $stdin.read(16)
 書き込む
 
 str を書き、**書いたバイト数**を返す。str は String だけ (数値などは TypeError。
-`puts`・`print` は to_s してから渡す)。書けなかったときは RuntimeError ("write failed")、閉じたストリームなら RuntimeError ("closed stream")。
+`puts`・`print` は to_s してから渡す)。
+**読むだけで開いたもの (`"r"`、標準入力) は IOError ("not opened for writing")** (`puts`・`print` も)。書けなかったときは RuntimeError ("write failed")、閉じたストリームなら RuntimeError ("closed stream")。
 ```ruby
 n = f.write("hello\n")   #=> 6
 ```
@@ -100,4 +103,4 @@ f.closed?
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*

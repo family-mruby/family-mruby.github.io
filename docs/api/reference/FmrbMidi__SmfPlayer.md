@@ -122,6 +122,8 @@ so it carries on that much further on. false when not paused.
 
 Whether it is playing
 
+Turns false once the song is read to the end and **what this player queued** has all played.
+Another player (of this app or another) still playing does not keep it true.
 ```ruby
 draw_bar if @smf.playing?
 ```
@@ -461,4 +463,4 @@ Log.info(@smf.timing_stats)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

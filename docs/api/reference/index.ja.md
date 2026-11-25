@@ -81,7 +81,7 @@
 | <span class="fmrb-name">[`JSON`](JSON.md)</span> | JSON の読み書き | 2 |
 | <span class="fmrb-name">[`JSON::Digger`](JSON__Digger.md)</span> | 大きな JSON から一部だけ取り出す | 3 |
 | <span class="fmrb-name">[`JSON::DiggerError`](JSON__DiggerError.md)</span> | JSON::Digger の例外 | 0 |
-| <span class="fmrb-name">[`JSON::GeneratorError`](JSON__GeneratorError.md)</span> | JSON.generate の例外 (実装は出さない) | 0 |
+| <span class="fmrb-name">[`JSON::GeneratorError`](JSON__GeneratorError.md)</span> | JSON.generate の例外 (NaN・無限大) | 0 |
 | <span class="fmrb-name">[`JSON::JSONError`](JSON__JSONError.md)</span> | JSON の例外の親 | 0 |
 | <span class="fmrb-name">[`JSON::ParserError`](JSON__ParserError.md)</span> | JSON.parse が読めなかったときの例外 | 0 |
 | <span class="fmrb-name">[`MessagePack`](MessagePack.md)</span> | MessagePack で値をバイト列にし、戻す | 4 |
@@ -185,4 +185,4 @@
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*

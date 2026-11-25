@@ -4,7 +4,7 @@
 
 使い方は [ハードウェア制御](../peripherals.md)、[定数・システム情報](../const.md) のページにあります。
 
-どのピンが「システム専用」で、どれをアプリの `GPIO`・`I2C`・RMT が使っているかを調べる。
+どのピンが「システム専用」で、どれをアプリの `GPIO`・`I2C`・RMT が使っているかを調べる。機種ごとにアプリが使えるピンは `FmrbHw.pin_available?` で確かめる。
 **台帳に実際の印が付くのは実機だけ**。Linux sim・ネイティブ版・ブラウザ版はピンを持たず、台帳は全部 `PIN_UNUSED` のまま (ピンの数は 49)。
 ```ruby
 if FmrbHw.pin_available?(5)
@@ -37,7 +37,7 @@ end
 
 ピンの使われ方 (PIN_* の値)
 
-範囲外のピン番号は例外にならず `PIN_UNUSED` (0)。
+システムが使うピンは、台帳に取られていなくても `PIN_SYSTEM_EXCLUSIVE` (`GPIO` が断るピンと同じ)。範囲外のピン番号は例外にならず `PIN_UNUSED` (0)。
 ```ruby
 FmrbHw.pin_status(25) == FmrbHw::PIN_SYSTEM_EXCLUSIVE
 ```
@@ -48,7 +48,7 @@ FmrbHw.pin_status(25) == FmrbHw::PIN_SYSTEM_EXCLUSIVE
 
 そのピンをアプリが取れるか
 
-`PIN_UNUSED` のピンだけ true。**範囲外の番号は false**。システム専用のピンと、すでに誰かが取っているピンは false。
+`PIN_UNUSED` のピンだけ true。**範囲外の番号は false**。システム専用のピン (`GPIO` が断るピン) と、すでに誰かが取っているピンは false。
 ```ruby
 FmrbHw.pin_available?(5)   #=> true か false
 ```
@@ -59,7 +59,7 @@ FmrbHw.pin_available?(5)   #=> true か false
 
 全ピンの使われ方
 
-添字がピン番号、値が `PIN_*`。長さは `pin_count`。
+添字がピン番号、値が `PIN_*` (`pin_status` と同じ値)。長さは `pin_count`。
 ```ruby
 FmrbHw.pin_status_all[5]
 ```
@@ -78,4 +78,4 @@ FmrbHw.pin_count   #=> 55 か 49
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*

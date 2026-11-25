@@ -38,7 +38,8 @@ mode: `"r"` (default; read), `"w"` (truncate and write; created when missing), `
 `"w+"` (truncate, read and write) and `"a+"` (read, and every write goes to the
 end; created when missing). A `b` may be added (`"rb+"` is `"r+"`).
 **A mode starting with any other letter opens read-only**
-(no error). `perm` is accepted and ignored.
+(no error). `read` on a `"w"` or `"a"` file, and `write`, `puts` or `print`
+on an `"r"` file, raise IOError. `perm` is accepted and ignored.
 
 **RuntimeError ("failed to open file: path") when it cannot open**; the reason
 (missing, no room, too many open) is not told apart. Only 10 files can be open on
@@ -106,8 +107,7 @@ Make a path absolute
 
 Resolves "." and ".." and merges repeated "/".
 **A relative path is based on `default_dir` (".")**
-**put on the environment variable `PWD` ("/" when it is not set)**,
-not on `Dir.getwd`. A leading "~" becomes `HOME` (ArgumentError when HOME is not
+**put on the app's working directory (`Dir.getwd`)**. A leading "~" becomes `HOME` (ArgumentError when HOME is not
 set); the "~name" form is an ArgumentError. It does not check the file exists.
 ```ruby
 File.expand_path("/home/../tmp/a")   #=> "/tmp/a"
@@ -290,4 +290,4 @@ f.close
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

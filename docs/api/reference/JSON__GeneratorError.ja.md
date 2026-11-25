@@ -1,13 +1,13 @@
 # JSON::GeneratorError
 
-JSON.generate の例外 (実装は出さない)
+JSON.generate の例外 (NaN・無限大)
 
 使い方は [ユーティリティ](../utilities.md) のページにあります。
 
 継承元: [`JSON::JSONError`](JSON__JSONError.md)
 
-名前だけあり、`JSON.generate` はこれを出さない。作れない値は文字列にして書く。
+`JSON.generate` が Float の NaN・無限大 (入れ子の中も) に出す。文は `"NaN not allowed in JSON"` など。それ以外の書けない値は文字列にして書くので、これは出ない。
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*

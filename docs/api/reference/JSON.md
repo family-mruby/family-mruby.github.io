@@ -44,8 +44,8 @@ Turn a Ruby value into a JSON string
 
 Writes Hash, Array, String, Integer, Float, true, false and nil. **A Symbol becomes a string**, and a Hash key is written as its `to_s`. **Any other object is written as its `to_s`** (no error).
 
-The result is one line with no spaces. Japanese is left as it is (not escaped). `NaN` and
-infinity do not raise either: the text `NaN` and the like go in, which is not valid JSON.
+The result is one line with no spaces. Japanese is left as it is (not escaped). A Float `NaN`
+or infinity has no JSON form and raises `JSON::GeneratorError` (nested ones too).
 ```ruby
 JSON.generate({ "a" => [1, nil] })
 #=> "{\"a\":[1,null]}"
@@ -53,4 +53,4 @@ JSON.generate({ "a" => [1, nil] })
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

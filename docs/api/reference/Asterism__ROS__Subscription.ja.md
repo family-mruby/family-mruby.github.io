@@ -68,7 +68,7 @@ n = sub.errors
 
 <pre class="fmrb-sig"><code>handler() -&gt; <a href="../Proc/">Proc</a>?</code></pre>
 
-node.subscribe のブロック
+Node#poll が渡す先のブロック (無ければ nil)
 
 ```ruby
 b = sub.handler
@@ -80,8 +80,7 @@ b = sub.handler
 
 ブロックを付け替える
 
-Node#poll が渡す先を変える。**node.subscribe で作ったものだけ**
-Node#poll が渡す (node.subscription の物は each_pending で取る)。
+Node#poll が、届いたメッセージとその Attachment をこのブロックに渡すようになる。node.subscription で作ったものに後から付けてもよい。nil を入れると止まり、メッセージは each_pending で取る形に戻る。ブロックは update の流れの中で呼ばれるので、中で待たない (サービスの呼び出しをしない)。
 ```ruby
 sub.handler = proc { |m, i| got(m) }
 ```
@@ -129,4 +128,4 @@ k = sub.token_key
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*

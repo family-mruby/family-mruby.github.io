@@ -38,11 +38,15 @@ Open an I2C bus
 (100000 Hz when left out), `sda_pin:` and `scl_pin:` (-1 when left out), `timeout:` (500
 when left out; the default wait of later `read` and `write`, in ms).
 
-**A bus that cannot be opened raises IOError with one message, "Invalid I2C unit"**: not
-only an unknown unit name, but also **a bus another app already holds**, **a different pin**
-**for I2C1 on a board with a screen**, and a screen not ready yet. On those boards
-(Tab5, NARYA v4, AtomS3R) I2C1 is fixed to the board's wiring, and anything but
-`FmrbHw::PIN_I2C1_SDA` and `PIN_I2C1_SCL` is refused.
+**A bus that cannot be opened raises IOError, with a message for each cause** (the unit is
+the name you passed): an unknown unit is "Invalid I2C unit: name",
+**a bus another app already holds** is "I2C unit name is in use by another app",
+**a different pin for I2C1 on a board with a screen** is "I2C unit name is fixed to other
+pins on this board (not SDA n / SCL n)", a screen not ready yet is "I2C unit name is not ready yet", and a bus that would
+not start on those pins is "I2C unit name did not start on SDA n / SCL n". On the boards with
+a screen (Tab5, NARYA v4, AtomS3R) I2C1 is fixed to the board's wiring, and anything but
+`FmrbHw::PIN_I2C1_SDA` and `PIN_I2C1_SCL` is refused. `frequency:` is not checked when
+opening, and neither is the pin table (`FmrbHw.pin_status`).
 ```ruby
 i2c = I2C.new(unit: :ESP32_I2C1,
   sda_pin: FmrbHw::PIN_I2C1_SDA,
@@ -121,4 +125,4 @@ i2c.close
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9d470992.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*

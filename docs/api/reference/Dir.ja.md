@@ -157,10 +157,9 @@ Dir.foreach("/home") { |n| p n }
 
 作業ディレクトリ
 
-`pwd` は同じ働きの別名。
-**ファイルの操作 (File.open・Dir.open ...) の相対パスはこれでなく、ルート (ESP32 は flash のルート) から解くので、パスは "/" から書く**。
+`pwd` は同じ働きの別名。**アプリごと**の場所で、起動したときは "/"。`Dir.chdir` で変わり、ファイルの操作 (File.open・Dir.open ...) と `File.expand_path` の相対パスはここから解く。ほかのアプリの場所とは別で、シェルの `cd` とも別 (シェルから起動したアプリも "/" から)。
 ```ruby
-Dir.getwd
+Dir.getwd   #=> "/"
 ```
 
 ### Dir.pwd
@@ -180,10 +179,14 @@ chdir(<a href="../String/">String</a> path) { (<a href="../String/">String</a> p
 
 作業ディレクトリを変える
 
-成功すると 0。ブロックを渡すと、その間だけ変えて元に戻し、ブロックの値を返す。無いと
-RuntimeError。**変えても、ファイル操作の相対パスの基準は変わらない** (`Dir.getwd` 参照)。アプリは絶対パスを使う。
+成功すると 0。変わるのはこのアプリの場所だけ (`Dir.getwd` 参照)。相対パスは今の場所から、
+"." と ".." をまとめ、"/" より上には出ない。無い・フォルダでない・長すぎる (127 バイトまで)
+と RuntimeError で、場所は変わらない。ブロックを渡すと、その間だけ変えて元に戻し
+(例外でも戻る)、ブロックの値を返す。アプリが終わると消える。
 ```ruby
-Dir.chdir("/home")
+Dir.chdir("/tmp")
+File.open("a.txt", "w") { |f| f.write("x") }   # /tmp/a.txt
+Dir.chdir("/home") { Dir.getwd }               #=> "/home"
 ```
 
 ## インスタンスメソッド
@@ -289,4 +292,4 @@ d.pos = saved
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*

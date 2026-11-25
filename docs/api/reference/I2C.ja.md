@@ -37,8 +37,14 @@ I2C の線を開く
 `unit:` は必須 (`:ESP32_I2C0` か `:ESP32_I2C1`。文字列でもよい)。`frequency:` (省略すると 100000 Hz)、
 `sda_pin:`・`scl_pin:` (省略すると -1)、`timeout:` (省略すると 500。以後の `read`・`write` の待ちの既定、ms)。
 
-**開けないときの IOError の文は "Invalid I2C unit" 1 種類**: 知らないユニット名だけでなく、
-**すでに別のアプリが持っている**、**画面を持つ機種で I2C1 に別のピンを渡した**、画面の準備前、も同じ文になる。画面を持つ機種 (Tab5・NARYA v4・AtomS3R) の I2C1 は本体の配線に固定で、`FmrbHw::PIN_I2C1_SDA`・`PIN_I2C1_SCL` 以外は断られる。
+**開けないときは IOError で、文が原因ごとに違う** (ユニット名は渡した名前):
+知らないユニット名は "Invalid I2C unit: 名前"、**すでに別のアプリが持っている**は
+"I2C unit 名前 is in use by another app"、**画面を持つ機種で I2C1 に別のピンを渡した**は
+"I2C unit 名前 is fixed to other pins on this board (not SDA n / SCL n)"、画面の準備前は
+"I2C unit 名前 is not ready yet"、そのピンで線を始められなかったは
+"I2C unit 名前 did not start on SDA n / SCL n"。画面を持つ機種 (Tab5・NARYA v4・AtomS3R) の
+I2C1 は本体の配線に固定で、`FmrbHw::PIN_I2C1_SDA`・`PIN_I2C1_SCL` 以外は断られる。
+`frequency:` は開くときには調べない。ピンの台帳 (`FmrbHw.pin_status`) も見ない。
 ```ruby
 i2c = I2C.new(unit: :ESP32_I2C1,
   sda_pin: FmrbHw::PIN_I2C1_SDA,
@@ -113,4 +119,4 @@ i2c.close
 
 ---
 
-*このページは fmruby-core の develop@9d470992 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*
