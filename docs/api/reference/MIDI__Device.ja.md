@@ -1,6 +1,6 @@
 # MIDI::Device
 
-音を出す口。音符や音色をここへ送る
+音を出すデバイス。音符や音色をここへ送る
 
 使い方は [MIDI](../midi.md) のページにあります。
 
@@ -10,11 +10,11 @@
 
 <pre class="fmrb-sig"><code>new(untyped transport) -&gt; MIDI::Device</code></pre>
 
-音を出す口を作る
+音を出すデバイスを作る
 
 transport は MIDI を送る相手で、`send_packet(cable, cin, b1, b2, b3)`・
 `read_available`・`bytes_available`・`connected?` を持つ (`info` には
-`device_info`、`trigger` には `transport_id` も使う)。内蔵音源と外の音源の口は `FmrbMidi.device` と `FmrbMidi.sam2695_device` が作る。自分の送り先で `trigger` を使うなら、`FmrbMidi.register` で登録し、
+`device_info`、`trigger` には `transport_id` も使う)。内蔵音源と外の音源のデバイスは `FmrbMidi.device` と `FmrbMidi.sam2695_device` が作る。自分の送り先で `trigger` を使うなら、`FmrbMidi.register` で登録し、
 `@pending = []` と `note_on(channel, note, velocity)`・
 `note_off(channel, note)` を用意して `FmrbMidi::NoteScheduler` を
 include する。
@@ -30,7 +30,7 @@ dev = MIDI::Device.new(MyTransport.new)
 
 送り先 (transport)
 
-内蔵音源の口なら `FmrbMidi::ApuTransport`。`all_off`・`auto_map`・
+内蔵音源のデバイスなら `FmrbMidi::ApuTransport`。`all_off`・`auto_map`・
 `map_channel` はここから呼ぶ。
 ```ruby
 @device.transport.all_off
@@ -133,7 +133,7 @@ dev.modulation(40)
 
 音の強さの変化
 
-`volume` とは別の口 (CC 11)。曲中の強弱はこちらで付ける。
+`volume` とは別の調節 (CC 11)。曲中の強弱はこちらで付ける。
 ```ruby
 dev.expression(100)
 ```
@@ -290,4 +290,4 @@ dev.info[:name]
 
 ---
 
-*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*

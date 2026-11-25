@@ -53,8 +53,8 @@ MML の文を読み込む
 
 **読めなければ false**、理由は `error`。行ごとの書式で、`#` で始まる行は注釈。`bpm 120`・`loop on`・`velocity 80`・`voice triangle`・`duty 1`・
 `volume 100`・`program 24` は設定で、それ以降のパートに効く。それ以外の行は MML のパートで、順に channel 0, 1, ... に載る。
-`voice` `duty` `volume` `program` は**読み込むときに口へ送られる**ので、
-`device=` で先に口を決めておく。
+`voice` `duty` `volume` `program` は**読み込むときにデバイスへ送られる**ので、
+`device=` で先にデバイスを決めておく。
 ```ruby
 @mml.device = @midi
 @mml.load_file("/home/a.mml")
@@ -265,7 +265,7 @@ true なら終わりまで来たら頭から続ける。
 
 <pre class="fmrb-sig"><code>device() -&gt; <a href="../MIDI__Device/">MIDI::Device</a></code></pre>
 
-鳴らす先の口
+鳴らす先のデバイス
 
 ```ruby
 dev = @mml.device
@@ -275,9 +275,9 @@ dev = @mml.device
 
 <pre class="fmrb-sig"><code>device=(<a href="../MIDI__Device/">MIDI::Device</a> value) -&gt; void</code></pre>
 
-鳴らす先の口を切り替える
+鳴らす先のデバイスを切り替える
 
-鳴らしている最中でも変えられる。古い口の音は止まり、待ち行列にあった分は捨てられる。
+鳴らしている最中でも変えられる。古いデバイスの音は止まり、待ち行列にあった分は捨てられる。
 ```ruby
 @mml.device = @serial
 ```
@@ -337,4 +337,4 @@ msg = @mml.error
 
 ---
 
-*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*

@@ -223,7 +223,7 @@ name = @smf.path
 
 <pre class="fmrb-sig"><code>device() -&gt; <a href="../MIDI__Device/">MIDI::Device</a></code></pre>
 
-鳴らす先の口
+鳴らす先のデバイス
 
 ```ruby
 dev = @smf.device
@@ -233,9 +233,9 @@ dev = @smf.device
 
 <pre class="fmrb-sig"><code>device=(<a href="../MIDI__Device/">MIDI::Device</a> value) -&gt; void</code></pre>
 
-鳴らす先の口を切り替える
+鳴らす先のデバイスを切り替える
 
-**鳴らしている最中でも変えられる**。古い口で鳴っていた音は止まり、待ち行列に入れてあった分 (最大 0.3 秒) は捨てられる。内蔵音源と外の音源 (`FmrbMidi.sam2695_device`) の切り替えに使う。
+**鳴らしている最中でも変えられる**。古いデバイスで鳴っていた音は止まり、待ち行列に入れてあった分 (最大 0.3 秒) は捨てられる。内蔵音源と外の音源 (`FmrbMidi.sam2695_device`) の切り替えに使う。
 ```ruby
 @smf.device = @serial
 ```
@@ -246,7 +246,7 @@ dev = @smf.device
 
 先に待ち行列へ入れる長さ (µs)
 
-内蔵音源やシリアルの口では既定で 300000 (`LOOKAHEAD_US`)。時間つきで受けられない口では 0。
+内蔵音源やシリアルのデバイスでは既定で 300000 (`LOOKAHEAD_US`)。時間つきで受けられないデバイスでは 0。
 ```ruby
 n = @smf.lookahead_us
 ```
@@ -257,7 +257,7 @@ n = @smf.lookahead_us
 
 先に待ち行列へ入れる長さを変える
 
-単位は µs。**0 にすると送るのをアプリのタスクに戻す** (描画などで遅れたぶんだけ音がずれる。比べるときに使う)。0 より大きくしても、口が時間つきで受けられない (スケジューラが無い) ときは 0 のまま。
+単位は µs。**0 にすると送るのをアプリのタスクに戻す** (描画などで遅れたぶんだけ音がずれる。比べるときに使う)。0 より大きくしても、デバイスが時間つきで受けられない (スケジューラが無い) ときは 0 のまま。
 **変えると待ち行列を捨てる**ので、鳴らす前に変える。
 ```ruby
 @smf.lookahead_us = 0
@@ -431,4 +431,4 @@ Log.info(@smf.timing_stats)
 
 ---
 
-*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*

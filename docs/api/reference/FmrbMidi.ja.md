@@ -1,12 +1,12 @@
 # FmrbMidi
 
-MIDI の入り口。音を出す口・曲・MML
+MIDI の入り口。音を出すデバイス・曲・MML
 
 使い方は [MIDI](../midi.md) のページにあります。
 
-`FmrbMidi.device(self)` で内蔵音源 (APU) につながった口 (MIDI::Device) をもらい、
+`FmrbMidi.device(self)` で内蔵音源 (APU) につながったデバイス (MIDI::Device) をもらい、
 `note_on` などで音符を送る。標準 MIDI ファイルは `FmrbMidi::SmfPlayer`、MML は
-`FmrbMidi::MmlPlayer` が鳴らす。外の音源へは `sam2695_device`・`serial_device` が口を作り、`register` で出し先を足す。曲の時間は `now_us` で測る。
+`FmrbMidi::MmlPlayer` が鳴らす。外の音源へは `sam2695_device`・`serial_device` がデバイスを作り、`register` で出し先を足す。曲の時間は `now_us` で測る。
 
 ## 定数
 
@@ -20,9 +20,9 @@ MIDI の入り口。音を出す口・曲・MML
 
 <pre class="fmrb-sig"><code>device(<a href="../FmrbApp/">FmrbApp</a> app) -&gt; <a href="../MIDI__Device/">MIDI::Device</a></code></pre>
 
-このアプリ用の音を出す口を作る
+このアプリ用の音を出すデバイスを作る
 
-**内蔵音源 (APU) につながった口**が返る。外の音源に出すなら出し先を `register` する。
+**内蔵音源 (APU) につながったデバイス**が返る。外の音源に出すなら出し先を `register` する。
 ```ruby
 @midi = FmrbMidi.device(self)
 @midi.note_on(60)
@@ -93,12 +93,12 @@ FmrbMidi.gm_name(0)
   ?baud: <a href="../Integer/">Integer</a>
 ) -&gt; <a href="../MIDI__Device/">MIDI::Device</a>?</code></pre>
 
-外の音源 (SAM2695) の口を作る
+外の音源 (SAM2695) のデバイスを作る
 
 M5Stack Unit MIDI など。シリアルで MIDI を送る (31250 baud)。
 **つながらなければ nil** (sim では受け皿の FIFO が無いとき、実機では端末に MIDI の出口が無いときやピンが使われているとき)。
 nil のまま使うと NoMethodError なので、必ず確かめる。つなぐたびに音源へ GM System On を送り全 channel を止めるので、
-**一度だけ作って持っておく**。内蔵音源の口 (`FmrbMidi.device`) とは別物で、`SmfPlayer#device=` で切り替える。
+**一度だけ作って持っておく**。内蔵音源のデバイス (`FmrbMidi.device`) とは別物で、`SmfPlayer#device=` で切り替える。
 `path:` (sim だけ)・`uart:`・`tx:` (実機だけ)・`rx:` (省略すると -1 =
 送るだけ)・`baud:` (省略すると 31250)。省略した分は端末の既定。
 ```ruby
@@ -116,7 +116,7 @@ nil のまま使うと NoMethodError なので、必ず確かめる。つなぐ�
   ?baud: <a href="../Integer/">Integer</a>
 ) -&gt; <a href="../MIDI__Device/">MIDI::Device</a>?</code></pre>
 
-シリアルの MIDI の口を作る
+シリアルの MIDI のデバイスを作る
 
 `sam2695_device` と同じで、音源のリセットを送らない版。**つながらなければ nil**。引数も同じ (`path:` `uart:` `tx:` `rx:` `baud:`、省略すると端末の既定)。
 ```ruby
@@ -141,7 +141,7 @@ puts FmrbMidi.scheduler ? "yes" : "no"
 
 予定した音の止め時を見る
 
-`MIDI::Device#trigger` の音を止めるのはこれ。毎回の `on_update` で 1 回呼ぶ。呼ばないと、trigger の音は次の MIDI メッセージまで鳴りっぱなし。内蔵音源 (`FmrbMidi.device`) もシリアルも、作った口は全部ここで見る。
+`MIDI::Device#trigger` の音を止めるのはこれ。毎回の `on_update` で 1 回呼ぶ。呼ばないと、trigger の音は次の MIDI メッセージまで鳴りっぱなし。内蔵音源 (`FmrbMidi.device`) もシリアルも、作ったデバイスは全部ここで見る。
 ```ruby
 def on_update
   FmrbMidi.tick
@@ -167,4 +167,4 @@ end
 
 ---
 
-*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*

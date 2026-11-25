@@ -427,7 +427,7 @@ end
 
 USB の生の入力を受け取る
 
-その口の生のレポートが `on_control` に届くようになる。HID Inspector が使っている。
+その機器の生のレポートが `on_control` に届くようになる。HID Inspector が使っている。
 ```ruby
 FmrbApp.hid_raw_subscribe(slot)
 ```
@@ -1738,4 +1738,4 @@ idle_gc   #=> false (まだ頼んでいない)
 
 ---
 
-*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*

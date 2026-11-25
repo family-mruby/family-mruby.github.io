@@ -10,4 +10,4 @@ The text does not start with a value, a string is not closed, a `\u` is cut shor
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*

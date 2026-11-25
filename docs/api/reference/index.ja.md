@@ -55,11 +55,11 @@
 | <span class="fmrb-name">[`FmrbAudio`](FmrbAudio.md)</span> | 音を鳴らす。 | 21 |
 | <span class="fmrb-name">[`FmrbMic`](FmrbMic.md)</span> | マイクの C 側の窓口 | 1 |
 | <span class="fmrb-name">[`FmrbMidi`](FmrbMidi.md)</span> | MIDI の入り口。 | 11 |
-| <span class="fmrb-name">[`FmrbMidi::ApuTransport`](FmrbMidi__ApuTransport.md)</span> | 内蔵音源 (APU) へ MIDI を送る口 | 8 |
+| <span class="fmrb-name">[`FmrbMidi::ApuTransport`](FmrbMidi__ApuTransport.md)</span> | 内蔵音源 (APU) へ MIDI を送るトランスポート | 8 |
 | <span class="fmrb-name">[`FmrbMidi::MmlPlayer`](FmrbMidi__MmlPlayer.md)</span> | MML で書いた曲を鳴らす係 | 29 |
 | <span class="fmrb-name">[`FmrbMidi::SmfPlayer`](FmrbMidi__SmfPlayer.md)</span> | 曲のファイル (SMF) を鳴らす係 | 37 |
 | <span class="fmrb-name">[`MIDI`](MIDI.md)</span> | MIDI の名前空間。 | 0 |
-| <span class="fmrb-name">[`MIDI::Device`](MIDI__Device.md)</span> | 音を出す口。 | 24 |
+| <span class="fmrb-name">[`MIDI::Device`](MIDI__Device.md)</span> | 音を出すデバイス。 | 24 |
 | <span class="fmrb-name">[`NsfHeader`](NsfHeader.md)</span> | NSF (ファミコンの曲) のファイルの題名などを読む | 6 |
 
 ## ファイルと時刻
@@ -185,4 +185,4 @@
 
 ---
 
-*このページは fmruby-core の develop@9274e3b8 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@521eb2e7 の API の型定義 (`sig/`) から自動で作っています。*

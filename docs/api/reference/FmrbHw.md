@@ -79,4 +79,4 @@ FmrbHw.pin_count   #=> 55 or 49
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@9274e3b8.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@521eb2e7.*
