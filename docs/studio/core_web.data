@@ -38957,7 +38957,7 @@ n = sub.errors
 
 handler() -> Proc?
 
-The block of node.subscribe (nil for node.subscription)
+The block Node#poll hands messages to (or nil)
 
 ```ruby
 b = sub.handler
@@ -38969,9 +38969,10 @@ handler=(Proc? blk) -> Proc?
 
 Set the block that gets the messages
 
-Changes where Node#poll hands the messages.
-**Only a subscription made by node.subscribe** is served by Node#poll (take from one made by
-node.subscription with each_pending).
+Node#poll hands each message and its Attachment to this block from then
+on, also for a subscription made with node.subscription. nil stops it,
+and the messages wait for each_pending again. The block runs on the
+update loop: do not wait in it (no service call).
 ```ruby
 sub.handler = proc { |m, i| got(m) }
 ```
@@ -39081,7 +39082,7 @@ n = sub.errors
 
 handler() -> Proc?
 
-node.subscribe のブロック
+Node#poll が渡す先のブロック (無ければ nil)
 
 ```ruby
 b = sub.handler
@@ -39093,8 +39094,10 @@ handler=(Proc? blk) -> Proc?
 
 ブロックを付け替える
 
-Node#poll が渡す先を変える。**node.subscribe で作ったものだけ**
-Node#poll が渡す (node.subscription の物は each_pending で取る)。
+Node#poll が、届いたメッセージとその Attachment をこのブロックに渡すように
+なる。node.subscription で作ったものに後から付けてもよい。nil を入れると
+止まり、メッセージは each_pending で取る形に戻る。ブロックは update の
+流れの中で呼ばれるので、中で待たない (サービスの呼び出しをしない)。
 ```ruby
 sub.handler = proc { |m, i| got(m) }
 ```
@@ -40766,12 +40769,15 @@ chdir(String path) -> Integer
 
 Change the working directory
 
-Returns 0. With a block it changes only for the block, restores, and returns the
-block's value. RuntimeError when it is missing.
-**It does not change what relative paths in file operations are based on**
-(see `Dir.getwd`); apps use absolute paths.
+Returns 0. Only this app's place changes (see `Dir.getwd`). A relative path is taken
+from the current place; "." and ".." are folded and it never goes above "/". Missing,
+not a directory or too long (127 bytes at most) raises RuntimeError and leaves the
+place as it was. With a block it changes only for the block, restores (also on an
+exception), and returns the block's value. It is gone when the app ends.
 ```ruby
-Dir.chdir("/home")
+Dir.chdir("/tmp")
+File.open("a.txt", "w") { |f| f.write("x") }   # /tmp/a.txt
+Dir.chdir("/home") { Dir.getwd }               #=> "/home"
 ```
 
 # Dir.children
@@ -40903,11 +40909,12 @@ getwd() -> String
 
 The working directory
 
-`pwd` is the same method.
-**Relative paths given to File.open, Dir.open and the like are resolved from the root**
-**(an ESP32's flash root), not from this, so write paths from "/".**
+`pwd` is the same method. **Each app has its own**, "/" when it starts. `Dir.chdir`
+changes it, and relative paths in file operations (File.open, Dir.open, ...) and in
+`File.expand_path` are taken from it. It is apart from other apps' and from the
+shell's `cd` (an app started from the shell starts at "/" too).
 ```ruby
-Dir.getwd
+Dir.getwd   #=> "/"
 ```
 
 # Dir.mkdir
@@ -41067,11 +41074,14 @@ chdir(String path) -> Integer
 
 作業ディレクトリを変える
 
-成功すると 0。ブロックを渡すと、その間だけ変えて元に戻し、ブロックの値を返す。無いと
-RuntimeError。**変えても、ファイル操作の相対パスの基準は変わらない** (`Dir.getwd` 参照)。
-アプリは絶対パスを使う。
+成功すると 0。変わるのはこのアプリの場所だけ (`Dir.getwd` 参照)。相対パスは今の場所から、
+"." と ".." をまとめ、"/" より上には出ない。無い・フォルダでない・長すぎる (127 バイトまで)
+と RuntimeError で、場所は変わらない。ブロックを渡すと、その間だけ変えて元に戻し
+(例外でも戻る)、ブロックの値を返す。アプリが終わると消える。
 ```ruby
-Dir.chdir("/home")
+Dir.chdir("/tmp")
+File.open("a.txt", "w") { |f| f.write("x") }   # /tmp/a.txt
+Dir.chdir("/home") { Dir.getwd }               #=> "/home"
 ```
 
 # Dir.children
@@ -41196,10 +41206,11 @@ getwd() -> String
 
 作業ディレクトリ
 
-`pwd` は同じ働きの別名。
-**ファイルの操作 (File.open・Dir.open ...) の相対パスはこれでなく、ルート (ESP32 は flash のルート) から解くので、パスは "/" から書く**。
+`pwd` は同じ働きの別名。**アプリごと**の場所で、起動したときは "/"。`Dir.chdir` で変わり、
+ファイルの操作 (File.open・Dir.open ...) と `File.expand_path` の相対パスはここから解く。
+ほかのアプリの場所とは別で、シェルの `cd` とも別 (シェルから起動したアプリも "/" から)。
 ```ruby
-Dir.getwd
+Dir.getwd   #=> "/"
 ```
 
 # Dir.mkdir
@@ -41675,8 +41686,7 @@ Make a path absolute
 
 Resolves "." and ".." and merges repeated "/".
 **A relative path is based on `default_dir` (".")**
-**put on the environment variable `PWD` ("/" when it is not set)**,
-not on `Dir.getwd`. A leading "~" becomes `HOME` (ArgumentError when HOME is not
+**put on the app's working directory (`Dir.getwd`)**. A leading "~" becomes `HOME` (ArgumentError when HOME is not
 set); the "~name" form is an ArgumentError. It does not check the file exists.
 ```ruby
 File.expand_path("/home/../tmp/a")   #=> "/tmp/a"
@@ -41726,7 +41736,8 @@ mode: `"r"` (default; read), `"w"` (truncate and write; created when missing), `
 `"w+"` (truncate, read and write) and `"a+"` (read, and every write goes to the
 end; created when missing). A `b` may be added (`"rb+"` is `"r+"`).
 **A mode starting with any other letter opens read-only**
-(no error). `perm` is accepted and ignored.
+(no error). `read` on a `"w"` or `"a"` file, and `write`, `puts` or `print`
+on an `"r"` file, raise IOError. `perm` is accepted and ignored.
 
 **RuntimeError ("failed to open file: path") when it cannot open**; the reason
 (missing, no room, too many open) is not told apart. Only 10 files can be open on
@@ -41929,7 +41940,7 @@ expand_path(String path, ?String default_dir) -> String
 絶対パスにする
 
 "." と ".." をたどり、重なった "/" をまとめる。
-**相対パスの基準は `default_dir` (省略すると ".") を環境変数 `PWD` (無ければ "/") に付けたもの**で、`Dir.getwd` ではない。
+**相対パスの基準は `default_dir` (省略すると ".") をアプリの作業ディレクトリ (`Dir.getwd`) に付けたもの**。
 "~" で始まるパスは環境変数 `HOME` に置き換わり、HOME が無いと ArgumentError。
 "~名前" の形は ArgumentError。ファイルがあるかは見ない。
 ```ruby
@@ -41979,7 +41990,8 @@ mode は `"r"` (省略時・読む)・`"w"` (空にして書く。無ければ�
 と、`"r+"` (読み書き。無いと失敗)・`"w+"` (空にして読み書き)・`"a+"` (読めて、書くと
 必ず末尾に足す。無ければ作る)。`b` は付けてもよく (`"rb+"` は `"r+"` と同じ)、
 **ほかの文字で始まる mode は読み取り専用として開く** (エラーにならない)。
-`perm` は受け取るだけで使わない。
+`"w"`・`"a"` で開いたものの `read` と、`"r"` で開いたものの `write`・`puts`・`print` は
+IOError。`perm` は受け取るだけで使わない。
 
 **開けないと RuntimeError ("failed to open file: パス")**。理由 (無い・場所が無い・
 開いている数が上限) は区別できない。開いたままにできるのは、ESP32 では全アプリで 10 個。
@@ -52117,7 +52129,8 @@ m.width
 # FmrbHw
 
 Which pins are system-only, and which an app's `GPIO`,
-`I2C` or RMT holds. **Only a real board marks the table.** The Linux sim, the native build
+`I2C` or RMT holds. Check with `FmrbHw.pin_available?` which pins an app may use on this board.
+**Only a real board marks the table.** The Linux sim, the native build
 and the browser build have no pins, so every entry stays `PIN_UNUSED` (49 pins).
 ```ruby
 if FmrbHw.pin_available?(5)
@@ -52132,7 +52145,7 @@ pin_available?(Integer pin) -> bool
 Whether an app can take the pin
 
 true only for a `PIN_UNUSED` pin. **A number out of range is false**, and so is a
-system-only pin or one somebody already holds.
+system-only pin (one `GPIO` refuses) or one somebody already holds.
 ```ruby
 FmrbHw.pin_available?(5)   #=> true or false
 ```
@@ -52154,7 +52167,8 @@ pin_status(Integer pin) -> Integer
 
 How a pin is used (a PIN_* value)
 
-A pin number out of range does not raise: it is `PIN_UNUSED` (0).
+A pin the system uses is `PIN_SYSTEM_EXCLUSIVE` even when the table does not hold it (the
+same pins `GPIO` refuses). A pin number out of range does not raise: it is `PIN_UNUSED` (0).
 ```ruby
 FmrbHw.pin_status(25) == FmrbHw::PIN_SYSTEM_EXCLUSIVE
 ```
@@ -52165,13 +52179,15 @@ pin_status_all() -> Array[Integer]
 
 How every pin is used
 
-The index is the pin number and the value is a `PIN_*`. The length is `pin_count`.
+The index is the pin number and the value is a `PIN_*` (as `pin_status` gives it). The
+length is `pin_count`.
 ```ruby
 FmrbHw.pin_status_all[5]
 ```
 # FmrbHw
 
 どのピンが「システム専用」で、どれをアプリの `GPIO`・`I2C`・RMT が使っているかを調べる。
+機種ごとにアプリが使えるピンは `FmrbHw.pin_available?` で確かめる。
 **台帳に実際の印が付くのは実機だけ**。Linux sim・ネイティブ版・ブラウザ版はピンを持たず、
 台帳は全部 `PIN_UNUSED` のまま (ピンの数は 49)。
 ```ruby
@@ -52186,8 +52202,8 @@ pin_available?(Integer pin) -> bool
 
 そのピンをアプリが取れるか
 
-`PIN_UNUSED` のピンだけ true。**範囲外の番号は false**。システム専用のピンと、すでに
-誰かが取っているピンは false。
+`PIN_UNUSED` のピンだけ true。**範囲外の番号は false**。システム専用のピン (`GPIO` が断る
+ピン) と、すでに誰かが取っているピンは false。
 ```ruby
 FmrbHw.pin_available?(5)   #=> true か false
 ```
@@ -52210,6 +52226,7 @@ pin_status(Integer pin) -> Integer
 
 ピンの使われ方 (PIN_* の値)
 
+システムが使うピンは、台帳に取られていなくても `PIN_SYSTEM_EXCLUSIVE` (`GPIO` が断るピンと同じ)。
 範囲外のピン番号は例外にならず `PIN_UNUSED` (0)。
 ```ruby
 FmrbHw.pin_status(25) == FmrbHw::PIN_SYSTEM_EXCLUSIVE
@@ -52221,7 +52238,7 @@ pin_status_all() -> Array[Integer]
 
 全ピンの使われ方
 
-添字がピン番号、値が `PIN_*`。長さは `pin_count`。
+添字がピン番号、値が `PIN_*` (`pin_status` と同じ値)。長さは `pin_count`。
 ```ruby
 FmrbHw.pin_status_all[5]
 ```
@@ -53226,6 +53243,8 @@ playing?() -> bool
 
 Whether it is playing
 
+Turns false once the song is read to the end and **what this player queued** has all played.
+Another player (of this app or another) still playing does not keep it true.
 ```ruby
 draw_bar if @mml.playing?
 ```
@@ -53564,6 +53583,8 @@ playing?() -> bool
 
 鳴っている最中かどうか
 
+曲を最後まで読み、**このプレーヤーが予約した音**が全部鳴ったら false になる。ほかのプレーヤー
+(同じアプリでも別のアプリでも) が鳴らしている間も、自分の分が終われば false。
 ```ruby
 draw_bar if @mml.playing?
 ```
@@ -53978,6 +53999,8 @@ playing?() -> bool
 
 Whether it is playing
 
+Turns false once the song is read to the end and **what this player queued** has all played.
+Another player (of this app or another) still playing does not keep it true.
 ```ruby
 draw_bar if @smf.playing?
 ```
@@ -54421,6 +54444,8 @@ playing?() -> bool
 
 鳴っている最中かどうか
 
+曲を最後まで読み、**このプレーヤーが予約した音**が全部鳴ったら false になる。ほかのプレーヤー
+(同じアプリでも別のアプリでも) が鳴らしている間も、自分の分が終われば false。
 ```ruby
 draw_bar if @smf.playing?
 ```
@@ -59944,7 +59969,7 @@ GC.step_ratio = 200
 
 `GPIO.new(pin, flags)` makes it, then `read` and `write`.
 Join flags with `|`, as in `GPIO::IN | GPIO::PULL_UP`. **A pin is an integer only.** Check
-with `FmrbHw.pin_available?` which pins you may use.
+with `FmrbHw.pin_available?` which pins you may use (a system pin or one in use raises IOError).
 ```ruby
 led = GPIO.new(5, GPIO::OUT)
 led.write(1)
@@ -59956,7 +59981,7 @@ high_at?(Integer pin) -> bool
 
 Whether a pin is high, by number
 
-True when the value read is not 0.
+True when the value read is not 0. Any pin can be read, as with `read_at`; IOError when it cannot be.
 ```ruby
 GPIO.high_at?(7)
 ```
@@ -59967,7 +59992,7 @@ high?() -> bool
 
 Whether the level is high
 
-true when the value read is not 0 (also when the read failed and gave -1).
+true when the value read is not 0. IOError when the level cannot be read.
 ```ruby
 pressed = !sw.high?
 ```
@@ -59978,7 +60003,7 @@ low_at?(Integer pin) -> bool
 
 Whether a pin is low, by number
 
-True when the value read is 0.
+True when the value read is 0. Any pin can be read, as with `read_at`; IOError when it cannot be.
 ```ruby
 GPIO.low_at?(7)
 ```
@@ -59989,7 +60014,7 @@ low?() -> bool
 
 Whether the level is low
 
-true when the value read is 0.
+true when the value read is 0. IOError when the level cannot be read.
 ```ruby
 pressed = sw.low?
 ```
@@ -60003,12 +60028,18 @@ Open a pin
 Pass in `flags` **one** of `IN`, `OUT` and `HIGH_Z`, plus `PULL_UP` or `PULL_DOWN` if
 needed, joined with `|`. `alt_function` (0 when left out) is for ALT and has no effect here.
 
-**A pin that is already in use does not raise.** The pin is claimed in the table, but a
-refusal is not looked at and setup and I/O go on. **To keep off system-only pins**, check
-`FmrbHw.pin_available?` first.
+The pin is claimed in the pin table.
+**When it cannot be, IOError is raised and the pin's setup (direction, pull) is left alone**:
+a system pin (one `FmrbHw.pin_status` gives as `PIN_SYSTEM_EXCLUSIVE`) is "GPIO n is used by
+the system", a pin another app (or another use such as I2C) holds is "GPIO n is in use by
+another app or driver".
+**The board's buttons** are not claimed and open with `IN` (pulls too) only; `OUT` and the like
+raise "GPIO n is a system button: input only". A claimed pin goes back to the table when the
+app ends.
 
 A String or Symbol pin is an ArgumentError ("Wrong GPIO pin name"), and so is a negative
-number. No direction, or two or more, is an ArgumentError ("You must specify one of IN, OUT,
+number; a number this board does not have is an ArgumentError ("GPIO n does not exist on
+this board"). No direction, or two or more, is an ArgumentError ("You must specify one of IN, OUT,
 HIGH_Z, and ALT", "IN, OUT and HIGH_Z are exclusive"), and so are both `PULL_UP` and `PULL_DOWN`.
 ```ruby
 sw = GPIO.new(7, GPIO::IN | GPIO::PULL_UP)
@@ -60020,7 +60051,7 @@ open_drain_at(Integer pin) -> Integer
 
 Open drain by number (does nothing)
 
-This machine's link does nothing. Returns 0.
+This machine's link does nothing. Returns 0. Checked against the pin table as an output (IOError when refused).
 ```ruby
 GPIO.open_drain_at(7)
 ```
@@ -60041,7 +60072,7 @@ pull_down_at(Integer pin) -> Integer
 
 Pull a pin down by number
 
-Like `set_dir_at`, it does not claim the pin. Returns 0.
+Checked against the pin table like `set_dir_at` (a board button takes it too). Returns 0.
 ```ruby
 GPIO.pull_down_at(7)
 ```
@@ -60052,7 +60083,7 @@ pull_up_at(Integer pin) -> Integer
 
 Pull a pin up by number
 
-Like `set_dir_at`, it does not claim the pin. Returns 0.
+Checked against the pin table like `set_dir_at` (a board button takes it too). Returns 0.
 ```ruby
 GPIO.pull_up_at(7)
 ```
@@ -60063,7 +60094,7 @@ read() -> Integer
 
 Read the level (0 or 1)
 
-**-1** on failure (no exception). -1 is not 0, so `high?` is true then.
+IOError ("GPIO n could not be read") when the level cannot be read.
 ```ruby
 sw.read   #=> 0 or 1
 ```
@@ -60074,7 +60105,9 @@ read_at(Integer pin) -> Integer
 
 Read by pin number
 
-Same as `GPIO#read` (0 or 1, -1 on failure). A String, a Symbol or a negative number is an ArgumentError.
+0 or 1. **Reading changes nothing, so any pin can be read**, a system pin or one in use too
+(it is not claimed). IOError when it cannot be read. A String, a Symbol, a negative number or
+a number this board does not have is an ArgumentError.
 ```ruby
 GPIO.read_at(7)
 ```
@@ -60083,10 +60116,11 @@ GPIO.read_at(7)
 
 set_dir_at(Integer pin, Integer dir) -> Integer
 
-Set direction by pin number (no claim)
+Set direction by pin number
 
-**It skips `GPIO.new`, so the pin is not claimed** and nothing else is remembered. `dir`
-is `IN` or `OUT`. Returns 0. Normally use `GPIO.new`.
+Checked against the pin table as `GPIO.new` is: a free pin becomes this app's, a system pin
+or one in use raises IOError (nothing is changed). A board button takes `IN` only. Nothing
+else is remembered. `dir` is `IN` or `OUT`. Returns 0. Normally use `GPIO.new`.
 ```ruby
 GPIO.set_dir_at(5, GPIO::OUT)
 ```
@@ -60097,7 +60131,7 @@ set_function_at(Integer pin, Integer function) -> Integer
 
 Alternate function by number (does nothing)
 
-This machine's link does nothing. Returns 0.
+This machine's link does nothing. Returns 0. Checked against the pin table as an output (IOError when refused).
 ```ruby
 GPIO.set_function_at(7, 1)
 ```
@@ -60109,7 +60143,7 @@ setmode(Integer flags, ?Integer alt_function) -> Integer
 Set direction and pull again
 
 Takes the same combinations as `new`. **Without a direction flag the direction stays as**
-**it is**, and so does the pull. Returns 0.
+**it is**, and so does the pull. Returns 0. Making a board button an output raises IOError.
 ```ruby
 sw.setmode(GPIO::IN | GPIO::PULL_DOWN)
 ```
@@ -60121,7 +60155,7 @@ write(Integer value) -> Integer
 Write the level (0 or 1)
 
 Anything but 0 and 1 is an ArgumentError ("Wrong value. 0 and 1 are only valid"). Returns 0.
-Use it on a pin set as an output.
+Use it on a pin set as an output. On a board button it raises IOError ("... input only").
 ```ruby
 led.write(1)
 ```
@@ -60132,14 +60166,16 @@ write_at(Integer pin, Integer value) -> Integer
 
 Write by pin number
 
-Same as `GPIO#write` (0 or 1 only; returns 0).
+Same as `GPIO#write` (0 or 1 only; returns 0). Checked against the pin table like
+`set_dir_at`: a free pin becomes this app's; a system pin (a button too) or one in use raises IOError.
 ```ruby
 GPIO.write_at(5, 1)
 ```
 # GPIO
 
 `GPIO.new(ピン, フラグ)` で作り、`read` と `write` を使う。フラグは `GPIO::IN | GPIO::PULL_UP`
-のように `|` でつなぐ。**ピンは整数だけ**。使ってよいピンは `FmrbHw.pin_available?` で調べる。
+のように `|` でつなぐ。**ピンは整数だけ**。使ってよいピンは `FmrbHw.pin_available?` で調べる
+(システムのピン・使用中のピンは IOError になる)。
 ```ruby
 led = GPIO.new(5, GPIO::OUT)
 led.write(1)
@@ -60151,7 +60187,7 @@ high_at?(Integer pin) -> bool
 
 ピン番号で高いか
 
-読んだ値が 0 でなければ true。
+読んだ値が 0 でなければ true。`read_at` と同じく、どのピンも読める。読めなければ IOError。
 ```ruby
 GPIO.high_at?(7)
 ```
@@ -60162,7 +60198,7 @@ high?() -> bool
 
 高いか
 
-読んだ値が 0 でなければ true (読めずに -1 のときも true)。
+読んだ値が 0 でなければ true。読めなかったときは IOError。
 ```ruby
 pressed = !sw.high?
 ```
@@ -60173,7 +60209,7 @@ low_at?(Integer pin) -> bool
 
 ピン番号で低いか
 
-読んだ値が 0 なら true。
+読んだ値が 0 なら true。`read_at` と同じく、どのピンも読める。読めなければ IOError。
 ```ruby
 GPIO.low_at?(7)
 ```
@@ -60184,7 +60220,7 @@ low?() -> bool
 
 低いか
 
-読んだ値が 0 なら true。
+読んだ値が 0 なら true。読めなかったときは IOError。
 ```ruby
 pressed = sw.low?
 ```
@@ -60198,11 +60234,15 @@ new(Integer pin, Integer flags, ?Integer alt_function) -> GPIO
 `flags` に `IN`・`OUT`・`HIGH_Z` のどれか **1 つ**と、必要なら `PULL_UP` か `PULL_DOWN` を `|` で渡す。
 `alt_function` (省略すると 0) は ALT 用で、この端末では効かない。
 
-**ピンが使用中でも例外にならない**: 作るときに台帳へ取る (acquire) が、断られても結果は
-見られず、そのまま設定と読み書きに進む。**システム専用のピンを触らない**ように、先に
-`FmrbHw.pin_available?` で確かめる。
+作るときにピンの台帳へ取る。**取れないときは IOError で、ピンの設定 (向き・プル) は変えない**:
+システムのピン (`FmrbHw.pin_status` が `PIN_SYSTEM_EXCLUSIVE` のピン) は "GPIO n is used by the
+system"、ほかのアプリ (または I2C などの別の使い方) が
+持っているピンは "GPIO n is in use by another app or driver"。**本体のボタン**は台帳には取らず、
+`IN` (プルつきも) でだけ開ける。`OUT` などで開くと "GPIO n is a system button: input only"。
+取ったピンはアプリが終わると台帳へ返る。
 
-文字列・Symbol のピンは ArgumentError ("Wrong GPIO pin name")、負の数も同じ。方向が無い・
+文字列・Symbol のピンは ArgumentError ("Wrong GPIO pin name")、負の数も同じ。端末に無い番号は
+ArgumentError ("GPIO n does not exist on this board")。方向が無い・
 2 つ以上は ArgumentError ("You must specify one of IN, OUT, HIGH_Z, and ALT"・
 "IN, OUT and HIGH_Z are exclusive")、`PULL_UP` と `PULL_DOWN` の両方も ArgumentError。
 ```ruby
@@ -60215,7 +60255,7 @@ open_drain_at(Integer pin) -> Integer
 
 ピン番号でオープンドレインにする (何もしない)
 
-この端末のつなぎは何もせず、戻り値は 0。
+この端末のつなぎは何もせず、戻り値は 0。出力と同じく台帳に照らす (断られると IOError)。
 ```ruby
 GPIO.open_drain_at(7)
 ```
@@ -60236,7 +60276,7 @@ pull_down_at(Integer pin) -> Integer
 
 ピン番号でプルダウンにする
 
-`set_dir_at` と同じく台帳に取らない。戻り値は 0。
+`set_dir_at` と同じく台帳に照らす (本体のボタンにもかけられる)。戻り値は 0。
 ```ruby
 GPIO.pull_down_at(7)
 ```
@@ -60247,7 +60287,7 @@ pull_up_at(Integer pin) -> Integer
 
 ピン番号でプルアップにする
 
-`set_dir_at` と同じく台帳に取らない。戻り値は 0。
+`set_dir_at` と同じく台帳に照らす (本体のボタンにもかけられる)。戻り値は 0。
 ```ruby
 GPIO.pull_up_at(7)
 ```
@@ -60258,7 +60298,7 @@ read() -> Integer
 
 読む (0 か 1)
 
-失敗すると **-1** (例外にならない)。-1 は 0 でないので、`high?` は true になる。
+読めなかったときは IOError ("GPIO n could not be read")。
 ```ruby
 sw.read   #=> 0 か 1
 ```
@@ -60269,7 +60309,8 @@ read_at(Integer pin) -> Integer
 
 ピン番号で読む
 
-`GPIO#read` と同じ (0・1、失敗は -1)。文字列・Symbol や負の数は ArgumentError。
+0 か 1。**読むだけなので、システムのピンも使用中のピンも読める** (台帳に取らず、設定も変えない)。
+読めなかったときは IOError。文字列・Symbol・負の数・端末に無い番号は ArgumentError。
 ```ruby
 GPIO.read_at(7)
 ```
@@ -60278,10 +60319,11 @@ GPIO.read_at(7)
 
 set_dir_at(Integer pin, Integer dir) -> Integer
 
-ピン番号で向きを設定する (台帳に取らない)
+ピン番号で向きを設定する
 
-**`GPIO.new` を通さないので台帳に取らず**、ほかの設定も覚えない。`dir` は `IN`・`OUT`。
-戻り値は 0。普通は `GPIO.new` を使う。
+`GPIO.new` と同じく台帳に照らす: 空いているピンはこのアプリの物になり、システムのピン・
+使用中のピンは IOError (設定は変えない)。本体のボタンは `IN` だけ。ほかの設定は覚えない。
+`dir` は `IN`・`OUT`。戻り値は 0。普通は `GPIO.new` を使う。
 ```ruby
 GPIO.set_dir_at(5, GPIO::OUT)
 ```
@@ -60292,7 +60334,7 @@ set_function_at(Integer pin, Integer function) -> Integer
 
 ピン番号で代替機能にする (何もしない)
 
-この端末のつなぎは何もせず、戻り値は 0。
+この端末のつなぎは何もせず、戻り値は 0。出力と同じく台帳に照らす (断られると IOError)。
 ```ruby
 GPIO.set_function_at(7, 1)
 ```
@@ -60304,7 +60346,7 @@ setmode(Integer flags, ?Integer alt_function) -> Integer
 向きとプルを設定し直す
 
 `new` と同じ組み合わせを渡せる。**向きのフラグを渡さなければ向きは今のまま**、プルも同じ。
-戻り値は 0。
+戻り値は 0。本体のボタンを出力にしようとすると IOError。
 ```ruby
 sw.setmode(GPIO::IN | GPIO::PULL_DOWN)
 ```
@@ -60316,7 +60358,7 @@ write(Integer value) -> Integer
 書く (0 か 1)
 
 0 と 1 以外は ArgumentError ("Wrong value. 0 and 1 are only valid")。戻り値は 0。
-出力に設定したピンに使う。
+出力に設定したピンに使う。本体のボタンでは IOError ("... input only")。
 ```ruby
 led.write(1)
 ```
@@ -60327,7 +60369,8 @@ write_at(Integer pin, Integer value) -> Integer
 
 ピン番号で書く
 
-`GPIO#write` と同じ (0・1 だけ、戻り値は 0)。
+`GPIO#write` と同じ (0・1 だけ、戻り値は 0)。`set_dir_at` と同じく台帳に照らす: 空いている
+ピンはこのアプリの物になり、システムのピン (ボタンも)・使用中のピンは IOError。
 ```ruby
 GPIO.write_at(5, 1)
 ```
@@ -60952,11 +60995,15 @@ Open an I2C bus
 (100000 Hz when left out), `sda_pin:` and `scl_pin:` (-1 when left out), `timeout:` (500
 when left out; the default wait of later `read` and `write`, in ms).
 
-**A bus that cannot be opened raises IOError with one message, "Invalid I2C unit"**: not
-only an unknown unit name, but also **a bus another app already holds**, **a different pin**
-**for I2C1 on a board with a screen**, and a screen not ready yet. On those boards
-(Tab5, NARYA v4, AtomS3R) I2C1 is fixed to the board's wiring, and anything but
-`FmrbHw::PIN_I2C1_SDA` and `PIN_I2C1_SCL` is refused.
+**A bus that cannot be opened raises IOError, with a message for each cause** (the unit is
+the name you passed): an unknown unit is "Invalid I2C unit: name",
+**a bus another app already holds** is "I2C unit name is in use by another app",
+**a different pin for I2C1 on a board with a screen** is "I2C unit name is fixed to other
+pins on this board (not SDA n / SCL n)", a screen not ready yet is "I2C unit name is not ready yet", and a bus that would
+not start on those pins is "I2C unit name did not start on SDA n / SCL n". On the boards with
+a screen (Tab5, NARYA v4, AtomS3R) I2C1 is fixed to the board's wiring, and anything but
+`FmrbHw::PIN_I2C1_SDA` and `PIN_I2C1_SCL` is refused. `frequency:` is not checked when
+opening, and neither is the pin table (`FmrbHw.pin_status`).
 ```ruby
 i2c = I2C.new(unit: :ESP32_I2C1,
   sda_pin: FmrbHw::PIN_I2C1_SDA,
@@ -61042,10 +61089,14 @@ I2C の線を開く
 `sda_pin:`・`scl_pin:` (省略すると -1)、`timeout:` (省略すると 500。以後の `read`・`write` の
 待ちの既定、ms)。
 
-**開けないときの IOError の文は "Invalid I2C unit" 1 種類**: 知らないユニット名だけでなく、
-**すでに別のアプリが持っている**、**画面を持つ機種で I2C1 に別のピンを渡した**、
-画面の準備前、も同じ文になる。画面を持つ機種 (Tab5・NARYA v4・AtomS3R) の I2C1 は
-本体の配線に固定で、`FmrbHw::PIN_I2C1_SDA`・`PIN_I2C1_SCL` 以外は断られる。
+**開けないときは IOError で、文が原因ごとに違う** (ユニット名は渡した名前):
+知らないユニット名は "Invalid I2C unit: 名前"、**すでに別のアプリが持っている**は
+"I2C unit 名前 is in use by another app"、**画面を持つ機種で I2C1 に別のピンを渡した**は
+"I2C unit 名前 is fixed to other pins on this board (not SDA n / SCL n)"、画面の準備前は
+"I2C unit 名前 is not ready yet"、そのピンで線を始められなかったは
+"I2C unit 名前 did not start on SDA n / SCL n"。画面を持つ機種 (Tab5・NARYA v4・AtomS3R) の
+I2C1 は本体の配線に固定で、`FmrbHw::PIN_I2C1_SDA`・`PIN_I2C1_SCL` 以外は断られる。
+`frequency:` は開くときには調べない。ピンの台帳 (`FmrbHw.pin_status`) も見ない。
 ```ruby
 i2c = I2C.new(unit: :ESP32_I2C1,
   sda_pin: FmrbHw::PIN_I2C1_SDA,
@@ -61102,8 +61153,9 @@ i2c.write(0x41, 0x20, [1, 2])
 
 The parent of File. `$stdout` and a file are the same kind
 of IO. **`read` and `write` on a closed stream raise RuntimeError** ("closed
-stream"), not IOError. Every failure is a RuntimeError; the reason (errno) is not
-told apart.
+stream"), not IOError. Going the other way to how it was opened (`read` on a
+write-only `"w"` or `"a"`, `write`, `puts` or `print` on a read-only `"r"`) raises
+IOError. Every other failure is a RuntimeError; the reason (errno) is not told apart.
 ```ruby
 $stdout.puts "hello"
 ```
@@ -61181,9 +61233,10 @@ Read bytes (File overrides it as File#read)
 
 Reads up to length bytes and returns them. **length defaults to 1024** (for
 streams such as stdin; a file goes through File#read, which reads everything
-when it is left out). length of 0 or less returns "". RuntimeError when the
-read fails ("failed to read from stream") or the stream is closed
-("closed stream").
+when it is left out). length of 0 or less returns "".
+**A stream opened for writing only (`"w"`, `"a"`, stdout) raises IOError ("not opened for reading")**.
+RuntimeError when the read fails ("failed to read from stream")
+or the stream is closed ("closed stream").
 ```ruby
 s = $stdin.read(16)
 ```
@@ -61196,8 +61249,9 @@ Write a string
 
 Writes str and returns **the number of bytes written**. Only a String is
 accepted (a number raises TypeError; `puts` and `print` call to_s first).
-RuntimeError when the write fails ("write failed") or the stream is closed
-("closed stream").
+**A stream opened for reading only (`"r"`, stdin) raises IOError ("not opened for writing")**,
+through `puts` and `print` too. RuntimeError when the write
+fails ("write failed") or the stream is closed ("closed stream").
 ```ruby
 n = f.write("hello\n")   #=> 6
 ```
@@ -61205,7 +61259,8 @@ n = f.write("hello\n")   #=> 6
 
 標準出力 (`$stdout`) もファイルも同じ IO。
 **ストリームが閉じた後の `read`・`write` は IOError でなく RuntimeError**
-("closed stream")。エラーはどれも RuntimeError で、
+("closed stream")。開いた向きと逆の操作 (書くだけの `"w"`・`"a"` で `read`、読むだけの
+`"r"` で `write`・`puts`・`print`) は IOError。それ以外のエラーは RuntimeError で、
 理由 (errno) は区別できない。
 ```ruby
 $stdout.puts "hello"
@@ -61280,7 +61335,9 @@ read(?Integer length) -> String
 
 length バイトまでを読んで文字列で返す。**length を省くと 1024 バイト**
 (標準入力などのストリーム用。ファイルは File#read で、省くと全部読む)。
-length が 0 以下なら "" を返す。読めなかったときは RuntimeError
+length が 0 以下なら "" を返す。
+**書くだけで開いたもの (`"w"`・`"a"`、標準出力) は IOError ("not opened for reading")**。
+読めなかったときは RuntimeError
 ("failed to read from stream")、閉じたストリームなら RuntimeError ("closed stream")。
 ```ruby
 s = $stdin.read(16)
@@ -61293,8 +61350,9 @@ write(String str) -> Integer
 書き込む
 
 str を書き、**書いたバイト数**を返す。str は String だけ (数値などは TypeError。
-`puts`・`print` は to_s してから渡す)。書けなかったときは RuntimeError ("write failed")、
-閉じたストリームなら RuntimeError ("closed stream")。
+`puts`・`print` は to_s してから渡す)。
+**読むだけで開いたもの (`"r"`、標準入力) は IOError ("not opened for writing")** (`puts`・`print` も)。
+書けなかったときは RuntimeError ("write failed")、閉じたストリームなら RuntimeError ("closed stream")。
 ```ruby
 n = f.write("hello\n")   #=> 6
 ```
@@ -61961,8 +62019,8 @@ Turn a Ruby value into a JSON string
 
 Writes Hash, Array, String, Integer, Float, true, false and nil. **A Symbol becomes a string**, and a Hash key is written as its `to_s`. **Any other object is written as its `to_s`** (no error).
 
-The result is one line with no spaces. Japanese is left as it is (not escaped). `NaN` and
-infinity do not raise either: the text `NaN` and the like go in, which is not valid JSON.
+The result is one line with no spaces. Japanese is left as it is (not escaped). A Float `NaN`
+or infinity has no JSON form and raises `JSON::GeneratorError` (nested ones too).
 ```ruby
 JSON.generate({ "a" => [1, nil] })
 #=> "{\"a\":[1,null]}"
@@ -62008,8 +62066,8 @@ Hash・Array・String・Integer・Float・true・false・nil を書く。**Symbo
 Hash のキーは `to_s` した文字列になる。**それ以外のオブジェクトも `to_s` した文字列**で
 書く (エラーにならない)。
 
-空白も改行も入れず 1 行で返す。日本語はそのまま (エスケープしない)。`NaN` や無限大も
-例外にならず、JSON として正しくない `NaN` などの字がそのまま入る。
+空白も改行も入れず 1 行で返す。日本語はそのまま (エスケープしない)。Float の `NaN`・無限大は
+JSON に書けないので `JSON::GeneratorError` (入れ子の中も)。
 ```ruby
 JSON.generate({ "a" => [1, nil] })
 #=> "{\"a\":[1,null]}"
@@ -62145,10 +62203,12 @@ position is past the end ("Array index out of range").
 範囲の外のとき ("Array index out of range")。
 # JSON::GeneratorError
 
-The name exists but `JSON.generate` never raises it: a value it cannot write is written as a string.
+`JSON.generate` raises it for a Float NaN or infinity (nested ones too), with a message such as
+`"NaN not allowed in JSON"`. Other values it cannot write are written as strings instead.
 # JSON::GeneratorError
 
-名前だけあり、`JSON.generate` はこれを出さない。作れない値は文字列にして書く。
+`JSON.generate` が Float の NaN・無限大 (入れ子の中も) に出す。文は `"NaN not allowed in JSON"` など。
+それ以外の書けない値は文字列にして書くので、これは出ない。
 # JSON::JSONError
 
 When `JSON.parse` expects a `,` or `:` and does not find it, it raises this `JSONError`
