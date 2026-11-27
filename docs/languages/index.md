@@ -17,7 +17,7 @@ to the Ruby apps, start the same way, and run at the same time as each other.
 | `.py` | MicroPython | The same app framework as Ruby: windows, drawing, sprites, sound. One Python app at a time |
 | `.bas` | FMRuby BASIC | Family BASIC compatible. Its own text screen and sprites |
 | `.lua` | Lua 5.4 | Functions `on_create` / `on_update` / `on_event` and a global `gfx`; the system draws the window and runs the loop |
-| `.wasm` | WAMR | Apps written in C, TinyGo, Rust or Zig and compiled to WebAssembly on a PC. Not on the ESP32-S3 boards. See [WebAssembly Apps](wasm.md) **(development version)** |
+| `.wasm` | WAMR | Apps written in C, TinyGo, Rust or Zig and compiled to WebAssembly on a PC. Not on the ESP32-S3 boards. See [WebAssembly Apps](wasm.md) **(from 3.1.0)** |
 
 The functions an app can call are defined once, in the firmware's type definitions, and each
 language's side is generated from there. Ruby, Lua, MicroPython and the WebAssembly languages

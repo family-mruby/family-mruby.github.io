@@ -57,7 +57,7 @@ You can check heap usage in the Monitor app.
 | MicroPython | Usable, with real limits: one Python app at a time, files read and written only whole (`FmrbFile`), strings that are bytes, and a smaller standard library. Drawing, sprites and sound are there. See [MicroPython](languages/micropython.md) |
 | BASIC | Feature-complete as of 2.0. Every known difference from Family BASIC V3 is catalogued. See [FMRuby BASIC](languages/basic.md) |
 | Lua | A concept implementation. Not suitable for building a substantial application |
-| C, TinyGo, Rust, Zig | As [WebAssembly apps](languages/wasm.md), experimental, in the development version. Not on the ESP32-S3 boards (Retro, StickS3, AtomS3R). The SDK's names and shapes may still change |
+| C, TinyGo, Rust, Zig | As [WebAssembly apps](languages/wasm.md), experimental, from 3.1.0. Not on the ESP32-S3 boards (Retro, StickS3, AtomS3R). The SDK's names and shapes may still change |
 
 ## Waiting inside an app
 

@@ -17,7 +17,7 @@ Family mruby は Ruby を中心に作られていますが、動く言語は Rub
 | `.py` | MicroPython | Ruby と同じアプリの枠組み。ウィンドウ・描画・スプライト・音。同時に 1 本だけ |
 | `.bas` | FMRuby BASIC | Family BASIC 互換。専用のテキスト画面とスプライトを持ちます |
 | `.lua` | Lua 5.4 | 関数 `on_create` / `on_update` / `on_event` とグローバルの `gfx`。ウィンドウとループは本体が持ちます |
-| `.wasm` | WAMR | C・TinyGo・Rust・Zig で書き、パソコンで WebAssembly にコンパイルしたアプリ。ESP32-S3 の基板では動きません。[WebAssembly のアプリ](wasm.md) を参照 **(開発版)** |
+| `.wasm` | WAMR | C・TinyGo・Rust・Zig で書き、パソコンで WebAssembly にコンパイルしたアプリ。ESP32-S3 の基板では動きません。[WebAssembly のアプリ](wasm.md) を参照 **(3.1.0 から)** |
 
 アプリから呼べる関数は、ファームウェアの型定義の 1 か所で定義し、各言語の側はそこから生成しています。
 そのため Ruby・Lua・MicroPython・WebAssembly の各言語で、名前も引数の順も同じです

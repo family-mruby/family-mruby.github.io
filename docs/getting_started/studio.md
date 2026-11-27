@@ -39,7 +39,7 @@ normal.
 - Play a video: MJPEG runs in the page like it does on Modern
 - Run [WebAssembly apps](../languages/wasm.md) written in C, TinyGo, Rust or Zig, including
   your own: drop a folder holding `<name>.app.wasm` and `<name>.app.toml` on the page
-  **(development version)**
+  **(from 3.1.0)**
 - Pick a screen size up to 852x480 and a zoom — a larger screen means more
   room, not bigger pixels
 - Go full screen. Where the browser allows it the machine keeps `Esc` for

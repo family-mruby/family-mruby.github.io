@@ -34,7 +34,7 @@ my_clock.app.toml
 | Lua | `.app.lua` |
 | BASIC | `.app.bas` |
 | MicroPython | `.app.py` |
-| WebAssembly (C・TinyGo・Rust・Zig) | `.app.wasm`。[WebAssembly のアプリ](../languages/wasm.md) を参照 **(開発版)** |
+| WebAssembly (C・TinyGo・Rust・Zig) | `.app.wasm`。[WebAssembly のアプリ](../languages/wasm.md) を参照 **(3.1.0 から)** |
 
 ## キー一覧
 

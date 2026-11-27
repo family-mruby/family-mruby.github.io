@@ -16,7 +16,7 @@ program run next to the desktop.
 |---|---|
 | User app slots | 5 on Modern, the Linux builds and Studio (`max_apps` can lower it). 3 at a time on the ESP32-S3 boards (Retro, StickS3, AtomS3R) |
 | Heap per app | Depends on the machine — see the table below |
-| Languages | Ruby (PicoRuby), MicroPython, BASIC, Lua; and, as [WebAssembly apps](languages/wasm.md) on WAMR, C, TinyGo, Rust and Zig (not on the ESP32-S3 boards; development version) |
+| Languages | Ruby (PicoRuby), MicroPython, BASIC, Lua; and, as [WebAssembly apps](languages/wasm.md) on WAMR, C, TinyGo, Rust and Zig (not on the ESP32-S3 boards; from 3.1.0) |
 
 | Machine | Ordinary pool | With `large_memory = 1` |
 |---|---|---|

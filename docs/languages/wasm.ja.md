@@ -1,8 +1,8 @@
 # WebAssembly のアプリ (C・TinyGo・Rust・Zig)
 
-!!! note "開発中の版"
-    WebAssembly のアプリは開発中の版にあり、まだリリースには入っていません。SDK も試験的な
-    もので開発中の版に合わせて変わります。名前や形はこれから変わることがあります。
+!!! note "3.1.0 から"
+    WebAssembly のアプリは Family mruby 3.1.0 から入っています。試験的な機能で、SDK も試験的な
+    ものです。名前や形はこれから変わることがあります。
 
 本体がインタプリタを持っている言語 (Ruby、MicroPython、BASIC、Lua。[他の言語](index.md)
 を参照) のほかに、**C・TinyGo・Rust・Zig** でアプリを書き、パソコンで WebAssembly に

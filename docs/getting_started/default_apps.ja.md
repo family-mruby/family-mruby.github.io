@@ -84,7 +84,7 @@ Modern では、常駐する[サービス](../file_formats/services.md)を抱え
 ## WebAssembly — `/app/tinygo`・`/app/rust`・`/app/zig`・`/app/c`
 
 [WebAssembly のアプリ](../languages/wasm.md)。ESP32-P4 の基板、Linux 版、シミュレータ、Studio で動きます
-**(開発版)**。
+**(3.1.0 から)**。
 
 | アプリ | |
 |---|---|

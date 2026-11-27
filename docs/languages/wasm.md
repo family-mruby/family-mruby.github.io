@@ -1,8 +1,8 @@
 # WebAssembly Apps (C, TinyGo, Rust, Zig)
 
-!!! note "Development version"
-    WebAssembly apps are on the development branch, not in a release yet. The SDK is
-    experimental and follows that branch: names and shapes may still change.
+!!! note "From 3.1.0"
+    WebAssembly apps are in Family mruby from 3.1.0. They are experimental, and so is the
+    SDK: names and shapes may still change.
 
 Besides the languages the system carries an interpreter for (Ruby, MicroPython, BASIC and
 Lua — see [Other Languages](index.md)), an app can be written in any of

@@ -84,7 +84,7 @@ Programs in [FMRuby BASIC](../languages/basic.md), runnable and readable:
 ## WebAssembly — `/app/tinygo`, `/app/rust`, `/app/zig`, `/app/c`
 
 [WebAssembly apps](../languages/wasm.md), on the ESP32-P4 boards, the Linux program, the simulator
-and Studio **(development version)**:
+and Studio **(from 3.1.0)**:
 
 | App | |
 |---|---|
