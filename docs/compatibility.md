@@ -38,6 +38,7 @@ Devices not listed here may also work, but due to limitations in the USB driver 
 |---|---|---|---|
 | OK | Logitech | MK245nBK | https://www.amazon.co.jp/dp/B01LW8E866 |
 | OK | Omikamo | -- | Verified with wired connection https://www.amazon.co.jp/dp/B0GJSV522Q |
+| OK | Sanwa Direct | 400-SKB052 | 2.4 GHz wireless. Verified on Retro, Tab5 and P4-Nano https://direct.sanwa.co.jp/ItemPage/400-SKB052 |
 
 ## USB Hubs
 

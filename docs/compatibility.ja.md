@@ -36,6 +36,7 @@
 |---|---|---|---|
 | OK | ロジクール | MK245nBK  | https://www.amazon.co.jp/dp/B01LW8E866 |
 | OK | Omikamo | – | 有線接続で確認 https://www.amazon.co.jp/dp/B0GJSV522Q |
+| OK | サンワダイレクト | 400-SKB052 | 2.4GHz のワイヤレス。Retro・Tab5・P4-Nano で確認 https://direct.sanwa.co.jp/ItemPage/400-SKB052 |
 
 ## USBハブ
 
