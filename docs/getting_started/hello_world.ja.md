@@ -190,7 +190,7 @@ snake_case → CamelCase + `App` でクラス名、Title Case で表示名 (`app
 
 - 図形を描いてみる → [FmrbGfx](../api/fmrb_gfx.md)
 - イベント処理を加える → [FmrbApp ▸ イベントハンドリング](../api/fmrb_app.md#イベントハンドリング-on_eventev)
-- 既存サンプルを読む → [サンプル集](../examples.md)
+- 既存サンプルを読む → [標準アプリ](default_apps.md)
 
 ## トラブル時のチェック
 

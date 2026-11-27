@@ -191,7 +191,7 @@ Editing these files directly lets you customize the output of subsequent `create
 
 - Try drawing shapes: [FmrbGfx](../api/fmrb_gfx.md)
 - Add event handling: [FmrbApp > Event handling](../api/fmrb_app.md#event-handling-on_eventev)
-- Read existing samples: [Sample collection](../examples.md)
+- Read existing samples: [Default Apps](default_apps.md)
 
 ## Troubleshooting checklist
 

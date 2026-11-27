@@ -364,7 +364,7 @@ canvas の他の場所に描いた絵はそのまま残ります。再生中は�
 | `set_output_level(level)` | 輝度全体 | 0..255 |
 | `set_chroma_level(level)` | 彩度（カラーバースト振幅） | 0..255 |
 
-CRT モニタでの色調整に使います（[NTSC 出力テスト](../examples.md) のサンプル参照）。
+CRT モニタでの色調整に使います（[NTSCテスト](../getting_started/default_apps.md#機種に依存するアプリ) のサンプル参照）。
 
 ## サンプル: 図形を並べる
 

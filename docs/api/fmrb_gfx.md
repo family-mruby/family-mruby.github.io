@@ -365,7 +365,7 @@ Normally, the system configures this via the `rounded_corners` flag in `.toml` (
 | `set_output_level(level)` | Overall brightness | 0..255 |
 | `set_chroma_level(level)` | Saturation (color burst amplitude) | 0..255 |
 
-Used for color adjustment on CRT monitors (see [NTSC Output Test](../examples.md) sample).
+Used for color adjustment on CRT monitors (see [NTSC Test](../getting_started/default_apps.md#machine-specific-apps) sample).
 
 ## Example: Drawing Shapes
 

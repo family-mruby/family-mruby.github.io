@@ -174,4 +174,3 @@ Most apps run on both machines. A few depend on hardware only one of them has:
 - [Hello World](hello_world.md) — write your own
 - [App Config (.app.toml)](../file_formats/app_toml.md) — how an app gets into the launcher
 - [File Associations](../file_formats/associations.md) — which app opens which file
-- [Examples](../examples.md) — annotated code

@@ -173,4 +173,3 @@ Modern にしかない部品を使うアプリです。Retro ではランチャ�
 - [Hello World](hello_world.md) — 自分で書く
 - [アプリ設定 (.app.toml)](../file_formats/app_toml.md) — ランチャーに載せる方法
 - [ファイルの関連付け](../file_formats/associations.md) — どのアプリが何を開くか
-- [サンプル](../examples.md) — 解説つきのコード
