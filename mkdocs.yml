@@ -84,7 +84,7 @@ plugins:
             Utilities: ユーティリティ
             Constants & System Info: 定数・システム情報
             Tasks & Timing: タスク・時間
-            File Formats: ファイル形式
+            Settings & File Formats: 設定とファイル形式
             System Config (system_conf.toml / wifi.toml): システム設定 (system_conf.toml / wifi.toml)
             App Config (.app.toml): アプリ設定ファイル (.app.toml)
             HID Device Config (hid_devices.toml): HID 機器設定 (hid_devices.toml)
@@ -300,7 +300,7 @@ nav:
               - "TypeError": api/reference/TypeError.md
               - "ZeroDivisionError": api/reference/ZeroDivisionError.md
       # END class reference
-  - File Formats:
+  - Settings & File Formats:
       - System Config (system_conf.toml / wifi.toml): file_formats/system_conf.md
       - App Config (.app.toml): file_formats/app_toml.md
       - HID Device Config (hid_devices.toml): file_formats/hid_devices.md
