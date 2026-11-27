@@ -8,10 +8,9 @@ runs the newest one.
 Every release replaces the whole flash image, `/home` included. Copy anything you want to
 keep off the device before flashing — see [Console](getting_started/console.md).
 
-## In development (after 3.0.0)
+## 3.1.0 — 2026-11-27
 
-Not in a release yet: this is what the development branch — and [Studio](getting_started/studio.md),
-which is built from it — does now. These pages describe it.
+Applies to Modern, Retro, the headless boards, the Linux program and Studio.
 
 ### Changed: writing an app
 
@@ -45,6 +44,20 @@ Apps written for 3.0.0 need small changes:
 
 ### New
 
+- **UART for apps.** A `UART` class with PicoRuby's API (`UART.new(unit:, txd_pin:, rxd_pin:,
+  baudrate:)`, `gets`, `puts`, `read`, `write` ...), guarded so that an app cannot open the
+  system's own ports or pins, and a Serial Terminal app to try a device by hand. On the Tab5
+  the Grove port is free for it. → [Hardware Control](api/peripherals.md#uart-serial)
+- **Remote shell.** An Asterism console's Terminal can enter a machine (`remote <node>`) to look
+  at and change its files and apps, once its owner turns it on in the Receiving app; a mark
+  (RS) on the menu bar shows while someone is in. → [Family mruby Console](getting_started/console.md)
+- **Remote control is closed on release builds** until the owner allows it (Config > Remote
+  control) and pairs a PC. → [Remote Desktop](remote_desktop.md)
+- **The editor holds up to five documents** in tabs, with File > New and Close.
+- **Chat** (rooms kept by a chat host) and the **AI helper** (asks a tutor host over Asterism and
+  puts hints or whole apps into the editor), on Modern machines on an Asterism network.
+- The P4-Nano starts at 640x360; Config has a Resolution row (426x240 or 640x360), and holding
+  Shift while it starts brings it back at 426x240.
 - **Kanji conversion** in kana input, with a dictionary on the SD card.
   → [The Desktop](getting_started/desktop.md#kana-input)
 - **Wi-Fi from the screen.** The Network dialog opens a Wi-Fi page: pick a network, type the
@@ -92,6 +105,30 @@ Apps written for 3.0.0 need small changes:
   [Security](limitations.md#security)
 - `/app/test` and Walk Scroller are left out of every board's image and the public browser
   build; they can be sent to a board over Wi-Fi.
+
+### Fixed
+
+- `Machine.delay_ms` and the like waited about a tenth of the time asked on the ESP32 machines.
+- Files, JSON, MIDI and Kernel methods behave as documented: each app has its own current folder
+  for `Dir.chdir`, and GPIO refuses the system's pins.
+- Large Asterism messages over TLS no longer drop the connection (file transfers to a machine
+  were slow because of it).
+- `ls` and the file lists mark folders on the ESP32 machines.
+- The F1 help jumps to a nested class's method, and String's class page is back.
+- The transfer app (receiving and sending files, moving apps, the remote shell) is built into
+  the firmware and needs far less memory and stack.
+
+### Updating
+
+- **NARYA v3 (Retro):** the flash layout changed (the firmware partition grew from 6 MB to 8 MB,
+  storage from 5 MB to 7.94 MB). The installer writes everything, which erases `/home`: copy
+  what you keep first.
+- The core and the graphics-audio firmware must be the same version: on Retro, flash both chips.
+- The kanji dictionary is attached to the
+  [GitHub release](https://github.com/family-mruby/family-mruby/releases/tag/3.1.0): put
+  `fmrb_kanji.dic` in `/dict/` on the SD card. → [The Desktop](getting_started/desktop.md#kana-input)
+- Checked on the device: the Tab5 (the release build) and the P4-Nano. NARYA v3, StickS3 and
+  AtomS3R are built by CI and checked in the simulator.
 
 ## 3.0.0 — 2026-11-07
 
@@ -148,8 +185,7 @@ Applies to Modern, Retro, the headless boards, the Linux program and Studio.
 ### Updating
 
 The core and the graphics-audio firmware must be the same version: on Retro, flash both
-chips. The kanji dictionary for the development branch's kanji conversion is not part of
-3.0.0.
+chips. The kanji dictionary for kanji conversion (added after 3.0.0) is not part of 3.0.0.
 
 ## 2.1.0 — 2026-09-09
 
