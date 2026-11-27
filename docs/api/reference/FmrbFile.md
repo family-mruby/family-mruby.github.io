@@ -127,6 +127,21 @@ the devices, the simulation and the browser.
 FmrbFile.path_read_only?("/mnt/root/etc/hostname")
 ```
 
+### FmrbFile.secret_path?
+
+<pre class="fmrb-sig"><code>secret_path?(<a href="../String/">String</a> path) -&gt; bool</code></pre>
+
+Whether the path is a secret kept from remote reading
+
+true for the WiFi password (wifi.toml), the API keys (secrets.toml) and
+everything in /home/asterism (the directory and its config.toml too):
+the rules of the WiFi remote control and the BLE settings. The path is
+read as the file HAL reads it ("/flash/..." is "/"; one with ".." is
+true). Make a relative path absolute first.
+```ruby
+FmrbFile.secret_path?("/home/wifi.toml")
+```
+
 ### FmrbFile.free_bytes
 
 <pre class="fmrb-sig"><code>free_bytes(<a href="../String/">String</a> path) -&gt; int64?</code></pre>
@@ -141,4 +156,4 @@ FmrbFile.free_bytes("/tmp")
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

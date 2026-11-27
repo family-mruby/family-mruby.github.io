@@ -128,4 +128,4 @@ k = sub.token_key
 
 ---
 
-*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@095a863f の API の型定義 (`sig/`) から自動で作っています。*

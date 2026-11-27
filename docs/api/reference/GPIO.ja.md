@@ -38,7 +38,7 @@ led.write(1)
 作るときにピンの台帳へ取る。**取れないときは IOError で、ピンの設定 (向き・プル) は変えない**:
 システムのピン (`FmrbHw.pin_status` が `PIN_SYSTEM_EXCLUSIVE` のピン) は "GPIO n is used by the
 system"、ほかのアプリ (または I2C などの別の使い方) が持っているピンは "GPIO n is in use by another app or driver"。**本体のボタン**は台帳には取らず、
-`IN` (プルつきも) でだけ開ける。`OUT` などで開くと "GPIO n is a system button: input only"。取ったピンはアプリが終わると台帳へ返る。
+`IN` (プルつきも) でだけ開ける。`OUT` などで開くと "GPIO n is input only (a system button or a chip's interrupt line)"。取ったピンはアプリが終わると台帳へ返る。
 
 文字列・Symbol のピンは ArgumentError ("Wrong GPIO pin name")、負の数も同じ。端末に無い番号は
 ArgumentError ("GPIO n does not exist on this board")。方向が無い・
@@ -217,4 +217,4 @@ pressed = sw.low?
 
 ---
 
-*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@095a863f の API の型定義 (`sig/`) から自動で作っています。*

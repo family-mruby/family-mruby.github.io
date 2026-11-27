@@ -223,4 +223,4 @@ x.to_s
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

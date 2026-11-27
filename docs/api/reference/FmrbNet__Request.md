@@ -94,4 +94,4 @@ Safe to call more than once. From then on `done?` is true and `error` is "cancel
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

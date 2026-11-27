@@ -119,6 +119,18 @@ PC 版の配布物の木と /mnt/root で true。端末・sim・ブラウザ版�
 FmrbFile.path_read_only?("/mnt/root/etc/hostname")
 ```
 
+### FmrbFile.secret_path?
+
+<pre class="fmrb-sig"><code>secret_path?(<a href="../String/">String</a> path) -&gt; bool</code></pre>
+
+遠くから読ませない鍵の場所か
+
+WiFi のパスワード (wifi.toml)・API の鍵 (secrets.toml) と、/home/asterism の中すべて
+(フォルダとその config.toml も) で true。WiFi の遠隔操作と BLE の設定と同じ決まりで、パスは file HAL の読み方で見る ("/flash/..." は "/" と同じ、".." を含むと true)。相対パスや "." は先に絶対パスへ直してから渡す。
+```ruby
+FmrbFile.secret_path?("/home/wifi.toml")
+```
+
 ### FmrbFile.free_bytes
 
 <pre class="fmrb-sig"><code>free_bytes(<a href="../String/">String</a> path) -&gt; int64?</code></pre>
@@ -132,4 +144,4 @@ FmrbFile.free_bytes("/tmp")
 
 ---
 
-*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@095a863f の API の型定義 (`sig/`) から自動で作っています。*

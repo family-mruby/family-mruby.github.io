@@ -11,7 +11,7 @@ Every class an app can use, with every method, constant and example the API sign
 | <span class="fmrb-name">[`FmrbColors`](FmrbColors.md)</span> | The colour-name table, and /home/colors.toml | 11 |
 | <span class="fmrb-name">[`FmrbConst`](FmrbConst.md)</span> | Constants: machine, build, keys, theme | 1 |
 | <span class="fmrb-name">[`FmrbI18n`](FmrbI18n.md)</span> | Switch the display between Japanese and English | 8 |
-| <span class="fmrb-name">[`FmrbReceiveConf`](FmrbReceiveConf.md)</span> | Read and write the receive settings | 16 |
+| <span class="fmrb-name">[`FmrbReceiveConf`](FmrbReceiveConf.md)</span> | Read and write the receive settings | 19 |
 | <span class="fmrb-name">[`FmrbSystem`](FmrbSystem.md)</span> | The machine's settings and services | 40 |
 | <span class="fmrb-name">[`FmrbToml`](FmrbToml.md)</span> | Read TOML; rewrite it by line | 7 |
 | <span class="fmrb-name">[`FmrbToml::Raw`](FmrbToml__Raw.md)</span> | Holds a value to write unquoted | 2 |
@@ -68,7 +68,7 @@ Every class an app can use, with every method, constant and example the API sign
 |---|---|---|
 | <span class="fmrb-name">[`Dir`](Dir.md)</span> | List and operate on directories | 24 |
 | <span class="fmrb-name">[`File`](File.md)</span> | Reading and writing files (File) | 20 |
-| <span class="fmrb-name">[`FmrbFile`](FmrbFile.md)</span> | Read and write whole files by path | 11 |
+| <span class="fmrb-name">[`FmrbFile`](FmrbFile.md)</span> | Read and write whole files by path | 12 |
 | <span class="fmrb-name">[`IO`](IO.md)</span> | An input/output stream | 7 |
 | <span class="fmrb-name">[`Time`](Time.md)</span> | Date and time | 52 |
 
@@ -136,6 +136,7 @@ Every class an app can use, with every method, constant and example the API sign
 | Class / module | What it is | Methods |
 |---|---|---|
 | <span class="fmrb-name">[`FmrbHw`](FmrbHw.md)</span> | Read the table of how pins are used | 4 |
+| <span class="fmrb-name">[`FmrbUart`](FmrbUart.md)</span> | The app boundary's UART functions | 15 |
 | <span class="fmrb-name">[`GC`](GC.md)</span> | Control and statistics of the garbage collector | 20 |
 | <span class="fmrb-name">[`GPIO`](GPIO.md)</span> | Use one pin as input or output | 16 |
 | <span class="fmrb-name">[`GPIO::Error`](GPIO__Error.md)</span> | Peripheral error codes and their exceptions | 1 |
@@ -144,6 +145,7 @@ Every class an app can use, with every method, constant and example the API sign
 | <span class="fmrb-name">[`Math`](Math.md)</span> | Trigonometric, exponential and logarithmic functions | 26 |
 | <span class="fmrb-name">[`Math::DomainError`](Math__DomainError.md)</span> | Raised for an argument outside the domain | 0 |
 | <span class="fmrb-name">[`RNG`](RNG.md)</span> | The source of random numbers | 3 |
+| <span class="fmrb-name">[`UART`](UART.md)</span> | Talk to a device over a serial line (UART) | 22 |
 
 ## Ruby core
 
@@ -158,6 +160,7 @@ Every class an app can use, with every method, constant and example the API sign
 | <span class="fmrb-name">[`Float`](Float.md)</span> | A floating-point number | 20 |
 | <span class="fmrb-name">[`FrozenError`](FrozenError.md)</span> | Changing a frozen object | 0 |
 | <span class="fmrb-name">[`Hash`](Hash.md)</span> | A table that maps keys to values | 20 |
+| <span class="fmrb-name">[`IOError`](IOError.md)</span> | An I/O stream or a device port cannot be used | 0 |
 | <span class="fmrb-name">[`IndexError`](IndexError.md)</span> | An index out of range | 0 |
 | <span class="fmrb-name">[`Integer`](Integer.md)</span> | An integer | 29 |
 | <span class="fmrb-name">[`Kernel`](Kernel.md)</span> | Output, random numbers, Proc helpers | 12 |
@@ -185,4 +188,4 @@ Every class an app can use, with every method, constant and example the API sign
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

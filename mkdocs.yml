@@ -256,6 +256,7 @@ nav:
               - "FmrbNet::Request": api/reference/FmrbNet__Request.md
           - Machine and devices:
               - "FmrbHw": api/reference/FmrbHw.md
+              - "FmrbUart": api/reference/FmrbUart.md
               - "GC": api/reference/GC.md
               - "GPIO": api/reference/GPIO.md
               - "GPIO::Error": api/reference/GPIO__Error.md
@@ -264,6 +265,7 @@ nav:
               - "Math": api/reference/Math.md
               - "Math::DomainError": api/reference/Math__DomainError.md
               - "RNG": api/reference/RNG.md
+              - "UART": api/reference/UART.md
           - Ruby core:
               - "ArgumentError": api/reference/ArgumentError.md
               - "Array": api/reference/Array.md
@@ -274,6 +276,7 @@ nav:
               - "Float": api/reference/Float.md
               - "FrozenError": api/reference/FrozenError.md
               - "Hash": api/reference/Hash.md
+              - "IOError": api/reference/IOError.md
               - "IndexError": api/reference/IndexError.md
               - "Integer": api/reference/Integer.md
               - "Kernel": api/reference/Kernel.md

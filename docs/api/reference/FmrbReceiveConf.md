@@ -57,6 +57,30 @@ true with `send_enabled = true`. The same rules.
 FmrbReceiveConf.send_enabled?
 ```
 
+### FmrbReceiveConf.rshell_enabled?
+
+<pre class="fmrb-sig"><code>rshell_enabled?() -&gt; bool</code></pre>
+
+Whether the remote shell is on
+
+true with `rshell_enabled = true`. The same rules. Who may come in is the `"rshell"` kind's
+list (doc/remote_shell).
+```ruby
+FmrbReceiveConf.rshell_enabled?
+```
+
+### FmrbReceiveConf.rshell_uncertified?
+
+<pre class="fmrb-sig"><code>rshell_uncertified?() -&gt; bool</code></pre>
+
+Whether unchecked connections are taken
+
+true with `rshell_uncertified = true` (written by hand only). For the sim and development
+checks; otherwise only a tls/ router's connection (the console's door in the browser) is taken.
+```ruby
+FmrbReceiveConf.rshell_uncertified?
+```
+
 ### FmrbReceiveConf.install_mode
 
 <pre class="fmrb-sig"><code>install_mode() -&gt; <a href="../String/">String</a></code></pre>
@@ -77,8 +101,8 @@ The settings read in one go
 
 A Hash of what the Receiving app shows: `"enabled"`, `"send_enabled"`, `"path"` (nil without
 a file), `"hand_ok"` (the part by hand is TOML or empty), `"by"` and `"at"` (what the console
-wrote), `"install"`, and per kind (`"file"`, `"checkpoint"`, `"app"`) `{ "hand" => list or nil,
-"managed" => list or nil }`.
+wrote), `"install"`, `"rshell_enabled"`, and per kind (`"file"`, `"checkpoint"`, `"app"`,
+`"rshell"`) `{ "hand" => list or nil, "managed" => list or nil }`.
 ```ruby
 v = FmrbReceiveConf.view
 v["file"]["hand"]
@@ -109,6 +133,18 @@ The same answers and exceptions as `set_enabled`.
 FmrbReceiveConf.set_send_enabled(true)
 ```
 
+### FmrbReceiveConf.set_rshell_enabled
+
+<pre class="fmrb-sig"><code>set_rshell_enabled(bool on) -&gt; bool</code></pre>
+
+Turn the remote shell on or off
+
+The same answers and exceptions as `set_enabled`. On, the machines allowed can see and
+change the files here from afar. After switching, tell the transfer app with `tell_transfer`.
+```ruby
+FmrbReceiveConf.set_rshell_enabled(true)
+```
+
 ### FmrbReceiveConf.set_install_mode
 
 <pre class="fmrb-sig"><code>set_install_mode(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> mode) -&gt; bool</code></pre>
@@ -123,12 +159,12 @@ FmrbReceiveConf.set_install_mode("ask")
 
 ### FmrbReceiveConf.allow
 
-<pre class="fmrb-sig"><code>allow(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> kind, <a href="../String/">String</a> node) -&gt; bool</code></pre>
+<pre class="fmrb-sig"><code>allow(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> kind, <a href="../String/">String</a> node, ?bool all_kinds) -&gt; bool</code></pre>
 
 Let a sender in
 
 `kind` is `"file"`, `"checkpoint"` or `"app"` (a Symbol works; anything else is an
-ArgumentError). `node` is a node name or pattern (letters, digits and `.` `_` `-` `*` only, up
+ArgumentError; with `all_kinds` true `"rshell"` too). `node` is a node name or pattern (letters, digits and `.` `_` `-` `*` only, up
 to `ENTRY_MAX` bytes; `"*"` is everyone on the network, and a pattern like `"pc-*"` works), else
 an ArgumentError. One list holds at most 64 entries (more is an ArgumentError). true when it
 wrote, false when the list by hand already had it.
@@ -138,7 +174,7 @@ FmrbReceiveConf.allow("file", "pc-desk")
 
 ### FmrbReceiveConf.deny
 
-<pre class="fmrb-sig"><code>deny(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> kind, <a href="../String/">String</a> node) -&gt; bool</code></pre>
+<pre class="fmrb-sig"><code>deny(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> kind, <a href="../String/">String</a> node, ?bool all_kinds) -&gt; bool</code></pre>
 
 Take a sender out
 
@@ -155,7 +191,7 @@ FmrbReceiveConf.deny("file", "pc-desk")
 
 Tell the transfer app the settings changed
 
-`app` is the calling app (self), `on` whether receiving or sending is on. When on and the
+`app` is the calling app (self), `on` whether receiving, sending or the remote shell is on. When on and the
 transfer app is not running it is started (`:started`); when running it is asked to read the
 settings again (`:running`, or `:stopping` when `on` is false: it ends once what is coming in
 is in). `:none` when it is not running and `on` is false.
@@ -225,4 +261,4 @@ FmrbReceiveConf.lines.each { |l| puts l }
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

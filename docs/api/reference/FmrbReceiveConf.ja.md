@@ -54,6 +54,29 @@ FmrbReceiveConf.enabled?
 FmrbReceiveConf.send_enabled?
 ```
 
+### FmrbReceiveConf.rshell_enabled?
+
+<pre class="fmrb-sig"><code>rshell_enabled?() -&gt; bool</code></pre>
+
+リモートシェルを入れているか
+
+`rshell_enabled = true` があれば true。同じ規則。入ってよい相手は種類 `"rshell"` の一覧
+(doc/remote_shell)。
+```ruby
+FmrbReceiveConf.rshell_enabled?
+```
+
+### FmrbReceiveConf.rshell_uncertified?
+
+<pre class="fmrb-sig"><code>rshell_uncertified?() -&gt; bool</code></pre>
+
+確かめない接続も受けるか
+
+`rshell_uncertified = true` (手で書くときだけ) があれば true。sim や開発の確認用で、ふだんは tls/ のルータ (ブラウザ版は console の door) の接続でだけ受ける。
+```ruby
+FmrbReceiveConf.rshell_uncertified?
+```
+
 ### FmrbReceiveConf.install_mode
 
 <pre class="fmrb-sig"><code>install_mode() -&gt; <a href="../String/">String</a></code></pre>
@@ -72,7 +95,8 @@ FmrbReceiveConf.install_mode   #=> "ask"
 設定を 1 度に読んだ表
 
 Receiving アプリが見せるものを Hash で返す: `"enabled"`・`"send_enabled"`・`"path"` (ファイルが無ければ nil)・`"hand_ok"` (手で書く部分が TOML か空)・`"by"`・`"at"` (console の書いたもの)・
-`"install"`、種類 (`"file"`・`"checkpoint"`・`"app"`) ごとの `{ "hand" => 一覧か nil, "managed" => 一覧か nil }`。
+`"install"`・`"rshell_enabled"`、種類 (`"file"`・`"checkpoint"`・`"app"`・`"rshell"`) ごとの
+`{ "hand" => 一覧か nil, "managed" => 一覧か nil }`。
 ```ruby
 v = FmrbReceiveConf.view
 v["file"]["hand"]
@@ -101,6 +125,17 @@ FmrbReceiveConf.set_enabled(true)
 FmrbReceiveConf.set_send_enabled(true)
 ```
 
+### FmrbReceiveConf.set_rshell_enabled
+
+<pre class="fmrb-sig"><code>set_rshell_enabled(bool on) -&gt; bool</code></pre>
+
+リモートシェルを入れる・切る
+
+`set_enabled` と同じ答えと例外。入れると、許した相手がこの端末のファイルを遠くから見たり変えたりできる。入れ切りの後は `tell_transfer` で転送アプリに知らせる。
+```ruby
+FmrbReceiveConf.set_rshell_enabled(true)
+```
+
 ### FmrbReceiveConf.set_install_mode
 
 <pre class="fmrb-sig"><code>set_install_mode(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> mode) -&gt; bool</code></pre>
@@ -114,11 +149,12 @@ FmrbReceiveConf.set_install_mode("ask")
 
 ### FmrbReceiveConf.allow
 
-<pre class="fmrb-sig"><code>allow(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> kind, <a href="../String/">String</a> node) -&gt; bool</code></pre>
+<pre class="fmrb-sig"><code>allow(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> kind, <a href="../String/">String</a> node, ?bool all_kinds) -&gt; bool</code></pre>
 
 送り手を許す
 
-`kind` は `"file"`・`"checkpoint"`・`"app"` (Symbol も可。ほかは ArgumentError)。`node` はノード名か型 (英数字と `.` `_` `-` `*` だけ、`ENTRY_MAX` バイトまで。`"*"` はネットワークの全員、`"pc-*"` のような型も可)。そうでないと ArgumentError。1 つの一覧は 64 件まで
+`kind` は `"file"`・`"checkpoint"`・`"app"` (Symbol も可。ほかは ArgumentError。`all_kinds` が
+true なら `"rshell"` も)。`node` はノード名か型 (英数字と `.` `_` `-` `*` だけ、`ENTRY_MAX` バイトまで。`"*"` はネットワークの全員、`"pc-*"` のような型も可)。そうでないと ArgumentError。1 つの一覧は 64 件まで
 (超えると ArgumentError)。書いたら true、すでに手で書く一覧にあれば false。
 ```ruby
 FmrbReceiveConf.allow("file", "pc-desk")
@@ -126,7 +162,7 @@ FmrbReceiveConf.allow("file", "pc-desk")
 
 ### FmrbReceiveConf.deny
 
-<pre class="fmrb-sig"><code>deny(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> kind, <a href="../String/">String</a> node) -&gt; bool</code></pre>
+<pre class="fmrb-sig"><code>deny(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> kind, <a href="../String/">String</a> node, ?bool all_kinds) -&gt; bool</code></pre>
 
 送り手を外す
 
@@ -141,7 +177,7 @@ FmrbReceiveConf.deny("file", "pc-desk")
 
 転送アプリに設定の変更を知らせる
 
-`app` は呼ぶアプリ (self)、`on` は受け取り・送りのどちらかが入っているか。入っていて転送アプリが動いていなければ起動して `:started`、動いていれば設定を読み直させて `:running`
+`app` は呼ぶアプリ (self)、`on` は受け取り・送り・リモートシェルのどれかが入っているか。入っていて転送アプリが動いていなければ起動して `:started`、動いていれば設定を読み直させて `:running`
 (`on` が false なら `:stopping`: 受け取り中の分が済んだら終わる)。動いておらず切る側なら `:none`。
 ```ruby
 FmrbReceiveConf.tell_transfer(self, on)
@@ -207,4 +243,4 @@ FmrbReceiveConf.lines.each { |l| puts l }
 
 ---
 
-*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@095a863f の API の型定義 (`sig/`) から自動で作っています。*

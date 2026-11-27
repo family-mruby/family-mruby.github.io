@@ -8,4 +8,4 @@ The app's VM pool is used up. Not caught by a bare `rescue => e`.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

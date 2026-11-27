@@ -41,7 +41,7 @@ a system pin (one `FmrbHw.pin_status` gives as `PIN_SYSTEM_EXCLUSIVE`) is "GPIO 
 the system", a pin another app (or another use such as I2C) holds is "GPIO n is in use by
 another app or driver".
 **The board's buttons** are not claimed and open with `IN` (pulls too) only; `OUT` and the like
-raise "GPIO n is a system button: input only". A claimed pin goes back to the table when the
+raise "GPIO n is input only (a system button or a chip's interrupt line)". A claimed pin goes back to the table when the
 app ends.
 
 A String or Symbol pin is an ArgumentError ("Wrong GPIO pin name"), and so is a negative
@@ -227,4 +227,4 @@ pressed = sw.low?
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

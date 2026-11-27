@@ -71,4 +71,4 @@ ring.ensure_view(@cam_x, @cam_y,
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

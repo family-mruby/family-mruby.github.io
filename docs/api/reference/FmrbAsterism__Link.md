@@ -218,4 +218,4 @@ Only needed when Link.new was given screen_wait_ms:.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@76d45150.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*

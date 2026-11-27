@@ -11,7 +11,7 @@
 | <span class="fmrb-name">[`FmrbColors`](FmrbColors.md)</span> | 色の名前の表と、/home/colors.toml の読み書き | 11 |
 | <span class="fmrb-name">[`FmrbConst`](FmrbConst.md)</span> | 端末・ビルド・キー・テーマの定数の入れもの | 1 |
 | <span class="fmrb-name">[`FmrbI18n`](FmrbI18n.md)</span> | 日本語と英語で表示を切りかえる | 8 |
-| <span class="fmrb-name">[`FmrbReceiveConf`](FmrbReceiveConf.md)</span> | ファイルや app の受け取りの設定を読み書きする | 16 |
+| <span class="fmrb-name">[`FmrbReceiveConf`](FmrbReceiveConf.md)</span> | ファイルや app の受け取りの設定を読み書きする | 19 |
 | <span class="fmrb-name">[`FmrbSystem`](FmrbSystem.md)</span> | 端末の設定とサービス | 40 |
 | <span class="fmrb-name">[`FmrbToml`](FmrbToml.md)</span> | TOML の設定を読む・行ごとに書き換える | 7 |
 | <span class="fmrb-name">[`FmrbToml::Raw`](FmrbToml__Raw.md)</span> | 引用符なしで書く値の入れもの | 2 |
@@ -68,7 +68,7 @@
 |---|---|---|
 | <span class="fmrb-name">[`Dir`](Dir.md)</span> | ディレクトリの一覧と操作 | 24 |
 | <span class="fmrb-name">[`File`](File.md)</span> | ファイルの読み書き (File) | 20 |
-| <span class="fmrb-name">[`FmrbFile`](FmrbFile.md)</span> | ファイルを丸ごと読み書きする | 11 |
+| <span class="fmrb-name">[`FmrbFile`](FmrbFile.md)</span> | ファイルを丸ごと読み書きする | 12 |
 | <span class="fmrb-name">[`IO`](IO.md)</span> | 入出力のストリーム | 7 |
 | <span class="fmrb-name">[`Time`](Time.md)</span> | 日付と時刻 | 52 |
 
@@ -136,6 +136,7 @@
 | クラス / モジュール | 中身 | メソッド数 |
 |---|---|---|
 | <span class="fmrb-name">[`FmrbHw`](FmrbHw.md)</span> | ピンの台帳を読む | 4 |
+| <span class="fmrb-name">[`FmrbUart`](FmrbUart.md)</span> | アプリの UART の境界の関数 | 15 |
 | <span class="fmrb-name">[`GC`](GC.md)</span> | ガベージコレクタの操作と統計 | 20 |
 | <span class="fmrb-name">[`GPIO`](GPIO.md)</span> | 1 本のピンを入れ出力に使う | 16 |
 | <span class="fmrb-name">[`GPIO::Error`](GPIO__Error.md)</span> | GPIO の周辺機器の失敗の番号と例外 | 1 |
@@ -144,6 +145,7 @@
 | <span class="fmrb-name">[`Math`](Math.md)</span> | 三角関数・指数・対数などの数学関数 | 26 |
 | <span class="fmrb-name">[`Math::DomainError`](Math__DomainError.md)</span> | 定義域の外の値を渡したときの例外 | 0 |
 | <span class="fmrb-name">[`RNG`](RNG.md)</span> | 乱数の元 | 3 |
+| <span class="fmrb-name">[`UART`](UART.md)</span> | シリアル (UART) で外の機器とやりとりする | 22 |
 
 ## Ruby の基本クラス
 
@@ -158,6 +160,7 @@
 | <span class="fmrb-name">[`Float`](Float.md)</span> | 小数 (浮動小数点数) | 20 |
 | <span class="fmrb-name">[`FrozenError`](FrozenError.md)</span> | 凍結したオブジェクトの変更 | 0 |
 | <span class="fmrb-name">[`Hash`](Hash.md)</span> | 印 (キー) で値を引く表 | 20 |
+| <span class="fmrb-name">[`IOError`](IOError.md)</span> | 入出力や機器の口が使えない | 0 |
 | <span class="fmrb-name">[`IndexError`](IndexError.md)</span> | 範囲の外の位置 | 0 |
 | <span class="fmrb-name">[`Integer`](Integer.md)</span> | 整数 | 29 |
 | <span class="fmrb-name">[`Kernel`](Kernel.md)</span> | どこからでも呼べる出力・乱数・Proc の道具 | 12 |
@@ -185,4 +188,4 @@
 
 ---
 
-*このページは fmruby-core の develop@76d45150 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@095a863f の API の型定義 (`sig/`) から自動で作っています。*
