@@ -645,4 +645,4 @@ t = conn.type_of(info)
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@41060d05.*

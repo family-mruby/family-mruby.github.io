@@ -290,4 +290,4 @@ dev.info[:name]
 
 ---
 
-*このページは fmruby-core の develop@095a863f の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の develop@41060d05 の API の型定義 (`sig/`) から自動で作っています。*

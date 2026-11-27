@@ -188,4 +188,4 @@ Every class an app can use, with every method, constant and example the API sign
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@41060d05.*

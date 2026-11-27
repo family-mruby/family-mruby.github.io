@@ -506,4 +506,4 @@ The same unit as the reader.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@095a863f.*
+*Generated from the API signatures (`sig/`) of fmruby-core develop@41060d05.*
