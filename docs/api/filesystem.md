@@ -135,7 +135,7 @@ list_files("/usr/share/sounds/nsf")
 
 **(development version)** A module of functions that take a path and read or write the whole
 file at once, with nothing to open or close. It is the same in every language an app can be
-written in — Ruby, Lua, MicroPython and [WebAssembly](../wasm_apps.md) — which makes it the
+written in — Ruby, Lua, MicroPython and [WebAssembly](../languages/wasm.md) — which makes it the
 way to handle files in an app meant to be read across languages. `File` stays as it is.
 
 | Method | Returns |

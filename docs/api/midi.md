@@ -137,8 +137,8 @@ instrument, switchable at runtime.
 
 !!! note "This MML is not BASIC's MML"
     FMRuby BASIC has its own `PLAY` statement with Family BASIC-compatible syntax. It is a
-    separate implementation and the two dialects are not the same. See [MicroPython and
-    BASIC](../other_languages.md).
+    separate implementation and the two dialects are not the same. See [FMRuby
+    BASIC](../languages/basic.md).
 
 ## Watching what goes out
 

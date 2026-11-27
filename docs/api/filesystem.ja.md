@@ -134,7 +134,7 @@ list_files("/usr/share/sounds/nsf")
 ## パスで丸ごと読み書きする (`FmrbFile`)
 
 **(開発版)** パスを渡してファイル全体を一度に読み書きする関数のモジュールです。開く・閉じるは
-ありません。アプリを書けるどの言語 (Ruby、Lua、MicroPython、[WebAssembly](../wasm_apps.md)) でも
+ありません。アプリを書けるどの言語 (Ruby、Lua、MicroPython、[WebAssembly](../languages/wasm.md)) でも
 同じなので、言語をまたいで読まれるアプリのファイルの扱いに向いています。`File` は今までどおりです。
 
 | メソッド | 返り値 |

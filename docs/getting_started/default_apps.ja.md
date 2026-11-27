@@ -66,7 +66,7 @@ Modern では、常駐する[サービス](../file_formats/services.md)を抱え
 
 ## BASIC — `/app/basic`
 
-[FMRuby BASIC](../other_languages.md) のプログラム。動かせて、読めます。
+[FMRuby BASIC](../languages/basic.md) のプログラム。動かせて、読めます。
 
 | アプリ | |
 |---|---|
@@ -83,7 +83,7 @@ Modern では、常駐する[サービス](../file_formats/services.md)を抱え
 
 ## WebAssembly — `/app/tinygo`・`/app/rust`・`/app/zig`・`/app/c`
 
-[WebAssembly のアプリ](../wasm_apps.md)。ESP32-P4 の基板、Linux 版、シミュレータ、Studio で動きます
+[WebAssembly のアプリ](../languages/wasm.md)。ESP32-P4 の基板、Linux 版、シミュレータ、Studio で動きます
 **(開発版)**。
 
 | アプリ | |

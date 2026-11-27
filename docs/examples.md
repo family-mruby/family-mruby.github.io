@@ -41,7 +41,7 @@ A full list of what ships, in every language, is in
 | `tour.app.wasm` (one per language) | The same app in C, TinyGo, Rust and Zig, page for page: read two side by side to see how each language writes the same call. The sources are in the [SDK](https://github.com/family-mruby/family-mruby-sdk) (`<language>/examples/tour`) |
 | `hello.app.wasm` (one per language) | The smallest app, the one the SDK's guide builds |
 
-See [WebAssembly Apps](wasm_apps.md) **(development version)**.
+See [WebAssembly Apps](languages/wasm.md) **(development version)**.
 
 ## Games — `/app/game`
 

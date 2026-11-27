@@ -119,7 +119,7 @@ icon = "/usr/share/icon/myapp.icon"
 | `.py` | `/usr/share/icon/python.icon` |
 | `.wasm` | `/usr/share/icon/wasm.icon` |
 
-[WebAssembly のアプリ](../wasm_apps.md) は、ふつうは言語のアイコン (`c.icon`・`tinygo.icon`・
+[WebAssembly のアプリ](../languages/wasm.md) は、ふつうは言語のアイコン (`c.icon`・`tinygo.icon`・
 `rust.icon`・`zig.icon`) を指定します。
 
 ### ランチャーが読むもの

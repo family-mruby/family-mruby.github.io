@@ -40,7 +40,7 @@
 | `tour.app.wasm` (言語ごとに 1 つ) | C・TinyGo・Rust・Zig で書いた同じアプリ。ページも同じなので、2 つを並べて読めば同じ呼び出しを言語ごとにどう書くかが分かります。ソースは [SDK](https://github.com/family-mruby/family-mruby-sdk) の `<言語>/examples/tour` |
 | `hello.app.wasm` (言語ごとに 1 つ) | いちばん小さいアプリ。SDK の手順書で作るもの |
 
-[WebAssembly のアプリ](wasm_apps.md) を参照してください **(開発版)**。
+[WebAssembly のアプリ](languages/wasm.md) を参照してください **(開発版)**。
 
 ## ゲーム — `/app/game`
 

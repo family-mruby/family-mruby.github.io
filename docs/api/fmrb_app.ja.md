@@ -319,7 +319,7 @@ end
 | `FmrbApp.config(section)` | アプリの `.toml` から指定セクションを読み出し |
 | `FmrbApp.wallclock` | 現在時刻 (`{year, month, day, hour, minute, second}`) |
 | `FmrbApp.gfx_stats` | 描画統計 `{cmds:, presents:}` |
-| `FmrbApp.wasm_stats` / `FmrbApp.wasm_app_stats(pid)` | WebAssembly のランタイムの様子 (`running`、`apps`、`pool_used`、`pool_total`、`traps` など。ランタイムの無い端末では全部 0) と、1 つの [WebAssembly のアプリ](../wasm_apps.md) の様子 (`pages`、`max_pages`、`binary_size`、`hook_us`、`hook_max_us`、`calls`。`pid` が WebAssembly のアプリでなければ `nil`) **(開発版)** |
+| `FmrbApp.wasm_stats` / `FmrbApp.wasm_app_stats(pid)` | WebAssembly のランタイムの様子 (`running`、`apps`、`pool_used`、`pool_total`、`traps` など。ランタイムの無い端末では全部 0) と、1 つの [WebAssembly のアプリ](../languages/wasm.md) の様子 (`pages`、`max_pages`、`binary_size`、`hook_us`、`hook_max_us`、`calls`。`pid` が WebAssembly のアプリでなければ `nil`) **(開発版)** |
 | `FmrbApp.sys_pool_info` | システムメモリプール情報 |
 | `FmrbApp.pool_used` | 自分のプールを何バイト使ったか。読めないときは `-1`。処理の前後で引き算すると、その処理が出したごみの量が分かります |
 | `FmrbApp.heap_info` | ESP-IDF ヒープ情報（`free`, `total`, `min_free`, `largest_block` ほか） |

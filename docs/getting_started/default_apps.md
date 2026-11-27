@@ -66,7 +66,7 @@ On Modern a service host also runs in the background, holding the resident
 
 ## BASIC — `/app/basic`
 
-Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
+Programs in [FMRuby BASIC](../languages/basic.md), runnable and readable:
 
 | App | |
 |---|---|
@@ -83,7 +83,7 @@ Programs in [FMRuby BASIC](../other_languages.md), runnable and readable:
 
 ## WebAssembly — `/app/tinygo`, `/app/rust`, `/app/zig`, `/app/c`
 
-[WebAssembly apps](../wasm_apps.md), on the ESP32-P4 boards, the Linux program, the simulator
+[WebAssembly apps](../languages/wasm.md), on the ESP32-P4 boards, the Linux program, the simulator
 and Studio **(development version)**:
 
 | App | |

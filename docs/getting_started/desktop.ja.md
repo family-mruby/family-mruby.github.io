@@ -140,7 +140,7 @@ Modern にも同じ設定があり、false にすると何も告知せず、誰�
 | Editor | エディタ。ファームウェアに組み込みで、Shell とアプリの店とともにランチャーの先頭に並びます |
 | File Manager | フラッシュの中のファイルを見る |
 | Log Viewer | システムログ |
-| Monitor | 動いているタスク、メモリ、[サービス](../file_formats/services.md)。[WebAssembly のアプリ](../wasm_apps.md) 用の WASM のページ |
+| Monitor | 動いているタスク、メモリ、[サービス](../file_formats/services.md)。[WebAssembly のアプリ](../languages/wasm.md) 用の WASM のページ |
 | Set Clock | 日付と時刻 |
 | Config | 言語、キーボード配列、カーソル速度、配色、壁紙、時間帯、音量、WiFi/BLE の自動起動、表示の余白 |
 | Mute / Unmute (消音 / 消音を解除) | メニューバーのスピーカーと同じ切り替え |

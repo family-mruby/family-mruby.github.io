@@ -54,10 +54,10 @@ Family mruby の各アプリは独立した Ruby VM として動作し、それ�
 | 言語 | 状況 |
 |---|---|
 | Ruby (PicoRuby) | 中心となる言語。この文書に書かれているものが全部使えます |
-| MicroPython | 使えますが制限があります。Python アプリは同時に 1 本、ファイルは丸ごとの読み書きだけ (`FmrbFile`)、文字列はバイト列、標準ライブラリは狭い。描画・スプライト・音は使えます。[MicroPython と BASIC](other_languages.md) を参照 |
-| BASIC | 2.0 で機能実装完了。Family BASIC (V3) との既知の差は全件が整理されています。[MicroPython と BASIC](other_languages.md) を参照 |
+| MicroPython | 使えますが制限があります。Python アプリは同時に 1 本、ファイルは丸ごとの読み書きだけ (`FmrbFile`)、文字列はバイト列、標準ライブラリは狭い。描画・スプライト・音は使えます。[MicroPython](languages/micropython.md) を参照 |
+| BASIC | 2.0 で機能実装完了。Family BASIC (V3) との既知の差は全件が整理されています。[FMRuby BASIC](languages/basic.md) を参照 |
 | Lua | コンセプト実装。本格的なアプリを書くのには適していません |
-| C・TinyGo・Rust・Zig | [WebAssembly のアプリ](wasm_apps.md) として、開発版で試験的に動きます。ESP32-S3 の基板 (Retro・StickS3・AtomS3R) では動きません。SDK の名前や形はこれから変わることがあります |
+| C・TinyGo・Rust・Zig | [WebAssembly のアプリ](languages/wasm.md) として、開発版で試験的に動きます。ESP32-S3 の基板 (Retro・StickS3・AtomS3R) では動きません。SDK の名前や形はこれから変わることがあります |
 
 ## アプリの中で待つとき
 

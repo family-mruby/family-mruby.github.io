@@ -135,7 +135,7 @@ o5 l4 cegegegc   パート。書いた順に 1 つずつチャンネルへ
 
 !!! note "この MML は BASIC の MML とは別物です"
     FMRuby BASIC には Family BASIC 互換の `PLAY` 文があります。これは別の実装で、書き方も
-    同じではありません。[MicroPython と BASIC](../other_languages.md) を参照してください。
+    同じではありません。[FMRuby BASIC](../languages/basic.md) を参照してください。
 
 ## 出ているものを確かめる
 

@@ -121,7 +121,7 @@ If `icon` is omitted in the `.toml`, a default icon is used based on the main fi
 | `.py` | `/usr/share/icon/python.icon` |
 | `.wasm` | `/usr/share/icon/wasm.icon` |
 
-A [WebAssembly app](../wasm_apps.md) usually names its language's icon instead:
+A [WebAssembly app](../languages/wasm.md) usually names its language's icon instead:
 `c.icon`, `tinygo.icon`, `rust.icon` or `zig.icon`.
 
 ### What the launcher loads

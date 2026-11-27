@@ -35,7 +35,7 @@ Place the pair under `/app/<category>/` (where `category` is any subdirectory su
 | Lua | `.app.lua` |
 | BASIC | `.app.bas` |
 | MicroPython | `.app.py` |
-| WebAssembly (C, TinyGo, Rust, Zig) | `.app.wasm` — see [WebAssembly Apps](../wasm_apps.md) **(development version)** |
+| WebAssembly (C, TinyGo, Rust, Zig) | `.app.wasm` — see [WebAssembly Apps](../languages/wasm.md) **(development version)** |
 
 ## Key Reference
 

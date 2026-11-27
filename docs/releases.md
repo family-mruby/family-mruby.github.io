@@ -36,12 +36,12 @@ Apps written for 3.0.0 need small changes:
   top of the file; with both, a key in the `.app.toml` wins.
   → [App Config](file_formats/app_toml.md#metadata-in-the-rb-file)
 - **Lua apps** run on a shell the system provides: define `on_create` / `on_update` /
-  `on_event` and draw with the global `gfx`. → [Other languages](other_languages.md#lua)
+  `on_event` and draw with the global `gfx`. → [Lua](languages/lua.md)
 - **Lua and MicroPython follow Ruby's argument order.** Lua's `gfx:draw_text` is
   `(x, y, text, color)`, and the sizes are functions: `FmrbApp.user_area_width()`,
   `user_area_height()`, `window_width()`, `window_height()`. In MicroPython,
   `_fmrb.read_file` and `_fmrb.file_size` gave way to `FmrbFile`, and `gfx.clear()` needs its
-  colour. → [Other languages](other_languages.md)
+  colour. → [Other languages](languages/index.md)
 
 ### New
 
@@ -67,12 +67,12 @@ Apps written for 3.0.0 need small changes:
   the ESP32-S3 boards), with the same functions Ruby apps have. The SDK is
   [family-mruby-sdk](https://github.com/family-mruby/family-mruby-sdk); the same tour app in
   each language ships under `/app/tinygo`, `/app/rust`, `/app/zig` and `/app/c`, and an app
-  dropped on the Studio page runs there. → [WebAssembly Apps](wasm_apps.md)
+  dropped on the Studio page runs there. → [WebAssembly Apps](languages/wasm.md)
 - **One definition for every language.** The functions apps call are generated from the
   firmware's type definitions for Ruby, Lua, MicroPython and WebAssembly alike. Lua gained
   sound, the log, the clipboard, the clocks, the window's state and files; MicroPython gained
   the rest of `FmrbGfx` (arcs, `get_pixel`, masks, `blend_rect` ...), `FmrbApp.uptime_ms()`
-  and 64-bit integers. → [Other languages](other_languages.md)
+  and 64-bit integers. → [Other languages](languages/index.md)
 - **`FmrbFile`**: read, write, append, list and delete whole files by path, the same in every
   language. → [Files & I/O](api/filesystem.md#whole-files-by-path-fmrbfile)
 - **A new boot.** The logo comes on like a CRT television, over a chord that rises a fifth,
@@ -237,7 +237,7 @@ The release that added the second machine.
 - **Remote desktop.** The Tab5 serves its screen over Wi-Fi, and a browser on the same
   network drives it with a PC keyboard and mouse. → [Remote Desktop](remote_desktop.md)
 - **FMRuby BASIC.** A Family BASIC-compatible interpreter with its own text screen, sprites
-  and sound. → [MicroPython and BASIC](other_languages.md)
+  and sound. → [FMRuby BASIC](languages/basic.md)
 - **MicroPython.** A `.py` file runs as an ordinary app.
 - **MIDI.** Serial MIDI out on the Tab5's GROVE port, MML from Ruby, and a player for
   standard MIDI files. → [MIDI](api/midi.md)

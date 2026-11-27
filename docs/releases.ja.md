@@ -33,11 +33,11 @@
 - **記述を `.rb` の中に。** `.app.toml` のキーは、ファイル先頭の `#---fmrb` コメントにも書けます。
   両方あるときは `.app.toml` のキーが勝ちます。 → [アプリ設定](file_formats/app_toml.md#rb-ファイルの中の記述)
 - **Lua のアプリ**は本体が用意するアプリシェルの上で動きます。`on_create` / `on_update` / `on_event` を
-  定義し、グローバルの `gfx` で描きます。 → [ほかの言語](other_languages.md#lua)
+  定義し、グローバルの `gfx` で描きます。 → [Lua](languages/lua.md)
 - **Lua と MicroPython も Ruby の引数の順に。** Lua の `gfx:draw_text` は `(x, y, text, color)` に
   なり、大きさは関数 (`FmrbApp.user_area_width()`・`user_area_height()`・`window_width()`・
   `window_height()`) になりました。MicroPython の `_fmrb.read_file` と `_fmrb.file_size` は
-  `FmrbFile` に替わり、`gfx.clear()` には色が要ります。 → [ほかの言語](other_languages.md)
+  `FmrbFile` に替わり、`gfx.clear()` には色が要ります。 → [ほかの言語](languages/index.md)
 
 ### 新しいこと
 
@@ -61,11 +61,11 @@
   動きます (ESP32-S3 の基板では動きません)。SDK は
   [family-mruby-sdk](https://github.com/family-mruby/family-mruby-sdk) です。各言語の同じ tour の
   アプリが `/app/tinygo`・`/app/rust`・`/app/zig`・`/app/c` に入り、Studio のページに投げ込んだ
-  アプリもそこで動きます。 → [WebAssembly のアプリ](wasm_apps.md)
+  アプリもそこで動きます。 → [WebAssembly のアプリ](languages/wasm.md)
 - **全部の言語に 1 つの定義**。アプリが呼ぶ関数は、ファームウェアの型定義から Ruby・Lua・MicroPython・
   WebAssembly のどれにも生成します。Lua には音、ログ、クリップボード、時計、ウィンドウの状態、
   ファイルが加わり、MicroPython には `FmrbGfx` の残り (円弧、`get_pixel`、マスク、`blend_rect` など)、
-  `FmrbApp.uptime_ms()`、64 ビットの整数が加わりました。 → [ほかの言語](other_languages.md)
+  `FmrbApp.uptime_ms()`、64 ビットの整数が加わりました。 → [ほかの言語](languages/index.md)
 - **`FmrbFile`**。パスでファイルを丸ごと読む・書く・追記する・一覧する・消す。どの言語でも同じです。
   → [ファイル・I/O](api/filesystem.md#パスで丸ごと読み書きする-fmrbfile)
 - **起動の演出を一新**。ブラウン管のテレビのようにロゴが出て、5 度上がる和音が鳴り、2.7 秒
@@ -223,7 +223,7 @@ Modern は 1 チップ構成なので、Tab5 のファームウェアだけで�
 - **遠隔画面。** Tab5 が自分の画面を WiFi で配信し、同じネットワークのブラウザからパソコンの
   キーボードとマウスで操作できます。→ [遠隔画面](remote_desktop.md)
 - **FMRuby BASIC。** Family BASIC 互換の言語です。専用のテキスト画面、スプライト、音を
-  持ちます。→ [MicroPython と BASIC](other_languages.md)
+  持ちます。→ [FMRuby BASIC](languages/basic.md)
 - **MicroPython。** `.py` のファイルが普通のアプリとして動きます。
 - **MIDI。** Tab5 の GROVE 端子からのシリアル MIDI 出力、Ruby からの MML、標準 MIDI ファイルの
   再生。→ [MIDI](api/midi.md)

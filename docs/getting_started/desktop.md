@@ -147,7 +147,7 @@ Studio).
 | Editor | The editor. It is built into the firmware, and heads the launcher grid with the Shell and the App Store |
 | File Manager | Browse the flash filesystem |
 | Log Viewer | The system log |
-| Monitor | Running tasks, memory and [services](../file_formats/services.md); a WASM page for [WebAssembly apps](../wasm_apps.md) |
+| Monitor | Running tasks, memory and [services](../file_formats/services.md); a WASM page for [WebAssembly apps](../languages/wasm.md) |
 | Set Clock | Date and time |
 | Config | Language, keyboard layout, pointer speed, theme, wallpaper, timezone, volume, Wi-Fi and BLE autostart, display margins |
 | Mute / Unmute | The same switch as the speaker in the menu bar |

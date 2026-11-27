@@ -97,8 +97,7 @@ plugins:
             Tools: 開発ツール
             Remote Desktop: 遠隔画面
             Debugging: デバッグ
-            MicroPython and BASIC: MicroPython と BASIC
-            WebAssembly Apps: WebAssembly のアプリ
+            Other Languages: 他の言語
             Limitations: 制約事項
             Examples: サンプル集
             Hardware: ハードウェア
@@ -312,8 +311,12 @@ nav:
       - System Services (services.toml): file_formats/services.md
       - Audio File Formats: file_formats/audio_formats.md
       - Image & Icon Files: file_formats/image_formats.md
-  - MicroPython and BASIC: other_languages.md
-  - WebAssembly Apps: wasm_apps.md
+  - Other Languages:
+      - Overview: languages/index.md
+      - MicroPython: languages/micropython.md
+      - Lua: languages/lua.md
+      - BASIC: languages/basic.md
+      - WebAssembly: languages/wasm.md
   - Tools:
       - Remote Desktop: remote_desktop.md
       - Debugging: debugging.md
