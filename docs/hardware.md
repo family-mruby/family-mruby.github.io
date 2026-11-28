@@ -207,7 +207,7 @@ each runs one app on its own small screen and joins an
 | Firmware | `fmruby-core-sticks3` | `fmruby-core-atoms3r` |
 
 The app they start is Welcome: the version, the Wi-Fi state, the address and what to do
-next. Wi-Fi is set from the [Family mruby Console](getting_started/console.md) over BLE:
+next. Wi-Fi is set from the [Family mruby Console](tools/console.md) over BLE:
 hold the button while powering on to enter setup mode (a board with no Wi-Fi settings at all
 starts in it by itself). After that, apps are sent and started over Wi-Fi, the same
 file and app endpoints as on the other boards. Limits are in

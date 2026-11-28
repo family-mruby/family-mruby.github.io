@@ -6,7 +6,7 @@ is running is in the system menu under About. [Studio](getting_started/studio.md
 runs the newest one.
 
 Every release replaces the whole flash image, `/home` included. Copy anything you want to
-keep off the device before flashing — see [Console](getting_started/console.md).
+keep off the device before flashing — see [Console](tools/console.md).
 
 ## 3.1.1 — 2026-11-28
 
@@ -59,9 +59,9 @@ Apps written for 3.0.0 need small changes:
   the Grove port is free for it. → [Hardware Control](api/peripherals.md#uart-serial)
 - **Remote shell.** An Asterism console's Terminal can enter a machine (`remote <node>`) to look
   at and change its files and apps, once its owner turns it on in the Receiving app; a mark
-  (RS) on the menu bar shows while someone is in. → [Family mruby Console](getting_started/console.md)
+  (RS) on the menu bar shows while someone is in.
 - **Remote control is closed on release builds** until the owner allows it (Config > Remote
-  control) and pairs a PC. → [Remote Desktop](remote_desktop.md)
+  control) and pairs a PC. → [Remote Desktop](tools/remote_desktop.md)
 - **The editor holds up to five documents** in tabs, with File > New and Close.
 - **Chat** (rooms kept by a chat host) and the **AI helper** (asks a tutor host over Asterism and
   puts hints or whole apps into the editor), on Modern machines on an Asterism network.
@@ -110,7 +110,7 @@ Apps written for 3.0.0 need small changes:
   [Sound](api/audio.md#playing-a-recording-play_wav), [Hardware](hardware.md#storage-modern)
 - **`/home` over Wi-Fi.** The file endpoints reach every path, keys included, so `/home` can
   be backed up before flashing and put back after.
-  → [Remote Desktop](remote_desktop.md#files-and-apps-over-wi-fi),
+  → [Remote Desktop](tools/remote_desktop.md#files-and-apps-over-wi-fi),
   [Security](limitations.md#security)
 - `/app/test` and Walk Scroller are left out of every board's image and the public browser
   build; they can be sent to a board over Wi-Fi.
@@ -228,7 +228,7 @@ Applies to Modern, Retro, the simulator and Studio.
   board and in the browser. → [Network](api/network.md#fetching-without-stopping-fmrbnetrequest)
 - **The mouse wheel.** The editor, the shell, the log and the file dialogs scroll with it.
 - **Files and apps over Wi-Fi on Retro too.** `/fs` and `/app` answer on both machines now;
-  only the screen is Modern's. → [Remote Desktop](remote_desktop.md#on-retro)
+  only the screen is Modern's. → [Remote Desktop](tools/remote_desktop.md#on-retro)
 - **Each board names itself.** `fmruby-XXXXXX.local`, after its own MAC, and `fmruby.local`
   still answers. → [Connecting to Wi-Fi](getting_started/wifi.md#the-name-the-board-answers-to)
 - **`boot_splash` and `startup_app`.** Skip the logo and the jingle, or open one app as soon
@@ -280,14 +280,14 @@ The release that added the second machine.
 - **Modern (ESP32-P4).** A stock M5Stack Tab5, flashed from the browser, with its own panel,
   speaker, touch screen and Wi-Fi. → [Modern](getting_started/modern.md)
 - **Remote desktop.** The Tab5 serves its screen over Wi-Fi, and a browser on the same
-  network drives it with a PC keyboard and mouse. → [Remote Desktop](remote_desktop.md)
+  network drives it with a PC keyboard and mouse. → [Remote Desktop](tools/remote_desktop.md)
 - **FMRuby BASIC.** A Family BASIC-compatible interpreter with its own text screen, sprites
   and sound. → [FMRuby BASIC](languages/basic.md)
 - **MicroPython.** A `.py` file runs as an ordinary app.
 - **MIDI.** Serial MIDI out on the Tab5's GROVE port, MML from Ruby, and a player for
   standard MIDI files. → [MIDI](api/midi.md)
 - **A debugger on the device.** Breakpoints and variables from the editor, and the same
-  session over BLE or TCP from a PC. → [Debugging](debugging.md)
+  session over BLE or TCP from a PC. → [Debugging](tools/debugging.md)
 - **`Ctrl` + `Tab`.** Switch between the running apps, and park a fullscreen one where it
   stands. → [The Desktop](getting_started/desktop.md)
 - **Per-app stack size.** `task_stack_kb` in `.app.toml`, for an app that needs more than the

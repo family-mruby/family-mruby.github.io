@@ -23,7 +23,7 @@ hand-written layer on top that makes them read naturally in that language.
 | Machine | WebAssembly apps |
 |---|---|
 | Modern (M5Stack Tab5) and other ESP32-P4 boards | Yes |
-| [The Linux program](../getting_started/linux.md) and the [simulator](../getting_started/simulator.md) | Yes |
+| [The Linux program](../getting_started/linux.md) and the [simulator](../tools/simulator.md) | Yes |
 | [Studio](../getting_started/studio.md) (the browser build) | Yes |
 | Retro and the other ESP32-S3 boards (StickS3, AtomS3R) | Not yet. Starting one shows `wasm apps are not in this build` |
 
@@ -98,7 +98,7 @@ The log is the browser's developer console. `/app/usr` stays in the browser betw
 after a rebuild, drop the folder again and the new files replace the old ones.
 
 On an ESP32-P4 board the same two files can be sent over Wi-Fi and started without flashing
-— see [Files, and apps, over Wi-Fi](../remote_desktop.md#files-and-apps-over-wi-fi).
+— see [Files, and apps, over Wi-Fi](../tools/remote_desktop.md#files-and-apps-over-wi-fi).
 
 ## How the system treats them
 

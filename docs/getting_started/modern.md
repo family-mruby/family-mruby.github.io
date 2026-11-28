@@ -37,7 +37,7 @@ touch](#using-touch) below). A real mouse is still more comfortable for dragging
 
 ### Nice to have
 
-- **A Wi-Fi network.** With Wi-Fi configured you get the [remote desktop](../remote_desktop.md)
+- **A Wi-Fi network.** With Wi-Fi configured you get the [remote desktop](../tools/remote_desktop.md)
   — your PC's browser shows the Tab5's screen and drives it with your PC's keyboard and
   mouse — and apps can reach the internet.
 - **A GROVE cable** if you want to talk to sensors, or send [MIDI](../api/midi.md) to an
@@ -64,7 +64,7 @@ it stuck, press the reset button once and try again.
 !!! note "This erases the flash filesystem"
     Flashing writes the whole image, including the file area. Anything you wrote on the
     device — your own apps, edited config files — is replaced by the shipped contents. Copy
-    anything you care about off the device first (see [Console](console.md)).
+    anything you care about off the device first (see [Console](../tools/console.md)).
 
 More detail, including the Retro procedure and troubleshooting, is in
 [Firmware Update](firmware_update.md).
@@ -127,7 +127,7 @@ Pointer speed is adjustable: Config → `mouse_scale_x` / `mouse_scale_y`.
 
 ## Connecting to Wi-Fi
 
-Wi-Fi gets you the [remote desktop](../remote_desktop.md) and the
+Wi-Fi gets you the [remote desktop](../tools/remote_desktop.md) and the
 [networking API](../api/network.md). Credentials go in `/etc/wifi.toml`, which you create
 once on the device with the editor:
 
@@ -149,7 +149,7 @@ Full instructions, and what to do when it will not connect, are in
 [Connecting to Wi-Fi](wifi.md).
 
 !!! tip "Both radios at once"
-    On Modern the ESP32-C6 handles Wi-Fi and BLE together, so the [web console](console.md)
+    On Modern the ESP32-C6 handles Wi-Fi and BLE together, so the [web console](../tools/console.md)
     over BLE keeps working while Wi-Fi is up. (On Retro the ESP32-S3 has one radio and runs
     one or the other.)
 
@@ -166,7 +166,7 @@ does not resolve on your machine. You get the live screen, and your PC's keyboar
 drive the device, global shortcuts included.
 
 This is the fastest way to work: type on your PC's keyboard, watch the real hardware run.
-See [Remote Desktop](../remote_desktop.md) for the details and the settings.
+See [Remote Desktop](../tools/remote_desktop.md) for the details and the settings.
 
 ## Where your files go
 
@@ -211,6 +211,6 @@ setting, under Config.
 
 - [Hello World](hello_world.md) — write and run your first app
 - [Default Apps](default_apps.md) — what is already installed
-- [Remote Desktop](../remote_desktop.md) — work from your PC's browser
+- [Remote Desktop](../tools/remote_desktop.md) — work from your PC's browser
 - [API Reference](../api/index.md) — what your app can call
 - [Hardware](../hardware.md) — pin assignments and the GROVE port

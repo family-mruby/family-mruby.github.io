@@ -29,7 +29,7 @@ pressing the wrong button gives you an error, not a broken device.
 !!! warning "Flashing replaces the files on the device"
     The image includes the flash filesystem. Your own apps and any config files you edited
     on the device are replaced by the shipped contents. Copy anything you want to keep off
-    the device first — see [Console](console.md).
+    the device first — see [Console](../tools/console.md).
 
 ## Modern (M5Stack Tab5)
 

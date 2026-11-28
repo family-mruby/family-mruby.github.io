@@ -52,7 +52,7 @@ ESP32-P4 が 1 個で OS・描画・音・入力の全部を動かし、その�
 | キーボード | Tab5 Keyboard、または USB キーボード | USB キーボード |
 | USB ホスト | USB-A 端子 | USB-A 端子 |
 | WiFi / BLE | 両方同時に使える (ESP32-C6) | どちらか一方のみ (無線が 1 系統) |
-| 遠隔画面 | あり (WiFi 越しにブラウザから) | なし |
+| リモートデスクトップ | あり (WiFi 越しにブラウザから) | なし |
 | [WebAssembly のアプリ](../languages/wasm.md) (C・TinyGo・Rust・Zig) | あり (3.1.0 から) | なし |
 | 拡張 | GROVE x1 | GROVE x2、電池で動く時計 |
 | ストレージ | 内蔵フラッシュ 16MB + microSD | 内蔵フラッシュ 16MB + microSD |
@@ -66,7 +66,7 @@ ESP32-P4 が 1 個で OS・描画・音・入力の全部を動かし、その�
 - 同梱アプリ一式 (ゲームやデモも含む)
 - MicroPython (`.py`)、BASIC (`.bas`)、Lua のアプリ
 - Ruby のネットワーク API、MIDI 出力
-- [シミュレータ](simulator.md)。実機が無くても Linux 上で全部動きます
+- [シミュレータ](../tools/simulator.md)。実機が無くても Linux 上で全部動きます
 
 ## ほかの動かし方
 

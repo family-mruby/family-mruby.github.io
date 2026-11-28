@@ -10,7 +10,7 @@ device's flash, and both can be edited with the on-device editor.
 
 !!! warning "Flashing replaces them"
     Writing firmware rewrites the whole flash image, `/etc` included. Copy anything you have
-    customised off the device first — see [Console](../getting_started/console.md).
+    customised off the device first — see [Console](../tools/console.md).
 
 ## Editing
 
@@ -149,7 +149,7 @@ h264_bitrate_kbps = 1000
 h264_gop = 30
 ```
 
-Each key is explained in [Remote Desktop](../remote_desktop.md).
+Each key is explained in [Remote Desktop](../tools/remote_desktop.md).
 
 ## `/etc/wifi.toml`
 

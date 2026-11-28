@@ -221,7 +221,7 @@ pressed down, and touch screens are not taken.
 - **No SD card.** `/mnt/sd` and `/sd` do not exist; use `/mnt/host`.
 - **No hardware pins.** GPIO, I2C, the GROVE port and the boards' sensors are not there.
 - **Retro** (the two-chip machine) is not available as a Linux program; the
-  [simulator](simulator.md) covers it.
+  [simulator](../tools/simulator.md) covers it.
 - **Security.** Every Family mruby app may start Linux programs, run Linux commands and read
   and write your home directory through `/mnt/host` — with your Linux user's rights. Any
   Wayland application in the session can capture the screen and type into the focused

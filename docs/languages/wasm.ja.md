@@ -22,7 +22,7 @@ WebAssembly のアプリから呼べるもの (描画、文字と日本語、画
 | 端末 | WebAssembly のアプリ |
 |---|---|
 | Modern (M5Stack Tab5) とほかの ESP32-P4 の基板 | 動きます |
-| [Linux 版](../getting_started/linux.md)と[シミュレータ](../getting_started/simulator.md) | 動きます |
+| [Linux 版](../getting_started/linux.md)と[シミュレータ](../tools/simulator.md) | 動きます |
 | [Studio](../getting_started/studio.md) (ブラウザ版) | 動きます |
 | Retro とほかの ESP32-S3 の基板 (StickS3、AtomS3R) | まだ動きません。起動すると `wasm apps are not in this build` と出ます |
 
@@ -95,7 +95,7 @@ import している関数がすべてあるかを確認します。ファーム�
 残っています。作り直したら、もう一度フォルダを投げ込めば新しいファイルに置き換わります。
 
 ESP32-P4 の基板なら、同じ 2 つのファイルを WiFi で送り、焼き直さずに起動できます。
-[WiFi でファイルとアプリを扱う](../remote_desktop.md#wifi-でファイルとアプリを扱う) を参照してください。
+[WiFi でファイルとアプリを扱う](../tools/remote_desktop.md#wifi-でファイルとアプリを扱う) を参照してください。
 
 ## 本体での扱い
 

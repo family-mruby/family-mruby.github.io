@@ -2,18 +2,19 @@
 
 ## Security
 
-**Nothing on this machine is access-controlled.** The network features were built for a
-hobby machine on a home network, and they assume everyone who can reach the device is
-welcome to use it.
+**Most of the network features are not access-controlled.** They were built for a hobby
+machine on a home network, and they assume everyone who can reach the device is welcome to
+use it. The exception is the Wi-Fi remote control on release builds (what the Web Installer
+writes, since 3.1.0): it stays closed until the owner opens it and pairs a PC.
 
 | | |
 |---|---|
-| **Remote desktop** | No authentication. Anyone on the same network can open the address, watch the screen and send keyboard and mouse input — that is, operate the machine |
-| **The file and app endpoints beside it** | Also unauthenticated, and in the released build. Anyone who can reach the remote desktop can also list, read, write and delete files, and start or stop apps |
+| **Remote desktop** | Release builds: closed until the owner turns on **Remote control** in Config, and then open only to paired PCs, which send a token. The traffic is plain HTTP, so the screen, the input and the token itself can be read on the network. Development builds: no authentication; anyone on the same network can watch the screen and send keyboard and mouse input. → [Remote Desktop](tools/remote_desktop.md#who-can-connect) |
+| **The file and app endpoints beside it** | Behind the same switch. Release builds write only under `/home`, `/app` and `/mnt/sd`, and never serve keys or passwords. Development builds have no authentication and reach every path. Anyone let in can list, read, write and delete files, and start or stop apps |
 | **BLE console and debug service** | Starts at boot by default on Retro and on Modern (Tab5, NARYA v4); turn it off with the BLE Auto Start setting (`ble_auto_start`). The headless AtomS3R and StickS3 run it only in setup mode. While it runs it uses no pairing, no bonding and no encryption (deliberately, because pairing breaks Web Bluetooth on Windows): anyone in radio range can connect, look at running apps and their variables, start or stop them, read the log, and read and write ordinary files. It cannot be stopped without a reboot |
-| **Remote debugger over TCP** | No authentication. It listens on all interfaces |
-| **Wi-Fi credentials** | Stored in plain text on the device, in `/home/wifi.toml` (what the Wi-Fi page writes) or `/etc/wifi.toml`. 3.0.0's remote file services do not serve them over HTTP. In the development version they do: the file endpoints reach every path, keys and passwords included, so that `/home` can be backed up and restored over Wi-Fi. Over BLE they are readable only while BLE Setup is open on the machine |
-| **Service keys** | An API key for the speech service sits in plain text in `/home/secrets.toml`, kept like the Wi-Fi password: in the development version the file endpoints serve it over HTTP too, as they serve the rest of `/home` |
+| **Remote debugger over TCP** | Linux builds only. No authentication. The simulator listens on all interfaces; the Linux program's package has it off, and listens only on 127.0.0.1 when it is turned on |
+| **Wi-Fi credentials** | Stored in plain text on the device, in `/home/wifi.toml` (what the Wi-Fi page writes) or `/etc/wifi.toml`. Release builds do not serve them over HTTP. Development builds do: the file endpoints reach every path, keys and passwords included, so that `/home` can be backed up and restored over Wi-Fi. Over BLE they are readable only while BLE Setup is open on the machine |
+| **Service keys** | An API key for the speech service sits in plain text in `/home/secrets.toml`, kept like the Wi-Fi password: on development builds the file endpoints serve it over HTTP too, as they serve the rest of `/home` |
 | **Apps** | An app you download runs with the same rights as any other. There is no sandbox between apps and the filesystem |
 
 Use these features only on a network you trust, and at your own risk. Do not forward a port
@@ -123,7 +124,7 @@ Most limits apply to both machines. These do not.
 | | |
 |---|---|
 | Desktop | None. The board runs the one app named in `startup_app` (Welcome, as shipped) on its small screen (StickS3 240 x 135, AtomS3R 128 x 128) |
-| Setting up Wi-Fi | Over BLE from the [Family mruby Console](getting_started/console.md): power on with the button held to enter setup mode. With no Wi-Fi settings at all the board starts in setup mode by itself. BLE runs only in setup mode |
+| Setting up Wi-Fi | Over BLE from the [Family mruby Console](tools/console.md): power on with the button held to enter setup mode. With no Wi-Fi settings at all the board starts in setup mode by itself. BLE runs only in setup mode |
 | Apps at a time | Three, as on Retro (see [Heap Size](#heap-size)) |
 
 ### Studio (the browser build)

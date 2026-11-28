@@ -115,7 +115,7 @@ S3 が描画と音の命令をシリアルで送り、WROVER がそれをコン�
 | `esp32` / Modern | ESP32-P4 (M5Stack Tab5。開発中の NARYA v4 ボード) |
 | `esp32` / Retro | ESP32-S3 + ESP32-WROVER (narya-board) |
 | `esp32` / Headless | ESP32-S3 単体 (M5Stack StickS3・AtomS3R)。アプリ 1 つで、デスクトップは無し |
-| `linux` | システム全体を Linux のプロセスとして動かします。画面は SDL2。[シミュレータ](getting_started/simulator.md) を参照 |
+| `linux` | システム全体を Linux のプロセスとして動かします。画面は SDL2。[シミュレータ](tools/simulator.md) を参照 |
 | Linux 版 | 同じシステムを、ESP-IDF を使わない普通のプログラムとして Linux のパソコンで動かします。自分のウィンドウで動くほか、セッション全体のコンポジタにもなります。各リリースに `.deb` で添付 |
 | `wasm` | 同じシステムを WebAssembly にしたもの。FreeRTOS を協調的に移植し、ブラウザのタブで動きます。[Studio](getting_started/studio.md) を参照 |
 

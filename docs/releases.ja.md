@@ -6,7 +6,7 @@
 [Studio](getting_started/studio.md) は常に最新のものが動きます。
 
 書き込むとフラッシュの内容は `/home` も含めて置き換わります。残したいものは先に取り出して
-おいてください ([コンソール](getting_started/console.md))。
+おいてください ([コンソール](tools/console.md))。
 
 ## 3.1.1 — 2026-11-28
 
@@ -55,9 +55,9 @@
   → [ハードウェア制御](api/peripherals.md#uart-シリアル)
 - **リモートシェル**。Asterism のコンソールの Terminal から端末に入り (`remote <ノード>`)、ファイルや
   アプリを見たり変えたりできます。端末の持ち主が受け取りのアプリで許したときだけで、入られている間は
-  メニューバーに印 (RS) が出ます。→ [コンソール](getting_started/console.md)
+  メニューバーに印 (RS) が出ます。
 - **リリースのビルドでは遠隔操作が閉じています**。持ち主が Config の遠隔操作で許し、PC を登録するまで
-  使えません。→ [リモートデスクトップ](remote_desktop.md)
+  使えません。→ [リモートデスクトップ](tools/remote_desktop.md)
 - **エディタで 5 つまでの文書をタブで開けます**。File > New・Close も。
 - **チャット** (チャットのホストが持つ部屋) と **AI ヘルパー** (Asterism 越しに先生役のホストに聞き、
   ヒントやアプリ全体をエディタに入れる)。Asterism の網にいる Modern の端末で。
@@ -101,7 +101,7 @@
   移しました。 → [画像・アイコンファイル](file_formats/image_formats.md)、
   [音声](api/audio.md#録音した音を鳴らす-play_wav)、[ハードウェア](hardware.md#ストレージ-modern)
 - **`/home` を WiFi で**。ファイルのエンドポイントが鍵も含めてすべてのパスを扱うので、書き込みの前に
-  `/home` を退避し、あとで戻せます。 → [遠隔画面](remote_desktop.md#wifi-でファイルとアプリを扱う)、
+  `/home` を退避し、あとで戻せます。 → [リモートデスクトップ](tools/remote_desktop.md#wifi-でファイルとアプリを扱う)、
   [セキュリティ](limitations.md#セキュリティ)
 - `/app/test` と「歩いて進む」は、どの基板のイメージにも公開のブラウザ版にも入れないようにしました。
   WiFi で基板に送れます。
@@ -213,7 +213,7 @@ core と graphics-audio のファームウェアは同じ版でなければな�
   → [ネットワーク](api/network.md#止まらずに取ってくる-fmrbnetrequest)
 - **マウスのホイール。** エディタ・シェル・ログ・ファイル選択が送れます。
 - **WiFi 越しのファイルとアプリが Retro でも。** `/fs` と `/app` は 2 機種とも答えます。
-  Modern だけのものは画面です。→ [遠隔画面](remote_desktop.md#retro-では)
+  Modern だけのものは画面です。→ [リモートデスクトップ](tools/remote_desktop.md#retro-では)
 - **実機が自分で名乗る。** MAC から作った `fmruby-XXXXXX.local` です。`fmruby.local` にも
   引き続き答えます。→ [WiFi につなぐ](getting_started/wifi.md#実機が答える名前)
 - **`boot_splash` と `startup_app`。** 起動時のロゴと音をとばす、あるいはデスクトップが出たら
@@ -264,15 +264,15 @@ Modern は 1 チップ構成なので、Tab5 のファームウェアだけで�
 
 - **Modern (ESP32-P4)。** 市販の M5Stack Tab5 をブラウザから書き込んで使います。内蔵の液晶、
   スピーカー、タッチ、WiFi がそのまま使えます。→ [Modern](getting_started/modern.md)
-- **遠隔画面。** Tab5 が自分の画面を WiFi で配信し、同じネットワークのブラウザからパソコンの
-  キーボードとマウスで操作できます。→ [遠隔画面](remote_desktop.md)
+- **リモートデスクトップ。** Tab5 が自分の画面を WiFi で配信し、同じネットワークのブラウザからパソコンの
+  キーボードとマウスで操作できます。→ [リモートデスクトップ](tools/remote_desktop.md)
 - **FMRuby BASIC。** Family BASIC 互換の言語です。専用のテキスト画面、スプライト、音を
   持ちます。→ [FMRuby BASIC](languages/basic.md)
 - **MicroPython。** `.py` のファイルが普通のアプリとして動きます。
 - **MIDI。** Tab5 の GROVE 端子からのシリアル MIDI 出力、Ruby からの MML、標準 MIDI ファイルの
   再生。→ [MIDI](api/midi.md)
 - **実機の上のデバッガ。** エディタからブレークポイントと変数を見られます。同じものを
-  パソコンから BLE や TCP 経由でも使えます。→ [デバッグ](debugging.md)
+  パソコンから BLE や TCP 経由でも使えます。→ [デバッグ](tools/debugging.md)
 - **`Ctrl` + `Tab`。** 動いているアプリを切り替え、全画面のアプリはその場に退避します。
   → [デスクトップ](getting_started/desktop.md)
 - **アプリごとのスタック。** `.app.toml` の `task_stack_kb` で、既定より多く要るアプリに

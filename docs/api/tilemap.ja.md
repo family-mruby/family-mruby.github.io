@@ -147,7 +147,7 @@ map.render(sheet, origin_x: 16, origin_y: 16, max_cols: 11, max_rows: 11)
 - スプライトエディタ: 16x16 RGB332 タイルを並べた BMP を作る
 - マップエディタ: タイル配置 + イベント編集 → 詰めた `.map.bin` か `fmrb_map` JSON で書き出し。読み込みは両方に対応
 
-`ruby web_server.rb` で起動して `http://localhost:8080` から使えます（[コンソール](../getting_started/console.md) と同じサーバ）。
+`ruby web_server.rb` で起動して `http://localhost:8080` から使えます（[コンソール](../tools/console.md) と同じサーバ）。
 
 ## サンプル: 簡単な RPG
 

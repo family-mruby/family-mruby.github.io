@@ -112,5 +112,5 @@ single radio, so Wi-Fi and BLE cannot both be running; that page explains how to
 
 - Try out the pre-installed apps
 - Write your own app → [Hello World](hello_world.md)
-- Transfer apps and files from a PC → [Console](console.md)
+- Transfer apps and files from a PC → [Console](../tools/console.md)
 - Hardware specifications → [Hardware](../hardware.md)

@@ -100,7 +100,7 @@ from = ["*"]            # "*": everyone on the network
 ```
 
 A list holds node IDs and patterns (`fmruby-*`). A router with access control must let the
-sender through as well. When the machine is a member of a [console](console.md), a section the console writes
+sender through as well. When the machine is a member of a [console](../tools/console.md), a section the console writes
 into the same file adds the senders chosen there; `areceive` shows it but leaves it alone.
 Either switch on starts the transfer app at boot.
 

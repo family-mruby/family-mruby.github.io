@@ -2,7 +2,7 @@
 
 Both machines can join a network. What it gets you:
 
-- **[Remote desktop](../remote_desktop.md)** — the device's screen in a browser on your PC,
+- **[Remote desktop](../tools/remote_desktop.md)** — the device's screen in a browser on your PC,
   driven by your PC's keyboard and mouse. Modern only
 - **[Networking from your apps](../api/network.md)** — `Net::HTTP`, WebSocket and TLS
 - **mDNS** — the device answers to a name, so you do not have to hunt for its address
@@ -92,7 +92,7 @@ you do.
 
 !!! tip "Another way in"
     If you would rather not type on the device, you can push the file from your PC over the
-    [web console](console.md), which talks to the device over BLE.
+    [web console](../tools/console.md), which talks to the device over BLE.
 
 ## Check it worked
 
@@ -142,8 +142,8 @@ still start BLE by hand later from the system menu when you need the console.
 
 ## Related
 
-- [Remote Desktop](../remote_desktop.md) — the screen in a browser
+- [Remote Desktop](../tools/remote_desktop.md) — the screen in a browser
 - [Network](../api/network.md) — the API for your apps
 - [Modern (M5Stack Tab5)](modern.md)
 - [System Configuration](../file_formats/system_conf.md) — every key in `wifi.toml` and `system_conf.toml`
-- [Console](console.md) — moving files onto the device over BLE
+- [Console](../tools/console.md) — moving files onto the device over BLE

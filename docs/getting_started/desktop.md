@@ -95,7 +95,7 @@ the PC's. The guide on the device, `/usr/share/doc/kanji.md`, says where to get 
 |---|---|
 | Nothing | BLE is off |
 | Gray box, white `B` | BLE is on, waiting for something to connect |
-| White box, inverted `B` | A client is connected — the [web console](console.md), typically |
+| White box, inverted `B` | A client is connected — the [web console](../tools/console.md), typically |
 
 On Retro the system menu starts BLE and `ble_auto_start` in Config decides whether it comes
 up at boot; there is no way to stop it again short of a reboot. Modern has the same setting,
@@ -154,7 +154,7 @@ Studio).
 | Storage | Clear cached files |
 | Network | Wi-Fi state, address, hostname, and the [Wi-Fi page](wifi.md) |
 | BLE Start | Retro only, and only when BLE did not start at boot |
-| BLE Setup | Boards only. Opens a few minutes in which the [web console](console.md) may read and write the Wi-Fi and Asterism settings and the keys; it counts down, and choosing it again closes it |
+| BLE Setup | Boards only. Opens a few minutes in which the [web console](../tools/console.md) may read and write the Wi-Fi and Asterism settings and the keys; it counts down, and choosing it again closes it |
 | Shortcuts | Every key that works here, in one list |
 | About | Version and chip information |
 
@@ -232,7 +232,7 @@ dialogs. It goes to the window that has the keyboard, not to the one under the p
 it behaves like a key rather than like a click.
 
 In the simulator, in [Studio](studio.md) and over the
-[remote desktop](../remote_desktop.md) it needs nothing. On a board a USB mouse has to be
+[remote desktop](../tools/remote_desktop.md) it needs nothing. On a board a USB mouse has to be
 named in [`/etc/hid_devices.toml`](../file_formats/hid_devices.md#the-wheel) before its
 wheel does anything — plug the mouse in and the log prints the line to add.
 

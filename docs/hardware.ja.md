@@ -206,7 +206,7 @@ ESP32-S3 を載せた市販の小型ボードで、同じ
 | ファームウェア | `fmruby-core-sticks3` | `fmruby-core-atoms3r` |
 
 起動するアプリは Welcome で、版、WiFi の状態、アドレス、次にすることを表示します。
-WiFi は [Family mruby コンソール](getting_started/console.md) から BLE で設定します。
+WiFi は [Family mruby コンソール](tools/console.md) から BLE で設定します。
 ボタンを押したまま電源を入れるとセットアップモードになります (WiFi の設定が何も無い
 ボードは自動でセットアップモードで起動します)。その後は、ほかのボードと同じファイルと
 アプリのエンドポイントを使って、WiFi でアプリを送って起動します。制約は

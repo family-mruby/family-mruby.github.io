@@ -37,7 +37,7 @@
 
 ### あると良いもの
 
-- **WiFi**。設定すると [遠隔画面](../remote_desktop.md) が使えるようになり、パソコンの
+- **WiFi**。設定すると [リモートデスクトップ](../tools/remote_desktop.md) が使えるようになり、パソコンの
   ブラウザに Tab5 の画面が出て、パソコンのキーボードとマウスで操作できます。アプリから
   インターネットにもつながります
 - **GROVE ケーブル**。センサをつないだり、外部音源に [MIDI](../api/midi.md) を送るときに使います
@@ -63,7 +63,7 @@ Tab5 はパソコンと USB-Serial-JTAG でつながるので、ボタンを押�
 !!! note "書き込むとファイル領域も消えます"
     書き込みは、ファイル領域を含めたイメージ全体を上書きします。実機に置いた自作アプリや、
     書き換えた設定ファイルは、出荷時の内容に戻ります。残したいものは先にパソコンへ
-    退避してください ([コンソール](console.md) を参照)。
+    退避してください ([コンソール](../tools/console.md) を参照)。
 
 Retro の手順と、うまくいかないときの対処は [ファームウェア更新](firmware_update.md) に
 まとめてあります。
@@ -125,7 +125,7 @@ Log Viewer / Monitor / Set Clock / Config / Storage / Network / About / Reset)�
 
 ## WiFi につなぐ
 
-WiFi につなぐと [遠隔画面](../remote_desktop.md) と
+WiFi につなぐと [リモートデスクトップ](../tools/remote_desktop.md) と
 [ネットワーク API](../api/network.md) が使えるようになります。接続先は `/etc/wifi.toml` に
 書きます。このファイルは実機のエディタで一度だけ作ります。
 
@@ -147,7 +147,7 @@ hostname = "fmruby"
 
 !!! tip "無線を 2 つ同時に使えます"
     Modern では ESP32-C6 が WiFi と BLE を同時に受け持つので、WiFi を使いながら BLE の
-    [web コンソール](console.md) も使えます。(Retro の ESP32-S3 は無線が 1 系統なので、
+    [web コンソール](../tools/console.md) も使えます。(Retro の ESP32-S3 は無線が 1 系統なので、
     どちらか一方になります。)
 
 ## パソコンから画面を見る
@@ -164,7 +164,7 @@ http://fmruby.local/
 `Ctrl` + `Q` などのキーもそのまま効きます。
 
 作業はこれが一番速いです。パソコンのキーボードで書いて、実機が動くのをそのまま見られます。
-詳しくは [遠隔画面](../remote_desktop.md) を参照してください。
+詳しくは [リモートデスクトップ](../tools/remote_desktop.md) を参照してください。
 
 ## ファイルの置き場所
 
@@ -210,6 +210,6 @@ http://fmruby.local/
 
 - [Hello World](hello_world.md) — 最初のアプリを書いて動かす
 - [標準アプリ](default_apps.md) — 最初から入っているもの
-- [遠隔画面](../remote_desktop.md) — パソコンのブラウザから作業する
+- [リモートデスクトップ](../tools/remote_desktop.md) — パソコンのブラウザから作業する
 - [API リファレンス](../api/index.md) — アプリから呼べるもの
 - [ハードウェア](../hardware.md) — ピン配置と GROVE 端子

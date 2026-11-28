@@ -27,7 +27,7 @@ Let's write an app that simply draws "Hello, Family mruby!" on the screen.
 
 Create `/app/usr/hello.app.rb` and implement the code below.
 
-You can write the code in the default app editor or via the web console. See [Console](console.md) for details on the console.
+You can write the code in the default app editor or via the web console. See [Console](../tools/console.md) for details on the console.
 
 ### `/app/usr/hello.app.rb` file
 

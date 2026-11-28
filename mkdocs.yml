@@ -95,7 +95,7 @@ plugins:
             Audio File Formats: 音声ファイルフォーマット
             Image & Icon Files: 画像・アイコンファイル
             Tools: 開発ツール
-            Remote Desktop: 遠隔画面
+            Remote Desktop: リモートデスクトップ
             Debugging: デバッグ
             Other Languages: 他の言語
             Limitations: 制約事項
@@ -119,13 +119,11 @@ nav:
       - The Desktop: getting_started/desktop.md
       - Hello World: getting_started/hello_world.md
       - Connecting to Wi-Fi: getting_started/wifi.md
-      - Family mruby Console: getting_started/console.md
       - Family mruby Studio (Web): getting_started/studio.md
       - The Linux Program: getting_started/linux.md
       - Default Apps: getting_started/default_apps.md
       - Shell Commands: getting_started/shell.md
       - Firmware Update: getting_started/firmware_update.md
-      - Simulator: getting_started/simulator.md
   - API Reference:
       - Overview: api/index.md
       - Application: api/fmrb_app.md
@@ -317,8 +315,11 @@ nav:
       - BASIC: languages/basic.md
       - WebAssembly: languages/wasm.md
   - Tools:
-      - Remote Desktop: remote_desktop.md
-      - Debugging: debugging.md
+      - Overview: tools/index.md
+      - Remote Desktop: tools/remote_desktop.md
+      - Debugging: tools/debugging.md
+      - Family mruby Console: tools/console.md
+      - Simulator: tools/simulator.md
   - Architecture: architecture.md
   - Hardware: hardware.md
   - Verified Peripherals: compatibility.md

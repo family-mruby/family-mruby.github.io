@@ -1,0 +1,252 @@
+# Remote Desktop
+
+**Remote desktop is Modern only** (M5Stack Tab5, P4-Nano). With Wi-Fi up, the machine serves
+its own screen. Open its address in a browser on the same network and you get the live
+picture, and your PC's keyboard and mouse drive the real hardware.
+
+This is the fastest way to work on the device: type on a full-size keyboard, watch the
+actual machine run, and take screenshots without pointing a camera at a panel.
+
+<div align="center">
+  <img src="/images/photo_remote_desktop.jpg" width="620" alt="A laptop browser showing the Tab5 screen, with the Tab5 itself next to it">
+  <br><em>The browser and the device, the same frame. The status line reads <code>connected · mode: h264</code></em>
+</div>
+
+## Using it
+
+1. Get Wi-Fi working first — see [Connecting to Wi-Fi](../getting_started/wifi.md)
+2. Open the system menu → Network to confirm the address
+3. On the firmware the Web Installer writes, allow the remote control on the device and pair
+   this PC — see [Allowing a PC (release builds)](#allowing-a-pc-release-builds) below
+4. In a browser on the same network, open:
+
+    ```
+    http://fmruby.local/
+    ```
+
+    or the numeric address from the Network dialog, if mDNS does not resolve on your machine
+
+There is nothing to install on the PC.
+
+Your input goes into the device through its normal input path, so it is indistinguishable
+from touching the hardware — the global shortcuts (`Ctrl` + `Q`, `Ctrl` + `Tab`) work
+exactly as they do on the device, and your mouse wheel scrolls whatever has the keyboard.
+
+!!! warning "One user at a time"
+    Whoever is holding the device and whoever is in the browser are driving the same cursor.
+    If someone else might be using the device, say so before you start clicking.
+
+## Who can connect
+
+It depends on how the firmware was built.
+
+| Build | Remote control |
+|---|---|
+| **Release build** — what the Web Installer writes, since 3.1.0 | Closed until the owner turns it on in Config, and then only for PCs that have been paired |
+| **Development build** — built from the repositories (`FMRB_DEV_REMOTE_CTL`, on by default) | Open: no authentication at all |
+
+"Remote control" covers everything on this page: the screen (`/stream`, `/ws_video`), the
+input (`/ws`), and the app and file endpoints (`/app/...`, `/fs/...`). `/status` stays open in
+both builds, so tools can find the device.
+
+### Allowing a PC (release builds)
+
+The switch is the **Remote control** row on the **System** page of Config. The row appears
+once Wi-Fi is up. Its arrows step through:
+
+| The row shows | Meaning |
+|---|---|
+| `OFF` | Closed. Every request except `/status` is refused. The default |
+| `ON` | Open to the PCs already paired. Kept across restarts until you turn it off |
+| `Pair 123456` | Open, and taking new PCs: a new PC pairs with the six-digit number shown |
+| `Forget N PC` | Forgets every paired PC when you Save (the switch stays as it was) |
+
+Turning it off, or forgetting the PCs, also closes the connections that are open.
+
+To pair a PC, step the row to `Pair` and, while the number is on the screen:
+
+- **In the browser**: open the viewer. It asks for the number and keeps the token it
+  receives in the browser, so the next visit needs nothing
+- **With the Ruby tools**: run
+
+    ```
+    ruby tools/fmrb_rd_fs.rb <ip> pair <number>
+    ```
+
+    The token is kept in `~/.config/fmrb/`, and every `fmrb_rd_*.rb` tool sends it
+
+Pairing lasts only while the row shows the number; leaving the row or closing Config ends it.
+After five wrong numbers the row shows `Pair (locked)`; leave the row and come back for a
+new number. The device keeps up to four PCs, and a fifth replaces the one paired longest ago.
+
+!!! danger "The traffic is plain HTTP"
+    The screen, the input, the files and the token itself travel unencrypted, so anyone who
+    can watch the network can read them. On a development build there is not even a token:
+    any device on the same network can open the address, watch the screen, send input, read
+    and write files, and start or stop apps — nothing distinguishes them from you.
+
+    Use this only on a network you trust, never forward a port to the device from the
+    internet, and turn the remote control off (release builds), set `enable = false` below,
+    or turn Wi-Fi off when you do not want to be reachable. See
+    [Security](../limitations.md#security).
+
+## Settings
+
+The `[remote_desktop]` section of `/etc/system_conf.toml`:
+
+```toml
+[remote_desktop]
+enable = true
+mode = "h264"              # "h264" (WebCodecs viewer) or "mjpeg"
+fps_cap = 15
+jpeg_quality = 80
+h264_bitrate_kbps = 1000
+h264_gop = 30
+```
+
+| Key | Meaning |
+|---|---|
+| `enable` | Turn the server on or off |
+| `mode` | `h264` offers the H.264 stream and falls back to MJPEG; `mjpeg` only ever sends MJPEG |
+| `fps_cap` | Upper bound on frames per second. The stream runs at this steady rate even when the screen is still — an unchanged frame costs a few hundred bytes |
+| `jpeg_quality` | MJPEG quality, 0-100 |
+| `h264_bitrate_kbps`, `h264_gop` | H.264 encoder settings |
+
+## MJPEG and H.264
+
+Two paths exist. MJPEG always works. H.264 is smaller on the wire, but the browser API that
+decodes it (`VideoDecoder`, from WebCodecs) is only available in a secure context, and
+`http://fmruby.local/` is not one. In a plain-HTTP LAN origin, Chrome reports no
+`VideoDecoder` and the viewer silently uses MJPEG.
+
+The status line in the viewer tells you which one you got: `mode: mjpeg` or `mode: h264`.
+
+For most work MJPEG is fine. If you want the H.264 path:
+
+- **Tell Chrome to trust the origin** (simplest): open
+  `chrome://flags/#unsafely-treat-insecure-origin-as-secure`, enter
+  `http://fmruby.local` (and/or the numeric address), set it to Enabled and restart Chrome
+- **Or reach the device through `localhost`**, which counts as a secure context:
+
+    ```
+    socat TCP-LISTEN:8080,fork TCP:<device-ip>:80
+    # then open http://localhost:8080/
+    ```
+
+Serving HTTPS from the device itself was considered and rejected: the TLS cost on the device
+plus a certificate warning in the browser is a bad trade for a hobby machine on a home
+network.
+
+## Fullscreen
+
+The viewer has a fullscreen mode that fills your monitor at the source aspect ratio. The
+device sends exactly the same stream; only the viewer changes.
+
+## Files, and apps, over Wi-Fi
+
+The same server moves files and starts apps, so a program can go onto the machine without a
+cable and without the editor.
+
+```
+ruby tools/fmrb_rd_fs.rb <ip> ls    /home
+ruby tools/fmrb_rd_fs.rb <ip> put   my.app.rb /app/usr/my.app.rb
+ruby tools/fmrb_rd_fs.rb <ip> get   /home/notes.txt
+ruby tools/fmrb_rd_fs.rb <ip> pull  /mnt/sd/shots ./shots     # a whole tree
+ruby tools/fmrb_rd_fs.rb <ip> push  ./slides /home/slides
+```
+
+Give it only the address and you get a prompt instead, like an FTP client, with a current
+directory on the device and another on your PC (`cd`, `lcd`, `ls`, `get`, `put`, `pull`,
+`push`, `cat`, `launch`, `ps`).
+
+What the file endpoints reach depends on the build:
+
+| Build | Read | Write, delete, make folders |
+|---|---|---|
+| Release | `/app`, `/home`, `/usr/share`, `/mnt/sd`; files holding keys and passwords (the Wi-Fi password among them) are never read | `/home`, `/app`, `/mnt/sd` |
+| Development | Every path, keys included | Every path |
+
+A path with `..` in it is refused in both. `pull` and `push` skip a file whose size already
+matches on the other side; `--force` copies everything.
+
+On a development build that makes `/home` easy to keep across a re-flash:
+
+```
+ruby tools/fmrb_rd_fs.rb <ip> backup ./home-backup     # /home, keys and all
+ruby tools/fmrb_rd_fs.rb <ip> restore ./home-backup    # after flashing
+```
+
+`backup` checks every file against the device's MD5 and writes a `manifest.json` last; run
+it again on the same directory to finish an interrupted one. `restore` sends only what
+differs, checks each file after it lands, and lists files the device has that the backup
+does not, without deleting them. The backup holds your Wi-Fi password and service keys:
+keep it somewhere only you can read.
+
+With `fmrb_rd_launch.rb`, `fmrb_rd_ps.rb` and `fmrb_rd_kill.rb` beside it, the development
+loop is put, launch, look, kill — no re-flashing:
+
+```
+ruby tools/fmrb_rd_fs.rb     <ip> put my.app.rb /app/usr/my.app.rb
+ruby tools/fmrb_rd_launch.rb <ip> /app/usr/my.app.rb
+ruby tools/fmrb_rd_snap.rb   <ip> out.jpg
+ruby tools/fmrb_rd_kill.rb   <ip> <pid>
+```
+
+## Driving it from a script
+
+The same tools drive the screen, so a script — or an automated test — can operate the
+device:
+
+```
+ruby tools/fmrb_rd_input.rb <ip> click X Y | dclick X Y | key ctrl+tab | wheel N | sleep MS ...
+ruby tools/fmrb_rd_snap.rb  <ip> out.jpg
+```
+
+Coordinates are those of the device's framebuffer at the resolution it is showing now
+(426 x 240 or 640 x 360 on Modern; Config's Resolution row picks it), independent of how
+large the viewer window is. `fmrb_rd_snap.rb` pulls one frame out of the MJPEG stream —
+which is how the screenshots in this documentation were taken.
+
+## Under the hood
+
+The device runs a small HTTP server. `GET /stream` is the MJPEG stream, `/ws` is a
+WebSocket carrying input events as binary messages, `/ws_video` carries H.264, and `/status`
+returns a JSON summary you can poll. `POST /app/launch?path=`, `POST /app/kill?pid=` and
+`GET /app/list` are the app endpoints, and `/fs/list`, `/fs/get`, `/fs/put`, `/fs/del`,
+`/fs/mkdir`, `GET /fs/md5?path=` (a file's MD5 and size, computed on the device) and
+`GET /fs/df` (the free space) the file ones; `POST /sys/reboot` restarts the device. A
+release build adds `POST /pair` (a number for a token) and `GET /auth` (is this token
+still good?), and expects the token on every other request, in an `X-Fmrb-Token` header or a
+`token=` query value:
+
+```
+$ curl -s http://fmruby.local/status
+{"ip":"192.0.2.16","mode":"mjpeg","streaming":false,"fps":0.0,"kbps":0}
+```
+
+Frames are encoded on the P4's own hardware — the PPA block converts colour space and the
+H.264 encoder is a peripheral, not a software loop — which is why streaming does not slow
+the machine to a crawl.
+
+## On Retro
+
+Retro has no remote desktop: the S3 has no video encoder, and the picture leaves the board
+as composite video. What it does have is the other half — the app and file endpoints above
+answer on Retro too, once its Wi-Fi is up. `/app/launch`, `/app/kill`, `/app/list` and the
+whole of `/fs` behave exactly as they do on Modern, so a program can go onto the board and
+start there without a cable; `/stream`, `/ws` and `/ws_video` are not there.
+
+The same rules apply by build: a release build is closed until Config's Remote control row
+allows it and the PC is paired, exactly as on Modern, and a development build asks for
+nothing. On a board with one radio, remember that Wi-Fi and BLE are a choice — see
+[Connecting to Wi-Fi](../getting_started/wifi.md).
+
+The headless boards (AtomS3R, StickS3) carry the same endpoints. They have no Config to
+turn the remote control on, so on a release build the endpoints stay closed.
+
+## Related
+
+- [Tools](index.md) — every development tool, and the machines each works on
+- [Modern (M5Stack Tab5)](../getting_started/modern.md)
+- [Network](../api/network.md)
+- [Debugging](debugging.md) — the other remote route into the device

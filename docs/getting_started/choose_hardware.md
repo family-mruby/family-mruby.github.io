@@ -68,7 +68,7 @@ battery-backed clock.
 - The bundled apps, including the games and demos.
 - MicroPython (`.py`), BASIC (`.bas`) and Lua apps.
 - The Ruby networking API, and MIDI output.
-- The [simulator](simulator.md), which runs the whole system on Linux with no hardware
+- The [simulator](../tools/simulator.md), which runs the whole system on Linux with no hardware
   at all.
 
 ## Other ways to run it

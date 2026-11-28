@@ -111,5 +111,5 @@ Retro でも WiFi が使えます。[WiFi につなぐ](wifi.md) を参照して
 
 - インストール済みアプリを試してみる
 - 自分のアプリを書いてみる → [Hello World](hello_world.md)
-- PC からアプリやファイルを転送する → [コンソール](console.md)
+- PC からアプリやファイルを転送する → [コンソール](../tools/console.md)
 - ハードウェア仕様 → [ハードウェア](../hardware.md)

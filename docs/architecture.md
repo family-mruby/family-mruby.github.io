@@ -117,7 +117,7 @@ These builds come out of the same source tree:
 | `esp32` / Modern | ESP32-P4 (M5Stack Tab5; the NARYA v4 board, in development) |
 | `esp32` / Retro | ESP32-S3 + ESP32-WROVER (narya-board) |
 | `esp32` / Headless | ESP32-S3 on its own (M5Stack StickS3, AtomS3R), one app and no desktop |
-| `linux` | The whole system as a Linux process, with SDL2 for the screen. See [Simulator](getting_started/simulator.md) |
+| `linux` | The whole system as a Linux process, with SDL2 for the screen. See [Simulator](tools/simulator.md) |
 | Linux program | The same system as one ordinary program on a Linux PC, without ESP-IDF underneath: its own window, or the whole session as the compositor. Shipped as a `.deb` with each release |
 | `wasm` | The same system compiled to WebAssembly, with a cooperative FreeRTOS port, running in a browser tab. See [Studio](getting_started/studio.md) |
 

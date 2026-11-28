@@ -147,7 +147,7 @@ Tile sheets and maps can be created with web tools (bundled in `fmruby-core/tool
 - Sprite Editor: Create a BMP with 16x16 RGB332 tiles arranged in a grid
 - Map Editor: Place tiles + edit events -> export as a packed `.map.bin` or as `fmrb_map` JSON. It reads both
 
-Start with `ruby web_server.rb` and access `http://localhost:8080` (same server as the [Console](../getting_started/console.md)).
+Start with `ruby web_server.rb` and access `http://localhost:8080` (same server as the [Console](../tools/console.md)).
 
 ## Example: Simple RPG
 
