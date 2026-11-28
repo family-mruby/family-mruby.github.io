@@ -1,0 +1,8485 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Family mruby project documentation">
+      
+      
+        <meta name="author" content="kishima">
+      
+      
+        <link rel="canonical" href="https://family-mruby.github.io/ja/api/reference/Asterism__Connection/">
+      
+      
+        <link rel="prev" href="../Asterism__AsyncProxy/">
+      
+      
+        <link rel="next" href="../Asterism__Credentials/">
+      
+      
+        
+          <link rel="alternate" href="../../../../api/reference/Asterism__Connection/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Asterism::Connection - Family mruby project</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/class_reference.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#asterismconnection" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../../../" title="Family mruby project" class="md-header__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Family mruby project
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Asterism::Connection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="言語切り替え">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../../api/reference/Asterism__Connection/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="タブ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ホーム
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../getting_started/choose_hardware/" class="md-tabs__link">
+          
+  
+  
+  基本的な使い方
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  API リファレンス
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../file_formats/system_conf/" class="md-tabs__link">
+          
+  
+  
+  設定とファイル形式
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../languages/" class="md-tabs__link">
+          
+  
+  
+  他の言語
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tools/" class="md-tabs__link">
+          
+  
+  
+  開発ツール
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  アーキテクチャ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../hardware/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ハードウェア
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../compatibility/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  動作確認済み機器
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../limitations/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  制約事項
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../releases/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  リリースノート
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../" title="Family mruby project" class="md-nav__button md-logo" aria-label="Family mruby project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Family mruby project
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基本的な使い方
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    基本的な使い方
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/choose_hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    機種の選択
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/modern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modern (M5Stack Tab5)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    起動まで (Retro)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/booth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BOOTHで購入した方へ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    デスクトップ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/hello_world/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi につなぐ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/studio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Family mruby スタジオ (Web)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux 版
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/default_apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    標準アプリ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shell のコマンド
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/firmware_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファームウェア更新
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API リファレンス
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API リファレンス
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一覧
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fmrb_app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アプリ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fmrb_gfx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    描画
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sprite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    スプライト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UI 部品
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tilemap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    タイルマップ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../p5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processing 風の描画
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音声
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../midi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MIDI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ネットワーク
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pubsub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アプリ間通信
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファイル・I/O
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ログ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peripherals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ハードウェア制御
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ユーティリティ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../const/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    定数・システム情報
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    タスク・時間
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_18" id="__nav_3_18_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    クラスリファレンス
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_18_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_18">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    クラスリファレンス
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一覧
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_18_2" id="__nav_3_18_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アプリ
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_18_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_18_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    アプリ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbApp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbApp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbAssoc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbAssoc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbColors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbColors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbConst/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbConst
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbI18n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbI18n
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbReceiveConf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbReceiveConf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbSystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbSystem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbToml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbToml
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbToml__Raw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbToml::Raw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Unit8Encoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unit8Encoder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_18_3" id="__nav_3_18_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    描画
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_18_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_18_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    描画
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BMP332/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BMP332
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fmrb__Raycast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fmrb::Raycast
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbGfx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbGfx
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbHitMask/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbHitMask
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbText/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbText
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__Button/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::Button
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__Enum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::Enum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__HitAreas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::HitAreas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__Label/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::Label
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__Scrollbar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::Scrollbar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__Stepper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::Stepper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__TextField/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::TextField
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__Toggle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::Toggle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUI__Widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUI::Widget
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbVideo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbVideo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GfxBlock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GfxBlock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../P5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SpriteImage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SpriteImage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SpriteInstance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SpriteInstance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TileMap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TileMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TileRing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TileRing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TileSheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TileSheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_18_4" id="__nav_3_18_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音声
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_18_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_18_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    音声
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fmrb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fmrb
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fmrb__Fft/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fmrb::Fft
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbAudio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbAudio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbMic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbMic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbMidi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbMidi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbMidi__ApuTransport/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbMidi::ApuTransport
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbMidi__MmlPlayer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbMidi::MmlPlayer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbMidi__SmfPlayer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbMidi::SmfPlayer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MIDI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MIDI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MIDI__Device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MIDI::Device
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NsfHeader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NsfHeader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_18_5" id="__nav_3_18_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファイルと時刻
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_18_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_18_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ファイルと時刻
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dir
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../File/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbFile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbFile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Time/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_18_6" id="__nav_3_18_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    データ
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_18_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_18_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    データ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Digest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Digest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Digest__SHA256/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Digest::SHA256
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSON/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSON__Digger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON::Digger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSON__DiggerError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON::DiggerError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSON__GeneratorError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON::GeneratorError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSON__JSONError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON::JSONError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSON__ParserError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON::ParserError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MessagePack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MessagePack
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_18_7" id="__nav_3_18_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ネットワーク
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_18_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_18_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ネットワーク
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__AsyncProxy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::AsyncProxy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Connection
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Connection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#インスタンスメソッド" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インスタンスメソッド
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="インスタンスメソッド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionexpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#expose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnection_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#[]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectioneach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#each
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionnodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionapps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#apps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpublish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#publish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionsubscribe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#subscribe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionstatus_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#status_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionon_join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#on_join
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionon_leave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#on_leave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectioncurrent_call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#current_call
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#app
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionnode_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#node_id
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionrun_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#run_id
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionconnected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#connected?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionreconnecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#reconnecting?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionlost_reason" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#lost_reason
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionclose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#close
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpoll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#poll
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionsession" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#session
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionexposed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#exposed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionunexpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#unexpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpublished" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#published
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionunpublish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#unpublish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionunsubscribe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#unsubscribe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionoff_join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#off_join
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionoff_leave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#off_leave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionon_app_join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#on_app_join
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionon_app_leave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#on_app_leave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionoff_app_join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#off_app_join
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionoff_app_leave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#off_app_leave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionprofile_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#profile_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionprotocol_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#protocol_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectiondefine_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#define_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpubs_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#pubs_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectiontypes_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#types_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpublishers_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#publishers_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectiondeclaration_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#declaration_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectiontype_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#type_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Credentials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Credentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Credentials__Error/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Credentials::Error
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__CurrentCall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::CurrentCall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Disconnected/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Disconnected
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__EncodeError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::EncodeError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Error/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Error
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Future/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Future
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Profile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Proxy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Proxy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Pubs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Pubs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Attachment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Attachment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Call/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Call
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Client
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Message/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Message
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Publisher/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Publisher
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Subscription/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Subscription
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__TimeoutError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::TimeoutError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__Timer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::Timer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__ROS__UnknownType/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::ROS::UnknownType
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__RemoteError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::RemoteError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__SampleInfo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::SampleInfo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Sequences/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Sequences
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__SharedSession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::SharedSession
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Subscription/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Subscription
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__TimeoutError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::TimeoutError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Topic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Topic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Asterism__Types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Asterism::Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbAsterism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbAsterism
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbAsterism__Link/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbAsterism::Link
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbAsterism__Settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbAsterism::Settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbAsterism__TableClient/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbAsterism::TableClient
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbNet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbNet__Request/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbNet::Request
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_18_8" id="__nav_3_18_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    本体と機器
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_18_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_18_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    本体と機器
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbHw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbHw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FmrbUart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FmrbUart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GPIO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GPIO__Error/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPIO::Error
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../I2C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I2C
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Machine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Math__DomainError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math::DomainError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RNG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UART
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_18_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_18_9" id="__nav_3_18_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ruby の基本クラス
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_18_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_18_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ruby の基本クラス
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ArgumentError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ArgumentError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Array/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Class/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Class
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Enumerable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enumerable
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Exception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FalseClass/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FalseClass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Float/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Float
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FrozenError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FrozenError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IOError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IOError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IndexError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Integer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kernel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kernel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KeyError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KeyError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NameError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NameError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NilClass/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NilClass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NoMemoryError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoMemoryError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NoMethodError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NoMethodError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NotImplementedError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NotImplementedError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Object/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Proc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Range/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Range
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RangeError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RangeError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RuntimeError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RuntimeError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ScriptError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ScriptError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../StandardError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StandardError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../StopIteration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StopIteration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../String/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    String
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Symbol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Symbol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SystemStackError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SystemStackError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TrueClass/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TrueClass
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TypeError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TypeError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ZeroDivisionError/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ZeroDivisionError
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    設定とファイル形式
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    設定とファイル形式
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/system_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    システム設定 (system_conf.toml / wifi.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/app_toml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アプリ設定ファイル (.app.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/hid_devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HID 機器設定 (hid_devices.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/associations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ファイルの関連付け (associations.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/colors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    配色 (colors.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/color_names/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    色の名前
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    システムサービス (services.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/audio_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音声ファイルフォーマット
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../file_formats/image_formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    画像・アイコンファイル
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    他の言語
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    他の言語
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../languages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一覧
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../languages/micropython/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroPython
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../languages/lua/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lua
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../languages/basic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BASIC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../languages/wasm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WebAssembly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    開発ツール
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    開発ツール
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一覧
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/remote_desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    リモートデスクトップ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    デバッグ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Family mruby コンソール
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools/simulator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    シミュレータ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    アーキテクチャ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ハードウェア
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    動作確認済み機器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    制約事項
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../releases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    リリースノート
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#インスタンスメソッド" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インスタンスメソッド
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="インスタンスメソッド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionexpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#expose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnection_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#[]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectioneach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#each
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionnodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionapps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#apps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpublish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#publish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionsubscribe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#subscribe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionstatus_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#status_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionon_join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#on_join
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionon_leave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#on_leave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectioncurrent_call" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#current_call
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#app
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionnode_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#node_id
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionrun_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#run_id
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionconnected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#connected?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionreconnecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#reconnecting?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionlost_reason" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#lost_reason
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionclose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#close
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpoll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#poll
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionsession" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#session
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionexposed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#exposed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionunexpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#unexpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpublished" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#published
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionunpublish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#unpublish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionunsubscribe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#unsubscribe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionoff_join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#off_join
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionoff_leave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#off_leave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionon_app_join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#on_app_join
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionon_app_leave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#on_app_leave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionoff_app_join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#off_app_join
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionoff_app_leave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#off_app_leave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionprofile_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#profile_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionprotocol_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#protocol_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectiondefine_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#define_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpubs_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#pubs_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectiontypes_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#types_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectionpublishers_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#publishers_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectiondeclaration_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#declaration_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asterismconnectiontype_of" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asterism::Connection#type_of
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="asterismconnection">Asterism::Connection<a class="headerlink" href="#asterismconnection" title="Permanent link">&para;</a></h1>
+<p>ネットワーク上のアプリ 1 つ分のつながり</p>
+<p>使い方は <a href="../../network/">ネットワーク</a> のページにあります。</p>
+<p>link.conn で得る。</p>
+<h2 id="インスタンスメソッド">インスタンスメソッド<a class="headerlink" href="#インスタンスメソッド" title="Permanent link">&para;</a></h2>
+<h3 id="asterismconnectionexpose">Asterism::Connection#expose<a class="headerlink" href="#asterismconnectionexpose" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>expose(
+  <a href="../String/">String</a> name,
+  untyped obj,
+  methods: <a href="../Array/">Array</a>[untyped] | <a href="../Hash/">Hash</a>[untyped, untyped],
+  ?caller: (<a href="../Symbol/">Symbol</a> | <a href="../String/">String</a>)?,
+  ?doc: <a href="../String/">String</a>?
+) -&gt; <a href="../String/">String</a></code></pre>
+
+<p>オブジェクトを公開する</p>
+<p>name はオブジェクトの名前で、ほかの端末からは
+"&lt;この端末&gt;/&lt;アプリ&gt;/<name>" で呼ばれる。
+<strong>methods: はキーワードで渡す</strong>: 呼んでよいメソッドの名前と引数の数の Hash
+({ post: 1 }。数は呼ばれる前に確かめる、-1 は何個でも) か、名前の Array。並べたメソッドだけが呼べる。obj にそのメソッドが無いと ArgumentError。公開したメソッドは update の中で呼ばれる。メソッドが例外を出すと、呼んだ側に RemoteError で届く。
+<code>caller:</code> (省略すると渡さない) に :from のようなキーワード名を渡すと、呼ぶたびに呼んだ端末の名前がそのキーワードで公開メソッドに渡る。
+<code>doc:</code> (省略すると無し) はオブジェクトの説明 (2048 バイトまで)。戻り値は公開した道 ("node/app/name")。link_up の中で呼ぶ。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">link_up</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+<span class="w">  </span><span class="n">link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">expose</span><span class="p">(</span><span class="s2">"board"</span><span class="p">,</span><span class="w"> </span><span class="nb">self</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">methods</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="ss">post</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">})</span>
+<span class="k">end</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="w">  </span><span class="vi">@lines</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">text</span>
+<span class="w">  </span><span class="vi">@lines</span><span class="o">.</span><span class="n">size</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<h3 id="asterismconnection_1">Asterism::Connection#[]<a class="headerlink" href="#asterismconnection_1" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>[](
+  <a href="../String/">String</a> path,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; <a href="../Asterism__Proxy/">Asterism::Proxy</a></code></pre>
+
+<p>ほかの端末のオブジェクトを受け取る</p>
+<p>path は "&lt;端末&gt;/&lt;アプリ&gt;/&lt;オブジェクト&gt;"。受け取っただけでは何も送らない。そのメソッドを呼ぶと相手で動き、答えを待つ (既定 2 秒。
+<strong>timeout: で秒を変えられる</strong>。ミリ秒なら <code>timeout_ms:</code>)。待つ間も、こちらに来た呼び出しには答える。待たずに呼ぶなら async。失敗: 相手が例外を出した・公開していない・引数の数が違うと
+Asterism::RemoteError、時間切れは Asterism::TimeoutError、つながっていないと Asterism::Disconnected。どれも Asterism::Error。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">[</span>
+<span class="w">  </span><span class="s2">"fmruby-1/talk_board/board"</span><span class="o">]</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"hello"</span><span class="p">)</span>
+<span class="k">rescue</span><span class="w"> </span><span class="o">::</span><span class="no">Asterism</span><span class="o">::</span><span class="no">Error</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">e</span>
+<span class="w">  </span><span class="n">show</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<h3 id="asterismconnectioneach">Asterism::Connection#each<a class="headerlink" href="#asterismconnectioneach" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>each(?<a href="../String/">String</a> pattern) -&gt; <a href="../Array/">Array</a>[<a href="../Asterism__Proxy/">Asterism::Proxy</a>]
+each(?<a href="../String/">String</a> pattern) { (<a href="../Asterism__Proxy/">Asterism::Proxy</a> proxy) -&gt; untyped } -&gt; <a href="../Integer/">Integer</a></code></pre>
+
+<p>公開されているオブジェクトを探す</p>
+<p>pattern の * は 1 区切り、<code>**</code> は何区切りでも (省略すると全部)。この端末の物も入る。答えはオブジェクトの Array (受け取り方は conn[path] と同じ)。ブロックを渡すと 1 つずつ渡し、数を返す。ネットワークに問い合わせないので、毎回呼んでよい。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">each</span><span class="p">(</span>
+<span class="w">  </span><span class="s2">"*/talk_board/board"</span><span class="p">)</span>
+<span class="vi">@board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionnodes">Asterism::Connection#nodes<a class="headerlink" href="#asterismconnectionnodes" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>nodes() -&gt; <a href="../Array/">Array</a>[<a href="../String/">String</a>]</code></pre>
+
+<p>今いる端末の名前</p>
+<div class="codehilite"><pre><span></span><code><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">nodes</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionapps">Asterism::Connection#apps<a class="headerlink" href="#asterismconnectionapps" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>apps(?<a href="../String/">String</a> pattern) -&gt; <a href="../Array/">Array</a>[<a href="../String/">String</a>]</code></pre>
+
+<p>今いるアプリ ("端末/アプリ")</p>
+<div class="codehilite"><pre><span></span><code><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">apps</span><span class="p">(</span><span class="s2">"*/talk"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionpath">Asterism::Connection#path<a class="headerlink" href="#asterismconnectionpath" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>path() -&gt; <a href="../String/">String</a></code></pre>
+
+<p>この端末/アプリの道</p>
+<div class="codehilite"><pre><span></span><code><span class="n">me</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">path</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionpublish">Asterism::Connection#publish<a class="headerlink" href="#asterismconnectionpublish" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>publish(
+  <a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> name,
+  ?type: (<a href="../Symbol/">Symbol</a> | <a href="../Integer/">Integer</a> | <a href="../String/">String</a>)?,
+  ?unit: <a href="../String/">String</a>?,
+  ?desc: <a href="../String/">String</a>?,
+  ?ts: bool,
+  ?encoding: <a href="../String/">String</a>?,
+  ?shared: (<a href="../Symbol/">Symbol</a> | <a href="../String/">String</a>)?
+) -&gt; <a href="../Asterism__Topic/">Asterism::Topic</a></code></pre>
+
+<p>トピックを出す (値を流せるように宣言する)</p>
+<p>name は "said" や "game/score" (区切りは /)。ほかの端末からは
+"&lt;この端末&gt;/&lt;アプリ&gt;/<name>" で受ける。返った Topic の put で値を流す。キーワード (type:・unit:・desc:・ts:) は省ける。残らない (後から受け始めた側には前の値は届かない)。つながっていないと Asterism::Disconnected。link_up の中で呼ぶ。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">link_up</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+<span class="w">  </span><span class="vi">@said</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s2">"said"</span><span class="p">)</span>
+<span class="k">end</span>
+<span class="c1"># ...</span>
+<span class="vi">@said</span><span class="o">.</span><span class="n">put</span><span class="p">({</span><span class="w"> </span><span class="s2">"text"</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">"hi"</span><span class="w"> </span><span class="p">})</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionsubscribe">Asterism::Connection#subscribe<a class="headerlink" href="#asterismconnectionsubscribe" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>subscribe(
+  <a href="../String/">String</a> path,
+  ?depth: <a href="../Integer/">Integer</a>?
+) { (untyped value, <a href="../Asterism__SampleInfo/">Asterism::SampleInfo</a> info) -&gt; untyped } -&gt; <a href="../Asterism__Subscription/">Asterism::Subscription</a></code></pre>
+
+<p>トピックを受ける (ブロックで)</p>
+<p>path は "&lt;端末&gt;/&lt;アプリ&gt;/&lt;トピック&gt;"。* は 1 区切り、<code>**</code> は何区切りでも。値が来るたびに、<strong>update の中で</strong>ブロックが |値, info| で呼ばれる (info は Asterism::SampleInfo)。自分で put した値は自分には届かない。<strong>depth: で溜める数を変えられる</strong>。止めるには返った Subscription の close。link_up の中で呼ぶ。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">link_up</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+<span class="w">  </span><span class="n">link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span>
+<span class="w">    </span><span class="s2">"*/talk_board/said"</span><span class="p">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="o">|</span>
+<span class="w">    </span><span class="n">got</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="o">.</span><span class="n">from</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionstatus">Asterism::Connection#status<a class="headerlink" href="#asterismconnectionstatus" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>status(?<a href="../Hash/">Hash</a> status, **untyped fields) -&gt; <a href="../Hash/">Hash</a>?</code></pre>
+
+<p>このアプリの状態を出す</p>
+<p>Hash を渡すと全部を入れ替え、キーワードで渡すとその項目だけ変わる (nil で消える)。変わったときだけ流れる。1 KB まで。引数なしなら今の状態を返す (無ければ nil)。<code>status(lines: 3)</code> のようにキーワードで渡すと、その項目だけが変わる。</p>
+<div class="codehilite"><pre><span></span><code><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">status</span><span class="p">(</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s2">"lines"</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="vi">@lines</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="p">})</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionstatus_of">Asterism::Connection#status_of<a class="headerlink" href="#asterismconnectionstatus_of" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>status_of(
+  <a href="../String/">String</a> node,
+  <a href="../String/">String</a> app,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; <a href="../Hash/">Hash</a>?</code></pre>
+
+<p>ほかのアプリの状態を読む</p>
+<p>答えを待つ (既定 2 秒。<code>timeout:</code> は秒、<code>timeout_ms:</code> はミリ秒)。つながっていないと Asterism::Disconnected。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">status_of</span><span class="p">(</span>
+<span class="w">  </span><span class="s2">"fmruby-1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"talk_board"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionon_join">Asterism::Connection#on_join<a class="headerlink" href="#asterismconnectionon_join" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>on_join() { (<a href="../String/">String</a> node) -&gt; untyped } -&gt; Asterism::Connection</code></pre>
+
+<p>端末が来たときに呼ぶブロック</p>
+<p>ブロックは |端末の名前| で、update の中で呼ばれる。link_up の中で渡す (つなぎ直すと消えるため)。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">on_join</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">|</span><span class="n">n</span><span class="o">|</span><span class="w"> </span><span class="n">joined</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionon_leave">Asterism::Connection#on_leave<a class="headerlink" href="#asterismconnectionon_leave" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>on_leave() { (<a href="../String/">String</a> node) -&gt; untyped } -&gt; Asterism::Connection</code></pre>
+
+<p>端末が去ったときに呼ぶブロック</p>
+<p>切れたときは、知っていた端末が全部去る。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">on_leave</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">|</span><span class="n">n</span><span class="o">|</span><span class="w"> </span><span class="n">left</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<h3 id="asterismconnectioncurrent_call">Asterism::Connection#current_call<a class="headerlink" href="#asterismconnectioncurrent_call" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>current_call() -&gt; <a href="../Asterism__CurrentCall/">Asterism::CurrentCall</a>?</code></pre>
+
+<p>今答えている呼び出し (だれから)</p>
+<p>公開したメソッドの中で、呼んだ端末の名前を知るのに使う。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="w">  </span><span class="n">who</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">current_call</span><span class="o">.</span><span class="n">from</span>
+<span class="w">  </span><span class="n">add</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">who</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionapp">Asterism::Connection#app<a class="headerlink" href="#asterismconnectionapp" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>app() -&gt; <a href="../String/">String</a></code></pre>
+
+<p>このアプリの名前</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">app</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionnode_id">Asterism::Connection#node_id<a class="headerlink" href="#asterismconnectionnode_id" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>node_id() -&gt; <a href="../String/">String</a></code></pre>
+
+<p>この端末の名前 (ノード ID)</p>
+<div class="codehilite"><pre><span></span><code><span class="n">me</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">node_id</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionrun_id">Asterism::Connection#run_id<a class="headerlink" href="#asterismconnectionrun_id" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>run_id() -&gt; <a href="../Integer/">Integer</a></code></pre>
+
+<p>今の接続の番号</p>
+<p>接続するたびに変わる。トピックの値に付いて、受ける側が「送り手がつなぎ直した」と気づくのに使う (SampleInfo#restarted?)。</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">run_id</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionconnected">Asterism::Connection#connected?<a class="headerlink" href="#asterismconnectionconnected" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>connected?() -&gt; bool</code></pre>
+
+<p>つながっているか</p>
+<p>つなぎ直しの途中 (reconnecting?) も true。セッションが閉じていると気づいたときは、その場で「切れた」ことにして false を返す。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">return</span><span class="w"> </span><span class="k">unless</span><span class="w"> </span><span class="n">conn</span><span class="o">.</span><span class="n">connected?</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionreconnecting">Asterism::Connection#reconnecting?<a class="headerlink" href="#asterismconnectionreconnecting" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>reconnecting?() -&gt; bool</code></pre>
+
+<p>切れたあと自動でつなぎ直している最中か</p>
+<p>true の間は connected? も true。ほかの端末は一度 leave し、戻ると
+join し直す。呼び出しは Disconnected か時間切れ、put は誰にも届かない。戻ると、公開したオブジェクト・トピック・購読は元のまま使える。</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="n">conn</span><span class="o">.</span><span class="n">reconnecting?</span>
+<span class="w">  </span><span class="n">show</span><span class="p">(</span><span class="s2">"reconnecting"</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionlost_reason">Asterism::Connection#lost_reason<a class="headerlink" href="#asterismconnectionlost_reason" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>lost_reason() -&gt; <a href="../String/">String</a>?</code></pre>
+
+<p>つながっていない理由</p>
+<div class="codehilite"><pre><span></span><code><span class="n">why</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">lost_reason</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionclose">Asterism::Connection#close<a class="headerlink" href="#asterismconnectionclose" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>close() -&gt; nil</code></pre>
+
+<p>つながりを閉じる</p>
+<p>公開・トピック・購読もいっしょに終わり、on_join などのブロックも忘れる。何度呼んでも構わない。閉じたものはもう開かない
+(Asterism.connect で作り直す)。Link を使うなら Link#close でよい。戻り値は nil。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="o">.</span><span class="n">close</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionpoll">Asterism::Connection#poll<a class="headerlink" href="#asterismconnectionpoll" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>poll() -&gt; bool</code></pre>
+
+<p>毎回呼ぶ (答える・受ける・知らせる)</p>
+<p>届いた呼び出しに答え、on_join / on_leave のブロックと subscribe のブロックを呼ぶ。つなぎ直しの待ちの中からは呼ばれない。閉じたら false。
+<strong>Link を使うなら Link#update が呼ぶので、自分では呼ばない</strong>。
+Asterism.poll_all はプログラムの全部の接続を呼ぶ。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Asterism</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="ss">app</span><span class="p">:</span><span class="w"> </span><span class="s2">"x"</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">poll</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionsession">Asterism::Connection#session<a class="headerlink" href="#asterismconnectionsession" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>session() -&gt; untyped</code></pre>
+
+<p>Zenoh のセッション</p>
+<p>ROS 2 の Node (<code>Asterism::ROS::Node.new(conn.session, ...)</code>) や
+put・subscribe を直接使うとき用。セッションは接続のもので、そこから close しても何も起きない (1 回だけ警告)。閉じるのは
+Connection#close。つながっていないと Asterism::Disconnected。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">session</span>
+<span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Asterism</span><span class="o">::</span><span class="no">ROS</span><span class="o">::</span><span class="no">Node</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="s2">"n"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionexposed">Asterism::Connection#exposed<a class="headerlink" href="#asterismconnectionexposed" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>exposed() -&gt; <a href="../Array/">Array</a>[<a href="../String/">String</a>]</code></pre>
+
+<p>公開しているオブジェクトの名前</p>
+<div class="codehilite"><pre><span></span><code><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">exposed</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionunexpose">Asterism::Connection#unexpose<a class="headerlink" href="#asterismconnectionunexpose" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>unexpose(<a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> name) -&gt; bool</code></pre>
+
+<p>公開をやめる</p>
+<p>公開していたら true、無ければ false。</p>
+<div class="codehilite"><pre><span></span><code><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">unexpose</span><span class="p">(</span><span class="s2">"board"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionpublished">Asterism::Connection#published<a class="headerlink" href="#asterismconnectionpublished" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>published() -&gt; <a href="../Array/">Array</a>[<a href="../String/">String</a>]</code></pre>
+
+<p>出しているトピックの名前</p>
+<p>自分のトピックは名前、共有のものは "&lt;端末&gt;/@shared/&lt;名前&gt;" か
+"@shared/&lt;名前&gt;"。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">published</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionunpublish">Asterism::Connection#unpublish<a class="headerlink" href="#asterismconnectionunpublish" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>unpublish(
+  <a href="../Asterism__Topic/">Asterism::Topic</a> | <a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> topic,
+  ?shared: (<a href="../Symbol/">Symbol</a> | <a href="../String/">String</a>)?
+) -&gt; bool</code></pre>
+
+<p>トピックをやめる</p>
+<p>Topic か、publish に渡した名前 (共有なら同じ <code>shared:</code> も) を渡す。宣言が消える。やめたら true、無いものは false。同じ名前でまた publish すると番号は続きから。</p>
+<div class="codehilite"><pre><span></span><code><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">unpublish</span><span class="p">(</span><span class="s2">"said"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionunsubscribe">Asterism::Connection#unsubscribe<a class="headerlink" href="#asterismconnectionunsubscribe" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>unsubscribe(<a href="../Asterism__Subscription/">Asterism::Subscription</a> sub) -&gt; bool</code></pre>
+
+<p>受けるのをやめる</p>
+<p>Subscription#close と同じ。受けていたら true。</p>
+<div class="codehilite"><pre><span></span><code><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="vi">@sub</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionoff_join">Asterism::Connection#off_join<a class="headerlink" href="#asterismconnectionoff_join" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>off_join(<a href="../Proc/">Proc</a> blk) -&gt; Asterism::Connection</code></pre>
+
+<p>on_join で渡したブロックを外す</p>
+<p>渡したときの Proc を取っておき、同じものを渡す。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">proc</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">|</span><span class="n">n</span><span class="o">|</span><span class="w"> </span><span class="n">joined</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">on_join</span><span class="p">(</span><span class="o">&amp;</span><span class="n">h</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">off_join</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionoff_leave">Asterism::Connection#off_leave<a class="headerlink" href="#asterismconnectionoff_leave" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>off_leave(<a href="../Proc/">Proc</a> blk) -&gt; Asterism::Connection</code></pre>
+
+<p>on_leave で渡したブロックを外す</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="o">.</span><span class="n">off_leave</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionon_app_join">Asterism::Connection#on_app_join<a class="headerlink" href="#asterismconnectionon_app_join" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>on_app_join() { (<a href="../String/">String</a> node, <a href="../String/">String</a> app) -&gt; untyped } -&gt; Asterism::Connection</code></pre>
+
+<p>アプリが来たときに呼ぶブロック</p>
+<p>ブロックは |端末の名前, アプリの名前| で、update の中で呼ばれる。
+1 つの端末が複数のアプリを動かしていても、アプリごとに来る・去る。切れたときは、知っていたアプリが全部去る。link_up の中で渡す。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="o">.</span><span class="n">on_app_join</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">|</span>
+<span class="w">  </span><span class="n">seen</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionon_app_leave">Asterism::Connection#on_app_leave<a class="headerlink" href="#asterismconnectionon_app_leave" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>on_app_leave() { (<a href="../String/">String</a> node, <a href="../String/">String</a> app) -&gt; untyped } -&gt; Asterism::Connection</code></pre>
+
+<p>アプリが去ったときに呼ぶブロック</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="o">.</span><span class="n">on_app_leave</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="o">|</span>
+<span class="w">  </span><span class="n">gone</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionoff_app_join">Asterism::Connection#off_app_join<a class="headerlink" href="#asterismconnectionoff_app_join" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>off_app_join(<a href="../Proc/">Proc</a> blk) -&gt; Asterism::Connection</code></pre>
+
+<p>on_app_join のブロックを外す</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="o">.</span><span class="n">off_app_join</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionoff_app_leave">Asterism::Connection#off_app_leave<a class="headerlink" href="#asterismconnectionoff_app_leave" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>off_app_leave(<a href="../Proc/">Proc</a> blk) -&gt; Asterism::Connection</code></pre>
+
+<p>on_app_leave のブロックを外す</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="o">.</span><span class="n">off_app_leave</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionprofile">Asterism::Connection#profile<a class="headerlink" href="#asterismconnectionprofile" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>profile(
+  ?kind: (<a href="../Symbol/">Symbol</a> | <a href="../String/">String</a>)?,
+  ?name: <a href="../String/">String</a>?,
+  ?host: <a href="../String/">String</a>?,
+  ?icon: <a href="../String/">String</a>?
+) -&gt; <a href="../Hash/">Hash</a></code></pre>
+
+<p>この端末の名乗り (種類・名前・アイコン)</p>
+<p>キーワードを渡すとその項目を変えて、全体を返す。渡さなければ今のものを返す。<code>kind:</code> (Symbol か String。nil で既定へ戻す)、<code>name:</code>・<code>host:</code>
+(String。nil で外す)、<code>icon:</code> (PNG のバイト列。nil でアイコン無し)。受け付けないものは ArgumentError。名乗りは端末のもので、同じ端末のほかの接続にも効く。変えると流れる。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rover"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionprofile_of">Asterism::Connection#profile_of<a class="headerlink" href="#asterismconnectionprofile_of" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>profile_of(
+  <a href="../String/">String</a> node,
+  ?icon: bool,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; <a href="../Hash/">Hash</a>?</code></pre>
+
+<p>ほかの端末の名乗りを読む</p>
+<p>答えを待つ (既定 2 秒。<code>timeout:</code> は秒、<code>timeout_ms:</code> はミリ秒)。
+<code>icon: false</code> でアイコンのバイト列を省く (icon_hash は付く)。つながっていないと Asterism::Disconnected。自分の端末は問い合わせない。</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">profile_of</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<span class="nb">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">p</span><span class="o">[</span><span class="s2">"name"</span><span class="o">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">p</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionprotocol_of">Asterism::Connection#protocol_of<a class="headerlink" href="#asterismconnectionprotocol_of" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>protocol_of(
+  <a href="../String/">String</a> node,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; <a href="../Integer/">Integer</a>?</code></pre>
+
+<p>端末やアプリが話す通信の版</p>
+<p>"端末/アプリ" を渡すとそのアプリの版 (まだ見えていなければ nil)。端末だけなら、そのアプリの版の一番低いもの。アプリが見えない端末は名乗りに聞く (答えなければ nil、版が書いてなければ 0)。自分の版は
+Asterism::PROTOCOL。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="o">.</span><span class="n">protocol_of</span><span class="p">(</span><span class="s2">"n/app"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectiondefine_type">Asterism::Connection#define_type<a class="headerlink" href="#asterismconnectiondefine_type" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>define_type(
+  <a href="../String/">String</a> | <a href="../Symbol/">Symbol</a> name,
+  <a href="../Array/">Array</a>[<a href="../Array/">Array</a>[untyped]] fields,
+  ?desc: <a href="../String/">String</a>?
+) -&gt; <a href="../Hash/">Hash</a></code></pre>
+
+<p>自分の型を決める</p>
+<p>name は "mygame/board.strokes" のような名前。fields は
+<code>[[名前, 型], ...]</code> で、型は名前 (組み込みの "vector3"、基本の "int"
+"float" "str" "bin" "bool" "any"、別の自分の型。末尾に "[]" で配列)。値は欄の名前をキーにした Hash で、名前は短いほど値が小さい。
+<code>desc:</code> (省略すると無し) は説明。同じ名前は置き換わる。つながりが閉じても残る。送った定義 ({"f" =&gt; ..., "d" =&gt; ...}) を返す。数を型にしたり不正な欄だと ArgumentError。publish の <code>type:</code> に名前を渡す。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">conn</span><span class="o">.</span><span class="n">define_type</span><span class="p">(</span><span class="s2">"g/pt"</span><span class="p">,</span>
+<span class="w">  </span><span class="o">[[</span><span class="s2">"x"</span><span class="p">,</span><span class="w"> </span><span class="s2">"int"</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="s2">"y"</span><span class="p">,</span><span class="w"> </span><span class="s2">"int"</span><span class="o">]]</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionpubs_of">Asterism::Connection#pubs_of<a class="headerlink" href="#asterismconnectionpubs_of" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>pubs_of(
+  <a href="../String/">String</a> node,
+  <a href="../String/">String</a> app,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; <a href="../Hash/">Hash</a>?</code></pre>
+
+<p>ほかのアプリのトピックを読む</p>
+<p><code>{トピック名 =&gt; {"t" =&gt; 型, "u" =&gt; 単位, ...}}</code>。何も出していなければ {}、答えが無ければ nil。status_of と同じ待ち方 (既定 2 秒、<code>timeout:</code>
+は秒、<code>timeout_ms:</code> はミリ秒)。つながっていないと Asterism::Disconnected。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">pubs_of</span><span class="p">(</span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"app"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectiontypes_of">Asterism::Connection#types_of<a class="headerlink" href="#asterismconnectiontypes_of" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>types_of(
+  <a href="../String/">String</a> node,
+  <a href="../String/">String</a> app,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; <a href="../Hash/">Hash</a>?</code></pre>
+
+<p>ほかのアプリの自分の型を読む</p>
+<p><code>{型の名前 =&gt; {"f" =&gt; [[欄, 型], ...], "d" =&gt; 説明}}</code>。無ければ {}、答えが無ければ nil。待ち方は pubs_of と同じ。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vi">@link</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">types_of</span><span class="p">(</span><span class="s2">"n"</span><span class="p">,</span><span class="w"> </span><span class="s2">"app"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectionpublishers_of">Asterism::Connection#publishers_of<a class="headerlink" href="#asterismconnectionpublishers_of" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>publishers_of(
+  <a href="../String/">String</a> path,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; <a href="../Hash/">Hash</a></code></pre>
+
+<p>共有の場所に値を出しているアプリを探す</p>
+<p>path は "@shared/&lt;名前&gt;" か "&lt;端末&gt;/@shared/&lt;名前&gt;" (端末は * も可)。
+<code>{"端末/アプリ" =&gt; 宣言}</code> を返す (自分も入る)。誰もいなければ {}。全アプリの名乗りに一度に問い合わせて <code>timeout:</code> (秒、既定 2 秒) まで待つ (<code>timeout_ms:</code> はミリ秒)。共有の道でなければ ArgumentError、つながっていないと Asterism::Disconnected。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">who</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="o">.</span><span class="n">publishers_of</span><span class="p">(</span>
+<span class="w">  </span><span class="s2">"@shared/lobby"</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectiondeclaration_of">Asterism::Connection#declaration_of<a class="headerlink" href="#asterismconnectiondeclaration_of" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>declaration_of(
+  <a href="../Asterism__SampleInfo/">Asterism::SampleInfo</a> info,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; <a href="../Hash/">Hash</a>?</code></pre>
+
+<p>受けた値の送り手の宣言を読む</p>
+<p>info は subscribe のブロックの SampleInfo。送り手の @pubs の、そのキーの項目 (<code>{"t", "e", "u", "d", "ts"}</code>) を返す。共有の場所では送り手ごとに宣言が違うので、送り手 (info.from) に問い合わせる。送り手が分からない・答えない・宣言していなければ nil。初回だけ待ち (既定 2 秒)、答えは覚える。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="o">.</span><span class="n">declaration_of</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="asterismconnectiontype_of">Asterism::Connection#type_of<a class="headerlink" href="#asterismconnectiontype_of" title="Permanent link">&para;</a></h3>
+<pre class="fmrb-sig"><code>type_of(
+  <a href="../Asterism__SampleInfo/">Asterism::SampleInfo</a> info,
+  ?timeout: (<a href="../Integer/">Integer</a> | <a href="../Float/">Float</a>)?,
+  ?timeout_ms: <a href="../Integer/">Integer</a>?
+) -&gt; (<a href="../Integer/">Integer</a> | <a href="../Array/">Array</a>[untyped])?</code></pre>
+
+<p>受けた値の型を、送り手の宣言から読む</p>
+<p>組み込みの型なら番号 (Integer)、自分の型なら <code>[名前, 定義]</code> (定義は送り手の自分の型の表から。無ければ nil)。型が無い・送り手が答えない場合は nil。待ち方と覚え方は declaration_of と同じ。</p>
+<div class="codehilite"><pre><span></span><code><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conn</span><span class="o">.</span><span class="n">type_of</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<p><em>このページは fmruby-core の main@579eba38 の API の型定義 (<code>sig/</code>) から自動で作っています。</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight"], "search": "../../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://family-mruby.github.io/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/architecture/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/architecture/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/compatibility/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/compatibility/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/compatibility/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/debugging/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/debugging/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/debugging/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/hardware/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/hardware/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/hardware/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/limitations/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/limitations/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/limitations/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/other_languages/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/other_languages/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/other_languages/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/releases/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/releases/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/releases/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/remote_desktop/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/remote_desktop/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/remote_desktop/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/wasm_apps/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/wasm_apps/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/wasm_apps/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/audio/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/audio/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/audio/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/const/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/const/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/const/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/filesystem/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/filesystem/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/filesystem/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/fmrb_app/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/fmrb_app/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/fmrb_app/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/fmrb_gfx/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/fmrb_gfx/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/fmrb_gfx/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/log/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/log/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/log/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/midi/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/midi/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/midi/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/network/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/network/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/network/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/p5/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/p5/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/p5/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/peripherals/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/peripherals/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/peripherals/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/pubsub/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/pubsub/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/pubsub/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/sprite/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/sprite/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/sprite/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/system/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/system/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/system/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/tilemap/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/tilemap/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/tilemap/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/ui/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/ui/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/ui/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/utilities/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/utilities/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/utilities/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/ArgumentError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/ArgumentError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/ArgumentError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Array/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Array/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Array/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__AsyncProxy/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__AsyncProxy/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__AsyncProxy/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Connection/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Connection/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Connection/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Credentials/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Credentials/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Credentials/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Credentials__Error/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Credentials__Error/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Credentials__Error/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__CurrentCall/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__CurrentCall/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__CurrentCall/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Disconnected/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Disconnected/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Disconnected/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__EncodeError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__EncodeError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__EncodeError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Error/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Error/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Error/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Future/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Future/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Future/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Profile/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Profile/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Profile/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Proxy/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Proxy/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Proxy/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Pubs/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Pubs/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Pubs/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Attachment/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Attachment/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Attachment/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Call/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Call/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Call/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Client/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Client/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Client/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Message/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Message/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Message/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Node/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Node/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Node/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Publisher/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Publisher/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Publisher/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Service/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Service/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Service/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Subscription/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Subscription/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Subscription/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__TimeoutError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__TimeoutError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__TimeoutError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__Timer/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Timer/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Timer/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__ROS__UnknownType/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__UnknownType/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__UnknownType/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__RemoteError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__RemoteError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__RemoteError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__SampleInfo/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__SampleInfo/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__SampleInfo/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Sequences/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Sequences/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Sequences/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__SharedSession/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__SharedSession/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__SharedSession/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Status/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Status/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Status/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Subscription/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Subscription/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Subscription/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__TimeoutError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__TimeoutError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__TimeoutError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Topic/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Topic/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Topic/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Asterism__Types/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Types/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Types/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/BMP332/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/BMP332/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/BMP332/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Class/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Class/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Class/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Digest/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Digest/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Digest/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Digest__SHA256/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Digest__SHA256/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Digest__SHA256/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Dir/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Dir/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Dir/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Enumerable/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Enumerable/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Enumerable/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Exception/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Exception/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Exception/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FalseClass/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FalseClass/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FalseClass/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/File/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/File/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/File/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Float/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Float/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Float/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Fmrb/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Fmrb/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Fmrb/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbApp/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbApp/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbApp/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbAssoc/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAssoc/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAssoc/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbAsterism/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAsterism/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAsterism/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbAsterism__Link/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAsterism__Link/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAsterism__Link/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbAsterism__Settings/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAsterism__Settings/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAsterism__Settings/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbAsterism__TableClient/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAsterism__TableClient/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAsterism__TableClient/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbAudio/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAudio/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAudio/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbColors/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbColors/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbColors/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbConst/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbConst/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbConst/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbFile/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbFile/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbFile/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbGfx/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbGfx/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbGfx/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbHitMask/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbHitMask/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbHitMask/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbHw/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbHw/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbHw/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbI18n/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbI18n/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbI18n/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbMic/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMic/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMic/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbMidi/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMidi/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMidi/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbMidi__ApuTransport/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMidi__ApuTransport/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMidi__ApuTransport/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbMidi__MmlPlayer/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMidi__MmlPlayer/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMidi__MmlPlayer/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbMidi__SmfPlayer/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMidi__SmfPlayer/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMidi__SmfPlayer/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbNet/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbNet/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbNet/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbNet__Request/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbNet__Request/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbNet__Request/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbReceiveConf/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbReceiveConf/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbReceiveConf/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbSystem/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbSystem/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbSystem/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbText/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbText/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbText/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbToml/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbToml/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbToml/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbToml__Raw/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbToml__Raw/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbToml__Raw/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__Button/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Button/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Button/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__Enum/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Enum/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Enum/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__HitAreas/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__HitAreas/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__HitAreas/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__Label/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Label/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Label/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__Scrollbar/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Scrollbar/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Scrollbar/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__Stepper/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Stepper/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Stepper/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__TextField/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__TextField/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__TextField/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__Toggle/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Toggle/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Toggle/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUI__Widget/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Widget/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Widget/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbUart/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUart/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUart/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FmrbVideo/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbVideo/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbVideo/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Fmrb__Fft/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Fmrb__Fft/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Fmrb__Fft/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Fmrb__Raycast/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Fmrb__Raycast/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Fmrb__Raycast/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/FrozenError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FrozenError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FrozenError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/GC/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/GC/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/GC/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/GPIO/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/GPIO/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/GPIO/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/GPIO__Error/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/GPIO__Error/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/GPIO__Error/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/GfxBlock/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/GfxBlock/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/GfxBlock/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Hash/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Hash/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Hash/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/I2C/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/I2C/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/I2C/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/IO/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/IO/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/IO/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/IOError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/IOError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/IOError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/IndexError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/IndexError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/IndexError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Integer/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Integer/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Integer/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/JSON/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/JSON__Digger/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__Digger/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__Digger/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/JSON__DiggerError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__DiggerError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__DiggerError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/JSON__GeneratorError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__GeneratorError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__GeneratorError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/JSON__JSONError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__JSONError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__JSONError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/JSON__ParserError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__ParserError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__ParserError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Kernel/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Kernel/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Kernel/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/KeyError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/KeyError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/KeyError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Log/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Log/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Log/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/MIDI/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/MIDI/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/MIDI/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/MIDI__Device/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/MIDI__Device/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/MIDI__Device/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Machine/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Machine/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Machine/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Math/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Math/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Math/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Math__DomainError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Math__DomainError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Math__DomainError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/MessagePack/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/MessagePack/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/MessagePack/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Module/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Module/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Module/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/NameError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NameError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NameError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/NilClass/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NilClass/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NilClass/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/NoMemoryError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NoMemoryError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NoMemoryError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/NoMethodError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NoMethodError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NoMethodError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/NotImplementedError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NotImplementedError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NotImplementedError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/NsfHeader/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NsfHeader/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NsfHeader/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Object/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Object/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Object/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/P5/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/P5/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/P5/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Proc/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Proc/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Proc/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/RNG/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/RNG/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/RNG/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Range/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Range/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Range/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/RangeError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/RangeError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/RangeError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/RuntimeError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/RuntimeError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/RuntimeError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/ScriptError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/ScriptError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/ScriptError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/SpriteImage/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/SpriteImage/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/SpriteImage/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/SpriteInstance/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/SpriteInstance/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/SpriteInstance/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/StandardError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/StandardError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/StandardError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/StopIteration/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/StopIteration/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/StopIteration/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/String/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/String/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/String/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Symbol/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Symbol/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Symbol/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/SystemStackError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/SystemStackError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/SystemStackError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/TileMap/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TileMap/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TileMap/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/TileRing/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TileRing/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TileRing/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/TileSheet/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TileSheet/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TileSheet/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Time/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Time/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Time/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/TrueClass/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TrueClass/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TrueClass/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/TypeError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TypeError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TypeError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/UART/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/UART/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/UART/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/Unit8Encoder/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Unit8Encoder/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Unit8Encoder/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/api/reference/ZeroDivisionError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/ZeroDivisionError/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/ZeroDivisionError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/app_toml/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/app_toml/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/app_toml/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/associations/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/associations/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/associations/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/audio_formats/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/audio_formats/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/audio_formats/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/color_names/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/color_names/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/color_names/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/colors/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/colors/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/colors/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/hid_devices/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/hid_devices/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/hid_devices/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/image_formats/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/image_formats/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/image_formats/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/services/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/services/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/services/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/file_formats/system_conf/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/system_conf/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/system_conf/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/booth/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/booth/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/booth/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/choose_hardware/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/choose_hardware/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/choose_hardware/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/console/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/console/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/console/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/default_apps/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/default_apps/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/default_apps/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/desktop/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/desktop/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/desktop/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/firmware_update/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/firmware_update/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/firmware_update/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/hello_world/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/hello_world/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/hello_world/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/linux/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/linux/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/linux/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/modern/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/modern/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/modern/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/setup/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/setup/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/setup/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/shell/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/shell/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/shell/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/simulator/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/simulator/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/simulator/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/studio/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/studio/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/studio/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/getting_started/wifi/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/wifi/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/wifi/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/languages/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/languages/basic/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/basic/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/basic/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/languages/lua/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/lua/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/lua/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/languages/micropython/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/micropython/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/micropython/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/languages/wasm/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/wasm/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/wasm/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/tools/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/tools/console/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/console/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/console/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/tools/debugging/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/debugging/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/debugging/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/tools/remote_desktop/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/remote_desktop/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/remote_desktop/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/tools/simulator/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/simulator/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/simulator/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/architecture/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/architecture/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/compatibility/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/compatibility/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/compatibility/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/debugging/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/debugging/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/debugging/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/hardware/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/hardware/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/hardware/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/limitations/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/limitations/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/limitations/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/other_languages/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/other_languages/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/other_languages/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/releases/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/releases/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/releases/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/remote_desktop/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/remote_desktop/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/remote_desktop/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/wasm_apps/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/wasm_apps/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/wasm_apps/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/audio/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/audio/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/audio/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/const/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/const/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/const/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/filesystem/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/filesystem/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/filesystem/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/fmrb_app/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/fmrb_app/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/fmrb_app/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/fmrb_gfx/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/fmrb_gfx/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/fmrb_gfx/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/log/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/log/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/log/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/midi/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/midi/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/midi/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/network/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/network/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/network/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/p5/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/p5/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/p5/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/peripherals/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/peripherals/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/peripherals/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/pubsub/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/pubsub/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/pubsub/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/sprite/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/sprite/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/sprite/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/system/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/system/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/system/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/tilemap/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/tilemap/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/tilemap/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/ui/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/ui/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/ui/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/utilities/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/utilities/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/utilities/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/ArgumentError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/ArgumentError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/ArgumentError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Array/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Array/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Array/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__AsyncProxy/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__AsyncProxy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__AsyncProxy/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Connection/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Connection/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Connection/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Credentials/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Credentials/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Credentials/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Credentials__Error/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Credentials__Error/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Credentials__Error/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__CurrentCall/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__CurrentCall/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__CurrentCall/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Disconnected/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Disconnected/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Disconnected/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__EncodeError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__EncodeError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__EncodeError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Error/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Error/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Error/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Future/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Future/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Future/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Profile/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Profile/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Profile/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Proxy/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Proxy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Proxy/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Pubs/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Pubs/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Pubs/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Attachment/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Attachment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Attachment/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Call/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Call/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Call/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Client/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Client/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Client/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Message/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Message/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Message/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Node/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Node/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Node/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Publisher/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Publisher/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Publisher/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Service/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Service/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Service/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Subscription/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Subscription/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Subscription/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__TimeoutError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__TimeoutError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__TimeoutError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Timer/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__Timer/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__Timer/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__ROS__UnknownType/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__ROS__UnknownType/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__ROS__UnknownType/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__RemoteError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__RemoteError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__RemoteError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__SampleInfo/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__SampleInfo/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__SampleInfo/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Sequences/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Sequences/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Sequences/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__SharedSession/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__SharedSession/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__SharedSession/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Status/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Status/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Status/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Subscription/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Subscription/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Subscription/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__TimeoutError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__TimeoutError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__TimeoutError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Topic/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Topic/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Topic/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Asterism__Types/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Asterism__Types/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Asterism__Types/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/BMP332/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/BMP332/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/BMP332/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Class/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Class/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Class/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Digest/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Digest/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Digest/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Digest__SHA256/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Digest__SHA256/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Digest__SHA256/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Dir/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Dir/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Dir/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Enumerable/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Enumerable/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Enumerable/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Exception/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Exception/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Exception/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FalseClass/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FalseClass/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FalseClass/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/File/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/File/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/File/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Float/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Float/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Float/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Fmrb/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Fmrb/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Fmrb/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbApp/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbApp/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbApp/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbAssoc/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAssoc/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAssoc/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbAsterism/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAsterism/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAsterism/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbAsterism__Link/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAsterism__Link/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAsterism__Link/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbAsterism__Settings/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAsterism__Settings/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAsterism__Settings/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbAsterism__TableClient/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAsterism__TableClient/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAsterism__TableClient/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbAudio/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbAudio/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbAudio/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbColors/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbColors/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbColors/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbConst/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbConst/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbConst/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbFile/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbFile/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbFile/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbGfx/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbGfx/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbGfx/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbHitMask/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbHitMask/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbHitMask/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbHw/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbHw/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbHw/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbI18n/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbI18n/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbI18n/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbMic/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMic/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMic/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbMidi/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMidi/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMidi/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbMidi__ApuTransport/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMidi__ApuTransport/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMidi__ApuTransport/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbMidi__MmlPlayer/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMidi__MmlPlayer/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMidi__MmlPlayer/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbMidi__SmfPlayer/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbMidi__SmfPlayer/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbMidi__SmfPlayer/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbNet/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbNet/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbNet/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbNet__Request/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbNet__Request/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbNet__Request/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbReceiveConf/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbReceiveConf/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbReceiveConf/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbSystem/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbSystem/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbSystem/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbText/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbText/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbText/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbToml/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbToml/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbToml/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbToml__Raw/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbToml__Raw/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbToml__Raw/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__Button/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Button/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Button/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__Enum/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Enum/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Enum/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__HitAreas/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__HitAreas/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__HitAreas/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__Label/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Label/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Label/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__Scrollbar/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Scrollbar/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Scrollbar/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__Stepper/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Stepper/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Stepper/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__TextField/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__TextField/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__TextField/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__Toggle/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Toggle/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Toggle/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUI__Widget/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUI__Widget/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUI__Widget/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbUart/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbUart/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbUart/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FmrbVideo/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FmrbVideo/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FmrbVideo/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Fmrb__Fft/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Fmrb__Fft/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Fmrb__Fft/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Fmrb__Raycast/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Fmrb__Raycast/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Fmrb__Raycast/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/FrozenError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/FrozenError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/FrozenError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/GC/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/GC/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/GC/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/GPIO/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/GPIO/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/GPIO/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/GPIO__Error/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/GPIO__Error/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/GPIO__Error/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/GfxBlock/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/GfxBlock/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/GfxBlock/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Hash/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Hash/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Hash/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/I2C/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/I2C/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/I2C/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/IO/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/IO/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/IO/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/IOError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/IOError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/IOError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/IndexError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/IndexError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/IndexError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Integer/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Integer/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Integer/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/JSON/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/JSON__Digger/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__Digger/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__Digger/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/JSON__DiggerError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__DiggerError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__DiggerError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/JSON__GeneratorError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__GeneratorError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__GeneratorError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/JSON__JSONError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__JSONError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__JSONError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/JSON__ParserError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/JSON__ParserError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/JSON__ParserError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Kernel/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Kernel/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Kernel/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/KeyError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/KeyError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/KeyError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Log/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Log/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Log/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/MIDI/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/MIDI/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/MIDI/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/MIDI__Device/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/MIDI__Device/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/MIDI__Device/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Machine/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Machine/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Machine/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Math/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Math/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Math/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Math__DomainError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Math__DomainError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Math__DomainError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/MessagePack/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/MessagePack/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/MessagePack/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Module/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Module/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Module/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/NameError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NameError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NameError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/NilClass/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NilClass/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NilClass/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/NoMemoryError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NoMemoryError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NoMemoryError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/NoMethodError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NoMethodError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NoMethodError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/NotImplementedError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NotImplementedError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NotImplementedError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/NsfHeader/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/NsfHeader/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/NsfHeader/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Object/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Object/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Object/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/P5/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/P5/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/P5/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Proc/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Proc/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Proc/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/RNG/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/RNG/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/RNG/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Range/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Range/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Range/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/RangeError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/RangeError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/RangeError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/RuntimeError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/RuntimeError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/RuntimeError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/ScriptError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/ScriptError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/ScriptError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/SpriteImage/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/SpriteImage/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/SpriteImage/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/SpriteInstance/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/SpriteInstance/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/SpriteInstance/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/StandardError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/StandardError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/StandardError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/StopIteration/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/StopIteration/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/StopIteration/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/String/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/String/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/String/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Symbol/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Symbol/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Symbol/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/SystemStackError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/SystemStackError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/SystemStackError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/TileMap/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TileMap/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TileMap/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/TileRing/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TileRing/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TileRing/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/TileSheet/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TileSheet/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TileSheet/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Time/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Time/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Time/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/TrueClass/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TrueClass/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TrueClass/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/TypeError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/TypeError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/TypeError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/UART/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/UART/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/UART/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/Unit8Encoder/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/Unit8Encoder/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/Unit8Encoder/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/api/reference/ZeroDivisionError/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/api/reference/ZeroDivisionError/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/api/reference/ZeroDivisionError/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/app_toml/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/app_toml/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/app_toml/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/associations/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/associations/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/associations/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/audio_formats/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/audio_formats/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/audio_formats/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/color_names/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/color_names/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/color_names/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/colors/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/colors/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/colors/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/hid_devices/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/hid_devices/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/hid_devices/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/image_formats/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/image_formats/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/image_formats/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/services/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/services/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/services/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/file_formats/system_conf/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/file_formats/system_conf/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/file_formats/system_conf/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/booth/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/booth/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/booth/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/choose_hardware/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/choose_hardware/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/choose_hardware/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/console/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/console/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/console/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/default_apps/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/default_apps/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/default_apps/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/desktop/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/desktop/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/desktop/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/firmware_update/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/firmware_update/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/firmware_update/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/hello_world/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/hello_world/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/hello_world/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/linux/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/linux/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/linux/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/modern/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/modern/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/modern/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/setup/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/setup/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/setup/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/shell/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/shell/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/shell/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/simulator/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/simulator/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/simulator/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/studio/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/studio/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/studio/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/getting_started/wifi/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/getting_started/wifi/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/getting_started/wifi/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/languages/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/languages/basic/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/basic/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/basic/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/languages/lua/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/lua/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/lua/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/languages/micropython/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/micropython/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/micropython/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/languages/wasm/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/languages/wasm/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/languages/wasm/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/tools/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/tools/console/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/console/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/console/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/tools/debugging/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/debugging/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/debugging/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/tools/remote_desktop/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/remote_desktop/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/remote_desktop/"/>
+    </url>
+    <url>
+        <loc>https://family-mruby.github.io/ja/tools/simulator/</loc>
+        <lastmod>2026-11-28</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://family-mruby.github.io/ja/tools/simulator/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://family-mruby.github.io/tools/simulator/"/>
+    </url>
+</urlset>
