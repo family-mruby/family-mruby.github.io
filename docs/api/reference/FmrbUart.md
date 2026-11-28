@@ -204,4 +204,4 @@ ok = (m >> 2) & 1 == 1   # UART2
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@41060d05.*
+*Generated from the API signatures (`sig/`) of fmruby-core main@579eba38.*

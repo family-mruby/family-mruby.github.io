@@ -8,6 +8,15 @@ runs the newest one.
 Every release replaces the whole flash image, `/home` included. Copy anything you want to
 keep off the device before flashing — see [Console](getting_started/console.md).
 
+## 3.1.1 — 2026-11-28
+
+A fix release. The Tab5 no longer restarts when a button in the Wi-Fi window is pressed, some
+writes to the flash no longer risk stopping the machine, and the UART guide describes the
+serial MIDI output as it behaves since 3.1.0.
+
+The display firmware stays 3.1.0, so a 3.1.0 board needs only the main chip written (NARYA v3's
+WROVER does not need rewriting).
+
 ## 3.1.0 — 2026-11-27
 
 Applies to Modern, Retro, the headless boards, the Linux program and Studio.

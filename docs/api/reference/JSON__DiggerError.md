@@ -11,4 +11,4 @@ position is past the end ("Array index out of range").
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@41060d05.*
+*Generated from the API signatures (`sig/`) of fmruby-core main@579eba38.*

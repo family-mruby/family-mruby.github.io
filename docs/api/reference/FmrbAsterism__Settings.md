@@ -73,4 +73,4 @@ cfg = FmrbAsterism.settings
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@41060d05.*
+*Generated from the API signatures (`sig/`) of fmruby-core main@579eba38.*

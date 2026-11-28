@@ -87,4 +87,4 @@ on_bar = @ui.find(:sb).hit?(x, y)
 
 ---
 
-*このページは fmruby-core の develop@41060d05 の API の型定義 (`sig/`) から自動で作っています。*
+*このページは fmruby-core の main@579eba38 の API の型定義 (`sig/`) から自動で作っています。*

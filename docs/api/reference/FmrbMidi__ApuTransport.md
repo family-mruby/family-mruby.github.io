@@ -128,4 +128,4 @@ happens and nil comes back. What was sounding on the channel stops.
 
 ---
 
-*Generated from the API signatures (`sig/`) of fmruby-core develop@41060d05.*
+*Generated from the API signatures (`sig/`) of fmruby-core main@579eba38.*
